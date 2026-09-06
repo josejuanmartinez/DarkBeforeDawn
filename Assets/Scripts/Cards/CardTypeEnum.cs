@@ -1,0 +1,27 @@
+using System;
+
+public enum CardTypeEnum
+{
+    Unknown = 0,
+    Action = 1,
+    Event = 2,
+    Land = 3,
+    PC = 4,
+    Character = 5,
+    Army = 6,
+    Ally = 8,
+    Spell = 9,
+    Environmental = 10,
+    Object = 11
+}
+
+public static class CardTypeParser
+{
+    public static CardTypeEnum Parse(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return CardTypeEnum.Unknown;
+        return Enum.TryParse(value.Trim(), true, out CardTypeEnum parsed)
+            ? parsed
+            : CardTypeEnum.Unknown;
+    }
+}

@@ -1,0 +1,2301 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ef6b4b043cefe0f85b4daf45a0460c, type: 3}
+  m_Name: CardArtLibrary
+  m_EditorClassIdentifier: 
+  entries:
+  - sprite: {fileID: 21300000, guid: 5f1bcdd42b9c2bb4790dad68ebdd4036, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 606e1377925badb448cda6f423ae77a5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b083080f978e26c408cc9848ceda88f9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b9e9117e81415fd49b526d8ee936cf69, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b7b2219efd404842bbe6e00ac79f2db2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 83366a773183a4043a6aaacbdcdf5acb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0d8f321350f5a8d4dbaa4bff435c389a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 087cfb40c450f9248b28f90eaa556849, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a39221b5e41e5ea44942f3696cac97be, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4fdc0c3b120cb0a40b1900551f2d1865, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7c3fe9e611bb9ac40bd12b7db4b1b843, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7b070c5f662623a4d839c57e2e8cea90, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 093dcf205c75ad04f8727c89907c2e98, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9827895d643c4bb5946ecd79079c952a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 917ab3e71bf1bcb479295a0ed1c34575, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fd8eef1e220e597429cac96446d2bb02, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5b0c2da2091d4234b96c5c97631aaf41, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8aaf4442be33829408c21247bed351d3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 27c8edd0c2fc8924abf4ab0dc125fc5c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e26f7c987141c604ba498c46f5ae7c2b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 88bc1af52a5f43978cf845beee6a730f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b2b5c1b4c61f40c9a5e0a1243a858250, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4d5f10b2b5995b144ab7032f313c7b1b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cea0ea4c1cb6aa54ebf9779b7513c600, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 42b70e85f21a02c4982f21fa0ac2aec5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 35c5d562a232ace47a182d677381c7f2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fde2f44b0e82bb54e971bd6650c5acec, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 223b743dab6d11a41bdd04137fe0f445, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 72350354f22ee6a4da288f8de626a041, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a993c20c64e712b44a55d5b10f948513, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 29f28ec4d76c7ad47acf5e9718f9b037, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0e9af1338ab8ddc49a30534072e0bd62, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4731f4fb32e84ff43a64cf16dcb58da7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a71dd28ca36ae3c499f9f1fd9aa3fe91, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e79e4ac5ff56e5747abf5d3f04fe2ee7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 13401ecf54092ad4888e7a2398c215c2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0d66521e934a8a047a57ac2b464a37cd, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 53a19745f2d277148a42ef9b507d56d6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 121c31014bcb8004e943d36cd92e7989, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fea5c4f0de9afb54581b7e42d3f59506, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1871a8768049a0b408005314fd673cf7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ff6e27a0b0a42584ea0bd0b3cb07c519, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bc582ab01d03eb44bab191c93f1f12a6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: af5299de3e847804994627038541f9da, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7cc129423740e134487e46a2ca4d9281, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e39d9217e79587049b9465321cdda3e5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4c7185d144ddfb04f8f50efd0e31f003, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c5c6a2032f2a5d64293facfd25d00163, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9743e8689d4575449ad52f0fa858ec93, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 74581cab816c0a446bc35a2463c1fae2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: dad3f97ab5356c044bd1ab03dfcb1a7f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bc26d585b6f84cb458a79b0478984b1e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: dce8866d1cace2f459b39cc8da355a5a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 78b9ed10649d9c24fa809b56bcd52fb4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e31fdcfe5686dfd44a7eeabb29d04dd1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7affb452bf7bd9143a34135f3e257d09, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e34fded3939e1924fa5ab56bfee8cbbc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: eb0937ef955609f43a2b4a23af697864, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: af88096d9f9836b42a9c524cc7073501, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 712567bd8b06f4140a62dc6d3af57211, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b69cd71231428d54d9330ba98e679d0e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ed7e79c46dff86c4394888cb1a4f65b5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 892bf90023de94f41b5d4e95f4fb06ec, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fc983b3fba058ba40b03e266fdad269e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c910e341afec21d4ca3c6a7e76664070, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c28a16d90ed8baf478af3fbe13714fd0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8c6921976ec34871aa573b94e39d375f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: da8d7ef9f2b245cb81a37327e8020092, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fa589795dcc91a748a6d5a7686a04024, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5085f3a27b267494ea1fbc6d4b3a5ba0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7ff2a726788c4dc40b76e6a6055fcab5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 70d53429910341ec9be976a4b112349a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0ffdf0bd488f23a438627889a12875f2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a475a7257984dbb43b18ee29587f21bb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7074dea86aa520845a4a510235932fd3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3cae249ed9b08064b9c53f61ae6d8b09, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c7560043246747b5bef7689df0598cf8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5c65712bb60168942b01ca49823eb6a7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f7ba7f657fadecd4f98614533e6bbb1b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4a2f357587a2f414eb57f083b21755ab, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b626807a0b424944fbab7474ccb94dac, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2c7a2b6202f349bb8e0ef4a0b6d8cb32, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a5ceb9c326d33ef41817fdbdd3269511, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e27063687f3b6454d8f6f6f3ae14ecd6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 483410e5847f8e941b38fabe712f25ac, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4ef565b3bb556ba4c9eb66082286b13b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3b4ba4ea0b8194f44af0bb203640d049, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: addb70861518b1843844543db19bcb27, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ca6bcf14d8fc432cb37a38805da4592b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fba2b5004b31cc546b992754b8fb2849, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4cd065509df77d84ca6b3f5df2a17cfa, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5741b5ba66809304eba2499a5da7109f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5d710b52ccbd261439f32756a85db36f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f36341db995ba4e4e8ba199b093d09cf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b95d92e1f9da77c4cadcc229100b6430, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ce1dde92c19e4ea9a3d9e00c2d50aa2f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4070828ea3024f67b418709e0d90786a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6fb1a4be37064954684a069df1a42bf0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3333c4f482174bb4aa58305e6ba29a82, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 58ee91ae5d561c04f9cc3946540461f0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ee5e4dd0f73cdc34390d76ccf7f9e8c3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ac15eba048967fb429dec444cfae47d9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ddd997603a7932e41a67e0ef5cfe1983, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c3b11ec779e54f1db6649fc3cc6d124f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b018f2f8ba9b70d4aae798674497db69, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b2ffe7ad5f770ba4e979be2b278b746b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 930d9c783c6eb3848bfac7343c84c7b4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8dbde5d4dd1e8904ebd5a1d8e4160220, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3bf4b8b9da5c7fc43bfa9c6efab2fe16, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a277933d5be445f4581d45b8139cc66a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 64e3dbd3de8c619478ee6248acd69017, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d1bed1bf178c4475995742d6d9534b80, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 01d9403645172094e8383ef19051fa09, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f04507da7c0d0e3469f0d9f71dec3c2e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b0f0c3b933aa1a34d8d8d0c28ee0ff16, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 15143189c55f4fa4a443e34f7a716401, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c9ab90a2c2dab3d409ebf588d33fa336, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 41d5238202ea8c449b22c67a84aa43b8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: aa1a388a87bd5974a8783f83d568099e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e41981db90b34bbc955ee121fe7025ad, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8a3e4baae252ef1498cab1d36a8d5c63, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f0d631bc7c11de342b108397bb1f4511, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fecdbf49e2f4f2042bd15e770cee152d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1a15927161febd141bd30eb01d6b6477, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2e2733e9390071041820a829b4678ff8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 75d43de3cb05ca9489cdff41b757b536, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8c18bb705eb55784191783f66f613ae1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9dff13e647b729342970a3748cdf3fbe, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8de27bbff0bf81b4d8f780751fa3cda9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 25f2d75ec3c2d8e4abc497f5c548e1c0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 56b2ead78c76e3d468f94da3b17a18fb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f780a6f0068422f4d93cffa4f15981da, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e7f8c160f8e87cd4b89a8479ff4dd9db, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9ac2595f588e45d4e93f42ea94dc2d0d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 82f26dabbaded0944b836e6ab1028601, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c8134bd5e48217945b055273cd0a3d2a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f765ca76624dd6840ab05d3347d554c0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 13933ab6bc46cb44a9d3c6354b657d24, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 00d71b5ace945704d8f16d874e0ea4b7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 765d18d9cdc85894385f8a7ae65450f9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 574d6c44af854754e9989d13da42f359, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ba758e6f96fee1c4f96a0b7914382e9e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 28155a72776f0ff4f8f13ed3b10c564f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4b087989eeff19f4bb49d265e7282ad4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1148fb920754bd3498bdfbf950be5b62, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 71b69c1fb2854f648ade3977c57c306e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9dd534bc4504d164ba19c0455f3b6453, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a12579e61698e9741a87ca28e372a02b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2604b281d291e2442b27fdde76ef99b4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 14b15b7714ce51c4f9d235cf288ee885, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0f1e5596a169d4e49a0ca1ce60a9ccf2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 608fb5ad3bb21d141a411b705899b43f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bf2604bc183e79e489dbcacde8a4423b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d7d0c818047e4c2e90cd4655bf62143e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 812b9a41640e6db4398b97f93830a10d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c78c3e3dc930bb54b8f5ef3f3252b31a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8950289791c20b04183a5386d8578615, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fed85335e821abc4aa4ee302a5b9960a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 324b7122ac7a0b244ba11468959453a5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3c2f30146316e39478d06c77c6cfe633, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0f2ab410a2eb9c0439c8e5df2446fd3e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 72620d06efc4447c9d9bf8b30a20a267, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0bbf6d7b7801593439e72fa3ddae26dd, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 16527db801e11624196fd9edc0d4e700, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b4ba5563e98c4848a8a4743542187cb4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b53474ce5dde23845847b0a0dfe5feab, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 65ae9c9e90c8d81459748b1193fa84c0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3b1a15f96b2910848a244f04e40af402, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1b611f8f0b96660429b229309bf4c275, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 41ca690e56dcd304983f22f725a7b7e4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6489876343a8ab04bb96e0e2dcbe21df, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 717044f1ae517a34890b457187dbc065, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cc2e627f4d9a25146916c7a85202fb17, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 839285781674e9e40991c5547d6f486f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7601e9eec8085ab408d78ec3a93a2eea, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cefc3b869304c40409550034cf86dcb0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6ef442f33a7e4e6c9a363e0eda5acb82, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b3e5ac185a26a5344875899dae9183b1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0453d9b8cfcd63f44b69df63fcebcf3d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6d1dff43f8e35ac48bc3da58de636b1c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fa038641b8078af4eb66ff20cf1c8af8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bb3affc3afaae514194768c7a0b5eab0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5fab6711fea60d04b94df19e23ec7b7d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6537dfc64ba3252489f0a5ee1fe4e4ac, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1ee21f664b4a637438d220ca87a474c8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cc862c3572ec3c64db715bc346a93f28, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6e53ccc1f9c9bf0469d88d2e68e9647c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9f90e8c3d55718f4dbb8ed44b2a865f0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c24021ce08cb5424c82278d3220e860a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 495ac461de8d2204aac6bb395180890c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 893e8d0bfdc94d658c80bc9c79c26b3c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 28952eff1230cb04bb1c750dafcacbf3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 07c4f89768a34f929607df28b3918038, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ba1dd9c396b3b5245bd5164eb1e7f270, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a61e3d94ba344425b1dfc6a9405f8474, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fc42b962cbf38874f84de1a245e6429a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5edc6f8e9104ff6458984efac40adfeb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c996e76f91ca354428a81aebd6aabfc2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5f4f0321ee131ec4c8a459501abe84dc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 97b278c83949a014299f1ddf7909a7b7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ada7836f77d30d34ab3ce35938c98f75, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6119d5bdfac543243bdd5652af60caca, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3d29d5c5859444240b22516540f8a73a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7871642c25ca41899572eddf2e0a7e54, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c6de715100909e54a9aadbbedef68746, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bc5ece0afa2c17a4b9daaa5c3be1ec93, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4e958760dae5f1444aadcf73731bfc49, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9cd615d7aebb9854e895637e8f5626c4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 205cfb39e53d4c74984d5b8d761840ab, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 177d00e399c2c2e40937a2d28c63b5b5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ab84071fc2d9a2349893af45066fc385, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e785e66461c64534d8135102edd7bb03, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f5ccde9f0607161419ea131ab22e1a78, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 764f8224448833e429475199a53c928b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: be5ab43d23c4c3f4fa49232d7122a3cc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fd93e09fdfc67dd4f84458f5f02016e0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: df3a2c9caa079264d95f71b08090b361, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 67e556a82a10d6e40affa73948cf301d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4cc0a1520a0860e40bee699ee34f64e4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 18e81f9dee99c2b4697f2a4be7b03bba, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 52b9382c1f2d28f46ab2459157887dd7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f6bcf2cfb1d12794da3dffbac8ea4b9a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9b7b68adea33f5442bd25ab4abd4d6df, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: aa672bdedf366564fb6559991239ad98, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8a39208e0554554458e8393ab2d51618, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 93aebe88f6d24537b2763e8ecccd3221, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2ff5ab526d2b49279032f3361b9a1230, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4b176216e99b96d48a276cffae514b2b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3884e9a392375454f8d19a6677e5fbfd, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e39be0e43b074b64385255a545927236, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 354f1181ed4cfea44b095f0e395b4989, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0e68cf96689a4e2f8c4750c90b6b216e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 601b034e4848369498e56d380e5dda89, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 738da55be01fb0841aa1bf4cdf39da05, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3fbe6dc72e4739e4aa935c75c15b3096, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a25084f6574ed8b4d8f385b05d3f2505, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 09e4f95a19c24bd439bc745deebe04ed, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6ca5c68125e51cd4685dee330838a204, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1ef715f1cc57be040b69bbd8da501713, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bf0ab065eb4945618df9e22d42eb9267, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1b8818a81360b1f4bb293828e760222d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9e13a64dd5f49ea4fa9cc9a157fe6cf9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c53b5f529e2007045b64f7f637658aff, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 351c7dd0ca4054940b29b3fe438174ea, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e61827ed54ab4749ab715e5e48c4ef84, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f17dba98aa954533b465e9b05bad5c28, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f24d380f6b8043a3adebe839575eb7e4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5fc00b7738276fd4eab02f08d5ea9f98, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2fe26782011a6334789a8ffaee043893, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2338f8921b7014d4284d9e2a708d880d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6d8b4e48a9ecb074d8722ffb9924d53d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 92f302634a00783458809b53a8ac3983, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 31a4014c1a4e8ce46bf12e55e4e70fc2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 581ebda715a272141b37e34c0bc2c447, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2b60e4a6c83274c48965461659356f2c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bee75c732db4a39488dcaa6a3eda2c81, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5c0689b0d62c0ab44aef5e162a0eb851, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bd0fd68e90cc900409715079113539f1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e6cf60551e3c0024ba3c9a0c7da05083, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3d1d044fea8cd7645909fc1f987549c5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0a22092e09cc63444a3abc08a744f9ce, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d08f8f7b04f8dce41b2f0516deb74670, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 45fe9bb3a7f3f3148b182fae7d708586, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 29b4758f0f60b7b499be3c17f52e9656, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 59b56d666fbf2b5448b133a4bb22099c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5e83bb5097f746b98867a247bd414ee7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ec97939943ea4fb1af8972881cfa6470, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e3ce89208ad4f1d4b9601fc155f411b2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: de3fe24e49d38d34fbd228e117751c71, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 91c78414f5829434e86477dad1f4257a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 51b2a095d6f9b1847b86b4cef8651481, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 94587ad7a8c3fdd4fb1cbba38c0d3445, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b488919e9e4b2d74b90a91a43a81b17f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1186954206daa0e4e8c33fa653e1e800, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 33cb90f8edf2d094591bf84d30ad58d1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6710912f9bd66ca45946e94d9f57299e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5c5be621b0815a0449ecabe4a9e9bc1c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ddb7bcd1898640742bc4f535d194c46e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1994eafeb5ec4b946af5f38081076584, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 69f0060663485cf49b6dbe64ecf9cff7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5b857a9f589500f4f8eefc63fe9e6afd, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ea7232ebb3204c8abfbb8f5f2ffe884e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 06087caeeacf58c4092e63505f7cbae7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2d347e7239e700d44aef012303a5ed71, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ce7e32b92e4849bc8563a676e8da8c07, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5951769a059642089c710dbbf036e949, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 116a10c525d64222af04f1dc034a46da, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 21403b242e9f475a9596e79ee48fd31d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: da094b92c92b6534596104af89afb00b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4ce458d3d57ac0548bef7b0ee695fbac, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4411ec524510e07418e618bbe697e63b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: efbe1bb7050204648a86d0bc6ddf77e6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: dbbbfbadb4344424948cc2005208a35c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fb6b90e42a89e4a48862fcb2e33893ad, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6b3e175ffd1d4a07b56d656308105453, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 82d5440e7afa1b548b1805ef87673bd1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ce82e6aee06ada945bf4829f55544f9a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a69373920a4040fd820dd0492541dca2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: af15aba52d008054c802466c5c72fa0a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 50442fc87b6e05248b17feff9a904126, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e0da24ceb4fc406389c0a102ed277aed, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2565fa3a81cb4df7a5a1f77bbbec344c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 94491c56bfa14726810904cd5949251c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 10f7109b2d7aacb4596eb8726f000926, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 789d4d3d56df47a3871bcee0e418b35f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6446c6a531f5488995014d84ad24e969, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ac046d888db3a8a459c9badf0ec8bc65, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 32cc274302fed5445b4e849b3fedbfb4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 81be803edbbfad64f892e0f444e1e15a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7255faff464648c3ab0e8d8b06a94ff0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3162b69536eb56549a25df116e4ef244, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0092e4f4dffbb2b4e97ca5da48eb8e24, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ca98773ebd70b634fa08df5e7ce273f4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b80c63b759514a94a1a9b9b9aecec528, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7a4b246c8758364418b7ec8fb9552ecd, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 380eb36bc1c748bea7b6630ded65a04f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 17f38e28b8a34af99a1b73b9717fd2e0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c03eceee9cce0d34984c60bcf31e15d4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 78663a9336be40889b21f08c3692e123, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5cd0f15b08d34d04791a1c08c60cb025, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7cd58be195ff6ff41992e46ae3bad806, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ff91666d08836a1459a9f3874efceda1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 59e48963d3074ebc87dab717eaacd071, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1bca1088ea2157d4abe285de846f610c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f05dc8946da791a4f99d85129e75ba3a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 01ce41f73e914cf8b173902f51696fdc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a360137490a74ebb837b2442bc42414e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 62e1524d6d36bcd4b893c0518a667a37, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f6fbe9e9463771e44a391a99b8be5ff8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 31cc59a6f1146844da23e72778593f81, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a5edaaa7fad475e44919ce6a8e472e9e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2d0ccbe4dabb47c5bbc8647334a929c0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ea6848bbf83a2f44f8019d6ea202bdf3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4bbaf6bce9544ee784e4efcec545775a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a6d5a09e87dcba64e95c024c61f21efe, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fddd43993d1394e49aa3bb1f004a52bf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bf86ddd52006c5843a7867be82458980, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9286dd4e4a9a060438c37201efe1b957, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 37a5240f56ff96e4eb10fea345ff316e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fefd20f906a9050438c55eca91336dcf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ddeb41e9049f71149a7791d5e1581bbd, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d27287a3f1fea6c438999e82d00b010b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ece420c12a5a02841842d12d8509a8d2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f734f27af01147944a9bec72dfe50b1a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f8631b6d00ccd4342bbc32369552f79e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9dc3c1facd37e224a88bc66d735834d9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e0612367538820e4ba29799af6e19261, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 25c67c10d843ff94c8e86040b104ae18, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: efbf688bc75412d4c91519b340e193db, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fdae9375c223fd046b3675f7ec6dde43, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b207e77b63c2feb488e19167d6bb8922, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 290a12e510a6b0843ac3ebb065caa9a6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 27809c9c78590ca418a5b751b3165074, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7a92616c9ef25954e9642af29b23b61b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bfcba9d5217e3da4ea84efbb7392bd59, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: feb355926adf6fd4292786eb581925a6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8490334fdab089a4684d4d3fcb94d629, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 39116ba103e867940b1352976791d925, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f346dfe5c58d8d34597c0d133906824d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e2b8ec6c1a6d3554792105d37127056f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6fdc807f2454be54580074f16fd5d65d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 30568cb083826ab44b42a06472f8b856, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8521905661a464f4094869f8a8add743, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4567137f9d7166a4ba7c873e9bf526f4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 80a230f9b8ebfa6449aac7477514f54d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: da1e06a9a0e0a97479ebf7c8819a02a8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 674b47b7fcf7b9c40b1afc11aa600add, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a756983233688bb47af504f043acf713, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b376ab43d2face14abe6570323f574b1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0bb8d4ec5684e6f4ab6dc583207e20d7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e6f2d00276de3a24e8335f362a456176, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8ef7bc45bfff3d24387fbff2e3f8efa2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8f8357ac59bf8c646acb06a7b8a2c948, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5fe596cde5ee15640810adf42b12db45, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e3c5dd14af7b4690bd8d211e631a3189, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1e1ab41431b378d48b939cb6f3b7f9bb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5217d9fad94259c4e8347d0ab2dbf738, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5ec64380c757fae42b59062562aba00f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 804f7f6e02c093f4bb95808f513ae38a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9e47259c75096b54f9d284afc72610dc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c18dde6eb18d09e448a7ed85fe7bdd98, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8e53883a5d56c714fa36fa799fa67173, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1b174e7ca82a4ec4da0eb6bba5864a10, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a90a1d1cc5dc6084883d7d6ca07fdd11, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f0bfb1541dcdb7746b8d21783084b6e6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d89903e4019b2c847aa497411c5cc3d4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4fbbbce7da9491a44bf7e29af4fee176, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8cba2eba4c8c3e74592832ccd095572e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5347ebc9073bfce4dab69a78c64a4774, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 42cf5938d32e38e40991251fc617c98b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8dc4adf7933479a40acd1532c1a7c600, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 56ad7bb27667474498338878b61896b7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 33fb2edd0c38db142bad4320f58e7a49, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9ff43f9dd60f5424998b82e4c7ca8356, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a1dcda3da3bdfc6468ca78be591528ef, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 48240569dba6dad4884b515875d169c0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9ad818e04283b2641b3ac820d6eee757, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fa7a17ceb7aa3b8418870fe2bb1bad46, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 18a24b05fa4acae41ab32cb9dedc5e7d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d7e3117bdc6758c428058d09878f2b06, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 454113ff60c4818418af50c820f40435, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: aa5b0fbb632b937438fc603f08850f85, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cffa6ef63abd7ca45be2197aec7fe02f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 20571cad47826684282ff4c7ca9b3850, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 51865ba1f33c3a945bf40d9312786ef2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4467cb38e58b50741a7e0503522120f3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: db0dc76d3799559449343ff0974d34f8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c3a834f4aebbff047a97a826bc685995, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ea52f09a4ae4c5644b8975197e5984bf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 79e7e1ad63c52e94dbccc95e11bd9952, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e15a5a57e99014a4189a50bda3b36459, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 30ac288a3ac03df4897e155d7608ce1b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: eef7ceb081bf465693606f8e9d0e0393, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2689d2a4664c8314ca84efe7293ecf77, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ede0dd9c8e96247418937414b64f9f36, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6894595eda584fc47a59a490e65ce49a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7978556709bfca64d869eb26e8334020, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 95c69257bcfa4a74d85f55978cd9e777, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a5ab678124d10334a98f267ebc91a662, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1246a775507602346bb58612eb610259, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7c55e4a077337f341beced2aee07fa63, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 54b6f7f9e67d0394a80aabf9d4ff21f1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a2e15b660ea3e86448415a5aac563caf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3d05d3733bfe40a40a2344272d85ab71, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d994eee14ff7b2047a658b7f3a919a43, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a8f1e3b9fcec36e4f86c7a7664d26bbc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2f9f298da8dee7e4f8ad1861c44803b6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 55d875533ebbc8442b623a3920b13996, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0d6b9dc08d5b46947884572f16b17470, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e53a8e060ec524248ba14d1deb463344, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a411b89544b49c040a55376afbe8f523, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5589256098005774f9286590041e47cf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: aee0a42b2248c2e40ad85d07014cba55, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8dd270134948f6345ae81789e6de1669, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 77247ea5a525a1247a5461dbfe44c8e9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 611227e9b70583b47a75a9da3a475267, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6ed2f580b693f4a4d98b0367634dabf0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f0d2e90dcb8c53f45b941768351f0dc6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 67fc3c4810ac2264db2f5f788ba216c4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 13ab58b52c4f1ea4890a774c243de36a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a4b4dac8aa91a6c4fb04c02afb9f7817, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: db3854429b0cc4946baad7466374795c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5312954e1ea4a814b937abe8d9dda490, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e47214eecd0ae554793e4b9a10446276, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3ec8236bd27e4c745b32e42a881bfbed, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a8a829220e4469c47963c68cb2e5ac9b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6d5021e3aa928b5409733e29d840738b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f4895a4e23a37d948a836eee0cad0306, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7cda5eb5a1494999ac4d9df306c7a617, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 65ef0f88466442108de71af08bf79c6e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b19875734a554aee87d75c43c05406c0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6994b7845bf9ff6448df98b3b4f58189, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 009b3704c8cb96048b94023e38d2509b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f459519dff021384cabef1c4a4edbc9f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b437dd7ddb3846241a0b38ecec55f16a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f6e10896bd36a66469d64dd3fe9804f1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e2b24365ee29ae647a0e3fef179815c5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 67aef1312dc7405469e955e33c950daa, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9ad9fc9cc6902c642a9a55457fc64419, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7aaa5a2d5c120da43b685015f444d6a1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f7e76e2fb8e84624a13a6f9e40d0f681, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ee2780bafe8066644a9f7d60362a8ba3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 70f7a38c3a1692a49922ee83dc5c1821, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b98fbcc73e1fa5246a55d1a2d77f8ec0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7f64bb789428f99478d73b4ffcd72821, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d3d8e66f0a50bf141a886e47720879c3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e1b36422675baab41a33484dde98a21a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f976d7ef269982749bb3b7f66f614e27, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e6258244aa5984647bdf7f021d324237, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 298bbb78bbe6fb341ba69a4f788e2c73, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1f747e0f54b81514f8b103bb041c9303, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 43ed252f3fd735d4b9f5f997b3138c34, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 98ddc72de02762c47bab7091cd7087b5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5e7aa87efec230c44975e39abc136769, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 224df3eb8de469a4193ea5ea4074a56d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 103203ef16ac4bb890b66ad88b8eeb47, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0b8cc1e5d90a2854e87114bf6883f65d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: da831cc53540e2f4483e0343502365d9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a2aaa35559367f740ae16c246b4c17e0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: afddb69b22ee6184abd9c79ac1133c31, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b3aad238ea6431e449cfe0926d186ce4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2f2b64349582bb6488977faf4269be41, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e53bfc2c4d6547644a32b07c47850281, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0e652eede67b0b545b07003b988cf1dd, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6c1be4d0294a6a44ea6bbff189120a1c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f6ecacc5c1a624745a2f46473f8d4b20, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e8a0a72ef3085984196c0410b875f0b1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cf33513e8a8c24a48baa4675d1b37d95, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3d5f2858cf7e2bd439d92bd90f25af5a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 65fafd8dcd4dfc24e98c9db38da941d4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 457635a9b7d2f344cb6b67d5c10ff386, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: de66f28e27af25f4ba9c179081cb61e5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a386437c15df1994a83179fe720ed580, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ad9939ae7f1b0364da1337df08f46497, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: aca53571b28ea5246ad88538800567ce, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0164db56d9701dc47b36180944cf44b6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7eb887f9751ed4148ad480bf90d0cd74, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5b51b5359c373614eb4ae4fbef845dbf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b7d575d0580919a41a0cbe2048cf8c22, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9650d2ddb3e16514f85d6f6762cf9b2d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 754ecaf90f8678c43bdb1293f9ed0273, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 97556bd4aa37bc946a271a05219e836a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 12405f8b04db7124db608e85d9823c14, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 058a45c117b0ba34ab0e0f56ddec55ec, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9a260e6555a40854a8e34fc7b0f12dd3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bbf092c99e27be84fa67f4237c1993f3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 199af8c1040887348a0dbb370b85e2e9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0de086ead8dfc42429a8ca8454f3bdb2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ec009e0abe677d5418f57663500060fc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: abb9f9a9e65af4841bc21e55beb77505, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d5cab54162eed984fae4a7619a47e745, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 17fc3f795faae1140b5120d750ecf2e2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 350adabc526a8dc4da0143b1fb5b11a3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6a72205222b19964c8ed3ef1734f9843, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 333312371def17945af3f7447829c404, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3d70eafeab7a4d94cae6e8173922fe62, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a3aa879e84c99a3479b57af5d5123d13, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: aaa7cd9e914306c418a94004d46c4261, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0608657df90104b42b7f8431fdad2638, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c0e8c0941a43cda4c9c1c02769e9fc1e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d8ccc9633ab2a194a9fb0df2c478c1ba, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7e2660117fea81042ad0c31420fa26ab, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7c885b27c73d2924586322bb55f8f844, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e599625626b7b9d4d9ea99bd12a780ed, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a725f16c5db326242a7da231ef99e3f5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7e766d5662544d66ae112a5222702059, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c2540388288d3bc4da082d7f93855e83, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7aaa1b796afb1b646b7c75fd0e5450d6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c9ef16be1b714ab69ba6bfc6733f931c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 682422d97f2f9ac44ab382a331992f26, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5c05c59424654a746b37c7d1d555def3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4ed9e6fd126d0f642bbb2475799fa525, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6d99680e3dc9416dbcad88af7505f256, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5a8f1c4f6bac08742a884df182e2fce3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: dda4b8f00688d454a8f6a09d433f040c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ca57d9b2f7f5ac243a7b7809d874b64e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 044eb8794f52ca84e8cdcffec48692e3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f633fcbde6501464198f03b7cdb2b33e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 366d223e3ee1d4942a81ef0a89b9f3b2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 73818b51b4121fd4db65a0daef875886, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 755f3553a1d7442428c0731cec1243c1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7310ae24eac3c9f4dbfced822fba4ddc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 617106632d3c98742b17c8676cb26baf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d58af826f6b6464f8cd9e2f92c3b7d39, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 56cde3a119fc4884d8ec3362ad290548, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e28febf982b218c47a732222d37afe9d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8b10183f68a42624d8462a61d21547bd, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c680ff241bd54015ad228f9b3e6a225c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fa6cdce12f9217a47bb5920560209bd5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f0fbdad1d61f1ed478473693097884df, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3b752d747cb21294790a45376dbb2967, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d8aeac1f2a784ae46b46cb16e7ffe8bd, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 023bcc3be78690440afbb9568ccf7cce, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2fa01c55184aee34987c7188e330117e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a7c58da41d2846a1bb1ea5f784b8c7f0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6662cb6945c93ec488912e5139e4b3b2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9d0f50bad88921d42b6288860686248d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d81102a67af263c40a1b38e97bf72574, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 92ba2ee81bdc2a44a8f624ff698d5919, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6e12806988fb7444f94f4fc6c2a13d36, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 17a187b76382efe45944eb67f4041eff, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 51567d2259e255b42961ffe9b0e52a77, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 04be3704c62f43e4186391b4b95cec7d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e1f6eab2f016c45409f38380c285d659, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 48b2b269588a47d1b8e6f25e16e76511, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1f2f51cb3af129244bfe968fac4c3ef5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b5fa5c27f2e12144894759ded1d6eea1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 24a8eb54cb6c980449a9391bf4f6f526, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3596a9d18a9a0b94789b702412acedd6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 703fa0175efb71f49b09f5b2778ad71e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a0748660863d0d944b900dcb237c638a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0d9b9c9472adcc245839e307bc5861ec, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 12a335121a4bca244b9e2e4bdb85afd4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 45021dd41a73a6048842af897d508bb0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 64ed6f7b8ead4b0f971412ae3316fdbf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b6a5a7f9b02a78845b3e58c53eb51fca, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 433e2659dc67ad0499aa38c3ef37113b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bff7738046f16ea4f9ae5f868f53475b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a21fc9229f0a83a4a89594b9d558ba63, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cc6d2c2210814c96bcb511b5efb36b67, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c0a0f532e2533ec4c887c65abcb8b47a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e6546250764b4a61b640ab284c411ad7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4087040b3ff85974ea8354002d0b7c1d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 42c497de573a48e4f87db63d102eff81, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2ce914ed1de4c9e44affec0e66dd4966, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 79beb4cf6ab7c164d9d9e4ad54bff113, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8a75f941bffc04a4bacc496ece12266a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a5dbe19d3d440d5468b13dd485c4a89d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3a03a2b21f5ac2745abffe42bbf284be, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3bd9e087ed26abe48ae5f9437b2d6dc3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3137e410b3425b94e853acbefda6b35d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c3b5ac91044850543b93e37534a1c79e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 42ab3e01ce09be7409792ae6788b209c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cd932a32b3a146849a51c4f4760852f4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8e30577f6a8ad5a4ebb6f815ff6b3beb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f2348051806d01f4481a3d5fbb7a0c65, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c758a71ef43f39c4b841f6e4709e95db, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a6fe112692874e7f882b5fbd12be0657, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9588048528530f54fb6c9ebd17b2bef4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 73776764d8dfdc84787ec93b30038a4d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ce2b91abe44e88948b14c51e468a2cf9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bc62cd0ae72958c49937fbe4365fcf94, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 51a8ac18e59c4fc89cbf42542b5139d8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4ac839b6f6a737e48adca235cc76998f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c1adbdff58788c841b20bef645b1d4d3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f72d745c79ea6c845a7da566f9f9440b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b75c214daedcf0947960bca632ad4e8f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d7a2e1112f905ad48bb6d115ecafdc3a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 922afc48128875844aedd89982607ddd, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 04207b036a456ae47910ec7ac0690f9f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9f3fee023dc5e574fbbf3be3c55d6a1f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 380433b5f8a148779305f44e4aebe147, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a46fc15545edafe4386ada340870ed9a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 97f26afc47cf1ed458d192ff804a5db3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 88891d105f1a1654a9967d8d96c68bcb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 088123844b20a7a4487e3243873b0a32, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ee456e8eb0c2607459692a0881e33e32, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d2e92321be161f24ba38e0e39519a3e9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cb3f88f0a7450f0419cddf737de2d07d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a11f421adfaafe846a8c2993c09bd937, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 81f7cb127323e5447b6ed42a775d98da, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 02bddae03aedffa42bfb971966e6af63, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3b9c559d8088408458446a80af8b5760, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 05aecfea5a68a7c48a0d4f6be1eddf4d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 659ca86bb30a7694b8660a6c831ef0d3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1846265bd7adf6f4e925e9c9faaa8d5f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bd5e20a6da138eb4da97010893cd401d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b30b3dad6657f9043b19b309ae2255f6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5714753a654ad834d9a1fc109107f00a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cd816cad16c83044dacee70cdaef1316, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 28db10817086e3244923716ba151cdb8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 753ad0da701806844b6baae092fdba72, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 97ce625ca53429741a017b592945500e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9cf1083a93f903f449b440b4d3052fd9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 55a9da2618b85844f8a13fd51157cdee, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c64ce577f84b702438e7d1b1c9d709d6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 08f3e2c56e977264e80d5b88a76585e5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 28aae0a7266ad7f4cba75edbfc367433, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4af31a8ede9c0c8ce53b0dbb5af4986e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 34087c0c1de21a448ac01c45543bcb56, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0a68a5c7d0b281f46ab4ab94472bd582, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 994ea194b42a6ae49af22169d10123c0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2f26d1acc824d5f4e8899a565330e817, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 278010449bf997843903e0ae827802d7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2df43fa2f935b204ba14ce4d88e8e992, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1c48866e749651a408528c53aad41b63, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8a55560ad2938c34aba7a940bbd8a816, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 15988579a878f034585f6a873365f23b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 77171fafbbf3485bb2a68ceae0aa8741, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a8fd074070709844daea86985b64e422, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bab1d7e4dc7b71b49ad85e95bc23be13, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 87b3ba6ca80b4e8187c47f480284eb2f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ec9a8cbaa829337408f8ff24599c7023, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f31d5eb844858d44585d57dda74e0411, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 32f5cac188ffbcb41bcba61fc0397af8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bdece5451b1749cdbc02f880c8de2857, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d4d0d799b08bcf94197d1344bc25777c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4d72ca285b71496c8456272dbc3f95bb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0dec284913ea681438ff6c2666d14c02, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 53b07cc3e1cf7eaafcfc45b530a10755, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3f925412575095a4a989f1f57d47b17e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5f1aeb2c53a1a5447881ec0baf7122e3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3d6ea69ca3e3a5040ad627f84cb2e29d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ff3d745700b283441853a2a8455e83cb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 25f7c906a75202e4ba1c6f0ae600137e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 45849bbcbd9f2604f803ab2da5f5475a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7efc22e8ed0b0f44c8d0d2c4542f3507, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 186afbeb472bc7c4ca9aac55ccf4bb2f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 69d0eda21dad91146ac7487d98e57bbc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8b3e59d1715840a40b9d03487970e337, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cc96e3da75d05234d8bfe392215bb4f5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9e52d2537261e8f4790e6738647b8f72, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cc8f6c6fef55d75498c76c5e73c43058, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: afdd54512c5237e4ca07b515d759f6e1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 007da9398d3edb74c813481f78d6313f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 33bbdff62fea4db44852ef8a11203d92, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d03c8ab4fe5c7af49a27eb73bb9cf4a9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9a9f299a9191aac4388b011204f3b0c4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b3f9c14d706ef5149969632fad213c98, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f019b1beea718d845ae8488c60ae303e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 28d2a7852bb214f469255da1d051c118, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d800f7c1ec02a6f42b2fae68c3a76ba9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 668f5cee9e6b8474998ff08882e89786, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3deb038f3f572704f89e1dab2eb41127, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b6eb770dc9f6a7246a5cb03e7e736434, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 79f27c35c153a3446b1c9825e6ab764b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cbfd60d872127a94b84e8873a94ed810, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6dae6eb2b0fdaa247ab7a7997688e531, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c7110303d0327224fb4edc6a1b84105c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6f0c3de11df02cf49ae0d18ade1ff7cc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9beefc0b6e3a9294594da112260cb22e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 77e76580377e31f44bd1dc27c67ec707, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 099cf69de47eae143b57148081518e25, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6ade4465c91e02b42a5c81adcd4a00fb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1a0a034bb6f26ee4aa30f45772412406, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f37ad36132c549741be7a6a58914ac9c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 42b54cc4894a9364cae463c24d19b3fb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2d946c3e8f4510941af86f4d51100443, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c11c7fdcefbb3a54e98dec7ebd9f77d7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c75c367ca6204904897ab24e8e848d21, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 997904549a9968a408e6ea7c5b88dd21, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ce4f3eaccba048a4d8ca6ab9fe09a4f0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1ee60b5d4bcea544c86cede3a7c9c158, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bf49a42fbf6a616439a80343fe8c79f0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f9bcab021efa63849b8d7e050f69189c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e8fe0e82852402d40b75fe7b2d3339f2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 21d309e73a597bc48913a3b94103e757, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7f64569110312a546b4928ab1db8e538, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e794c79cc3faf644a920a78196b9dc11, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: dcbcab3f774e3854389335f4d504e64b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 774d76d41b93ad148990fba4821bb59a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cd1c6dc5f65536d498437bed2788f143, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 701291b31d5531449931c7c8ba4f1f70, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 75a48340f7854e74fad012c49f84f8df, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: eefa0cf3f06d7ef42ab9e6d9df9e86e9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e2e9a960eb979e343b23b707b3a4dce9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9bca23caf16de2f4e8ebc460b56d4f50, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c8bf116bc1ac503449c0ed343a7363c5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f31aafe2659113741adddd69ee85df56, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fb0bd55130f47bf4a97fa408a8d7da3b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1723f3519afdbe5478adbeca13fc05a1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5a850f263955af74f9cebc26d344014e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c8cc3308fd1b2044d9b2a60e1aa0a643, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ec2bf0df75e8ebd4e9e2b1385b719e35, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: de77e36c7eeabd64fb40f629d42d10a1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 20384f6ad701d0d48b33164346c5acf9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 58a184d9e7edd714fa11c2f47e872345, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d26ca20f22950174f83b5060ad4ebdce, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6413b703117641d44a7cf00fd98b124f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5c39ba7461551d54b80ee2733bcd5456, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 45de6ec88480c0d4b9c9d220dfe9beba, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6ac5ffb7714afad4c9c07c2e0181fe7c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c383322b8e12fcf42997c94935d4fbad, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3663ab233ae0f6c4ab689d568866295b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4225a3c84d6785f4eac2e7f372ecdd65, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 23bdf31eaeca7e340ae3d517c6609a16, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 740cb0009da62204c8b86edb0a155df3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 712b63c812ff2a3478d137c28e433576, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e2e0459ac2bdc794098e9ccc613aa945, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 61b7c0f83c5cdc842a7345fd7be6a250, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: eae7648c61cb65e4384179a9b6c05d54, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f61b49173a269c849ada6768fd454ff1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8b53d4a20138aee429ba8d94f2f2e21e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 308178964e26cff48bffd759b7a0dca9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ae5197ebc63c7e145a952d7c8fc83e61, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fb588f9883d9f2842bdcdf46a01aeb7a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: dc5a8854afb8c6e49aecd2f3c525ae6b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9a38166e909d6c442ab9c6cd3c047a69, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8d118c3316a0ba146892adb58ec36c4a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ae04cff6116e4c848b609339ed4ca5c7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 49bae0bcc5eb7e74ca87bdc817d42afc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c6900da689ed9ef48a568c25d50282b6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ea4f222b08a800845bee72ef38f879e6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4c21c35ba972db14c9e9be50914a4c68, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f4617f30faaa9254d9ea8382be0cf2f8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b0e7e0daade8a7346ac99ff7b767197e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4d6e736620c41b947b0f9ec99a86f6d3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 570fb16bc03561941b21f1debfee16e0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3257a4996a04ab347a577f26d4c3625f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 678e20533b71f144bbf990e56e0c1e3a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 511f91be6910d0d468120e4e74a15910, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 745c9b772d1622f41a74a01f7681b867, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d0ce0e8b5dc520e4ca2a0b2a7250575c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1fdd5d7aa73be3b4bbd349fc99355683, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0a43a9b1141cedd4489031c4ce16fd7f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8ac2bc43a477b79468701d72fccd9b9d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cb1a31199c469eb4e826a072db432d74, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7a459b930a9a88e4ba26f2aaca88a9ba, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7a1ac44a67785964f8368d3ed1189a3d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 752d2ee51bbb3b74fb1410e81e15d756, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b789470c810778b489686505c191a218, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ef69f0107ab451149927524a8a89beb1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c574d88c55a5bd4458048adc669bb41b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1523a84827f90c14dabda5bd1a44f792, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a1e07f64ff7ab0b4d84202f17159b748, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e10ad91fef03c0847a89236292b7cb8a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 28c83d75e0df3d54ba7258fba90fa3d9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c63ff0303c6eb4645aad790f94170cd0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9c6c968683f5a4746b0e9c903e005943, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 938b411b3991bf04eabf4aa49d0517e5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0015514502604bc4192adc2782ef7cf7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b973b730cc5e9eb4e98587062f1bccea, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3d27c0c58b1b2e744a54a549c377da36, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4653cf9c0a779e74b92093dbd19e4b8d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8d90369229c002647b7a0d3aa72be366, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: aa57819db00fa7e468e38ed040478d5f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b3b49c5da88847158468cbd344484a93, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 200540c1447aa1e4eb1f40b86e4d1a97, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bff92dbff0805c646a5cafacded4b705, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bdc28ae172f142d4796d50f66dba0f61, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 279bb44b0f8c9934dbb5ae11e69dda08, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 60e48eafb6ea44a2b763a568e19c2999, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5c06acd266f11154297ba0ccfb98ebfa, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d00042e3d205024438f4e32342dd8422, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 911bc131febf9364ab4bf30067e7c853, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7d854a5e2c2bb3f49931b9595c20dc96, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 279cbae92aa2e2d4991f2de57f6d07ba, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ec40c927e799bce4598ccde89484c2d7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 25aa2c622cbec6c46a871336a6aea0e3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c8f3606d0fc890449a19956f7d164cab, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e804d941c8c841a42976e3df5884deb3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d9bdf7cf7bc8cc946aef133de9f09b3a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3d4128e402eaf7a43b71a9890544a22c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ff4c52393bedc9e42b5d5d414d61e1c3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4c73ca149c1e0724288d85f212730b54, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 146cf5fc9b5c7d3419dccc65c7f4d1c5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 27e68b69f1c9ef74a9548861392fd239, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3d3fec5ece460c2408f92a0af4169aa6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ec26380e10e1fe84194d4d84a98a8b4f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e3dd33375aff69c4aa949284106665a7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e12c7c0b86029e741a3cdd184399870c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 00108b45e3d3bc045a0a57d21eccc8e4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5e19350bff3b39c49a6d2fafc5746911, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 642580a403e85ca46a58a74224a39917, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3fe33135b766f5f4cb32498dfedf449e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c096d297147cfe34fad53d13e4c56a2a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 320191260b0e7054dbfad6aa2c9b4bc3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9ee11325c4eafef46949cd776acc1fae, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: db465c9371bd7f54e84d0289f33aa074, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: aba76ed3839aab14fbd413f83f132132, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f68e0b9538ca93246afe813c656d3eee, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 55b76c67f6df2ee4a848d6db3a3e32b7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c902ecad175800a45a1c729d1cdf2619, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 319b6832a78d11d45b984292cea72334, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 82834e28983764a4eadfac11d6b7f3e6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5bd983cf114c1fe4d8215c4c633ecaa3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 596bb27f60064f345a9fdf9a674b6003, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d48139ab0b6af5549a1d44bfd8df04b4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e878b862055557b4685bb231a382b074, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6c2e67a947b364741a2c0dba2e318761, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f0095e9f31634f34c89086f0bed5a0b9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 479b3f64cf1820d4b85d1314213db11f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7efc9fa8eca9e1c4c8b434fadbb7128a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e1b7a7684772d4a4da0bd1959399298b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6e90ddbb933f2904e8df794db05c0fd7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 151fc2bb8993a0e4f8483f9ba7dc83a5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1262fed27603d0043a53683b3f878f53, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 41e458dba0299864c858ab48a163baaf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 181ad71909da0324c81e30be71ccb5ca, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e76e491e7edf4cb46866394ded0e14db, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5acb3d8143dd3c14588b49e9cbc3b1cf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e52d856d154baa94b8a30c6c934f08a5, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8d4e87bb9a2746a499ec092533b61cf3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3157e6083533b2c4ca468694370f069e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 659ba47db0d698c4ab017da52b77d98e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c41b8cc41819e5840a22350c6ec65a99, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7867d58823f01804c83cc30565301de7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cbf74d1814bf3974fb0092234accce32, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e37f7fac1e584d147b620815a452013d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 811a5251927d7b1438183bd553c5ead8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cbad9853f7a1bf84c8e324ec455139f4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fa3b97400fc573b4091e3e1a9e67954b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9566d41e6a3681b4795993ca52b09b7c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 80bbbead73933fe438b1927198e69a4b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d1fe5b76f95d7994f8d6eef947e8c31d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6f4eda19ca06a894d877f9175ec0d2ba, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 20a17210c5abb56418262438561062c6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d4d040d838fa1534498077b7e44ff98f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: aca14de26e5aab645b8ba935581a2f0b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a6db1c67ac09cad47b0ab1634203a6cf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3fd561c13b47f224dad4b059ef782f9f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6ee85f542df68bc488d2ec51ad100477, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 99f5dfd4aac5d55489eacb7b9c0630f3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 163ace20cdc2bd64e89a924fa108a2d2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 87a2056e7d131944e8603f957de66416, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 12ccae597882229429e986a53d17e52e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4c2cab580c1df544abefad27bddbfa38, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5b54f8428fd628a4ea003de2eb972487, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 26247e5c0704c134d8b1a5d529bd1e25, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f7c79cf139da30941b2c63c843855146, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5979508e10f033b48868e58079501e7f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1bb28d804d5c8ad48843de4c226731f4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c4b3861920d7e834ba9141245c1bf557, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 390ee2025ac1c1a42a8833c4529dc007, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ce0dccc66feee4041bcfdbf66ad959a7, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: de48ddb7760e67f45a2b61b87dcd3506, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d97b7d207cfd7c746817171125affecb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ee1d384d98daa364797c3e279d0e10db, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3abcfadc6e7830d4bbd740d088c77335, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ff11e5f3af922c0409b9c6c8f99a2cb6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3dc9b3bbaf958544493d5533f9a92e90, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ff32d345d31d26246a8518e6e4bdf4fb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a3f152b43af15e84ca8051fb5f219112, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6e998375786d8dc4881cea8aef2cc16a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 95d852ab5fee39148946295a51c9c6a3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a53e5beb720c900488b509281c791806, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4248bf44c5697bd479b127571776ef4e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9357a79bc63134f4d9c20dcb0f77aed9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b09f6de768f04e047b3cd2fa4204c2d0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9661634e018c53d409370c4dfad99d1e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 132080e6d267a794c9035fafbe2a22bc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 16fa66a0be2fea84da1223fa591e39c2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 701d9faf7afd7264ab55c37c418a6e2f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bef4a3ad45c2ca044a196e8da6d2d241, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6acf11e173204874993dcc2d03887a83, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 492b2d5adfc04834e880c2c243fd7348, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 278124e689c99df4fa596f0d0e0f09f4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 68d5914ae47ffc944ad2b654ed2b8c65, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9355ae3f0e141fa42beea414c7941c84, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3c2fa19decb8bfb47bd050d27b51210e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4af7497fce5037540878b679d3fae388, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3612596f9788d4f4c89a1a9ff2e594b4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f714707c22d670845aa193457db5f334, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6980760c08efcd1458204bd69aae9970, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6c65b36ca37db2544ac07c81d58d4e10, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3893e621974f0ff489c63a2d35a3bffe, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bffd1c474863cc14783086a7eaa7b562, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b93c886d9f99fae4d81fcedbf387350c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f1ae4073d674e8441ba011e56590796b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2a045a818442c7449a35035691296385, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 19383558b825917449d9f6a013dc917f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ce2f2ac3d5f3eae4f887e8f2d0cd21bf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b9372ec9aa280cd458f2da7bfb131a0b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4d3ab0794e388a34198967f8d31e1222, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 24693f170af522a44a79f39e6d59cf1b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9850bfdd5b90ec647b95c89053ac57f9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 704c21864b975ab44b8c615093e8a66c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4f78b7f525622b54f8ef31967fbf0257, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 858423b2d7d045845bb1d4ccb5f1446b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fd6a6c4ef88c15f4f9b888dc69b3dd1d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 77487d658ae791446a8e7a433e2ac802, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e34fa2df7f40c7c44b0ed8a60a85cfb0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9ed20cef9700372468d53091d4e50893, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 54c6dd80fdbb49b49ac5090f786f4362, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3c75cb1450197f5478070c6819428273, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 98b4c2c62124d7a4682db59801343813, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f1ff6543076771047b4168c38aaff978, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f67eab46b94e5384b96268c6c1fda5cf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 41843021751e8b243a11c8ba9b3fff13, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8cb8ef3998366cd429912c93bfbaf9bb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 07eeb2b42a1b7de4a80dc5795bad94fc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a8dc8fcd3cfd2864db85d0fa477a1abf, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 08fda2a6e64455345a4f7cdda5e2de67, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5713de9b2325e124eb62efda27170040, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 18accd2035d1b984c9c2910ab63bcc32, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6d9f41c12507fdb4e873e6f35fca997b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6c68c8ec050859217cd382f4fc7ff209, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5b25b47f33cf295458960f76025ff216, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a19cdee00c2c868429f65ee4fae86fde, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9894a7f7d5818a54cb09643d87c56294, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 716e074aa77a8874e9a3a786101153a1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1bea11bfa55d85947beaa69cfd0ada5d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 22693be0422621a45b9b5a94ccd7c99a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: de8a9031f40af8b40803d70df24393e4, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1ccb4f64bfce10943921e6543e9bae3e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2972c20d0d92de14986bd53efe347d48, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 74f978b7774705b408db7340eaf0fdaa, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3cbb2a8e431c001429a9e5520ff98e47, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 89ebcd3b46e0c2e4aba2344ac4c42a46, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ddf62a16f2c8af08d69bfc832051eee9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a4da0b07a1930b24b812395efa1b004d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8b890902d859a214d9f5fac49acf5cfd, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e7ef98d5f7f5dd743b4d340340b9a00d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 30888b80cd089024295bb1c2d5a9e37c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b80ab60f57f14e241bdbc927495d24ee, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 22868caf6089a634e8b110ebaecf70d9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 87a5e5ce2e07d0f4d90a704e6c0f9c96, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a5d8ec75f182678489bdf5d8e8f69224, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b787559265aaf1a4ca8c12db3bfa0b92, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 5683d5a480cbeed4a82efafb7e63e079, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4b14047e4d1564d40bc36d77722cb598, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a12834c5821c3644286d4830a481f825, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 902568e5fc3ea59e911e91e3cde1c091, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 25bdf209795d9534b8ff6438c4795240, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d9b1a974e1facaf4799ba3616bc32103, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a628a510d12a628468e3b333bd7df6a9, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6ed719e361e81184c957eec478391170, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1e52068d3170bcd4fac29290652dfe18, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e7ea7443c584ffd4c988cb1ae8a56046, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ee8542a6cf8d86e498f49e84791e1784, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8f6fe836efa315a49a2b330988ed3ab2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ab15d3a40d6a5d041844edef13b02087, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2b3a7679edabcf14597a009720ad8ac2, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ce59f7a6e7622ee4697b440d88e70b21, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 748363efe9929cd69857bb8f48ced9c0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e7325ee83cdf97447a3f45b74504e22d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d6030c2c3ca1a6c46ace20a8d733013d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a9b4a72405ff1d34883e2568fb4b1829, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: a1066449a5aa87046b4a2b79ebf09d2b, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 836c6658355ff614c807999c391ca5ea, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4bd416df5babea94893129058f48ad91, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1d6455d8b7f8b2e40a5fc77936a52c90, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bd7db0e0ba680b74b8360f766bde26ff, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 0ca9770043313dc48818b4b29151c8bc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: aa730e449096dfb40b0d1f8692f011d0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: c38fcda1e95ccd349a581f422042337f, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b6fbcfc80a58e294bb6d4d08b2f62c41, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7e278671067737749aad601ff7cad516, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 64b291f7af9a9ea40969df633e37028a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4f7f2e0314837077c8187f044f5ec077, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 618a83cf28734aa4682b256300421031, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 416f374d3acc5c240a3fb77145a12e0e, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1b74568f41430e841890c8a5b82904a6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ccbd69421c46c3f4187b9cdeb79e6165, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9b6c6e73438e2ec4c99c4484734d8392, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ebd93f60edd669e26c736664108c85ca, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9481f70cf70e4f5a91229841c636cfb8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8aeb86dd86953af4ba75546f35f70269, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 43084609b93fcee5de5b73039eda2d30, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 64a9d7e1e9724469b06cb29c3f1668d6, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e4634b5163621694ab4f57acd78def5d, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: db39387dc70640a899ddce367b2ad88a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: ecceffbf58f1fe040a429635bb67eff8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: b97828d6b9ff94c47a75cef4613caa40, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d6be6773a4e09b669c8a21f02961bf66, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 974e7e7e9ec2bca49b9741f1ea80781a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 334e2fecb6137e14690208e4fe1cfba0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d99f2721691c135499fbd3939345cb34, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6eaf1d6ff24b31d428e7b2c482e457d8, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: fca413088d5258645b8bedccfbc6e6ad, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f803251a7b5db90438672261c9a78a60, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 850160d90e31cac46a03b2c6c9abfc78, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3e33eb8ba692a044794827e10e1ab524, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: bbbfbe7cc577cad429837a80287416ef, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 49eb437ea63dfa342b6d9181ab7343ed, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 37fb32e313db3724794db7d11e893e7c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: e2b4045e2e1ccbc41842e654c72309f1, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 24bd693e683c6d046aac45df06fd50e3, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: cb79bad1ef6612649bad6989f6250bdb, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 2d3f43c747bcd214481ff8d90beae9c0, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 3e066f3b669e04941922d8278a408afc, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: f7ae7ea9c7e163040aac508606738620, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 7dd9190e5db1ced4e89c30d6a1811c28, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 553cbc90f7edc9d4382c188a1d4ef795, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: d89a8f21a007e6e449d524d5b74ec566, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 1bbee4aa15fdd4f40948852e32b99415, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9b23b639f0dbd834a980ec525059b0ce, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 58bbf3205f66f3142a3f75b0fc560e28, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 6c505660d1bc3b545aa0edce2905848a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 9984ca901c234fd448183e349970ef7a, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 8af798416e48b49488437d45b786179c, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 12a9340f0ce632f46bef0d569174ef61, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 60825200f4bce3d4fb8458f3bae42e34, type: 3}
+    isCardArt: 1
+  - sprite: {fileID: 21300000, guid: 4b8d1d48e158d844daca118552822c56, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: f677a811b645114449c049f2ee22243d, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 2197f162cb0e1204783beaeae655d21a, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: e122671ce1b56474e8f4b8cf5b9617e5, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 87684f2ff93be6a4aaedf07bec50da13, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: fc652c9b2e1c4d845ab2e58edea1256e, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 2c511a3c5aafd814f82a005170031ca7, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 5cbf792fb39251f459f6b42b131a82df, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 25b08c2f731e1224b8e9a3a20fc6fe96, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 7f0e9bf8a2506744baa5b18e25eafea9, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 1d9d1af2ffa7ce94990f564eda763cc5, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 8421c242b1c4e1342b2b66c0cbde392b, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: d0b615d48b0cd67458df79562c3ef6c1, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 39402c20d02d62d43a4fac7db3b13222, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 6f527524a2a067a4584b9ab5d42526c4, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 2d116b9f196dc5c4f94c65e783ab9b4d, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 7cfe3d48051ccb1469711ede116e4815, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 5f4ef39400aad6d469350f153be8adfa, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 3f1e16a00dd4cf9468a716c4e861cf42, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 86be12c05fea042429762009ac8b09ae, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 4c56c29a527b3124e9e0dda132e6c447, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 7bab837fd29274849a07e70593433ad6, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: fb6aed8283204674f88e8eae075faa15, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: d2be544eb2bdc6d42a47c8805c25a47a, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 79e2a28264c95ad44a76b546f7d1be69, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: f935d618e0ba8cd499da39afd531337f, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 559048c9de72c504daa51f4ef71844e7, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 16e4be04df4b54e4b9e30f6d0bef11ea, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 7d5fba0e236ec17498cc114aaf82b192, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: f3c10c617d99bab4799a5fe45850c0b7, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: fa66035013b161147947d041d5ecda25, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 0d685c756072e89469e0ea03c238d455, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 248c2063e089391469310f7f56be6151, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 93013f1c1f855d94cad6aea710d90844, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: c12c6b9e4a144589a76669d44252c2e6, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 0e41a82a482a47f40be02fe3b586635a, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 79c801ba3829e6245bcd0f5243af4553, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: dea6abd781d4d4c4495963266620deaf, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 7abc97febcac4ca44b3ec55cfe5acd75, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 8a20797599cb0c049b63ca231cc1c597, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 0ea7d46ab715d3242842ffcd8d690ee2, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: f8af103673c93f948b70113fd82b6fa0, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: c5a0ff0cf5611f744a094931e78537bd, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 276ff880efeba09458fc9326bceb7a8c, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: f978569c0ca361f4eae5a70dc5e47ad6, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 921c7aad833be3446a45af5e143079f6, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 770ad0f066d330c48b4c123c90eb82f2, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 1de737ca394d19d4581d2f9c5c0a1cdd, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 46830afc8560d584d868804d29a9bb1a, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: b449e719e9aa9744ea6c2cb627b4fe59, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: b2415a9cbd0a9574e8a440b44c04bc9f, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 09a32697294a0384d8da7c984f6872da, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 718c7bdb9f669744cbc51f740488a10c, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: dd714b43351fe93419561fc9da83ec7a, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 928a22c02d6ebaa40bc11104579d4c92, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 213f3019395b3f94381fe109f8ceac26, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 34185046ad88a22428376f794f2392be, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 1e42339560289a240a419fe1a9f185bc, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 720b619c0b4d9d94a9d63f419bf6b2f1, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 6873e196b69902c4889e5295ceddcd16, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 7d71b31658b349148b693b4b6d9a3e18, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 353db5eb9a652cb43a57bec56a54c976, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 9b313d80304b5184994a47490c2f6ecf, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: ca045b4b191eb144eb4927a97858aefd, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 8da59d1029f2b4a44b48a412589f6ce5, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: a74ccbe4a3675184f96111b5edca01a4, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 7595d8fa927fb9043b4a5993937307ef, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 37e74f0be7c38e841a10fbada46a222b, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: f84afa01c45b89240b6d082a0344d708, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 02f2bb433b89973488884e240972925c, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: d84be47254e86574aa8a91fe8eaf1842, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 4ea8df2c443161d468246e00535516e4, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 506ca5b10bc4589479b78f49dbde78cf, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 2cfcbb895b921754888590bbe55ae101, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 1adcccd8955a75541af442c1492f9816, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: f8ab08788f825314a8c8c6e2358ab219, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 74e17b0a55bc55b43943cb1f2efc2f03, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 11937ecd02f14be47824c6babd5f70bf, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 4b85e89c6dfbddb45b04763f1ce3e141, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: c264168ae522308408afda615a3c192f, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 609db08b49a778f429438c1b6c6b28ea, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: fab9622b4d0905149906d0c6f532bfd4, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: e036533d387b3774b95e60c64d880db5, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 4a73e8f02d5592a459f93e194a97c915, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 8257b233dbf29f44bbf6839208e52085, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: f57ab16c6e99b394d97358a5e5d2f979, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 316e50a628fb41c4fbec3b4f3061a7de, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: bcf856ca29d5de1438f3d35ed708da0c, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 48cd3c07da6fee94fade42693986286f, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: c4623d774d082184ba34dfd213bfcd7d, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: ca3ee04ce47672e43b4f93e307dd7a1e, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 88c26264b9e74764c9bc5549e277bcd0, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 0daaee9b1a7912e46bccd8e606af1f8f, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 8f63dc164b44e9f4896c383951d154eb, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 5e441999c1313254f8de89d76b46e78c, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 569093f9c05a1f4439d7298348c24d8e, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: b8e09906633c1ef43a7fb9fe9ac1e3f1, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 7ee4e6358b1140f4abcf176c5aadb4eb, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 486c08f70f7e09b4782412663483a36d, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 57970533507532e4a892f442e3c52cf0, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 15af74b50a0e7294388504d5d64c9341, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: bd986d27f66a9864ab0650093044b8d7, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 01b5ca7b02eaa834a94c29af2d68d03c, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 131b9c41a3164dc448de3956e7f9acef, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: e4c03ebeccacf4145b1fce1972038c4e, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: d0ef0853c76db1c4484ab97277bfadab, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 28de992b820d16b4aae64f7260c51c29, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 69ebd11b096907344b2d63f31c70bc4e, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 758a6fb3d510f6b418eb8c86f471fad2, type: 3}
+    isCardArt: 0
+  - sprite: {fileID: 21300000, guid: 7e3274265f8738442a84b430ceabde3e, type: 3}
+    isCardArt: 0
