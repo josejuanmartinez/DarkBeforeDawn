@@ -1,0 +1,247 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b9acc2c44d79fa4a96f5323cd173103, type: 3}
+  m_Name: Default
+  m_EditorClassIdentifier: Assembly-CSharp::BoardSkin
+  displayName: Default
+  colors:
+    ink: {r: 0.035, g: 0.052, b: 0.06, a: 0.96}
+    gold: {r: 0.7, g: 0.56, b: 0.33, a: 1}
+    ivory: {r: 0.93, g: 0.89, b: 0.78, a: 1}
+    muted: {r: 0.57, g: 0.63, b: 0.62, a: 1}
+    teal: {r: 0.39, g: 0.71, b: 0.66, a: 1}
+    atmosphere: {r: 0.018, g: 0.033, b: 0.039, a: 0.8}
+    zoneSurface: {r: 0.035, g: 0.055, b: 0.06, a: 0.96}
+    tokenBorder: {r: 0.7, g: 0.56, b: 0.33, a: 0.6}
+    stackBorder: {r: 0.34, g: 0.31, b: 0.23, a: 1}
+    requirementRibbon: {r: 0.025, g: 0.035, b: 0.04, a: 0.92}
+    button: {r: 0.14, g: 0.18, b: 0.18, a: 1}
+    disabledButton: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+    cardShadow: {r: 0, g: 0, b: 0, a: 0.6}
+    previewShadow: {r: 0, g: 0, b: 0, a: 0.65}
+    emptyPile: {r: 1, g: 1, b: 1, a: 0.035}
+    cardTypes: {fileID: 0}
+  typography:
+    interfaceFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    mastheadFont: {fileID: 12800000, guid: 17d4945b9a263ab4891b0cfbfdb9a2eb, type: 3}
+    readingFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    zoneHeadingSize: 15
+    countSize: 12
+    previewLabelSize: 12
+    buttonSize: 19
+    titleFontRange: {x: 14, y: 21}
+    descriptionFontRange: {x: 9, y: 14}
+    titleStyle: 1
+    requirementsSize: 12
+  chrome:
+    lineWidth: 2
+    header:
+      min: {x: 0, y: 0.944}
+      max: {x: 1, y: 1}
+    headerLabels:
+    - text: DARK BEFORE DAWN
+      size: 24
+      color: 2
+      bounds:
+        min: {x: 0.02, y: 0}
+        max: {x: 0.44, y: 1}
+      alignment: 3
+      mastheadFont: 1
+    - text: THE GOLDEN VALE
+      size: 13
+      color: 1
+      bounds:
+        min: {x: 0.44, y: 0}
+        max: {x: 0.65, y: 1}
+      alignment: 4
+      mastheadFont: 0
+    - text: HOVER TO INSPECT  /  CLICK TO PIN
+      size: 12
+      color: 3
+      bounds:
+        min: {x: 0.66, y: 0}
+        max: {x: 0.98, y: 1}
+      alignment: 5
+      mastheadFont: 0
+    footerLabels:
+    - text: YOUR REALM
+      size: 15
+      color: 4
+      bounds:
+        min: {x: 0.022, y: 0.11}
+        max: {x: 0.125, y: 0.16}
+      alignment: 3
+      mastheadFont: 0
+    - text: 'Inspect a card
+
+        to read its story.'
+      size: 13
+      color: 3
+      bounds:
+        min: {x: 0.022, y: 0.04}
+        max: {x: 0.125, y: 0.11}
+      alignment: 3
+      mastheadFont: 0
+    - text: CARD INSPECTION
+      size: 12
+      color: 1
+      bounds:
+        min: {x: 0.88, y: 0.11}
+        max: {x: 0.98, y: 0.16}
+      alignment: 3
+      mastheadFont: 0
+    - text: 'Click to pin
+
+        Esc to close'
+      size: 13
+      color: 3
+      bounds:
+        min: {x: 0.88, y: 0.04}
+        max: {x: 0.98, y: 0.11}
+      alignment: 3
+      mastheadFont: 0
+    zoneBorderOpacity: 0.23
+    zoneInlayOpacity: 0.65
+    zoneInlayFraction: 0.12
+    headingInset: {x: 14, y: 2}
+    headingHeight: 26
+    countWidth: 80
+    contentInsetMin: {x: 14, y: 10}
+    contentInsetMax: {x: 14, y: 30}
+    zoneGap: 12
+    handGap: 18
+  cards:
+    size: {x: 300, y: 410}
+    art:
+      size: {x: 280, y: 232}
+      position: {x: 0, y: 38}
+    title:
+      size: {x: 280, y: 38}
+      position: {x: 0, y: 178}
+    description:
+      size: {x: 276, y: 116}
+      position: {x: 0, y: -137}
+    badge:
+      size: {x: 22, y: 22}
+      position: {x: 130, y: 180}
+    shadowOffset: {x: 3, y: -5}
+    titleInsetMin: {x: 3, y: 0}
+    titleInsetMax: {x: 20, y: 0}
+    descriptionMargin: {x: 4, y: 5, z: 4, w: 5}
+    requirementMargin: {x: 6, y: 4, z: 6, w: 4}
+    requirementHeightRange: {x: 24, y: 76}
+    typeBorderBlend: 0.55
+  tokens:
+    captionHeight: 24
+    captionInset: 3
+    captionMinSize: 11
+    captionMaxSize: 16
+    highlightFadeSpeed: 10
+  piles:
+    faceScale: 0.94
+    faceOffset: {x: -3, y: 3}
+    stackOffset: {x: 3, y: -3}
+    visibleStackEdges: 2
+    emptyBounds:
+      min: {x: 0.2, y: 0.2}
+      max: {x: 0.8, y: 0.8}
+    counterSize: {x: 55, y: 26}
+    counterFontSize: 18
+  preview:
+    preferredHeight: 610
+    header: 34
+    footer: 46
+    padding: 12
+    screenMargin: 10
+    sourceGap: 18
+    shadowOffset: {x: 7, y: -9}
+    closeOffset: {x: -16, y: -17}
+    closeSize: {x: 28, y: 26}
+    arrowInset: {x: 36, y: 23}
+    arrowSize: {x: 44, y: 30}
+    labelInset: 14
+    statusInset: 55
+    exitGrace: 0.32
+    fadeSpeed: 12
+  zones:
+  - zone: 0
+    title: LANDS
+    bounds:
+      min: {x: 0.145, y: 0.818}
+      max: {x: 0.495, y: 0.93}
+    accent: 1
+  - zone: 1
+    title: SETTLEMENTS
+    bounds:
+      min: {x: 0.505, y: 0.818}
+      max: {x: 0.855, y: 0.93}
+    accent: 1
+  - zone: 2
+    title: OPPONENT  /  ARMIES & CHARACTERS
+    bounds:
+      min: {x: 0.145, y: 0.678}
+      max: {x: 0.855, y: 0.808}
+    accent: 1
+  - zone: 3
+    title: VICTORY
+    bounds:
+      min: {x: 0.018, y: 0.678}
+      max: {x: 0.13, y: 0.93}
+    accent: 1
+  - zone: 4
+    title: DISCARD
+    bounds:
+      min: {x: 0.87, y: 0.678}
+      max: {x: 0.982, y: 0.93}
+    accent: 1
+  - zone: 5
+    title: THE WORLD  /  ENVIRONMENT
+    bounds:
+      min: {x: 0.145, y: 0.572}
+      max: {x: 0.855, y: 0.667}
+    accent: 1
+  - zone: 6
+    title: YOUR REALM  /  ARMIES & CHARACTERS
+    bounds:
+      min: {x: 0.145, y: 0.43}
+      max: {x: 0.855, y: 0.56}
+    accent: 4
+  - zone: 7
+    title: LANDS
+    bounds:
+      min: {x: 0.145, y: 0.296}
+      max: {x: 0.495, y: 0.42}
+    accent: 4
+  - zone: 8
+    title: SETTLEMENTS
+    bounds:
+      min: {x: 0.505, y: 0.296}
+      max: {x: 0.855, y: 0.42}
+    accent: 4
+  - zone: 9
+    title: VICTORY
+    bounds:
+      min: {x: 0.018, y: 0.296}
+      max: {x: 0.13, y: 0.56}
+    accent: 4
+  - zone: 10
+    title: DISCARD
+    bounds:
+      min: {x: 0.87, y: 0.296}
+      max: {x: 0.982, y: 0.56}
+    accent: 4
+  - zone: 11
+    title: YOUR HAND
+    bounds:
+      min: {x: 0.145, y: 0.012}
+      max: {x: 0.855, y: 0.284}
+    accent: 4

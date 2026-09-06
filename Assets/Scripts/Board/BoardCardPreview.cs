@@ -2,78 +2,108 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-/// <summary>One screen-clamped preview shared by every board zone.</summary>
+/// <summary>A shared, screen-clamped inspection surface. Slots never move when inspected.</summary>
 public sealed class BoardCardPreview : MonoBehaviour
 {
     public Board board;
-    [Min(100)] public float preferredHeight = 520;
+    private BoardSkin Skin => BoardPresentation.SkinFor(transform);
+    public float preferredHeight => Skin.preview.preferredHeight;
     private BoardCardView source;
-    private RectTransform panel, visual;
-    private Button previous, next;
+    private RectTransform panel;
+    private CanvasGroup fade;
     private Vector2 lastSize;
     private float outsideSince = -1;
+    private bool pinned;
     public bool IsShowing => source != null && panel != null;
+    public bool IsPinned => pinned;
     public RectTransform PreviewRect => panel;
 
     public void Show(BoardCardView view)
     {
-        if (source == view && panel != null) return;
+        if (view == null || (pinned && IsShowing) || (source == view && panel != null)) return;
         Hide();
         source = view;
         if (source.Zone is DeckVisualizer deck) deck.ResetSelection();
         Build();
     }
 
+    public void Pin(BoardCardView view)
+    {
+        if (source == view && pinned) { Hide(); return; }
+        pinned = false;
+        Show(view);
+        pinned = true;
+        Build();
+    }
+
     private void Build()
     {
+        if (source == null) return;
         if (panel != null) { panel.gameObject.SetActive(false); Destroy(panel.gameObject); }
-        var go = new GameObject("Hover preview", typeof(RectTransform), typeof(Image));
-        go.transform.SetParent(transform, false);
-        panel = (RectTransform)go.transform;
+        var background = BoardPresentation.Panel(transform, "Hover preview", Skin.colors.ink);
+        panel = background.rectTransform;
         panel.anchorMin = panel.anchorMax = panel.pivot = Vector2.one * .5f;
-        var background = go.GetComponent<Image>();
-        background.color = new Color(.04f, .055f, .07f, .98f);
         var deck = source.Zone as DeckVisualizer;
-        background.raycastTarget = deck != null;
+        background.raycastTarget = deck != null || pinned;
+        var shadow = background.gameObject.AddComponent<Shadow>();
+        shadow.effectColor = Skin.colors.previewShadow; shadow.effectDistance = Skin.preview.shadowOffset;
+        BoardPresentation.Border(panel, Skin.colors.gold);
+        fade = panel.gameObject.AddComponent<CanvasGroup>(); fade.alpha = 0;
         var holder = new GameObject("Full card", typeof(RectTransform));
         holder.transform.SetParent(panel, false);
-        visual = (RectTransform)holder.transform;
-        var natural = BoardCardView.BuildVisual(board, deck != null ? deck.SelectedCard : source.Data, false, visual);
+        var visual = (RectTransform)holder.transform;
+        var data = deck != null ? deck.SelectedCard : source.Data;
+        var natural = BoardCardView.BuildVisual(board, data, false, visual);
         visual.sizeDelta = natural;
         var area = ((RectTransform)transform).rect;
-        float footer = deck != null ? 40 : 0;
-        float scale = Mathf.Min(preferredHeight / natural.y, Mathf.Max(1, area.height - footer - 16) / natural.y,
-            Mathf.Max(1, area.width - 16) / natural.x);
+        float header = Skin.preview.header, footer = Skin.preview.footer, padding = Skin.preview.padding;
+        float margin = Skin.preview.screenMargin * 2 + 4;
+        float scale = Mathf.Min(preferredHeight / natural.y, Mathf.Max(1, area.height - header - footer - margin) / natural.y,
+            Mathf.Max(1, area.width - padding * 2 - margin) / natural.x);
         visual.localScale = Vector3.one * scale;
-        visual.anchoredPosition = new Vector2(0, footer * .5f);
-        panel.sizeDelta = new Vector2(natural.x * scale, natural.y * scale + footer);
+        visual.anchoredPosition = new Vector2(0, (footer - header) * .5f);
+        panel.sizeDelta = new Vector2(natural.x * scale + padding * 2, natural.y * scale + header + footer);
+        var title = BoardPresentation.TextLabel(panel, (pinned ? "PINNED" : "INSPECT") + "  /  " + (data.type ?? "CARD").ToUpperInvariant(),
+            board.interfaceFont, Skin.typography.previewLabelSize, Skin.colors.gold, Vector2.up, Vector2.one);
+        title.rectTransform.pivot = new Vector2(.5f, 1); title.rectTransform.sizeDelta = new Vector2(-Skin.preview.labelInset * 2, header);
+        string hint = deck != null ? $"{deck.SelectedIndex + 1} / {deck.Count}" : pinned ? "ESC TO CLOSE" : "CLICK CARD TO PIN";
+        var status = BoardPresentation.TextLabel(panel, hint, board.interfaceFont, Skin.typography.previewLabelSize, Skin.colors.muted,
+            Vector2.zero, Vector2.right, TextAnchor.MiddleCenter);
+        status.rectTransform.pivot = new Vector2(.5f, 0); status.rectTransform.sizeDelta = new Vector2(-Skin.preview.statusInset * 2, footer);
         if (deck != null)
         {
-            previous = Arrow("Previous", "<", -1, deck);
-            next = Arrow("Next", ">", 1, deck);
+            var previous = Arrow("Previous", "<", -1, deck);
+            var next = Arrow("Next", ">", 1, deck);
             previous.interactable = deck.SelectedIndex > 0;
             next.interactable = deck.SelectedIndex < deck.Count - 1;
+        }
+        if (pinned)
+        {
+            var close = MakeButton("Close", "x", panel, new Vector2(1, 1), Skin.preview.closeOffset, Skin.preview.closeSize);
+            close.onClick.AddListener(Hide);
         }
         Position();
     }
 
     private Button Arrow(string name, string label, int direction, DeckVisualizer deck)
     {
-        var go = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(Button));
-        go.transform.SetParent(panel, false);
-        var rect = (RectTransform)go.transform;
-        rect.anchorMin = rect.anchorMax = new Vector2(direction < 0 ? .25f : .75f, 0);
-        rect.pivot = new Vector2(.5f, 0); rect.sizeDelta = new Vector2(70, 38);
-        go.GetComponent<Image>().color = new Color(.16f, .20f, .24f);
-        var button = go.GetComponent<Button>();
+        var button = MakeButton(name, label, panel, new Vector2(direction < 0 ? 0 : 1, 0),
+            new Vector2(direction < 0 ? Skin.preview.arrowInset.x : -Skin.preview.arrowInset.x, Skin.preview.arrowInset.y), Skin.preview.arrowSize);
         button.onClick.AddListener(() => deck.Browse(direction));
-        var textObject = new GameObject("Arrow", typeof(RectTransform), typeof(Text));
-        textObject.transform.SetParent(go.transform, false);
-        var tr = (RectTransform)textObject.transform;
-        tr.anchorMin = Vector2.zero; tr.anchorMax = Vector2.one; tr.sizeDelta = Vector2.zero;
-        var text = textObject.GetComponent<Text>();
-        text.font = board.interfaceFont; text.fontSize = 26; text.text = label;
-        text.alignment = TextAnchor.MiddleCenter; text.color = Color.white; text.raycastTarget = false;
+        return button;
+    }
+
+    private Button MakeButton(string name, string label, Transform parent, Vector2 anchor, Vector2 position, Vector2 size)
+    {
+        var image = BoardPresentation.Panel(parent, name, Skin.colors.button);
+        image.raycastTarget = true;
+        var rect = image.rectTransform; rect.anchorMin = rect.anchorMax = anchor;
+        rect.pivot = Vector2.one * .5f; rect.sizeDelta = size; rect.anchoredPosition = position;
+        var button = image.gameObject.AddComponent<Button>(); button.targetGraphic = image;
+        var colors = button.colors; colors.highlightedColor = Skin.colors.gold;
+        colors.pressedColor = Skin.colors.teal; colors.disabledColor = Skin.colors.disabledButton; button.colors = colors;
+        BoardPresentation.TextLabel(rect, label, board.interfaceFont, Skin.typography.buttonSize, Skin.colors.ivory,
+            Vector2.zero, Vector2.one, TextAnchor.MiddleCenter);
         return button;
     }
 
@@ -81,45 +111,43 @@ public sealed class BoardCardPreview : MonoBehaviour
     {
         var root = (RectTransform)transform;
         Vector3 center = root.InverseTransformPoint(source.Rect.TransformPoint(source.Rect.rect.center));
+        var corners = new Vector3[4]; source.Rect.GetWorldCorners(corners);
+        float right = root.InverseTransformPoint(corners[2]).x;
+        float left = root.InverseTransformPoint(corners[0]).x;
         Vector2 half = panel.sizeDelta * .5f;
+        // Open beside the card wherever possible, preserving sight of the inspected token.
+        float x = center.x <= 0 ? right + half.x + Skin.preview.sourceGap : left - half.x - Skin.preview.sourceGap;
         panel.anchoredPosition = new Vector2(
-            Mathf.Clamp(center.x, root.rect.xMin + half.x + 4, root.rect.xMax - half.x - 4),
-            Mathf.Clamp(center.y, root.rect.yMin + half.y + 4, root.rect.yMax - half.y - 4));
+            Mathf.Clamp(x, root.rect.xMin + half.x + Skin.preview.screenMargin, root.rect.xMax - half.x - Skin.preview.screenMargin),
+            Mathf.Clamp(center.y, root.rect.yMin + half.y + Skin.preview.screenMargin, root.rect.yMax - half.y - Skin.preview.screenMargin));
         lastSize = root.rect.size;
     }
 
-    public void RefreshDeck(DeckVisualizer deck)
-    {
-        if (source != null && source.Zone == deck) Build();
-    }
+    public void RefreshDeck(DeckVisualizer deck) { if (source != null && source.Zone == deck) Build(); }
 
     private void Update()
     {
-        if (source == null || !source.gameObject.activeInHierarchy)
-        {
-            if (panel != null) Hide();
-            return;
-        }
+        if (source == null || !source.gameObject.activeInHierarchy) { if (panel != null) Hide(); return; }
         if (lastSize != ((RectTransform)transform).rect.size) Build();
-        if (Mouse.current == null) return;
+        if (fade != null) fade.alpha = Mathf.MoveTowards(fade.alpha, 1, Time.unscaledDeltaTime * Skin.preview.fadeSpeed);
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) { Hide(); return; }
+        if (pinned || Mouse.current == null) return;
         Vector2 pointer = Mouse.current.position.ReadValue();
         var canvas = GetComponentInParent<Canvas>().rootCanvas;
         Camera camera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
         bool inside = RectTransformUtility.RectangleContainsScreenPoint(source.Rect, pointer, camera);
-        if (source.Zone is DeckVisualizer)
-            inside |= RectTransformUtility.RectangleContainsScreenPoint(panel, pointer, camera);
-        // A short grace period allows pointer travel from a source to a clamped deck preview.
+        if (source.Zone is DeckVisualizer) inside |= RectTransformUtility.RectangleContainsScreenPoint(panel, pointer, camera);
         if (inside) outsideSince = -1;
         else if (outsideSince < 0) outsideSince = Time.unscaledTime;
-        else if (Time.unscaledTime - outsideSince > .15f) Hide();
+        else if (Time.unscaledTime - outsideSince > Skin.preview.exitGrace) Hide();
     }
 
     public void HideFor(CardZoneVisualizer zone) { if (source != null && source.Zone == zone) Hide(); }
     public void Hide()
     {
-        source = null; outsideSince = -1;
+        source = null; outsideSince = -1; pinned = false;
         if (panel != null) { panel.gameObject.SetActive(false); Destroy(panel.gameObject); }
-        panel = null;
+        panel = null; fade = null;
     }
     private void OnDisable() { Hide(); }
 }

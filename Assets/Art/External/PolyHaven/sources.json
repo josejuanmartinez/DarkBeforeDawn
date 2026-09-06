@@ -1,0 +1,146 @@
+[
+  {
+    "asset": "mossy_stone_wall",
+    "map": "Diffuse",
+    "source": "https://polyhaven.com/a/mossy_stone_wall",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/mossy_stone_wall/mossy_stone_wall_diff_2k.jpg",
+    "md5": "1f0ff600e455874379c78ab97c7680b4",
+    "file": "Assets/Art/External/PolyHaven/mossy_stone_wall/mossy_stone_wall_Diffuse.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "mossy_stone_wall",
+    "map": "nor_gl",
+    "source": "https://polyhaven.com/a/mossy_stone_wall",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/mossy_stone_wall/mossy_stone_wall_nor_gl_2k.jpg",
+    "md5": "0c40b1b9b731c404bd499389322fffb1",
+    "file": "Assets/Art/External/PolyHaven/mossy_stone_wall/mossy_stone_wall_nor_gl.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "mossy_stone_wall",
+    "map": "Rough",
+    "source": "https://polyhaven.com/a/mossy_stone_wall",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/mossy_stone_wall/mossy_stone_wall_rough_2k.jpg",
+    "md5": "c0c8fc6f25386e98fe0ee6bfe4264eda",
+    "file": "Assets/Art/External/PolyHaven/mossy_stone_wall/mossy_stone_wall_Rough.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "leafy_grass",
+    "map": "Diffuse",
+    "source": "https://polyhaven.com/a/leafy_grass",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/leafy_grass/leafy_grass_diff_2k.jpg",
+    "md5": "8014f4dace676a62ed71b3dd76119dae",
+    "file": "Assets/Art/External/PolyHaven/leafy_grass/leafy_grass_Diffuse.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "leafy_grass",
+    "map": "nor_gl",
+    "source": "https://polyhaven.com/a/leafy_grass",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/leafy_grass/leafy_grass_nor_gl_2k.jpg",
+    "md5": "ea5e91abe01dc5e5d7028c68c3bc9194",
+    "file": "Assets/Art/External/PolyHaven/leafy_grass/leafy_grass_nor_gl.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "leafy_grass",
+    "map": "Rough",
+    "source": "https://polyhaven.com/a/leafy_grass",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/leafy_grass/leafy_grass_rough_2k.jpg",
+    "md5": "b5c551ed91162aab5afbfb03b73ae3f5",
+    "file": "Assets/Art/External/PolyHaven/leafy_grass/leafy_grass_Rough.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "pine_bark",
+    "map": "Diffuse",
+    "source": "https://polyhaven.com/a/pine_bark",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/pine_bark/pine_bark_diff_2k.jpg",
+    "md5": "d10980446d36a65a73081cf61bc84992",
+    "file": "Assets/Art/External/PolyHaven/pine_bark/pine_bark_Diffuse.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "pine_bark",
+    "map": "nor_gl",
+    "source": "https://polyhaven.com/a/pine_bark",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/pine_bark/pine_bark_nor_gl_2k.jpg",
+    "md5": "ee1de039967165665060653a0e12e571",
+    "file": "Assets/Art/External/PolyHaven/pine_bark/pine_bark_nor_gl.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "pine_bark",
+    "map": "Rough",
+    "source": "https://polyhaven.com/a/pine_bark",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/pine_bark/pine_bark_rough_2k.jpg",
+    "md5": "9ea974ea3e298b30ee3b7a21ec05b566",
+    "file": "Assets/Art/External/PolyHaven/pine_bark/pine_bark_Rough.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "aerial_grass_rock",
+    "map": "Diffuse",
+    "source": "https://polyhaven.com/a/aerial_grass_rock",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/aerial_grass_rock/aerial_grass_rock_diff_2k.jpg",
+    "md5": "024018554c0002620127749d1f585f3d",
+    "file": "Assets/Art/External/PolyHaven/aerial_grass_rock/aerial_grass_rock_Diffuse.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "aerial_grass_rock",
+    "map": "nor_gl",
+    "source": "https://polyhaven.com/a/aerial_grass_rock",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/aerial_grass_rock/aerial_grass_rock_nor_gl_2k.jpg",
+    "md5": "0c5423ce365169df7c242933b5137696",
+    "file": "Assets/Art/External/PolyHaven/aerial_grass_rock/aerial_grass_rock_nor_gl.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "aerial_grass_rock",
+    "map": "Rough",
+    "source": "https://polyhaven.com/a/aerial_grass_rock",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/aerial_grass_rock/aerial_grass_rock_rough_2k.jpg",
+    "md5": "8d181000237d420a73f99dfc260dab17",
+    "file": "Assets/Art/External/PolyHaven/aerial_grass_rock/aerial_grass_rock_Rough.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "grey_roof_tiles_02",
+    "map": "Diffuse",
+    "source": "https://polyhaven.com/a/grey_roof_tiles_02",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grey_roof_tiles_02/grey_roof_tiles_02_diff_2k.jpg",
+    "md5": "2f49aaebd1b68926e76ddce57d27b6ff",
+    "file": "Assets/Art/External/PolyHaven/grey_roof_tiles_02/grey_roof_tiles_02_Diffuse.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "grey_roof_tiles_02",
+    "map": "nor_gl",
+    "source": "https://polyhaven.com/a/grey_roof_tiles_02",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grey_roof_tiles_02/grey_roof_tiles_02_nor_gl_2k.jpg",
+    "md5": "ec60f08e8819bfac34b71e04d354459b",
+    "file": "Assets/Art/External/PolyHaven/grey_roof_tiles_02/grey_roof_tiles_02_nor_gl.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "grey_roof_tiles_02",
+    "map": "Rough",
+    "source": "https://polyhaven.com/a/grey_roof_tiles_02",
+    "download": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grey_roof_tiles_02/grey_roof_tiles_02_rough_2k.jpg",
+    "md5": "9562363f4f595fdf26cd3c162e31a3c1",
+    "file": "Assets/Art/External/PolyHaven/grey_roof_tiles_02/grey_roof_tiles_02_Rough.jpg",
+    "license": "CC0-1.0"
+  },
+  {
+    "asset": "kloofendal_48d_partly_cloudy_puresky",
+    "map": "hdri",
+    "source": "https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky",
+    "download": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_48d_partly_cloudy_puresky_2k.hdr",
+    "md5": "2eba3a4d7eeb23cbfbeca364c97e7980",
+    "file": "Assets/Art/External/PolyHaven/kloofendal_48d_partly_cloudy_puresky/kloofendal_48d_partly_cloudy_puresky_hdri.hdr",
+    "license": "CC0-1.0"
+  }
+]

@@ -7,7 +7,7 @@ The card rendering system, ported from **RetroLOTR / Runeboard** (`C:\Users\jjmc
 | | |
 |---|---|
 | **Art** | `Assets/Art/Cards` — all 1033 images (2.5 GB), folders and import settings unchanged. Plus `Art/Fonts`, `Art/Materials`, `Art/Other`, `Art/UI`, which the prefabs reference. |
-| **Prefabs** | `Assets/GameObjects/Reusable` — `Card`, `TokenCard`, `TokenCardMasked`, `CardPlayed`, `Hover`, `Tooltip`. |
+| **Prefabs** | `Assets/Prefabs` — `Card`, `TokenCard`, `TokenCardMasked`, `CardPlayed`, `Hover`, `Tooltip`. |
 | **Shaders** | `UI80sCartoon` (the Bakshi material) and `UIZoom` (ZoomImage). |
 | **Scripts** | This folder, plus `Assets/Editor`. |
 
@@ -47,7 +47,46 @@ characters yet.
    name and press **Apply** in the inspector to render it at edit time.
 
 `CardDataProvider` resolves names through `CardCatalog`, which reads the `Resources/Cards.json`
-manifest and the deck files it points at.
+manifest and the deck files it points at. Both card prefabs carry one already, so a fresh instance
+only needs a name typed into it.
+
+## Filling a board zone
+
+Each anchor under `TCGBoardAnchors` carries a `CardZoneVisualizer` (or `DeckVisualizer` for the four
+pile anchors). A zone is authored one way only: drag its prefab onto the anchor in the Hierarchy,
+once per card, and set **Card Name** on each instance's `CardDataProvider`. There is no serialized
+card list — `CardZoneVisualizer.cards` is runtime state, not an authoring surface.
+
+**Each zone takes exactly one prefab**, decided by `UsesFullCards` and never by a serialized field:
+
+| Zone | Takes |
+|---|---|
+| Current Hand | `Card.prefab` |
+| Victory Points Deck, Discarded Deck (both sides) | `Card.prefab` |
+| Everything else — armies, lands, population centres, environmental | `TokenCard.prefab` |
+
+The two are not interchangeable in either direction: `Card.prefab` carries no token subtree and
+`TokenCard.prefab` carries no `RealCard`, so the wrong one renders as nothing at all. A mismatch is
+reported in the zone's inspector and warned about at `Start`, and the instance is ignored.
+
+An authored instance is a *specification*, not the visual: at `Start` the zone reads the names, hides
+the instances and rebuilds the row from `Board.fullCardPrefab` / `tokenCardPrefab`. They are hidden
+rather than destroyed, because they are the scene's only record of how the zone was authored.
+`layout` is purely an arrangement strategy (overlapping row, grid, spaced row) and has no say in
+which prefab a zone takes.
+
+A card on the board is the prefab's own composition, untouched. The board only sizes the instance's
+root to the card's true extent — `Card.CardFootprint`, the border's scaled rect, 390x455, since the
+prefab's pieces deliberately overflow `RealCard`'s 200x200 box — and switches off the authored
+`DisabledImage` overlay, which nothing in `Card` toggles. If a card ever *looks* wrong rather than
+merely misplaced, **Revert Cards To Prefab** on the zone discards every override on the instances
+except their card names and rebuilds the presentation.
+
+`CardZoneVisualizerEditor` previews all of this at edit time: dropping a card in activates it,
+renders it, sizes it to its border footprint and lays it out through the same `LayoutSlots` call Play
+mode uses, so the
+Game view shows what Play will build. Note the board canvas is *Screen Space - Overlay*, so it
+appears in the **Game** view, not composited into the Scene view.
 
 ## How the decks are laid out
 

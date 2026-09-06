@@ -75,6 +75,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     [Tooltip("True on TokenCard instances that only carry the compact token visual: hovering unfolds the card into CardCenterPreview instead of flipping the (absent) RealCard subtree in place.")]
     [SerializeField] private bool isTokenOnlyPresentation;
 
+    /// <summary>True on TokenCard.prefab, false on Card.prefab: which of the two this instance is.</summary>
+    public bool IsTokenOnlyPresentation => isTokenOnlyPresentation;
+
     public CardData cardData { get; private set; }
 
     // Refreshed by UpdateInteractableState (RequestInteractionRefreshAll runs it on every relevant
@@ -1132,16 +1135,46 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // NOTE: the prefab's token root is a plain Transform, not a RectTransform, and its children carry
     // authored offsets that position them over the card layout — the clone re-centers them so it
     // works standalone.
+    // The full-card counterpart of TokenFootprint. The prefab composes the card out of pieces that
+    // deliberately overflow RealCard's 200x200 box, so the root's authored 200x250 says nothing about
+    // how much room a card needs. The border's *unscaled* rect does: it is exactly the box the art,
+    // title bar, description and type badge fill. Its 1.3 localScale is decorative bleed drawn at 4%
+    // alpha, so reserving that too would pad every card with ~23% invisible margin on both axes and
+    // no card could ever reach the edge of its slot.
+    // Resolved by BindLegacyPrefabReferences during Initialize, so read this after initializing.
+    public Vector2 CardFootprint =>
+        cardBackgroundImage != null && cardBackgroundImage.transform is RectTransform frame && frame.rect.size.sqrMagnitude > 1f
+            ? frame.rect.size
+            : new Vector2(300f, 350f);
+
+    // The border ring is the widest token piece; its scaled rect is the token's visual footprint.
+    // Board zones size their layout slots from this, so a card previewed as a token while authoring
+    // occupies the same space as the clone CreateTokenVisualClone hands back at runtime.
+    public Vector2 TokenFootprint =>
+        tokenBorder != null && tokenBorder.transform is RectTransform ring && ring.rect.size.sqrMagnitude > 1f
+            ? Vector2.Scale(ring.rect.size, ring.localScale)
+            : new Vector2(132f, 132f);
+
+    // In-place counterpart to CreateTokenVisualClone, for a card previewed as a token where it
+    // stands rather than having its token subtree cloned out. Same reason the clone re-centers its
+    // children: the token pieces carry authored offsets that position them over the card layout, so
+    // left alone they sit off-centre in a board slot.
+    public void CompactTokenInPlace()
+    {
+        if (tokenCanvasGroup == null) return;
+        tokenCanvasGroup.transform.localPosition = Vector3.zero;
+        foreach (Transform child in tokenCanvasGroup.transform)
+        {
+            if (child is RectTransform childRect) childRect.anchoredPosition = Vector2.zero;
+        }
+        Transform environmentalChild = tokenCanvasGroup.transform.Find("Environmental");
+        if (environmentalChild != null) environmentalChild.gameObject.SetActive(false);
+    }
+
     public GameObject CreateTokenVisualClone(Transform parent, out Vector2 tokenSize)
     {
-        tokenSize = new Vector2(132f, 132f);
+        tokenSize = TokenFootprint;
         if (tokenCanvasGroup == null) return null;
-
-        // The border ring is the widest token piece; its rect x scale is the footprint.
-        if (tokenBorder != null && tokenBorder.transform is RectTransform borderRect && borderRect.rect.size.sqrMagnitude > 1f)
-        {
-            tokenSize = Vector2.Scale(borderRect.rect.size, borderRect.localScale);
-        }
 
         GameObject clone = Instantiate(tokenCanvasGroup.gameObject, parent, false);
         clone.name = "TokenVisual";

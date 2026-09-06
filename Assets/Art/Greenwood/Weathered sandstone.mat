@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Weathered sandstone
+  m_Shader: {fileID: 4800000, guid: 341ecc80d742b624e81ee16dc76f812f, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: f11f1e8b7e5c644468fcbbf82812b81c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: 6bb92ea0a5460d8479e16e4618d1ded1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RoughMap:
+        m_Texture: {fileID: 2800000, guid: b987d64d73e399745a847a7977920d9c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BumpScale: 0.7
+    - _BumpStrength: 0.35
+    - _DetailScale: 1
+    - _Stone: 1
+    - _Surface: 1
+    - _Wind: 0
+    - _WorldScale: 0.2
+    m_Colors:
+    - _BaseColor: {r: 1.65, g: 1.65, b: 1.6, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

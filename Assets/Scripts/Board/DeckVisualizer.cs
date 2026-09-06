@@ -4,13 +4,24 @@ using UnityEngine.UI;
 /// <summary>One visible full card; browsing never changes the collection's order.</summary>
 public sealed class DeckVisualizer : CardZoneVisualizer
 {
+    /// <summary>A pile shows the face of its top card, so it takes full cards, never tokens.</summary>
+    public override bool UsesFullCards => true;
+
     public int SelectedIndex { get; private set; } = -1;
     private Text counter;
     private Image empty;
     public CardData SelectedCard => SelectedIndex >= 0 && SelectedIndex < Count ? Cards[SelectedIndex] : null;
 
+    public override void RefreshSkin()
+    {
+        int selection = SelectedIndex;
+        Rebuild();
+        SelectedIndex = Count == 0 ? -1 : Mathf.Clamp(selection, 0, Count - 1);
+    }
+
     protected override void Rebuild()
     {
+        var skin = BoardPresentation.SkinFor(transform);
         ClearViews();
         SelectedIndex = Count - 1;
         if (SelectedCard != null) AddView(SelectedCard);
@@ -19,22 +30,27 @@ public sealed class DeckVisualizer : CardZoneVisualizer
             var placeholder = new GameObject("Empty pile", typeof(RectTransform), typeof(Image));
             placeholder.transform.SetParent(transform, false);
             empty = placeholder.GetComponent<Image>();
-            empty.color = new Color(1, 1, 1, .035f);
             empty.raycastTarget = false;
             var er = (RectTransform)placeholder.transform;
-            er.anchorMin = new Vector2(.2f, .2f); er.anchorMax = new Vector2(.8f, .8f);
             er.offsetMin = er.offsetMax = Vector2.zero;
             var go = new GameObject("Card count", typeof(RectTransform), typeof(Text));
             go.transform.SetParent(transform, false);
             counter = go.GetComponent<Text>(); counter.font = board.interfaceFont;
-            counter.fontSize = 18; counter.alignment = TextAnchor.MiddleCenter;
-            counter.color = Color.white; counter.raycastTarget = false;
+            counter.alignment = TextAnchor.MiddleCenter;
+            counter.raycastTarget = false;
             var rt = (RectTransform)go.transform;
             rt.anchorMin = rt.anchorMax = new Vector2(1, 0);
-            rt.pivot = new Vector2(1, 0); rt.sizeDelta = new Vector2(55, 26);
+            rt.pivot = new Vector2(1, 0);
         }
+        empty.color = skin.colors.emptyPile;
+        BoardPresentation.Stretch(empty.rectTransform, skin.piles.emptyBounds.min, skin.piles.emptyBounds.max);
+        counter.font = board.interfaceFont;
+        counter.fontSize = skin.piles.counterFontSize;
+        counter.color = skin.colors.ivory;
+        counter.rectTransform.sizeDelta = skin.piles.counterSize;
         empty.gameObject.SetActive(Count == 0);
-        counter.text = Count.ToString(); counter.transform.SetAsLastSibling();
+        counter.text = board.GetComponent<BoardPresentation>() != null ? "" : Count.ToString();
+        counter.transform.SetAsLastSibling();
         Arrange();
     }
 

@@ -12,14 +12,90 @@ public class CardZoneVisualizer : MonoBehaviour
     [Min(0)] public float gap = 8;
     [Range(.25f, 1f)] public float minimumVisibleFraction = .65f;
     public bool isHand;
-    [SerializeField] private List<CardData> cards = new();
+    // Deliberately not serialized: a zone is authored by dropping card prefabs onto the anchor,
+    // never by filling in card data field by field in the inspector. This list is runtime state.
+    private readonly List<CardData> cards = new();
     protected readonly List<BoardCardView> views = new();
     public IReadOnlyList<CardData> Cards => cards.AsReadOnly();
     public int Count => cards.Count;
     private Vector2 previousSize;
     protected RectTransform Area => (RectTransform)transform;
 
-    protected virtual void Start() { Rebuild(); }
+    /// <summary>True where the zone shows readable card faces: the hand, and the deck piles.</summary>
+    /// <remarks>
+    /// Every other zone is a token board. This is the whole token/full rule, derived rather than
+    /// serialized so no anchor can be set to a presentation its prefabs do not match. `layout` is
+    /// only ever an arrangement strategy — it has no say in which prefab a zone takes.
+    /// </remarks>
+    public virtual bool UsesFullCards => isHand;
+
+    /// <summary>The one prefab this zone accepts, for messages and for validation.</summary>
+    public string AcceptedPrefabName => UsesFullCards ? "Card.prefab" : "TokenCard.prefab";
+
+    protected virtual void Start()
+    {
+        AdoptAuthoredChildren();
+        Rebuild();
+    }
+
+    // The only way a zone is authored: drop this zone's prefab onto the anchor once per card and
+    // name each instance on its CardDataProvider. An authored instance only says *which* card belongs
+    // here — the visual the board shows is rebuilt from Board.fullCardPrefab / tokenCardPrefab by
+    // AddView — so the instances are consumed once read, which is why this runs at Start and never
+    // again.
+    private void AdoptAuthoredChildren()
+    {
+        var authored = new List<CardData>();
+        var consumed = new List<GameObject>();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var card = transform.GetChild(i).GetComponent<Card>();
+            if (card == null) continue;
+            consumed.Add(card.gameObject);
+            CardData data = ResolveAuthoredCard(card);
+            if (data != null) authored.Add(data);
+        }
+        if (consumed.Count == 0) return;
+        // Switched off rather than destroyed. Hiding them is all the board needs, and these are the
+        // only record of how the zone was authored — destroying the scene's own authoring data to
+        // save a few inactive GameObjects is a bad trade.
+        foreach (var instance in consumed) instance.SetActive(false);
+        // A warning rather than the exception SetCards throws: an over-full authored hand should
+        // still enter Play mode, just not silently exceed the cap.
+        if (isHand && board != null && authored.Count > board.maximumHandSize)
+        {
+            Debug.LogWarning($"'{name}' was authored with {authored.Count} cards but Board.maximumHandSize " +
+                $"is {board.maximumHandSize}; the extras are dropped.", this);
+            authored.RemoveRange(board.maximumHandSize, authored.Count - board.maximumHandSize);
+        }
+        cards.Clear();
+        cards.AddRange(authored);
+    }
+
+    // A zone takes one prefab and only that one. The two are not interchangeable in either
+    // direction: Card.prefab carries no token subtree and TokenCard.prefab carries no RealCard, so
+    // the wrong one renders as nothing at all rather than as something merely misshapen.
+    private bool IsAcceptedPrefab(Card card)
+    {
+        if (card.IsTokenOnlyPresentation != UsesFullCards) return true;
+        Debug.LogWarning($"'{card.name}' is the wrong prefab for '{name}': this zone takes " +
+            $"{AcceptedPrefabName}. Replace the instance; it is ignored.", card);
+        return false;
+    }
+
+    // A CardDataProvider is the authoring surface: it carries the card name, the optional deck-badge
+    // override and the presentation flags, and applying it is what fills in Card.cardData.
+    private CardData ResolveAuthoredCard(Card card)
+    {
+        if (!IsAcceptedPrefab(card)) return null;
+        var provider = card.GetComponent<CardDataProvider>();
+        if (provider != null && provider.Apply()) return card.cardData;
+        if (card.cardData != null) return card.cardData;
+        Debug.LogWarning($"'{card.name}' under '{name}' names no card: set Card Name on its " +
+            "CardDataProvider, or remove the instance.", card);
+        return null;
+    }
+
     protected virtual void OnDisable() { if (board != null && board.preview != null) board.preview.HideFor(this); }
     protected virtual void LateUpdate()
     {
@@ -33,7 +109,8 @@ public class CardZoneVisualizer : MonoBehaviour
         if (replacement.Exists(c => c == null)) throw new ArgumentException("Cards cannot contain null entries.");
         if (isHand && replacement.Count > board.maximumHandSize)
             throw new ArgumentException("The hand exceeds Board.maximumHandSize.");
-        cards = replacement;
+        cards.Clear();
+        cards.AddRange(replacement);
         Rebuild();
     }
 
@@ -51,6 +128,9 @@ public class CardZoneVisualizer : MonoBehaviour
         Rebuild();
         return true;
     }
+
+    /// <summary>Recreate visual clones without changing the collection or authored instances.</summary>
+    public virtual void RefreshSkin() { Rebuild(); }
 
     protected virtual void Rebuild()
     {
@@ -72,7 +152,7 @@ public class CardZoneVisualizer : MonoBehaviour
         var go = new GameObject("Card - " + data.name, typeof(RectTransform), typeof(BoardCardView));
         go.transform.SetParent(transform, false);
         var view = go.GetComponent<BoardCardView>();
-        view.Initialize(this, data, layout != BoardCardLayout.FullRow);
+        view.Initialize(this, data, !UsesFullCards);
         views.Add(view);
         return view;
     }
@@ -80,10 +160,21 @@ public class CardZoneVisualizer : MonoBehaviour
     public void Arrange()
     {
         previousSize = Area.rect.size;
-        int n = views.Count;
-        if (n == 0 || previousSize.x <= 0 || previousSize.y <= 0) return;
-        Vector2 natural = views[0].NaturalSize;
-        float width = previousSize.x, height = previousSize.y;
+        if (views.Count == 0) return;
+        var rects = new List<RectTransform>(views.Count);
+        foreach (var view in views) rects.Add(view.Rect);
+        LayoutSlots(rects, views[0].NaturalSize);
+    }
+
+    // Positions `slots` inside this anchor, each one `natural` units across before the uniform fit
+    // scale. Split out of Arrange so the editor can preview authored children through exactly the
+    // same math the board uses at runtime — what you lay out while authoring is what Play produces.
+    public void LayoutSlots(IReadOnlyList<RectTransform> slots, Vector2 natural)
+    {
+        int n = slots.Count;
+        Vector2 area = Area.rect.size;
+        if (n == 0 || area.x <= 0 || area.y <= 0 || natural.x <= 0 || natural.y <= 0) return;
+        float width = area.x, height = area.y;
         int columns = n, rows = 1;
         float scale;
         // Limit gaps as collections grow so even very dense layouts stay within their anchor.
@@ -113,7 +204,7 @@ public class CardZoneVisualizer : MonoBehaviour
         float contentHeight = rows * h + (rows - 1) * spacing;
         for (int i = 0; i < n; i++)
         {
-            var rect = views[i].Rect;
+            var rect = slots[i];
             rect.anchorMin = rect.anchorMax = rect.pivot = Vector2.one * .5f;
             rect.sizeDelta = natural;
             rect.localScale = Vector3.one * scale;

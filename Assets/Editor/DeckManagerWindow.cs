@@ -32,7 +32,7 @@ using UnityEngine.UI;
 public class DeckManagerWindow : EditorWindow
 {
     private const string MenuPath = "Tools/Cards/Deck Manager";
-    private const string CardPrefabPath = "Assets/GameObjects/Reusable/Card.prefab";
+    private const string CardPrefabPath = "Assets/Prefabs/Card.prefab";
     private const string CardArtLibraryPath = "Assets/Art/CardArtLibrary.asset";
     private const string ManifestResourceName = "Cards";
 

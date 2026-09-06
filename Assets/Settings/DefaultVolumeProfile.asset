@@ -214,6 +214,25 @@ MonoBehaviour:
   texture:
     m_OverrideState: 1
     m_Value: {fileID: 0}
+--- !u!114 &-7134203454239239320
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f276daaa6a4bdbd48a00b0d6aad77bce, type: 3}
+  m_Name: ExposureVolume
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.ExposureVolume
+  active: 1
+  mode:
+    m_OverrideState: 1
+    m_Value: 0
+  fixedExposure:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &-6951754464447674219
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -248,6 +267,85 @@ MonoBehaviour:
   highlightsEnd:
     m_OverrideState: 1
     m_Value: 1
+--- !u!114 &-6085527700254588357
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2274cd80d4e22254d98d0282578183e0, type: 3}
+  m_Name: ScreenSpaceReflectionVolumeSettings
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.ScreenSpaceReflectionVolumeSettings
+  active: 1
+  mode:
+    m_OverrideState: 1
+    m_Value: 1
+  reflectionStrength:
+    m_OverrideState: 1
+    m_Value: 1
+  clampReflectedColor:
+    m_OverrideState: 1
+    m_Value: 0
+  maxColorValue:
+    m_OverrideState: 1
+    m_Value: 1
+  resolution:
+    m_OverrideState: 1
+    m_Value: 2
+  upscalingMethod:
+    m_OverrideState: 1
+    m_Value: 1
+  marchingMethod:
+    m_OverrideState: 1
+    m_Value: 1
+  hitRefinementSteps:
+    m_OverrideState: 1
+    m_Value: 5
+  finalThicknessMultiplier:
+    m_OverrideState: 1
+    m_Value: 0.16
+  roughnessFilter:
+    m_OverrideState: 1
+    m_Value: 2
+  roughnessScale:
+    m_OverrideState: 1
+    m_Value: 0
+  minimumSmoothness:
+    m_OverrideState: 1
+    m_Value: 0.05
+  smoothnessFadeStart:
+    m_OverrideState: 1
+    m_Value: 0.1
+  normalFade:
+    m_OverrideState: 1
+    m_Value: 0
+  screenEdgeFadeDistance:
+    m_OverrideState: 1
+    m_Value: 0.2
+  reflectSky:
+    m_OverrideState: 1
+    m_Value: 0
+  maxRayLength:
+    m_OverrideState: 1
+    m_Value: 30
+  rayLengthFade:
+    m_OverrideState: 1
+    m_Value: 1
+  maxRaySteps:
+    m_OverrideState: 1
+    m_Value: 64
+  objectThickness:
+    m_OverrideState: 1
+    m_Value: 0.01
+  temporalFiltering:
+    m_OverrideState: 1
+    m_Value: 0
+  baseBlendFactor:
+    m_OverrideState: 1
+    m_Value: 0.95
 --- !u!114 &-4210620904635426390
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -509,6 +607,9 @@ MonoBehaviour:
   - {fileID: -8186968272690591729}
   - {fileID: -3978695733392391637}
   - {fileID: -1083910812058648046}
+  - {fileID: 594533955269357773}
+  - {fileID: -7134203454239239320}
+  - {fileID: -6085527700254588357}
 --- !u!114 &156332030701414761
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -531,6 +632,78 @@ MonoBehaviour:
   gain:
     m_OverrideState: 1
     m_Value: {x: 1, y: 1, z: 1, w: 0}
+--- !u!114 &594533955269357773
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1e685d8f7565142b879339cd471764, type: 3}
+  m_Name: SurfaceCacheGIVolumeOverride
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.SurfaceCacheGIVolumeOverride
+  active: 1
+  enabled:
+    m_OverrideState: 1
+    m_Value: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 1
+  lightTransportMultiBounce:
+    m_OverrideState: 1
+    m_Value: 1
+  lightTransportBouncePatchAllocation:
+    m_OverrideState: 1
+    m_Value: 0
+  lightTransportSampleCount:
+    m_OverrideState: 1
+    m_Value: 2
+  patchFilteringTemporalSmoothing:
+    m_OverrideState: 1
+    m_Value: 0.8
+  patchFilteringSpatialFilterEnabled:
+    m_OverrideState: 1
+    m_Value: 1
+  patchFilteringSpatialSampleCount:
+    m_OverrideState: 1
+    m_Value: 4
+  patchFilteringSpatialRadius:
+    m_OverrideState: 1
+    m_Value: 1
+  patchFilteringPostTemporalEnabled:
+    m_OverrideState: 1
+    m_Value: 1
+  screenFilteringLookupSampleCount:
+    m_OverrideState: 1
+    m_Value: 4
+  screenFilteringDenoisingPassCount:
+    m_OverrideState: 1
+    m_Value: 2
+  volumeSize:
+    m_OverrideState: 1
+    m_Value: 128
+  volumeResolution:
+    m_OverrideState: 1
+    m_Value: 32
+  volumeCascadeCount:
+    m_OverrideState: 1
+    m_Value: 4
+  volumeDistanceFallback:
+    m_OverrideState: 1
+    m_Value: 0
+  advancedRenderingLayerMask:
+    m_OverrideState: 1
+    m_Value:
+      serializedVersion: 0
+      m_Bits: 4294967295
+  advancedDefragCount:
+    m_OverrideState: 1
+    m_Value: 2
+  advancedPatchWarpingEnabled:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &1247868777620691934
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -718,7 +891,7 @@ MonoBehaviour:
   resolution:
     m_OverrideState: 1
     m_Value: 4
-  chromaticAbberationIntensity:
+  chromaticAberrationIntensity:
     m_OverrideState: 1
     m_Value: 0.5
 --- !u!114 &7933203426823181213
