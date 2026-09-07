@@ -54,6 +54,9 @@ public sealed class BoardCardPreview : MonoBehaviour
         var visual = (RectTransform)holder.transform;
         var data = deck != null ? deck.SelectedCard : source.Data;
         var natural = BoardCardView.BuildVisual(board, data, false, visual);
+        // The inspection card is a separate visual clone, so explicitly start the same
+        // art-only pan/zoom that is active on the board card beneath the pointer.
+        BoardCardView.EnablePreviewArtworkMotion(visual);
         visual.sizeDelta = natural;
         var area = ((RectTransform)transform).rect;
         float header = Skin.preview.header, footer = Skin.preview.footer, padding = Skin.preview.padding;

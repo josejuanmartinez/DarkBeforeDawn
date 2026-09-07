@@ -25,14 +25,14 @@ public sealed class CardZoneVisualizerEditor : Editor
     private static void ArrangeAllAuthoredZones()
     {
         if (EditorApplication.isPlayingOrWillChangePlaymode) return;
-        foreach (var zone in Object.FindObjectsByType<CardZoneVisualizer>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        foreach (var zone in Object.FindObjectsByType<CardZoneVisualizer>(FindObjectsInactive.Include))
         {
             PreviewAuthoredChildren(zone);
         }
     }
 
     /// <summary>Renders and lays out the Card instances parented to this zone, without consuming them.</summary>
-    public static int PreviewAuthoredChildren(CardZoneVisualizer zone)
+    public static int PreviewAuthoredChildren(CardZoneVisualizer zone, bool applySkin = false)
     {
         bool asToken = !zone.UsesFullCards;
         var slots = new List<RectTransform>();
@@ -63,9 +63,22 @@ public sealed class CardZoneVisualizerEditor : Editor
             // Slotted whether or not it resolved to a card: an unnamed instance left at the offset
             // baked into the prefab lands on top of a completely different anchor, which reads as
             // the card having gone to the wrong zone rather than as a card still missing its name.
-            Vector2 footprint = accepted
-                ? BoardCardView.PrepareForBoard(card, asToken)
-                : rect.rect.size;
+            Vector2 footprint = rect.rect.size;
+            if (accepted)
+            {
+                BoardCardView.PrepareForBoard(card, asToken);
+                if (applySkin && asToken)
+                {
+                    Font font = zone.board != null ? zone.board.interfaceFont : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+                    footprint = BoardPresentation.StyleTokenCard(card, font);
+                }
+                else if (applySkin)
+                {
+                    BoardPresentation.StyleFullCard(card);
+                    footprint = BoardPresentation.SkinFor(card.transform).cards.size;
+                    rect.sizeDelta = footprint;
+                }
+            }
 
             slots.Add(rect);
             foreach (var descendant in child.GetComponentsInChildren<RectTransform>(true)) touched.Add(descendant);

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>Runtime board chrome. Authored cards and match collections remain the source of truth.</summary>
-[DefaultExecutionOrder(-40)]
+[ExecuteAlways, DefaultExecutionOrder(-40)]
 [DisallowMultipleComponent]
 public sealed class BoardPresentation : MonoBehaviour
 {
@@ -37,14 +37,30 @@ public sealed class BoardPresentation : MonoBehaviour
         return skin;
     }
 
-    private T Track<T>(T component) where T : Component { generated.Add(component.gameObject); return component; }
+    private T Track<T>(T component) where T : Component
+    {
+        // Board chrome is rebuilt from the active skin whenever the scene loads.  Do not serialize
+        // these transient objects into the scene: that avoids stale generated UI after a script
+        // reload and keeps the authored hierarchy free of helper components.
+        if (!Application.isPlaying) component.gameObject.hideFlags |= HideFlags.DontSaveInEditor;
+        generated.Add(component.gameObject);
+        return component;
+    }
 
     private void ApplySkin(BoardSkin skin)
     {
         if (board == null || skin == null) return;
         board.preview?.Hide();
-        foreach (var go in generated) if (go != null) { go.SetActive(false); Destroy(go); }
-        generated.Clear(); counts.Clear();
+        ClearStaleGeneratedBackdrops();
+        // Clear cached labels before immediate edit-mode destruction, so LateUpdate never tries
+        // to write to a label that belonged to the previous generated chrome.
+        counts.Clear();
+        foreach (var go in generated)
+        {
+            if (go == null) continue;
+            DestroyGenerated(go);
+        }
+        generated.Clear();
         font = skin.typography.interfaceFont != null ? skin.typography.interfaceFont : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         board.interfaceFont = font;
         var shade = Track(Panel(transform, "Atmosphere veil", skin.colors.atmosphere));
@@ -58,8 +74,31 @@ public sealed class BoardPresentation : MonoBehaviour
         if (board.hand != null) board.hand.gap = skin.chrome.handGap;
         foreach (var label in skin.chrome.footerLabels) StyledLabel(transform, label);
         if (board.preview != null) board.preview.transform.SetAsLastSibling();
-        if (started)
+        // Runtime zones own generated BoardCardViews. In Edit mode the authored prefab instances
+        // are laid out by CardZoneVisualizerEditor instead, so rebuilding here would leave them
+        // out of sync with the scene authoring surface.
+        if (Application.isPlaying && started)
             foreach (var zone in board.GetComponentsInChildren<CardZoneVisualizer>()) zone.RefreshSkin();
+    }
+
+    private static void DestroyGenerated(GameObject go)
+    {
+        go.SetActive(false);
+        if (Application.isPlaying) Destroy(go);
+        else DestroyImmediate(go);
+    }
+
+    // Earlier edit-mode rebuilds did not retain their generated-object tracking after a domain
+    // reload. Remove those old full-screen/panel roots by their unique generated names before
+    // creating the current skin, otherwise their alpha values stack into an opaque black board.
+    private void ClearStaleGeneratedBackdrops()
+    {
+        foreach (var image in GetComponentsInChildren<Image>(true))
+        {
+            if (image == null) continue;
+            if (image.name != "Atmosphere veil" && image.name != "Board masthead" && image.name != "Zone surface") continue;
+            DestroyGenerated(image.gameObject);
+        }
     }
 
     private void StyledLabel(Transform parent, BoardSkin.LabelStyle style)
@@ -112,6 +151,7 @@ public sealed class BoardPresentation : MonoBehaviour
     {
         foreach (var entry in counts)
         {
+            if (entry.zone == null || entry.label == null) continue;
             var value = entry.zone.isHand ? $"{entry.zone.Count} / {board.maximumHandSize}" : entry.zone.Count.ToString("00");
             if (entry.label.text != value) entry.label.text = value;
         }
@@ -177,6 +217,7 @@ public sealed class BoardPresentation : MonoBehaviour
         var root = (RectTransform)card.transform;
         var real = root.Find("RealCard") as RectTransform;
         if (real == null) return;
+        ClearGeneratedCardChrome(root, real);
         real.anchorMin = real.anchorMax = Vector2.one * .5f;
         real.sizeDelta = style.size;
         real.anchoredPosition = Vector2.zero;
@@ -238,9 +279,68 @@ public sealed class BoardPresentation : MonoBehaviour
             }
             requirements.pivot = new Vector2(.5f, 1); requirements.sizeDelta = new Vector2(0, height);
         }
-        var accent = (skin.colors.cardTypes != null ? skin.colors.cardTypes : CardPalette.Default).GetCardTypeColor(card.cardData.GetCardType());
+        var accent = (skin.colors.cardTypes != null ? skin.colors.cardTypes : CardPalette.Default)
+            .GetCardTypeColor(card.cardData != null ? card.cardData.GetCardType() : CardTypeEnum.Unknown);
         Border(root, Color.Lerp(skin.colors.gold, accent, style.typeBorderBlend));
         Rule(root, accent, Vector2.zero, Vector2.right);
+    }
+
+    private static void ClearGeneratedCardChrome(RectTransform root, RectTransform real)
+    {
+        ClearChildrenNamed(root, "Obsidian card stock", "Frame", "Inlay");
+        for (int i = real.childCount - 1; i >= 0; i--)
+        {
+            var child = real.GetChild(i);
+            foreach (var ribbon in child.GetComponentsInChildren<Transform>(true))
+                if (ribbon.name == "Requirement ribbon")
+                {
+                    if (Application.isPlaying) Destroy(ribbon.gameObject);
+                    else DestroyImmediate(ribbon.gameObject);
+                }
+        }
+    }
+
+    private static void ClearChildrenNamed(Transform parent, params string[] names)
+    {
+        for (int i = parent.childCount - 1; i >= 0; i--)
+        {
+            var child = parent.GetChild(i);
+            if (!System.Array.Exists(names, name => child.name == name)) continue;
+            if (Application.isPlaying) Destroy(child.gameObject);
+            else DestroyImmediate(child.gameObject);
+        }
+    }
+
+    /// <summary>Styles an authored token card as the same framed, captioned token used at runtime.</summary>
+    public static Vector2 StyleTokenCard(Card card, Font interfaceFont)
+    {
+        var skin = SkinFor(card.transform);
+        var root = (RectTransform)card.transform;
+        ClearGeneratedTokenChrome(root);
+        card.ShowToken();
+        card.CompactTokenInPlace();
+        Vector2 tokenSize = card.TokenFootprint;
+        root.sizeDelta = tokenSize + Vector2.up * skin.tokens.captionHeight;
+        card.SetTokenPreviewOffset(Vector2.up * skin.tokens.captionHeight * .5f);
+        var backing = Panel(root, "Token stock", skin.colors.ink);
+        Stretch(backing.rectTransform, Vector2.zero, Vector2.one);
+        backing.transform.SetAsFirstSibling();
+        Border(backing.rectTransform, skin.colors.tokenBorder);
+        string caption = System.Text.RegularExpressions.Regex.Replace(card.cardData?.name ?? string.Empty, "(?<=[a-z])(?=[A-Z])", " ");
+        var label = TextLabel(root, caption, interfaceFont, skin.tokens.captionMaxSize, skin.colors.ivory,
+            Vector2.zero, Vector2.right, TextAnchor.MiddleCenter);
+        label.name = "Token caption";
+        label.rectTransform.pivot = new Vector2(.5f, 0);
+        label.rectTransform.sizeDelta = new Vector2(-skin.tokens.captionInset * 2, skin.tokens.captionHeight);
+        label.resizeTextForBestFit = true;
+        label.resizeTextMinSize = skin.tokens.captionMinSize;
+        label.resizeTextMaxSize = skin.tokens.captionMaxSize;
+        return root.sizeDelta;
+    }
+
+    private static void ClearGeneratedTokenChrome(RectTransform root)
+    {
+        ClearChildrenNamed(root, "Token stock", "Token caption");
     }
 
     private static void SetPiece(RectTransform real, string name, Vector2 size, Vector2 position, Color background)

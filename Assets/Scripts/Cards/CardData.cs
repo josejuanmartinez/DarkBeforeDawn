@@ -55,6 +55,9 @@ public class CardData
     // list of ints could not say which enum a given value belongs to.
     public List<CharacterOnlySpecialAbilityEnum> characterAbilities = new();
     public int procChance;
+    // MTG-style combat line for armies and characters.
+    public int attack;
+    public int defense;
 
     // --- Requirement icons (the cost row under the art) ----------------------------------------
     public int commanderSkillRequired;
@@ -276,6 +279,29 @@ public class CardData
             ? $"{troopLabel} {spriteTag}."
             : $"{raceLabel}. {troopLabel} {spriteTag}.";
         return abilities.Count > 0 ? $"{baseText} {string.Join(". ", abilities)}." : baseText;
+    }
+
+    public string GetCombatStatsText()
+    {
+        CardTypeEnum cardType = GetCardType();
+        if (cardType != CardTypeEnum.Army && cardType != CardTypeEnum.Character) return string.Empty;
+        int a = attack;
+        int d = defense;
+        if (a <= 0 && d <= 0 && cardType == CardTypeEnum.Army)
+        {
+            (a, d) = troopType switch
+            {
+                TroopsTypeEnum.ma => (1, 1), TroopsTypeEnum.ar => (2, 1), TroopsTypeEnum.li => (2, 2),
+                TroopsTypeEnum.hi => (3, 4), TroopsTypeEnum.lc => (3, 2), TroopsTypeEnum.hc => (6, 6),
+                TroopsTypeEnum.ca => (4, 2), TroopsTypeEnum.ws => (5, 5), _ => (1, 1)
+            };
+        }
+        if (a <= 0 && d <= 0 && cardType == CardTypeEnum.Character)
+        {
+            int level = Mathf.Clamp(GetCharacterPointTotal(), 1, 6);
+            a = d = level;
+        }
+        return a > 0 || d > 0 ? $"{Mathf.Max(0, a)}/{Mathf.Max(0, d)}" : string.Empty;
     }
 
     public string GetLandDescription()

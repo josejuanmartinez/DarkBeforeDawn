@@ -65,6 +65,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     [SerializeField] private CanvasGroup tokenCanvasGroup;
     [SerializeField] private CanvasGroup realCardCanvasGroup;
     [SerializeField] private TextMeshProUGUI environmentalSprite;
+    [SerializeField] private TMP_SpriteAsset compactSpriteAsset;
+    [SerializeField] private TextMeshProUGUI combatStatsText;
+    [SerializeField] private TextMeshProUGUI landResourcesText;
 
     [Header("Tuning")]
     [SerializeField] private Color requirementsMessageColor = Color.red;
@@ -243,6 +246,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         if (data == null) return;
         cardData = data;
+        EnsureCompactInfoVisuals();
         BindLegacyPrefabReferences();
         RestrictRaycastsToRootCard();
 
@@ -261,6 +265,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             baseDescription = GetActionDescription(data);
             descriptionText.text = baseDescription;
         }
+        RefreshCompactInfoVisuals();
 
         if (requirementsText != null)
         {
@@ -367,6 +372,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         if (data == null) return;
         cardData = data;
+        EnsureCompactInfoVisuals();
         BindLegacyPrefabReferences();
         ApplyCardTypeColor(data.GetCardType());
         if (environmentalSprite != null && environmentalSprite.gameObject != gameObject)
@@ -378,6 +384,72 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             // Never draw a sprite-less Image — it renders as a solid white square.
             tokenImage.enabled = sprite != null;
         }
+        RefreshCompactInfoVisuals();
+    }
+
+    private void EnsureCompactInfoVisuals()
+    {
+        TMP_SpriteAsset spriteAsset = compactSpriteAsset != null ? compactSpriteAsset : (descriptionText != null ? descriptionText.spriteAsset : null);
+        if (spriteAsset == null)
+        {
+            TextMeshProUGUI existingText = GetComponentInChildren<TextMeshProUGUI>(true);
+            spriteAsset = existingText != null ? existingText.spriteAsset : null;
+        }
+        Transform compactParent = transform;
+        if (isTokenOnlyPresentation && tokenImage != null)
+        {
+            // The artwork Image is the only rect guaranteed to match the visible token.  Keep all
+            // compact information inside it and mask it so no resource glyph can escape onto the
+            // board when a token is particularly small.
+            compactParent = tokenImage.transform;
+            if (tokenImage.GetComponent<RectMask2D>() == null)
+                tokenImage.gameObject.AddComponent<RectMask2D>();
+        }
+        if (combatStatsText == null)
+        {
+            GameObject go = new("CombatStats", typeof(RectTransform), typeof(TextMeshProUGUI));
+            go.transform.SetParent(compactParent, false);
+            combatStatsText = go.GetComponent<TextMeshProUGUI>();
+            ConfigureOverlay(combatStatsText, new Vector2(.52f, .02f), new Vector2(.98f, .32f), isTokenOnlyPresentation ? 18f : 34f, TextAlignmentOptions.BottomRight);
+            combatStatsText.spriteAsset = spriteAsset;
+        }
+        if (landResourcesText == null)
+        {
+            GameObject go = new("LandResources", typeof(RectTransform), typeof(TextMeshProUGUI));
+            go.transform.SetParent(compactParent, false);
+            landResourcesText = go.GetComponent<TextMeshProUGUI>();
+            ConfigureOverlay(landResourcesText, new Vector2(.04f, .18f), new Vector2(.96f, .82f), isTokenOnlyPresentation ? 22f : 42f, TextAlignmentOptions.Center);
+            landResourcesText.spriteAsset = spriteAsset;
+        }
+    }
+
+    private static void ConfigureOverlay(TextMeshProUGUI text, Vector2 min, Vector2 max, float size, TextAlignmentOptions alignment)
+    {
+        RectTransform rt = text.rectTransform; rt.anchorMin = min; rt.anchorMax = max; rt.offsetMin = rt.offsetMax = Vector2.zero;
+        text.fontSize = size; text.fontStyle = FontStyles.Bold; text.alignment = alignment; text.color = Color.white; text.outlineWidth = .25f; text.raycastTarget = false; text.richText = true;
+        text.enableAutoSizing = true; text.fontSizeMin = Mathf.Max(6f, size * .45f); text.fontSizeMax = size; text.overflowMode = TextOverflowModes.Truncate;
+    }
+
+    private void RefreshCompactInfoVisuals()
+    {
+        if (cardData == null) return;
+        CardTypeEnum type = cardData.GetCardType();
+        combatStatsText.text = cardData.GetCombatStatsText(); combatStatsText.gameObject.SetActive(!string.IsNullOrEmpty(combatStatsText.text));
+        landResourcesText.text = type == CardTypeEnum.Land && isTokenOnlyPresentation ? BuildLandResourceVisual() : string.Empty;
+        landResourcesText.gameObject.SetActive(type == CardTypeEnum.Land && isTokenOnlyPresentation && !string.IsNullOrEmpty(landResourcesText.text));
+    }
+
+    private string BuildLandResourceVisual()
+    {
+        List<string> parts = new();
+        if (cardData.leatherGranted > 0) parts.Add($"{cardData.leatherGranted}<sprite name=\"leather\">");
+        if (cardData.timberGranted > 0) parts.Add($"{cardData.timberGranted}<sprite name=\"timber\">");
+        if (cardData.mountsGranted > 0) parts.Add($"{cardData.mountsGranted}<sprite name=\"mounts\">");
+        if (cardData.ironGranted > 0) parts.Add($"{cardData.ironGranted}<sprite name=\"iron\">");
+        if (cardData.steelGranted > 0) parts.Add($"{cardData.steelGranted}<sprite name=\"steel\">");
+        if (cardData.mithrilGranted > 0) parts.Add($"{cardData.mithrilGranted}<sprite name=\"mithril\">");
+        if (cardData.goldGranted > 0) parts.Add($"{cardData.goldGranted}<sprite name=\"gold\">");
+        return string.Join("  ", parts);
     }
 
     // Reveals the environmental glyph, rendered via the normalized card name (the same scheme as the
@@ -1169,6 +1241,14 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
         Transform environmentalChild = tokenCanvasGroup.transform.Find("Environmental");
         if (environmentalChild != null) environmentalChild.gameObject.SetActive(false);
+    }
+
+    /// <summary>Moves the compact token artwork within an authored board-preview card.</summary>
+    public void SetTokenPreviewOffset(Vector2 offset)
+    {
+        BindLegacyPrefabReferences();
+        Transform visual = tokenCanvasGroup != null ? tokenCanvasGroup.transform : tokenImage != null ? tokenImage.transform : null;
+        if (visual != null) visual.localPosition = new Vector3(offset.x, offset.y, visual.localPosition.z);
     }
 
     public GameObject CreateTokenVisualClone(Transform parent, out Vector2 tokenSize)

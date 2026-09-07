@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 [CustomEditor(typeof(SkinManager))]
@@ -29,11 +30,19 @@ public sealed class SkinManagerEditor : Editor
                 active.objectReferenceValue = library.GetArrayElementAtIndex(index).objectReferenceValue;
         }
         serializedObject.ApplyModifiedProperties();
-        EditorGUILayout.HelpBox("Duplicate a skin to create a new look. Parameters belong to the asset and are saved even when edited during Play. The board refreshes live in Play; Edit mode uses the authored scene layout.", MessageType.Info);
+        EditorGUILayout.HelpBox("Duplicate a skin to create a new look. Parameters belong to the asset. Apply Active Skin rearranges the board in both Edit and Play mode.", MessageType.Info);
         using (new EditorGUI.DisabledScope(manager.ActiveSkin == null))
         {
             if (GUILayout.Button("Duplicate Active Skin")) Duplicate(manager);
-            if (Application.isPlaying && GUILayout.Button("Apply Active Skin")) manager.ApplyActiveSkin();
+            if (GUILayout.Button("Apply Active Skin"))
+            {
+                manager.ApplyActiveSkin();
+                ApplySkinToAuthoredCards(manager);
+                EditorUtility.SetDirty(manager);
+                if (manager.gameObject.scene.IsValid())
+                    EditorSceneManager.MarkSceneDirty(manager.gameObject.scene);
+                SceneView.RepaintAll();
+            }
         }
         if (manager.ActiveSkin == null) return;
         showParameters = EditorGUILayout.InspectorTitlebar(showParameters, manager.ActiveSkin);
@@ -41,6 +50,15 @@ public sealed class SkinManagerEditor : Editor
         {
             CreateCachedEditor(manager.ActiveSkin, null, ref skinEditor);
             skinEditor.OnInspectorGUI();
+        }
+    }
+    private static void ApplySkinToAuthoredCards(SkinManager manager)
+    {
+        var board = manager.GetComponent<Board>();
+        if (board == null) return;
+        foreach (var zone in board.GetComponentsInChildren<CardZoneVisualizer>(true))
+        {
+            CardZoneVisualizerEditor.PreviewAuthoredChildren(zone, applySkin: true);
         }
     }
     private void Duplicate(SkinManager manager)

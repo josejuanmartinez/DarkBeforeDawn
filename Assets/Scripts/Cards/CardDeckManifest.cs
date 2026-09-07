@@ -44,6 +44,7 @@ public class DeckData
     public string deckId;
     public string nation;
     public int alignment;
+    public string avatarCharacter = string.Empty;
     // Exactly one of these carries content: a meta deck fills cards and leaves cardRefs empty, a
     // reference deck does the reverse. Both are always written out, because JsonUtility has no way
     // to omit a field.

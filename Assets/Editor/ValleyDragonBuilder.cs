@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using Unity.Scripting.LifecycleManagement;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -10,8 +11,10 @@ public static class ValleyDragonBuilder
 {
     const string Folder="Assets/Art/ValleyDragon";
     const string RootName="Sky Dragon - East to West";
-    static Material hide,membrane,gold,eye;
-    static readonly Dictionary<Material,Geometry> geometry=new Dictionary<Material,Geometry>();
+    // These are short-lived editor build caches. Build() recreates/clears them explicitly,
+    // so lifecycle management must not reset them in the middle of a menu operation.
+    [NoAutoStaticsCleanup] static Material hide,membrane,gold,eye;
+    [NoAutoStaticsCleanup] static readonly Dictionary<Material,Geometry> geometry=new Dictionary<Material,Geometry>();
     sealed class Geometry
     {
         public readonly List<Vector3> vertices=new List<Vector3>();

@@ -143,7 +143,12 @@ public class CardZoneVisualizer : MonoBehaviour
     {
         if (board != null && board.preview != null) board.preview.HideFor(this);
         foreach (var view in views)
-            if (view != null) { view.gameObject.SetActive(false); Destroy(view.gameObject); }
+            if (view != null)
+            {
+                view.gameObject.SetActive(false);
+                if (Application.isPlaying) Destroy(view.gameObject);
+                else DestroyImmediate(view.gameObject);
+            }
         views.Clear();
     }
 

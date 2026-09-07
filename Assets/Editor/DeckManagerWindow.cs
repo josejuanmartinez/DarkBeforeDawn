@@ -127,6 +127,8 @@ public class DeckManagerWindow : EditorWindow
     private int editedCharacterAgent;
     private int editedCharacterEmissary;
     private int editedCharacterMage;
+    private int editedAttack;
+    private int editedDefense;
     private string editedStartingPC = string.Empty;
 
     private bool editedObjectHidden;
@@ -158,6 +160,7 @@ public class DeckManagerWindow : EditorWindow
     private int editedDeckAlignment;
     private bool editedDeckSharedToAll;
     private bool editedDeckExcluded;
+    private string editedDeckAvatar = string.Empty;
 
     private const float PreviewCardW = 275f;
     private const float PreviewCardH = 325f;
@@ -341,6 +344,14 @@ public class DeckManagerWindow : EditorWindow
             new GUIContent("Shared To All", "Not tied to one nation."), editedDeckSharedToAll);
         editedDeckExcluded = EditorGUILayout.Toggle(
             new GUIContent("Excluded", "World content that is never part of a player's drawable pool."), editedDeckExcluded);
+        if (!view.IsMeta)
+        {
+            List<string> avatars = new() { "None" };
+            avatars.AddRange(view.cards.Where(c => c != null && c.GetCardType() == CardTypeEnum.Character).Select(c => c.name).OrderBy(n => n));
+            int avatarIndex = Mathf.Max(0, avatars.IndexOf(string.IsNullOrWhiteSpace(editedDeckAvatar) ? "None" : editedDeckAvatar));
+            editedDeckAvatar = avatars[EditorGUILayout.Popup("Avatar", avatarIndex, avatars.ToArray())];
+            if (editedDeckAvatar == "None") editedDeckAvatar = string.Empty;
+        }
 
         EditorGUILayout.LabelField("Thematic");
         editedDeckThematic = EditorGUILayout.TextArea(
@@ -664,9 +675,12 @@ public class DeckManagerWindow : EditorWindow
             DrawEditableObjectStats(card);
         }
 
-        GUILayout.Space(10);
-        EditorGUILayout.LabelField("Editable Grants", EditorStyles.boldLabel);
-        DrawEditableGrants(card);
+        if (card.GetCardType() == CardTypeEnum.Land)
+        {
+            GUILayout.Space(10);
+            EditorGUILayout.LabelField("Resource Grants", EditorStyles.boldLabel);
+            DrawEditableGrants(card);
+        }
 
         GUILayout.Space(6);
         EditorGUILayout.BeginHorizontal();
@@ -800,6 +814,8 @@ public class DeckManagerWindow : EditorWindow
         editedCharacterAgent = EditorGUILayout.IntField("Agent", editedCharacterAgent);
         editedCharacterEmissary = EditorGUILayout.IntField("Emissary", editedCharacterEmissary);
         editedCharacterMage = EditorGUILayout.IntField("Mage", editedCharacterMage);
+        editedAttack = Mathf.Clamp(EditorGUILayout.IntField("Attack", editedAttack), 1, 6);
+        editedDefense = Mathf.Clamp(EditorGUILayout.IntField("Defense", editedDefense), 1, 6);
 
         GUILayout.Space(4);
         List<string> pcNames = GetAvailablePcNames();
@@ -952,6 +968,8 @@ public class DeckManagerWindow : EditorWindow
         editedCharacterAgent = Mathf.Max(0, card.agent);
         editedCharacterEmissary = Mathf.Max(0, card.emmissary);
         editedCharacterMage = Mathf.Max(0, card.mage);
+        editedAttack = Mathf.Clamp(card.attack, 1, 6);
+        editedDefense = Mathf.Clamp(card.defense, 1, 6);
         editedStartingPC = card.startingPC ?? string.Empty;
 
         editedObjectHidden = card.hidden;
@@ -988,6 +1006,7 @@ public class DeckManagerWindow : EditorWindow
         editedDeckAlignment = view.manifest.alignment;
         editedDeckSharedToAll = view.manifest.sharedToAll;
         editedDeckExcluded = view.manifest.excluded;
+        editedDeckAvatar = view.deckData?.avatarCharacter ?? string.Empty;
     }
 
     private static string GetEditableCardKey(CardData card)
@@ -1104,6 +1123,8 @@ public class DeckManagerWindow : EditorWindow
         target.agent = Mathf.Max(0, editedCharacterAgent);
         target.emmissary = Mathf.Max(0, editedCharacterEmissary);
         target.mage = Mathf.Max(0, editedCharacterMage);
+        target.attack = Mathf.Clamp(editedAttack, 1, 6);
+        target.defense = Mathf.Clamp(editedDefense, 1, 6);
         target.startingPC = editedStartingPC ?? string.Empty;
 
         CommitDeck(deckView, $"character stats for '{target.name}'");
@@ -1311,6 +1332,7 @@ public class DeckManagerWindow : EditorWindow
         view.deckData.deckId = newId;
         view.deckData.nation = view.manifest.nation;
         view.deckData.alignment = view.manifest.alignment;
+        view.deckData.avatarCharacter = editedDeckAvatar ?? string.Empty;
 
         // A meta deck's cards carry its own stamp, so they have to move with it or they go stale on
         // disk. A reference deck owns no cards; the loader stamps its identity onto resolved copies

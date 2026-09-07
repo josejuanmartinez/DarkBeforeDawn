@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using Unity.Scripting.LifecycleManagement;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -11,16 +12,18 @@ public static class RetroValleyBuilder
 {
     const string Folder = "Assets/Art/RetroValley";
     const string RootName = "The Golden Vale";
-    static System.Random random;
-    static Transform root;
-    static Dictionary<Material, Geometry> batches;
-    static Material earth, rock, bark, leaves, goldLeaves, pine, stone, trim, roof, ink, water, falls, flowers;
-    static Mesh sphere;
-    static readonly List<Vector3> stairTops = new List<Vector3>();
-    static readonly List<Vector3> stairBases = new List<Vector3>();
+    // These are short-lived editor build caches. Build() recreates/clears them explicitly,
+    // so lifecycle management must not reset them in the middle of a menu operation.
+    [NoAutoStaticsCleanup] static System.Random random;
+    [NoAutoStaticsCleanup] static Transform root;
+    [NoAutoStaticsCleanup] static Dictionary<Material, Geometry> batches;
+    [NoAutoStaticsCleanup] static Material earth, rock, bark, leaves, goldLeaves, pine, stone, trim, roof, ink, water, falls, flowers;
+    [NoAutoStaticsCleanup] static Mesh sphere;
+    [NoAutoStaticsCleanup] static readonly List<Vector3> stairTops = new List<Vector3>();
+    [NoAutoStaticsCleanup] static readonly List<Vector3> stairBases = new List<Vector3>();
     public static int StairCount => stairTops.Count;
-    public static float StairLandingGroundGap { get; private set; }
-    public static float MaximumStairSupportGap { get; private set; }
+    [field: NoAutoStaticsCleanup] public static float StairLandingGroundGap { get; private set; }
+    [field: NoAutoStaticsCleanup] public static float MaximumStairSupportGap { get; private set; }
 
     sealed class Geometry
     {

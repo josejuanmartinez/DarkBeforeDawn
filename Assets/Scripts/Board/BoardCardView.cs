@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 /// <summary>A stable layout slot; the preview never moves or resizes this slot.</summary>
 public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     private CanvasGroup highlight;
     private float targetHighlight;
+    private readonly List<ZoomImage> artworkMotion = new();
     public CardData Data { get; private set; }
     public CardZoneVisualizer Zone { get; private set; }
     public Vector2 NaturalSize { get; private set; }
@@ -18,6 +20,7 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
         Zone = zone;
         Data = data;
         NaturalSize = BuildVisual(zone.board, data, token, transform);
+        ConfigureArtworkMotion();
         if (zone is DeckVisualizer deck && deck.Count > 1)
         {
             var face = GetComponentInChildren<Card>();
@@ -46,10 +49,15 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
     public void OnPointerEnter(PointerEventData eventData)
     {
         targetHighlight = 1;
+        SetArtworkHover(true);
         if (Zone != null && Zone.board.preview != null) Zone.board.preview.Show(this);
     }
 
-    public void OnPointerExit(PointerEventData eventData) { targetHighlight = 0; }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        targetHighlight = 0;
+        SetArtworkHover(false);
+    }
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left && Zone != null && Zone.board.preview != null)
@@ -58,6 +66,49 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
     private void Update()
     {
         if (highlight != null) highlight.alpha = Mathf.MoveTowards(highlight.alpha, targetHighlight, Time.unscaledDeltaTime * BoardPresentation.SkinFor(transform).tokens.highlightFadeSpeed);
+    }
+
+    private void SetArtworkHover(bool hovered)
+    {
+        foreach (var effect in artworkMotion)
+            if (effect != null) effect.SetHovering(hovered);
+    }
+
+    private void AddArtworkMotion(Image image)
+    {
+        var effect = EnsureArtworkMotion(image);
+        if (effect == null) return;
+        artworkMotion.Add(effect);
+    }
+
+    /// <summary>
+    /// Makes the art inside an enlarged inspection card use the same in-frame camera motion as
+    /// the source card. The outer card transform remains untouched.
+    /// </summary>
+    public static void EnablePreviewArtworkMotion(Transform cardRoot)
+    {
+        if (cardRoot == null) return;
+        foreach (var image in cardRoot.GetComponentsInChildren<Image>(true))
+        {
+            if (image.name != "Image" && image.name != "TokenedImage") continue;
+            var effect = EnsureArtworkMotion(image);
+            if (effect != null) effect.SetHovering(true);
+        }
+    }
+
+    private static ZoomImage EnsureArtworkMotion(Image image)
+    {
+        if (image == null) return null;
+        var effect = image.GetComponent<ZoomImage>();
+        if (effect == null) effect = image.gameObject.AddComponent<ZoomImage>();
+        effect.EnableHoverMotion();
+        return effect;
+    }
+
+    private void ConfigureArtworkMotion()
+    {
+        foreach (var image in GetComponentsInChildren<Image>(true))
+            if (image.name == "Image" || image.name == "TokenedImage") AddArtworkMotion(image);
     }
 
     // The prefab composes a card out of pieces that deliberately overflow RealCard's 200x200 box —

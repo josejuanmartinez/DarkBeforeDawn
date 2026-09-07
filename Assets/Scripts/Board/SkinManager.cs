@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>Scene skin library and selection. Skin assets own the editable parameters.</summary>
-[DefaultExecutionOrder(-60), DisallowMultipleComponent]
+[ExecuteAlways, DefaultExecutionOrder(-60), DisallowMultipleComponent]
 public sealed class SkinManager : MonoBehaviour
 {
     [SerializeField] private List<BoardSkin> skins = new();
@@ -24,6 +24,10 @@ public sealed class SkinManager : MonoBehaviour
     {
         var skin = ActiveSkin;
         if (skin != lastSkin || (skin != null && skin.Revision != lastRevision)) ApplyActiveSkin();
+    }
+    private void OnValidate()
+    {
+        if (!Application.isPlaying) ApplyActiveSkin();
     }
     public void AddSkin(BoardSkin skin)
     {
@@ -46,6 +50,6 @@ public sealed class SkinManager : MonoBehaviour
     {
         lastSkin = ActiveSkin;
         lastRevision = lastSkin != null ? lastSkin.Revision : 0;
-        if (Application.isPlaying) SkinChanged?.Invoke(lastSkin);
+        SkinChanged?.Invoke(lastSkin);
     }
 }

@@ -26,24 +26,13 @@ public static class PcDescriptionBuilder
             sb.Append(regionName).Append(". ");
         }
 
-        string resources = BuildResourceSummary(data);
-        if (!string.IsNullOrWhiteSpace(resources))
-        {
-            sb.Append(resources).Append(".");
-        }
-        else if (hasRegion)
-        {
-            sb.Append("Resources.");
-        }
+        // Population centres do not produce resources. Resource grants belong exclusively to Land
+        // cards, whose own face and compact token render the granted materials.
 
         if (includeFoundingText && hasRegion)
         {
             if (sb.Length > 0) sb.Append(" ");
-            sb.Append("Can be founded in ").Append(regionName).Append(".");
-            if (!string.IsNullOrWhiteSpace(data.name))
-            {
-                sb.Append(" Allows recruiting characters born in ").Append(data.name).Append(".");
-            }
+            sb.Append("Allows recruiting characters, allies, factions and objects from this site.");
         }
 
         return sb.ToString();
