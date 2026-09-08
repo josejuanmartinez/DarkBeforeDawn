@@ -301,8 +301,15 @@ public class CardData
             int level = Mathf.Clamp(GetCharacterPointTotal(), 1, 6);
             a = d = level;
         }
-        return a > 0 || d > 0 ? $"{Mathf.Max(0, a)}/{Mathf.Max(0, d)}" : string.Empty;
+        return a > 0 || d > 0
+            ? $"{Mathf.Max(0, a)}{SpriteTag("attack")} {Mathf.Max(0, d)}{SpriteTag("defense")}"
+            : string.Empty;
     }
+
+    // Glyphs are never scaled inline: an inline <size> only enlarges the sprite, so auto-sizing
+    // shrinks the base font to compensate and the numbers beside it collapse. Overlays that want
+    // bigger resource or combat art raise their own font size instead (see Card.ConfigureOverlay).
+    public static string SpriteTag(string spriteName) => $"<sprite name=\"{spriteName}\">";
 
     public string GetLandDescription()
     {
@@ -315,13 +322,13 @@ public class CardData
         }
 
         List<string> grants = new();
-        if (leatherGranted > 0) grants.Add($"{leatherGranted}<sprite name=\"leather\">");
-        if (timberGranted > 0) grants.Add($"{timberGranted}<sprite name=\"timber\">");
-        if (mountsGranted > 0) grants.Add($"{mountsGranted}<sprite name=\"mounts\">");
-        if (ironGranted > 0) grants.Add($"{ironGranted}<sprite name=\"iron\">");
-        if (steelGranted > 0) grants.Add($"{steelGranted}<sprite name=\"steel\">");
-        if (mithrilGranted > 0) grants.Add($"{mithrilGranted}<sprite name=\"mithril\">");
-        if (goldGranted > 0) grants.Add($"{goldGranted}<sprite name=\"gold\">");
+        if (leatherGranted > 0) grants.Add(leatherGranted + SpriteTag("leather"));
+        if (timberGranted > 0) grants.Add(timberGranted + SpriteTag("timber"));
+        if (mountsGranted > 0) grants.Add(mountsGranted + SpriteTag("mounts"));
+        if (ironGranted > 0) grants.Add(ironGranted + SpriteTag("iron"));
+        if (steelGranted > 0) grants.Add(steelGranted + SpriteTag("steel"));
+        if (mithrilGranted > 0) grants.Add(mithrilGranted + SpriteTag("mithril"));
+        if (goldGranted > 0) grants.Add(goldGranted + SpriteTag("gold"));
         if (grants.Count > 0) parts.Add(string.Join(string.Empty, grants));
 
         if (!string.IsNullOrWhiteSpace(name))

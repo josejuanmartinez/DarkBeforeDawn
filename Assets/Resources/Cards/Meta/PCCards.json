@@ -5,19 +5,19 @@
     "cards": [
         {
             "cardId": 40001,
-            "name": "Aglarond",
-            "quote": "Aglarond gleams like a hidden jewel in the stone, bright with the memory of deep craft.",
+            "name": "Glimmerhold",
+            "quote": "Glimmerhold gleams like a hidden jewel in the stone, bright with the memory of deep craft.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "GapOfRohan"
+                "Windgate"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Aglarond",
-            "region": "GapOfRohan",
+            "region": "Windgate",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -78,19 +78,19 @@
         },
         {
             "cardId": 40002,
-            "name": "Aldburg",
-            "quote": "Eorl's folk raised Aldburg first of all their halls, and its gates still open eastward out of old habit.",
+            "name": "Aldenburg",
+            "quote": "The first riders of Mearhold raised Aldenburg before any other hall, and its gates still open eastward out of old habit.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rohan"
+                "Mearhold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Aldburg",
-            "region": "Rohan",
+            "region": "Mearhold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -151,19 +151,19 @@
         },
         {
             "cardId": 40003,
-            "name": "AmonHen",
-            "quote": "AmonHen crowns the river with a stern eye, as if watching for the same doom that once came south.",
+            "name": "The Seeing Hill",
+            "quote": "The Seeing Hill crowns the river with a stern eye, as if watching for the same doom that once came south.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Nindalf"
+                "Fenmire"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "AmonHen",
-            "region": "Nindalf",
+            "region": "Fenmire",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -224,19 +224,19 @@
         },
         {
             "cardId": 40004,
-            "name": "AmonLhaw",
-            "quote": "AmonLhaw watches the vale with a stillness that can outlast kingdoms.",
+            "name": "The Hearing Hill",
+            "quote": "The Hearing Hill watches the vale with a stillness that can outlast kingdoms.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "BrownLands"
+                "Scorchlands"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "AmonLhaw",
-            "region": "BrownLands",
+            "region": "Scorchlands",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -297,19 +297,19 @@
         },
         {
             "cardId": 40005,
-            "name": "AmonLind",
-            "quote": "AmonLind gleams with the old patience of a watchman who has seen the dusk before.",
+            "name": "Songhill",
+            "quote": "Songhill gleams with the old patience of a watchman who has seen the dusk before.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Eregion"
+                "Elderforge"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "AmonLind",
-            "region": "Eregion",
+            "region": "Elderforge",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -370,19 +370,19 @@
         },
         {
             "cardId": 40006,
-            "name": "AmonSul",
+            "name": "Windtop",
             "quote": "Weathertop remembers moonlight, blade, and the long ache of old days.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Arthedain"
+                "Ardwyn"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "AmonSul",
-            "region": "Arthedain",
+            "region": "Ardwyn",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -443,19 +443,19 @@
         },
         {
             "cardId": 40007,
-            "name": "Angren",
-            "quote": "Angren carries the iron memory of the mountains, where work and warning have always stood together.",
+            "name": "Angarn",
+            "quote": "Angarn carries the iron memory of the mountains, where work and warning have always stood together.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Dunland"
+                "Wyldmoor"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Angren",
-            "region": "Dunland",
+            "region": "Wyldmoor",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -516,19 +516,19 @@
         },
         {
             "cardId": 40008,
-            "name": "AnKaragmir",
-            "quote": "AnKaragmir is a dark hold of old metal and older grudges, and the stone remembers every strike.",
+            "name": "Karagmir",
+            "quote": "Karagmir is a dark hold of old metal and older grudges, and the stone remembers every strike.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Khand"
+                "Kharda"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "AnKaragmir",
-            "region": "Khand",
+            "region": "Kharda",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -589,19 +589,19 @@
         },
         {
             "cardId": 40009,
-            "name": "Annuminas",
-            "quote": "The stones of Annuminas wait in silence for the hand that shall wake them.",
+            "name": "Aumeneth",
+            "quote": "The stones of Aumeneth wait in silence for the hand that shall wake them.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "TheNorthDowns"
+                "TheBarrowfells"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Annuminas",
-            "region": "TheNorthDowns",
+            "region": "TheBarrowfells",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -662,19 +662,19 @@
         },
         {
             "cardId": 40010,
-            "name": "Arailt",
-            "quote": "Arailt lies quiet beneath the hills, but the ground there still knows the tread of ancient feet.",
+            "name": "Aralt",
+            "quote": "Aralt lies quiet beneath the hills, but the ground there still knows the tread of ancient feet.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Dunland"
+                "Wyldmoor"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Arailt",
-            "region": "Dunland",
+            "region": "Wyldmoor",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -735,19 +735,19 @@
         },
         {
             "cardId": 40011,
-            "name": "Ardumir",
-            "quote": "The shipwrights of Ardumir lay keels for the Corsairs and take their price in favours, not coin.",
+            "name": "Ardhumir",
+            "quote": "The shipwrights of Ardhumir lay keels for the Corsairs and take their price in favours, not coin.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Umbar"
+                "Corsarn"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Ardumir",
-            "region": "Umbar",
+            "region": "Corsarn",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -808,19 +808,19 @@
         },
         {
             "cardId": 40012,
-            "name": "Ashkiri",
-            "quote": "Ashkiri is ash-bright and watchful, as if the land had learned to glare back at the sun.",
+            "name": "Ashkirr",
+            "quote": "Ashkirr is ash-bright and watchful, as if the land had learned to glare back at the sun.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Dagorlad"
+                "The Battlewaste"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Ashkiri",
-            "region": "Dagorlad",
+            "region": "The Battlewaste",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -881,19 +881,19 @@
         },
         {
             "cardId": 40013,
-            "name": "Azanulimbar-Dum",
-            "quote": "At Azanulimbar-Dum, the walls are stern, and the silence is the silence of deep craft.",
+            "name": "Azanhold",
+            "quote": "At Azanhold, the walls are stern, and the silence is the silence of deep craft.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "IronHills"
+                "Ironreach"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "AzanulimbarDum",
-            "region": "IronHills",
+            "region": "Ironreach",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -954,19 +954,19 @@
         },
         {
             "cardId": 40014,
-            "name": "Barad Ungol",
-            "quote": "Barad Ungol keeps a dark and sinking quiet, and few cross it without care.",
+            "name": "Weftspire",
+            "quote": "Weftspire keeps a dark and sinking quiet, and few cross it without care.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Ungol"
+                "TheWeftmarch"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "BaradUngol",
-            "region": "Ungol",
+            "region": "TheWeftmarch",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -1027,19 +1027,19 @@
         },
         {
             "cardId": 40015,
-            "name": "Barad-dur",
+            "name": "Nharoth",
             "quote": "Barad-dûr broods over the ash like the final answer of a will that would not bend.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Gorgoroth"
+                "Cinderplain"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "BaradDur",
-            "region": "Gorgoroth",
+            "region": "Cinderplain",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -1100,19 +1100,19 @@
         },
         {
             "cardId": 40016,
-            "name": "BaradHarn",
-            "quote": "BaradHarn lifts a grim tower over the waste, and its shadow reaches farther than its walls.",
+            "name": "Barrahn",
+            "quote": "Barrahn lifts a grim tower over the waste, and its shadow reaches farther than its walls.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "FarHarad"
+                "FarSarrath"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "BaradHarn",
-            "region": "FarHarad",
+            "region": "FarSarrath",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -1173,19 +1173,19 @@
         },
         {
             "cardId": 40017,
-            "name": "BaradWath",
-            "quote": "BaradWath stands like a dark sentinel over the waste, its shadow long with command.",
+            "name": "Wraithtower",
+            "quote": "Wraithtower stands like a dark sentinel over the waste, its shadow long with command.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Gorgoroth"
+                "Cinderplain"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "BaradWath",
-            "region": "Gorgoroth",
+            "region": "Cinderplain",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -1246,19 +1246,19 @@
         },
         {
             "cardId": 40018,
-            "name": "BarakShathur",
-            "quote": "BarakShathur keeps the grave look of the hills, as if it had been hewn to outlast grief.",
+            "name": "Barrakshor",
+            "quote": "Barrakshor keeps the grave look of the hills, as if it had been hewn to outlast grief.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "IronHills"
+                "Ironreach"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "BarakShathur",
-            "region": "IronHills",
+            "region": "Ironreach",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -1319,19 +1319,19 @@
         },
         {
             "cardId": 40019,
-            "name": "Barrow-downs",
-            "quote": "Luglurak crouches over Nurn like a black horn of the earth, and no light lingers long beside it.",
+            "name": "The Cairnfields",
+            "quote": "Lugrakh crouches over Nurhal like a black horn of the earth, and no light lingers long beside it.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Cardolan"
+                "Caldwold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "BarrowDowns",
-            "region": "Cardolan",
+            "region": "Caldwold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -1392,19 +1392,19 @@
         },
         {
             "cardId": 40020,
-            "name": "Belegost",
-            "quote": "The hard places of Belegost seem to answer only to patience and long memory.",
+            "name": "Bargost",
+            "quote": "The hard places of Bargost seem to answer only to patience and long memory.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "EredLuin"
+                "Bluecrags"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Belegost",
-            "region": "EredLuin",
+            "region": "Bluecrags",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -1465,19 +1465,19 @@
         },
         {
             "cardId": 40021,
-            "name": "BeornHouse",
-            "quote": "BeornHouse stands as a stronghold of hearth and stern hospitality, where the bears’ memory is never far.",
+            "name": "Bearhall",
+            "quote": "Bearhall stands as a stronghold of hearth and stern hospitality, where the bears’ memory is never far.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Anduin"
+                "Longwater"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "BeornHouse",
-            "region": "Anduin",
+            "region": "Longwater",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -1538,19 +1538,19 @@
         },
         {
             "cardId": 40022,
-            "name": "Bree",
-            "quote": "Bree keeps faith with the road, though the years grow wary.",
+            "name": "Crossway",
+            "quote": "Crossway keeps faith with the road, though the years grow wary.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Arthedain"
+                "Ardwyn"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Bree",
-            "region": "Arthedain",
+            "region": "Ardwyn",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -1611,19 +1611,19 @@
         },
         {
             "cardId": 40023,
-            "name": "Buckland",
-            "quote": "At Buckland the evening stillness is kept like a lamp in the window.",
+            "name": "Bramblemarch",
+            "quote": "At Bramblemarch the evening stillness is kept like a lamp in the window.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "TheShire"
+                "Thornhollow"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Buckland",
-            "region": "TheShire",
+            "region": "Thornhollow",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -1684,19 +1684,19 @@
         },
         {
             "cardId": 40024,
-            "name": "BuhrWidu",
-            "quote": "BuhrWidu shelters its people beneath the wood, where the trees are old enough to judge strangers.",
+            "name": "Burwidd",
+            "quote": "Burwidd shelters its people beneath the wood, where the trees are old enough to judge strangers.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rhovanion"
+                "Wildermark"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "BuhrWidu",
-            "region": "Rhovanion",
+            "region": "Wildermark",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -1757,19 +1757,19 @@
         },
         {
             "cardId": 40025,
-            "name": "ButhOvaisa",
-            "quote": "ButhOvaisa lies far from easy roads, where the silence of the land feels deliberate.",
+            "name": "Buthavais",
+            "quote": "Buthavais lies far from easy roads, where the silence of the land feels deliberate.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "BrownLands"
+                "Scorchlands"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "ButhOvaisa",
-            "region": "BrownLands",
+            "region": "Scorchlands",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -1830,19 +1830,19 @@
         },
         {
             "cardId": 40026,
-            "name": "Bywater",
-            "quote": "Bywater sits at the crossing of roads and the meeting of waters, and does not forget either.",
+            "name": "Millpond",
+            "quote": "Millpond sits at the crossing of roads and the meeting of waters, and does not forget either.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "TheShire"
+                "Thornhollow"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Bywater",
-            "region": "TheShire",
+            "region": "Thornhollow",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -1903,19 +1903,19 @@
         },
         {
             "cardId": 40027,
-            "name": "CairAndros",
-            "quote": "CairAndros holds the river like a spear-point, watching north and south with hard patience.",
+            "name": "Foamisle",
+            "quote": "Foamisle holds the river like a spear-point, watching north and south with hard patience.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Nindalf"
+                "Fenmire"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "CairAndros",
-            "region": "Nindalf",
+            "region": "Fenmire",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -1976,19 +1976,19 @@
         },
         {
             "cardId": 40028,
-            "name": "Caldur",
-            "quote": "Half the cargo of Caldur is salt and fish; the ledgers do not say what the other half is.",
+            "name": "Kaldhur",
+            "quote": "Half the cargo of Kaldhur is salt and fish; the ledgers do not say what the other half is.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Umbar"
+                "Corsarn"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Caldur",
-            "region": "Umbar",
+            "region": "Corsarn",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -2049,19 +2049,19 @@
         },
         {
             "cardId": 40029,
-            "name": "CamethBrin",
-            "quote": "CamethBrin rises over the fields like a warning that never forgot how to speak.",
+            "name": "Kamreth",
+            "quote": "Kamreth rises over the fields like a warning that never forgot how to speak.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rhudaur"
+                "Ruhdar"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "CamethBrin",
-            "region": "Rhudaur",
+            "region": "Ruhdar",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -2122,19 +2122,19 @@
         },
         {
             "cardId": 40030,
-            "name": "Carach Angren",
-            "quote": "Carach Angren lies under a cruel name, and the stones there have not forgiven.",
+            "name": "The Iron Jaws",
+            "quote": "The Iron Jaws lies under a cruel name, and the stones there have not forgiven.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Udun"
+                "TheEmberpit"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "CarachAngren",
-            "region": "Udun",
+            "region": "TheEmberpit",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -2195,19 +2195,19 @@
         },
         {
             "cardId": 40031,
-            "name": "Caradhras",
-            "quote": "At Caradhras, the walls are stern, and the silence is the silence of deep craft.",
+            "name": "Cruachan",
+            "quote": "At Cruachan, the walls are stern, and the silence is the silence of deep craft.",
             "actionEffect": "The Cruel Mountain turns on those who trespass. Own mountain natives buffed. Own non-native mountain slowed. Enemy mountain emissaries gain Arcane Insight. Enemy mountain units 30-40% frozen; commanders halted.",
             "type": "PC",
             "tags": [
-                "MistyMountains"
+                "ThePalewall"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Caradhras",
-            "region": "MistyMountains",
+            "region": "ThePalewall",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -2268,19 +2268,19 @@
         },
         {
             "cardId": 40032,
-            "name": "Caras Galadhon",
-            "quote": "In Caras Galadhon, the trees keep their own counsel, and none should presume to answer for them.",
+            "name": "Amberhold",
+            "quote": "In Amberhold, the trees keep their own counsel, and none should presume to answer for them.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Lothlorien"
+                "Lumeneth"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "CarasGaladhon",
-            "region": "Lothlorien",
+            "region": "Lumeneth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -2341,19 +2341,19 @@
         },
         {
             "cardId": 40033,
-            "name": "CarasAmarth",
-            "quote": "CarasAmarth watches from the black wood as if the trees themselves had been set to guard a secret.",
+            "name": "Amarath",
+            "quote": "Amarath watches from the black wood as if the trees themselves had been set to guard a secret.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "NorthernMirkwood"
+                "NorthNightwood"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "CarasAmarth",
-            "region": "NorthernMirkwood",
+            "region": "NorthNightwood",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -2414,19 +2414,19 @@
         },
         {
             "cardId": 40034,
-            "name": "CarasCelairnen",
+            "name": "Silverwatch",
             "quote": "Beneath its boughs, Caras Celairnen keeps memory bright and still.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Arthedain"
+                "Ardwyn"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "CarasCelairnen",
-            "region": "Arthedain",
+            "region": "Ardwyn",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -2487,19 +2487,19 @@
         },
         {
             "cardId": 40035,
-            "name": "CarasMirilond",
-            "quote": "CarasMirilond glows with a pale remnant of grandeur, though time has thinned its banners.",
+            "name": "Miralond",
+            "quote": "Miralond glows with a pale remnant of grandeur, though time has thinned its banners.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Umbar"
+                "Corsarn"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "CarasMirilond",
-            "region": "Umbar",
+            "region": "Corsarn",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -2560,19 +2560,19 @@
         },
         {
             "cardId": 40036,
-            "name": "CarasTolfalas",
-            "quote": "CarasTolfalas clings to the sea-wind with the stubborn grace of stone weathered but unbroken.",
+            "name": "Tolfaras",
+            "quote": "Tolfaras clings to the sea-wind with the stubborn grace of stone weathered but unbroken.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "NearHarad"
+                "NearSarrath"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "CarasTolfalas",
-            "region": "NearHarad",
+            "region": "NearSarrath",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -2633,19 +2633,19 @@
         },
         {
             "cardId": 40037,
-            "name": "CarnDum",
-            "quote": "CarnDum stands hard against the North, and even its ruin looks carved for endurance.",
+            "name": "Kern Duhl",
+            "quote": "Kern Duhl stands hard against the North, and even its ruin looks carved for endurance.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Angmar"
+                "Grimhold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "CarnDum",
-            "region": "Angmar",
+            "region": "Grimhold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -2706,19 +2706,19 @@
         },
         {
             "cardId": 40038,
-            "name": "Carvarad",
-            "quote": "Carvarad holds itself like a fortress of old resolve, half-buried in memory and rain.",
+            "name": "Karvarad",
+            "quote": "Karvarad holds itself like a fortress of old resolve, half-buried in memory and rain.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rhun"
+                "Vashkar"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Carvarad",
-            "region": "Rhun",
+            "region": "Vashkar",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -2779,19 +2779,19 @@
         },
         {
             "cardId": 40039,
-            "name": "CeberFanuin",
-            "quote": "At CeberFanuin, the boughs bend low enough to listen, but not to forgive.",
+            "name": "Cevrun",
+            "quote": "At Cevrun, the boughs bend low enough to listen, but not to forgive.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "SouthernMirkwood"
+                "SouthNightwood"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "CeberFanuin",
-            "region": "SouthernMirkwood",
+            "region": "SouthNightwood",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -2852,19 +2852,19 @@
         },
         {
             "cardId": 40040,
-            "name": "Celebannon",
-            "quote": "At Celebannon, the boughs bend low enough to listen, but not to forgive.",
+            "name": "Silverbourne",
+            "quote": "At Silverbourne, the boughs bend low enough to listen, but not to forgive.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "NorthernMirkwood"
+                "NorthNightwood"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Celebannon",
-            "region": "NorthernMirkwood",
+            "region": "NorthNightwood",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -2925,19 +2925,19 @@
         },
         {
             "cardId": 40041,
-            "name": "Celebost",
-            "quote": "Celebost stands where the veins run thin but the will of its makers runs deep.",
+            "name": "Silverfast",
+            "quote": "Silverfast stands where the veins run thin but the will of its makers runs deep.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "WitheredHeath"
+                "TheBlightheath"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Celebost",
-            "region": "WitheredHeath",
+            "region": "TheBlightheath",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -2998,19 +2998,19 @@
         },
         {
             "cardId": 40042,
-            "name": "CerinAmroth",
-            "quote": "CerinAmroth lifts a green and golden hush above LÃ³rien, where even sorrow seems to keep its distance.",
+            "name": "The Golden Mound",
+            "quote": "The Golden Mound lifts a green and golden hush above LÃ³rien, where even sorrow seems to keep its distance.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Lothlorien"
+                "Lumeneth"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "CerinAmroth",
-            "region": "Lothlorien",
+            "region": "Lumeneth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -3071,19 +3071,19 @@
         },
         {
             "cardId": 40043,
-            "name": "CirithUngol",
-            "quote": "CirithUngol is a soft place, and its softness is the first of its deceits.",
+            "name": "The Weft Stair",
+            "quote": "The Weft Stair is a soft place, and its softness is the first of its deceits.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Ungol"
+                "TheWeftmarch"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "CirithUngol",
-            "region": "Ungol",
+            "region": "TheWeftmarch",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -3144,19 +3144,19 @@
         },
         {
             "cardId": 40044,
-            "name": "Crickhollow",
-            "quote": "Crickhollow lies quiet under hedge and hill, a hidden door for those who must travel unseen.",
+            "name": "Crook Hollow",
+            "quote": "Crook Hollow lies quiet under hedge and hill, a hidden door for those who must travel unseen.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "TheShire"
+                "Thornhollow"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Crickhollow",
-            "region": "TheShire",
+            "region": "Thornhollow",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -3217,19 +3217,19 @@
         },
         {
             "cardId": 40045,
-            "name": "Dale",
-            "quote": "Dale keeps the memory of the Long Lake and the mountain road, bright with trade and hard with loss.",
+            "name": "Dalemoot",
+            "quote": "Dalemoot keeps the memory of the Long Lake and the mountain road, bright with trade and hard with loss.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rhovanion"
+                "Wildermark"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Dale",
-            "region": "Rhovanion",
+            "region": "Wildermark",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -3290,19 +3290,19 @@
         },
         {
             "cardId": 40046,
-            "name": "DeadMarshes",
-            "quote": "The reeds about DeadMarshes whisper like witnesses who would rather not be named.",
+            "name": "The Drowned Fen",
+            "quote": "The reeds about The Drowned Fen whisper like witnesses who would rather not be named.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Nindalf"
+                "Fenmire"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "DeadMarshes",
-            "region": "Nindalf",
+            "region": "Fenmire",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -3363,19 +3363,19 @@
         },
         {
             "cardId": 40047,
-            "name": "Derndingle",
-            "quote": "Derndingle shelters the ancient wood with a silence that feels almost vowed.",
+            "name": "The Dern Ring",
+            "quote": "The Dern Ring shelters the ancient wood with a silence that feels almost vowed.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rohan"
+                "Mearhold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Derndingle",
-            "region": "Rohan",
+            "region": "Mearhold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -3436,19 +3436,19 @@
         },
         {
             "cardId": 40048,
-            "name": "Dol Guldur",
-            "quote": "Dol Guldur festers under the trees, and the wood around it seems to draw a darker breath.",
+            "name": "Dol Vorrath",
+            "quote": "Dol Vorrath festers under the trees, and the wood around it seems to draw a darker breath.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "SouthernMirkwood"
+                "SouthNightwood"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "DolGuldur",
-            "region": "SouthernMirkwood",
+            "region": "SouthNightwood",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -3509,19 +3509,19 @@
         },
         {
             "cardId": 40049,
-            "name": "DolAmroth",
-            "quote": "DolAmroth shines like a white helm set upon the sea, bright against the long road of dusk.",
+            "name": "Swanhold",
+            "quote": "Swanhold shines like a white helm set upon the sea, bright against the long road of dusk.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "SouthernGondor"
+                "LowerArdanth"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "DolAmroth",
-            "region": "SouthernGondor",
+            "region": "LowerArdanth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -3582,19 +3582,19 @@
         },
         {
             "cardId": 40050,
-            "name": "Druadan Forest",
-            "quote": "The hush of Druadan Forest is deep as root and as old as the first road through the dark.",
+            "name": "Drusan Forest",
+            "quote": "The hush of Drusan Forest is deep as root and as old as the first road through the dark.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "NorthernGondor"
+                "UpperArdanth"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "DruadanForest",
-            "region": "NorthernGondor",
+            "region": "UpperArdanth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -3655,19 +3655,19 @@
         },
         {
             "cardId": 40051,
-            "name": "Dunharrow",
-            "quote": "Dunharrow lies in the mountains like a grave that has chosen to stand upright.",
+            "name": "Dunbarrow",
+            "quote": "Dunbarrow lies in the mountains like a grave that has chosen to stand upright.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rohan"
+                "Mearhold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Dunharrow",
-            "region": "Rohan",
+            "region": "Mearhold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -3728,19 +3728,19 @@
         },
         {
             "cardId": 40052,
-            "name": "Durthang",
-            "quote": "Durthang clings to the Emyn Muil with a grim old patience, and its black height still dares the sky.",
+            "name": "Durthrang",
+            "quote": "Durthrang clings to the Emyn Muil with a grim old patience, and its black height still dares the sky.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Ithilien"
+                "Greenmarch"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Durthang",
-            "region": "Ithilien",
+            "region": "Greenmarch",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -3801,19 +3801,19 @@
         },
         {
             "cardId": 40053,
-            "name": "Eagle's Eyrie",
+            "name": "The Skyrie",
             "quote": "High on the eyrie the Eagles keep a lonely watch.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "MistyMountains"
+                "ThePalewall"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "EagleSEyrie",
-            "region": "MistyMountains",
+            "region": "ThePalewall",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -3874,19 +3874,19 @@
         },
         {
             "cardId": 40054,
-            "name": "Eastfold",
-            "quote": "Eastfold lies open to wind and horse-track, and its fields remember riders before plowmen.",
+            "name": "Easterfold",
+            "quote": "Easterfold lies open to wind and horse-track, and its fields remember riders before plowmen.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rohan"
+                "Mearhold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Eastfold",
-            "region": "Rohan",
+            "region": "Mearhold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -3947,19 +3947,19 @@
         },
         {
             "cardId": 40055,
-            "name": "Edhellond",
+            "name": "Aelhaven",
             "quote": "The broken haven still hears the sea in its sleep.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Anfalas"
+                "Longstrand"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Edhellond",
-            "region": "Anfalas",
+            "region": "Longstrand",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4020,19 +4020,19 @@
         },
         {
             "cardId": 40056,
-            "name": "Edoras",
-            "quote": "Edoras keeps its golden roofs against the sky, and the wind there still remembers riders.",
+            "name": "Mearsted",
+            "quote": "Mearsted keeps its golden roofs against the sky, and the wind there still remembers riders.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rohan"
+                "Mearhold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Edoras",
-            "region": "Rohan",
+            "region": "Mearhold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4093,19 +4093,19 @@
         },
         {
             "cardId": 40057,
-            "name": "Elgaer",
-            "quote": "Elgaer is ringed with a quiet that makes every hoofbeat sound like trespass.",
+            "name": "Elgarr",
+            "quote": "Elgarr is ringed with a quiet that makes every hoofbeat sound like trespass.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "SeaOfRhun"
+                "AmberSea"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Elgaer",
-            "region": "SeaOfRhun",
+            "region": "AmberSea",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4166,19 +4166,19 @@
         },
         {
             "cardId": 40058,
-            "name": "Elostirion",
-            "quote": "Elostirion keeps its gaze westward, as if memory itself were a star.",
+            "name": "Vaelstir",
+            "quote": "Vaelstir keeps its gaze westward, as if memory itself were a star.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Lindon"
+                "Aelmere"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Elostirion",
-            "region": "Lindon",
+            "region": "Aelmere",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4239,19 +4239,19 @@
         },
         {
             "cardId": 40059,
-            "name": "Enedhir",
-            "quote": "Enedhir holds the road with the stubborn silence of a place that has buried too many names.",
+            "name": "Ennodir",
+            "quote": "Ennodir holds the road with the stubborn silence of a place that has buried too many names.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Dunland"
+                "Wyldmoor"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Enedhir",
-            "region": "Dunland",
+            "region": "Wyldmoor",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4312,19 +4312,19 @@
         },
         {
             "cardId": 40060,
-            "name": "Erebor (Lost)",
-            "quote": "Erebor (Lost) keeps its noble outline even in ruin, like a crown left in ash.",
+            "name": "Erenkarr (Lost)",
+            "quote": "Erenkarr (Lost) keeps its noble outline even in ruin, like a crown left in ash.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rhovanion"
+                "Wildermark"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "EreborLost",
-            "region": "Rhovanion",
+            "region": "Wildermark",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4385,19 +4385,19 @@
         },
         {
             "cardId": 40061,
-            "name": "Erech",
-            "quote": "Erech remembers the oath-stones, and even the wind there speaks with old restraint.",
+            "name": "The Oathstone",
+            "quote": "The Oathstone remembers the oath-stones, and even the wind there speaks with old restraint.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "TheWhiteMountains"
+                "TheWhitespine"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Erech",
-            "region": "TheWhiteMountains",
+            "region": "TheWhitespine",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4458,19 +4458,19 @@
         },
         {
             "cardId": 40062,
-            "name": "ErynVorn",
-            "quote": "ErynVorn keeps the old forestÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s memory under its boughs, green and unbowed in the dusk.",
+            "name": "Blackwold",
+            "quote": "Blackwold keeps the old forestÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s memory under its boughs, green and unbowed in the dusk.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Cardolan"
+                "Caldwold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "ErynVorn",
-            "region": "Cardolan",
+            "region": "Caldwold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4531,19 +4531,19 @@
         },
         {
             "cardId": 40063,
-            "name": "Esgaroth",
-            "quote": "Esgaroth gleams on the water's edge, bright enough to tempt memory and fire alike.",
+            "name": "Merehaven",
+            "quote": "Merehaven gleams on the water's edge, bright enough to tempt memory and fire alike.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rhovanion"
+                "Wildermark"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Esgaroth",
-            "region": "Rhovanion",
+            "region": "Wildermark",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4604,19 +4604,19 @@
         },
         {
             "cardId": 40064,
-            "name": "FangornSCamp",
-            "quote": "FangornSCamp sits at the edge of Fangorn like a hesitant footstep beside an ancient mind.",
+            "name": "Wealdwatch Camp",
+            "quote": "Wealdwatch Camp sits at the edge of the Weald like a hesitant footstep beside an ancient mind.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "GapOfRohan"
+                "Windgate"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "FangornSCamp",
-            "region": "GapOfRohan",
+            "region": "Windgate",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4677,19 +4677,19 @@
         },
         {
             "cardId": 40065,
-            "name": "Fanuilond",
-            "quote": "The bells of Fanuilond ring for the tide as faithfully as for the King.",
+            "name": "Whitestrand",
+            "quote": "The bells of Whitestrand ring for the tide as faithfully as for the King.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "SouthernGondor"
+                "LowerArdanth"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Fanuilond",
-            "region": "SouthernGondor",
+            "region": "LowerArdanth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4752,19 +4752,19 @@
         },
         {
             "cardId": 40066,
-            "name": "FennasDrunin",
-            "quote": "At FennasDrunin, the water is still enough to hide danger and patient enough to keep it.",
+            "name": "Fenngate",
+            "quote": "At Fenngate, the water is still enough to hide danger and patient enough to keep it.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rhudaur"
+                "Ruhdar"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "FennasDrunin",
-            "region": "Rhudaur",
+            "region": "Ruhdar",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4825,19 +4825,19 @@
         },
         {
             "cardId": 40067,
-            "name": "Forlond",
-            "quote": "Forlond faces the western sea with the old patience of the Eldar, and its shore is never idle.",
+            "name": "Northhaven",
+            "quote": "Northhaven faces the western sea with the old patience of the Eldar, and its shore is never idle.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Lindon"
+                "Aelmere"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Forlond",
-            "region": "Lindon",
+            "region": "Aelmere",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4898,19 +4898,19 @@
         },
         {
             "cardId": 40068,
-            "name": "FornostErain",
+            "name": "Kingsfast",
             "quote": "Fornost lies like a fallen crown upon the North.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "TheNorthDowns"
+                "TheBarrowfells"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "FornostErain",
-            "region": "TheNorthDowns",
+            "region": "TheBarrowfells",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4971,19 +4971,19 @@
         },
         {
             "cardId": 40069,
-            "name": "Forochel",
-            "quote": "Under the hard sky of Forochel, even silence has a stern voice.",
+            "name": "Rimewatch",
+            "quote": "Under the hard sky of Rimewatch, even silence has a stern voice.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Bay of Forochel"
+                "The Rimewater"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Forochel",
-            "region": "Bay of Forochel",
+            "region": "The Rimewater",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -5044,19 +5044,19 @@
         },
         {
             "cardId": 40070,
-            "name": "Framsburg",
-            "quote": "Framsburg keeps a stern watch over the river-country, as if Fram’s old strength had never loosened its grip.",
+            "name": "Frennsburg",
+            "quote": "Frennsburg keeps a stern watch over the river-country, as if Fram’s old strength had never loosened its grip.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Anduin"
+                "Longwater"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Framsburg",
-            "region": "Anduin",
+            "region": "Longwater",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -5117,19 +5117,19 @@
         },
         {
             "cardId": 40071,
-            "name": "Freawul",
-            "quote": "Freawul clings to the high shoulders of the mountains, and its herdsmen count old grudges as carefully as their goats.",
+            "name": "Frewold",
+            "quote": "Frewold clings to the high shoulders of the mountains, and its herdsmen count old grudges as carefully as their goats.",
             "actionEffect": "The Cruel Mountain turns on those who trespass. Own mountain natives buffed. Own non-native mountain slowed. Enemy mountain emissaries gain Arcane Insight. Enemy mountain units 30-40% frozen; commanders halted.",
             "type": "PC",
             "tags": [
-                "TheWhiteMountains"
+                "TheWhitespine"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Freawul",
-            "region": "TheWhiteMountains",
+            "region": "TheWhitespine",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -5190,19 +5190,19 @@
         },
         {
             "cardId": 40072,
-            "name": "Galabrynd",
-            "quote": "Galabrynd stands where the forest climbs the mountain, and its sentries walk on branch and battlement alike.",
+            "name": "Galbrand",
+            "quote": "Galbrand stands where the forest climbs the mountain, and its sentries walk on branch and battlement alike.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "MountainsOfMirkwood"
+                "NightwoodPeaks"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Galabrynd",
-            "region": "MountainsOfMirkwood",
+            "region": "NightwoodPeaks",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -5263,19 +5263,19 @@
         },
         {
             "cardId": 40073,
-            "name": "GladdenFields",
+            "name": "The Irisfields",
             "quote": "The Gladden Fields lie hushed, where water and reed keep old secrets.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Anduin"
+                "Longwater"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "GladdenFields",
-            "region": "Anduin",
+            "region": "Longwater",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -5336,19 +5336,19 @@
         },
         {
             "cardId": 40074,
-            "name": "Goblin Gate",
-            "quote": "Goblin Gate gnaws at the pass like a broken fang, and the dark beyond it is never still.",
+            "name": "The Under Gate",
+            "quote": "The Under Gate gnaws at the pass like a broken fang, and the dark beyond it is never still.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "MistyMountains"
+                "ThePalewall"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "GoblinGate",
-            "region": "MistyMountains",
+            "region": "ThePalewall",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -5409,19 +5409,19 @@
         },
         {
             "cardId": 40075,
-            "name": "Gondmaeglon",
-            "quote": "Gondmaeglon opens beneath the sky, and there is little there to soften the eye of war.",
+            "name": "Maglon Keep",
+            "quote": "Maglon Keep opens beneath the sky, and there is little there to soften the eye of war.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "WitheredHeath"
+                "TheBlightheath"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Gondmaeglon",
-            "region": "WitheredHeath",
+            "region": "TheBlightheath",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -5482,19 +5482,19 @@
         },
         {
             "cardId": 40076,
-            "name": "Gundabad",
-            "quote": "Gundabad bears the deep memory of the North, grim as a mountain scar that never closed.",
+            "name": "Gunnabar",
+            "quote": "Gunnabar bears the deep memory of the North, grim as a mountain scar that never closed.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Angmar"
+                "Grimhold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Gundabad",
-            "region": "Angmar",
+            "region": "Grimhold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -5555,19 +5555,19 @@
         },
         {
             "cardId": 40077,
-            "name": "Harlond",
-            "quote": "Harlond stands by tide or river as if waiting for something that has not yet named itself.",
+            "name": "Southhaven",
+            "quote": "Southhaven stands by tide or river as if waiting for something that has not yet named itself.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Lindon"
+                "Aelmere"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Harlond",
-            "region": "Lindon",
+            "region": "Aelmere",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -5628,19 +5628,19 @@
         },
         {
             "cardId": 40078,
-            "name": "Havens of Umbar",
-            "quote": "The Havens of Umbar smile to the sea like a bright knife hidden in silk.",
+            "name": "The Corsarn Havens",
+            "quote": "The The Corsarn Havens smile to the sea like a bright knife hidden in silk.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Umbar"
+                "Corsarn"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "HavensOfUmbar",
-            "region": "Umbar",
+            "region": "Corsarn",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -5701,19 +5701,19 @@
         },
         {
             "cardId": 40079,
-            "name": "HelmDeep",
-            "quote": "HelmDeep bears the mark of war, yet its walls still answer with iron courage.",
+            "name": "The Deepgard",
+            "quote": "The Deepgard bears the mark of war, yet its walls still answer with iron courage.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "GapOfRohan"
+                "Windgate"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "HelmDeep",
-            "region": "GapOfRohan",
+            "region": "Windgate",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -5774,19 +5774,19 @@
         },
         {
             "cardId": 40080,
-            "name": "Henneth Annun",
-            "quote": "Henneth Annun hides the stream in shadow, as though the land itself guarded the hidden door.",
+            "name": "The Sunset Window",
+            "quote": "The Sunset Window hides the stream in shadow, as though the land itself guarded the hidden door.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Ithilien"
+                "Greenmarch"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "HennethAnnun",
-            "region": "Ithilien",
+            "region": "Greenmarch",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -5847,19 +5847,19 @@
         },
         {
             "cardId": 40081,
-            "name": "Hobbiton",
-            "quote": "The green of Hobbiton seems soft, yet it has a watchful heart.",
+            "name": "Hollyburrow",
+            "quote": "The green of Hollyburrow seems soft, yet it has a watchful heart.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "TheShire"
+                "Thornhollow"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Hobbiton",
-            "region": "TheShire",
+            "region": "Thornhollow",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -5920,19 +5920,19 @@
         },
         {
             "cardId": 40082,
-            "name": "Ilanin",
-            "quote": "Ilanin is quiet under the east wind, and its stillness feels like a warning held back.",
+            "name": "Ilannin",
+            "quote": "Ilannin is quiet under the east wind, and its stillness feels like a warning held back.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rhun"
+                "Vashkar"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Ilanin",
-            "region": "Rhun",
+            "region": "Vashkar",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -5993,19 +5993,19 @@
         },
         {
             "cardId": 40083,
-            "name": "Imdorad",
-            "quote": "Imdorad feels like a hall built for men who kept faith when the world forgot them.",
+            "name": "Imdorath",
+            "quote": "Imdorath feels like a hall built for men who kept faith when the world forgot them.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "NorthernGondor"
+                "UpperArdanth"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Imdorad",
-            "region": "NorthernGondor",
+            "region": "UpperArdanth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -6066,19 +6066,19 @@
         },
         {
             "cardId": 40084,
-            "name": "Imladris",
-            "quote": "In Imladris grief is borne as song, and not as burden.",
+            "name": "Imravel",
+            "quote": "In Imravel grief is borne as song, and not as burden.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rivendell"
+                "Hollowvale"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Imladris",
-            "region": "Rivendell",
+            "region": "Hollowvale",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -6139,19 +6139,19 @@
         },
         {
             "cardId": 40085,
-            "name": "Isigir",
-            "quote": "Isigir feels like a gate forgotten by empire and remembered by none but crows.",
+            "name": "Isighir",
+            "quote": "Isighir feels like a gate forgotten by empire and remembered by none but crows.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Umbar"
+                "Corsarn"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Isigir",
-            "region": "Umbar",
+            "region": "Corsarn",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -6212,19 +6212,19 @@
         },
         {
             "cardId": 40086,
-            "name": "JugRijeisha",
-            "quote": "JugRijeisha guards its own heat and dust, a place where the desert has learned to keep secrets.",
+            "name": "Jurajesh",
+            "quote": "Jurajesh guards its own heat and dust, a place where the desert has learned to keep secrets.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "FarHarad"
+                "FarSarrath"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "JugRijeisha",
-            "region": "FarHarad",
+            "region": "FarSarrath",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -6285,19 +6285,19 @@
         },
         {
             "cardId": 40087,
-            "name": "Kal Nargil",
-            "quote": "Kal Nargil grips the hills in black silence, where no bird lingers long.",
+            "name": "Kal Narghil",
+            "quote": "Kal Narghil grips the hills in black silence, where no bird lingers long.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Nurn"
+                "Nurhal"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "KalNargil",
-            "region": "Nurn",
+            "region": "Nurhal",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -6358,19 +6358,19 @@
         },
         {
             "cardId": 40088,
-            "name": "Kas Shadoul",
-            "quote": "Kas Shadoul stands under a heat-hazed sky, and its walls seem to hoard the dayÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s last breath.",
+            "name": "Kashadoul",
+            "quote": "Kashadoul stands under a heat-hazed sky, and its walls seem to hoard the dayÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s last breath.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "FarHarad"
+                "FarSarrath"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "KasShadoul",
-            "region": "FarHarad",
+            "region": "FarSarrath",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -6431,19 +6431,19 @@
         },
         {
             "cardId": 40089,
-            "name": "KasShafra",
-            "quote": "KasShafra clings to the edge of the southern heat, where even shadow seems worn thin.",
+            "name": "Kashafra",
+            "quote": "Kashafra clings to the edge of the southern heat, where even shadow seems worn thin.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "NearHarad"
+                "NearSarrath"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "KasShafra",
-            "region": "NearHarad",
+            "region": "NearSarrath",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -6504,19 +6504,19 @@
         },
         {
             "cardId": 40090,
-            "name": "KhandAmu",
-            "quote": "KhandAmu drinks the sun and gives back only heat, dust, and hard intent.",
+            "name": "Khardamu",
+            "quote": "Khardamu drinks the sun and gives back only heat, dust, and hard intent.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Khand"
+                "Kharda"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "KhandAmu",
-            "region": "Khand",
+            "region": "Kharda",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -6577,19 +6577,19 @@
         },
         {
             "cardId": 40091,
-            "name": "Khazad-Dum",
-            "quote": "Khazad-Dum endures in buried majesty, and the dark below it still rings with memory.",
+            "name": "Durndelve",
+            "quote": "Durndelve endures in buried majesty, and the dark below it still rings with memory.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "MistyMountains"
+                "ThePalewall"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "KhazadDum",
-            "region": "MistyMountains",
+            "region": "ThePalewall",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -6650,19 +6650,19 @@
         },
         {
             "cardId": 40092,
-            "name": "Kheled-nala",
-            "quote": "At Kheled-nala, the water runs clear and the ore runs true, and both are hoarded with equal care.",
+            "name": "Khelnala",
+            "quote": "At Khelnala, the water runs clear and the ore runs true, and both are hoarded with equal care.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rhun"
+                "Vashkar"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "KheledNala",
-            "region": "Rhun",
+            "region": "Vashkar",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -6723,19 +6723,19 @@
         },
         {
             "cardId": 40093,
-            "name": "Lag-lithlad",
-            "quote": "The watch-orcs of Lag-lithlad squint across the ash of Udun, counting every spark the Mountain throws.",
+            "name": "Lagleth",
+            "quote": "The watch-orcs of Lagleth squint across the ash of TheEmberpit, counting every spark the Mountain throws.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Lithlad"
+                "Ashflats"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "LagLithlad",
-            "region": "Lithlad",
+            "region": "Ashflats",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -6796,19 +6796,19 @@
         },
         {
             "cardId": 40094,
-            "name": "Lag-orod",
-            "quote": "The snows above Lag-orod are trampled black, for its garrison never sleeps and never leaves.",
+            "name": "Kraghold",
+            "quote": "The snows above Kraghold are trampled black, for its garrison never sleeps and never leaves.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "MistyMountains"
+                "ThePalewall"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "LagOrod",
-            "region": "MistyMountains",
+            "region": "ThePalewall",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -6869,19 +6869,19 @@
         },
         {
             "cardId": 40095,
-            "name": "LagariOrath",
-            "quote": "LagariOrath sits under a low sky, and the wind there sounds almost like counsel.",
+            "name": "Lagorath",
+            "quote": "Lagorath sits under a low sky, and the wind there sounds almost like counsel.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Khand"
+                "Kharda"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "LagariOrath",
-            "region": "Khand",
+            "region": "Kharda",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -6942,19 +6942,19 @@
         },
         {
             "cardId": 40096,
-            "name": "LagScara",
-            "quote": "LagScara lies under a restless sky, and the stillness there feels earned by threat.",
+            "name": "Skarra Camp",
+            "quote": "Skarra Camp lies under a restless sky, and the stillness there feels earned by threat.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Ithilien"
+                "Greenmarch"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "LagScara",
-            "region": "Ithilien",
+            "region": "Greenmarch",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -7015,19 +7015,19 @@
         },
         {
             "cardId": 40097,
-            "name": "LagVrasfotak",
-            "quote": "LagVrasfotak watches from a barren reach, half-fortress and half-buried warning.",
+            "name": "Vraskar",
+            "quote": "Vraskar watches from a barren reach, half-fortress and half-buried warning.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Gorgoroth"
+                "Cinderplain"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "LagVrasfotak",
-            "region": "Gorgoroth",
+            "region": "Cinderplain",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -7088,19 +7088,19 @@
         },
         {
             "cardId": 40098,
-            "name": "Laorki",
-            "quote": "Laorki keeps its own counsel, where the earth is old and the paths are few.",
+            "name": "Laorkhi",
+            "quote": "Laorkhi keeps its own counsel, where the earth is old and the paths are few.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Khand"
+                "Kharda"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Laorki",
-            "region": "Khand",
+            "region": "Kharda",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -7161,19 +7161,19 @@
         },
         {
             "cardId": 40099,
-            "name": "Larach Duhnnan",
-            "quote": "From Larach Duhnnan the war-bands of Dunland gather, and the smoke of their forges drifts down the dale.",
+            "name": "Larach Dunn",
+            "quote": "From Larach Dunn the war-bands of Wyldmoor gather, and the smoke of their forges drifts down the dale.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Dunland"
+                "Wyldmoor"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "LarachDuhnnan",
-            "region": "Dunland",
+            "region": "Wyldmoor",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -7234,19 +7234,19 @@
         },
         {
             "cardId": 40100,
-            "name": "LarHuz",
-            "quote": "LarHuz endures like an old work of Dwarven hands, sure, severe, and unbending.",
+            "name": "Larhuzz",
+            "quote": "Larhuzz endures like an old work of Dwarven hands, sure, severe, and unbending.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "IronHills"
+                "Ironreach"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "LarHuz",
-            "region": "IronHills",
+            "region": "Ironreach",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -7307,19 +7307,19 @@
         },
         {
             "cardId": 40101,
-            "name": "Linhir",
-            "quote": "Linhir keeps its harbor face to the tides, with Gondor’s old courage under the salt air.",
+            "name": "Linhar",
+            "quote": "Linhar keeps its harbor face to the tides, with Ardanth’s old courage under the salt air.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "SouthernGondor"
+                "LowerArdanth"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Linhir",
-            "region": "SouthernGondor",
+            "region": "LowerArdanth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -7380,19 +7380,19 @@
         },
         {
             "cardId": 40102,
-            "name": "LondDaerEnedh",
+            "name": "Greymouth Haven",
             "quote": "Lond Daer still leans upon the river, as though the age of ships were not yet done.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Cardolan"
+                "Caldwold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "LondDaerEnedh",
-            "region": "Cardolan",
+            "region": "Caldwold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -7453,19 +7453,19 @@
         },
         {
             "cardId": 40103,
-            "name": "Lugarlur",
-            "quote": "Lugarlur crouches beneath the old shadow, waiting with the patience of iron.",
+            "name": "Lugarr",
+            "quote": "Lugarr crouches beneath the old shadow, waiting with the patience of iron.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "FarHarad"
+                "FarSarrath"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Lugarlur",
-            "region": "FarHarad",
+            "region": "FarSarrath",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -7526,19 +7526,19 @@
         },
         {
             "cardId": 40104,
-            "name": "Luglurak",
-            "quote": "Luglurak crouches beneath the old shadow, waiting with the patience of iron.",
+            "name": "Lugrakh",
+            "quote": "Lugrakh crouches beneath the old shadow, waiting with the patience of iron.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Nurn"
+                "Nurhal"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Luglurak",
-            "region": "Nurn",
+            "region": "Nurhal",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -7599,19 +7599,19 @@
         },
         {
             "cardId": 40105,
-            "name": "Maethelburg",
-            "quote": "Maethelburg holds its river crossing like a clasp of iron, small but unwilling to break.",
+            "name": "Methelburg",
+            "quote": "Methelburg holds its river crossing like a clasp of iron, small but unwilling to break.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Anduin"
+                "Longwater"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Maethelburg",
-            "region": "Anduin",
+            "region": "Longwater",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -7672,19 +7672,19 @@
         },
         {
             "cardId": 40106,
-            "name": "Malborn High",
-            "quote": "Men of the North Downs say Malborn High was built to watch one star, and fell when that star was no longer watched.",
+            "name": "Marlbourne High",
+            "quote": "Men of the North Downs say Marlbourne High was built to watch one star, and fell when that star was no longer watched.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "TheNorthDowns"
+                "TheBarrowfells"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "MalbornHigh",
-            "region": "TheNorthDowns",
+            "region": "TheBarrowfells",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -7745,19 +7745,19 @@
         },
         {
             "cardId": 40107,
-            "name": "Methir",
-            "quote": "Methir keeps the old road under a guarded sky, and every stone there seems to have a watcher.",
+            "name": "Methira",
+            "quote": "Methira keeps the old road under a guarded sky, and every stone there seems to have a watcher.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "NearHarad"
+                "NearSarrath"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Methir",
-            "region": "NearHarad",
+            "region": "NearSarrath",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -7818,19 +7818,19 @@
         },
         {
             "cardId": 40108,
-            "name": "Michel Delving",
-            "quote": "Michel Delving stands small to the eye, yet stout in the keeping of the Shire.",
+            "name": "Great Delving",
+            "quote": "Great Delving stands small to the eye, yet stout in the keeping of the Thornhollow.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "TheShire"
+                "Thornhollow"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "MichelDelving",
-            "region": "TheShire",
+            "region": "Thornhollow",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -7891,19 +7891,19 @@
         },
         {
             "cardId": 40109,
-            "name": "Minas Durlith",
-            "quote": "Minas Durlith watches from a black spur of the Mountains of Ash, and nothing crosses the grey slopes beneath it unmarked.",
+            "name": "Durlith Spire",
+            "quote": "Durlith Spire watches from a black spur of the Mountains of Ash, and nothing crosses the grey slopes beneath it unmarked.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Lithlad"
+                "Ashflats"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "MinasDurlith",
-            "region": "Lithlad",
+            "region": "Ashflats",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -7964,19 +7964,19 @@
         },
         {
             "cardId": 40110,
-            "name": "Minas Morgul",
-            "quote": "Minas Morgul burns with a pale malice, and the road to it seems to remember fear.",
+            "name": "The Pale City",
+            "quote": "The Pale City burns with a pale malice, and the road to it seems to remember fear.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Ungol"
+                "TheWeftmarch"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "MinasMorgul",
-            "region": "Ungol",
+            "region": "TheWeftmarch",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8037,19 +8037,19 @@
         },
         {
             "cardId": 40111,
-            "name": "Minas Tirith",
-            "quote": "Minas Tirith rises white against the long shadow of the East, steadfast as a horn-call at dawn.",
+            "name": "Sunspire",
+            "quote": "Sunspire rises white against the long shadow of the East, steadfast as a horn-call at dawn.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "NorthernGondor"
+                "UpperArdanth"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "MinasTirith",
-            "region": "NorthernGondor",
+            "region": "UpperArdanth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8112,19 +8112,19 @@
         },
         {
             "cardId": 40112,
-            "name": "MinasArthor",
-            "quote": "MinasArthor stands in stern splendor, and its towers hold the wind like a vow.",
+            "name": "Mornspire",
+            "quote": "Mornspire stands in stern splendor, and its towers hold the wind like a vow.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "NorthernGondor"
+                "UpperArdanth"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "MinasArthor",
-            "region": "NorthernGondor",
+            "region": "UpperArdanth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8185,19 +8185,19 @@
         },
         {
             "cardId": 40113,
-            "name": "Mistrand",
-            "quote": "The riders of Mistrand break their horses on the open steppe, and their bargains wherever it profits them.",
+            "name": "Mistrande",
+            "quote": "The riders of Mistrande break their horses on the open steppe, and their bargains wherever it profits them.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rhun"
+                "Vashkar"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Mistrand",
-            "region": "Rhun",
+            "region": "Vashkar",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8258,19 +8258,19 @@
         },
         {
             "cardId": 40114,
-            "name": "Morannon",
-            "quote": "Morannon stands unyielding, a gate that has learned to answer only to ruin.",
+            "name": "The Ironmaw",
+            "quote": "The Ironmaw stands unyielding, a gate that has learned to answer only to ruin.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Udun"
+                "TheEmberpit"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Morannon",
-            "region": "Udun",
+            "region": "TheEmberpit",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8331,19 +8331,19 @@
         },
         {
             "cardId": 40115,
-            "name": "Morthondost",
-            "quote": "Morthondost stands as if carved from the will of the men who would not yield the river-road.",
+            "name": "Blackroot Post",
+            "quote": "Blackroot Post stands as if carved from the will of the men who would not yield the river-road.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "SouthernGondor"
+                "LowerArdanth"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Morthondost",
-            "region": "SouthernGondor",
+            "region": "LowerArdanth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8404,19 +8404,19 @@
         },
         {
             "cardId": 40116,
-            "name": "MountDoom",
-            "quote": "MountDoom broods in fire and ash, as though the mountain itself had grown a bitter heart.",
+            "name": "The Emberwound",
+            "quote": "The Emberwound broods in fire and ash, as though the mountain itself had grown a bitter heart.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Gorgoroth"
+                "Cinderplain"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "MountDoom",
-            "region": "Gorgoroth",
+            "region": "Cinderplain",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8477,19 +8477,19 @@
         },
         {
             "cardId": 40117,
-            "name": "MtGram",
-            "quote": "MtGram stands with a dwarf-fast stubbornness, as though the hill itself had taken a vow.",
+            "name": "Mount Grunn",
+            "quote": "Mount Grunn stands with a dwarf-fast stubbornness, as though the hill itself had taken a vow.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Angmar"
+                "Grimhold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "MtGram",
-            "region": "Angmar",
+            "region": "Grimhold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8550,19 +8550,19 @@
         },
         {
             "cardId": 40118,
-            "name": "Nanduhirion",
-            "quote": "From the flets of Nanduhirion the wardens mark every shadow that creeps out of the mountains toward the Golden Wood.",
+            "name": "Nandruin",
+            "quote": "From the flets of Nandruin the wardens mark every shadow that creeps out of the mountains toward the Golden Wood.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Lothlorien"
+                "Lumeneth"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Nanduhirion",
-            "region": "Lothlorien",
+            "region": "Lumeneth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8623,19 +8623,19 @@
         },
         {
             "cardId": 40119,
-            "name": "Neburcha",
-            "quote": "Neburcha shelters a stillness that feels earned, as though hardship had taken root and stayed.",
+            "name": "Neburkha",
+            "quote": "Neburkha shelters a stillness that feels earned, as though hardship had taken root and stayed.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Khand"
+                "Kharda"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Neburcha",
-            "region": "Khand",
+            "region": "Kharda",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8696,19 +8696,19 @@
         },
         {
             "cardId": 40120,
-            "name": "Nin-in-eilph",
-            "quote": "The reeds of Nin-in-eilph hide fires that cannot be found twice by the same path.",
+            "name": "The Swanfens",
+            "quote": "The reeds of The Swanfens hide fires that cannot be found twice by the same path.",
             "actionEffect": "The Cruel Mountain turns on those who trespass. Own mountain natives buffed. Own non-native mountain slowed. Enemy mountain emissaries gain Arcane Insight. Enemy mountain units 30-40% frozen; commanders halted.",
             "type": "PC",
             "tags": [
-                "Eregion"
+                "Elderforge"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "NinInEilph",
-            "region": "Eregion",
+            "region": "Elderforge",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8769,19 +8769,19 @@
         },
         {
             "cardId": 40121,
-            "name": "Noegrod",
-            "quote": "Noegrod rings with the memory of smiths, and its broken halls still listen for the hammer.",
+            "name": "Norgrad",
+            "quote": "Norgrad rings with the memory of smiths, and its broken halls still listen for the hammer.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "EredLuin"
+                "Bluecrags"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Noegrod",
-            "region": "EredLuin",
+            "region": "Bluecrags",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8842,19 +8842,19 @@
         },
         {
             "cardId": 40122,
-            "name": "Norr-dum",
+            "name": "Norrhold",
             "quote": "In the northern dark, the old delvings still yield to those who speak the true names of stone.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "WitheredHeath"
+                "TheBlightheath"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "NorrDum",
-            "region": "WitheredHeath",
+            "region": "TheBlightheath",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8915,19 +8915,19 @@
         },
         {
             "cardId": 40123,
-            "name": "Nurumurl",
-            "quote": "Nurumurl stands in a country that has taught itself to endure by never sleeping.",
+            "name": "Nurmurl",
+            "quote": "Nurmurl stands in a country that has taught itself to endure by never sleeping.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Nurn"
+                "Nurhal"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Nurumurl",
-            "region": "Nurn",
+            "region": "Nurhal",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8988,19 +8988,19 @@
         },
         {
             "cardId": 40124,
-            "name": "Olbamarl",
-            "quote": "Olbamarl keeps its old hush by the water, and the reeds there seem to remember names.",
+            "name": "Olbamar",
+            "quote": "Olbamar keeps its old hush by the water, and the reeds there seem to remember names.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Ungol"
+                "TheWeftmarch"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Olbamarl",
-            "region": "Ungol",
+            "region": "TheWeftmarch",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -9061,19 +9061,19 @@
         },
         {
             "cardId": 40125,
-            "name": "Old Forest",
-            "quote": "The Old Forest is older than the road, and not all old things are kindly.",
+            "name": "The Elderwood",
+            "quote": "The The Elderwood is older than the road, and not all old things are kindly.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "TheShire"
+                "Thornhollow"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "OldForest",
-            "region": "TheShire",
+            "region": "Thornhollow",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -9134,19 +9134,19 @@
         },
         {
             "cardId": 40126,
-            "name": "Ongushar",
-            "quote": "Ongushar is a thorn of a place, sharp enough to turn away easy hope.",
+            "name": "Onghazar",
+            "quote": "Onghazar is a thorn of a place, sharp enough to turn away easy hope.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "BrownLands"
+                "Scorchlands"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Ongushar",
-            "region": "BrownLands",
+            "region": "Scorchlands",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -9207,19 +9207,19 @@
         },
         {
             "cardId": 40127,
-            "name": "OrdugaAivaisa",
-            "quote": "OrdugaAivaisa feels like a watch-post left standing after the rest of a kingdom was taken away.",
+            "name": "Ordugavais",
+            "quote": "Ordugavais feels like a watch-post left standing after the rest of a kingdom was taken away.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Nurn"
+                "Nurhal"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "OrdugaAivaisa",
-            "region": "Nurn",
+            "region": "Nurhal",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -9280,19 +9280,19 @@
         },
         {
             "cardId": 40128,
-            "name": "Orthanc",
-            "quote": "Orthanc stands black and precise, as if stone itself had been taught arrogance.",
+            "name": "Thornspire",
+            "quote": "Thornspire stands black and precise, as if stone itself had been taught arrogance.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "GapOfRohan"
+                "Windgate"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Orthanc",
-            "region": "GapOfRohan",
+            "region": "Windgate",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -9353,19 +9353,19 @@
         },
         {
             "cardId": 40129,
-            "name": "Osgiliath",
-            "quote": "Osgiliath bears its wounds openly, yet the river still remembers the city that once was.",
+            "name": "Starholt",
+            "quote": "Starholt bears its wounds openly, yet the river still remembers the city that once was.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Ithilien"
+                "Greenmarch"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Osgiliath",
-            "region": "Ithilien",
+            "region": "Greenmarch",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -9426,19 +9426,19 @@
         },
         {
             "cardId": 40130,
-            "name": "Ost-in-Edhil",
-            "quote": "Bandits out of Dunland now camp in the courts of Ost-in-Edhil, warming their hands where the Rings were forged.",
+            "name": "Ostvaelin",
+            "quote": "Bandits out of Wyldmoor now camp in the courts of Ostvaelin, warming their hands in the ruin of the old forge-courts.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Eregion"
+                "Elderforge"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "OstInEdhil",
-            "region": "Eregion",
+            "region": "Elderforge",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -9499,19 +9499,19 @@
         },
         {
             "cardId": 40131,
-            "name": "Ostigurth",
-            "quote": "Ostigurth keeps its secrets in the stone, where even echoes seem cautious.",
+            "name": "Ostgurth",
+            "quote": "Ostgurth keeps its secrets in the stone, where even echoes seem cautious.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Lithlad"
+                "Ashflats"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Ostigurth",
-            "region": "Lithlad",
+            "region": "Ashflats",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -9572,19 +9572,19 @@
         },
         {
             "cardId": 40132,
-            "name": "Ovatharac",
-            "quote": "Ovatharac keeps the feel of a place where power once walked and still leaves its footprints.",
+            "name": "Ovathrak",
+            "quote": "Ovathrak keeps the feel of a place where power once walked and still leaves its footprints.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Khand"
+                "Kharda"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Ovatharac",
-            "region": "Khand",
+            "region": "Kharda",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -9645,19 +9645,19 @@
         },
         {
             "cardId": 40133,
-            "name": "Paths of the Dead",
-            "quote": "The Paths of the Dead still feel the chill of unbreathed oaths, and no cheer lingers there.",
+            "name": "The Dead Roads",
+            "quote": "The The Dead Roads still feel the chill of unbreathed oaths, and no cheer lingers there.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "TheWhiteMountains"
+                "TheWhitespine"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "PathsOfTheDead",
-            "region": "TheWhiteMountains",
+            "region": "TheWhitespine",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -9718,19 +9718,19 @@
         },
         {
             "cardId": 40134,
-            "name": "Pelargir",
-            "quote": "Pelargir wears the scars of trade and war alike, yet the tide still brings and carries its memory.",
+            "name": "Kingsquay",
+            "quote": "Kingsquay wears the scars of trade and war alike, yet the tide still brings and carries its memory.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "NorthernGondor"
+                "UpperArdanth"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Pelargir",
-            "region": "NorthernGondor",
+            "region": "UpperArdanth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -9791,19 +9791,19 @@
         },
         {
             "cardId": 40135,
-            "name": "Pellardur",
-            "quote": "Pellardur stands between sea and memory, a place where old trade routes left more than footprints.",
+            "name": "Pellandur",
+            "quote": "Pellandur stands between sea and memory, a place where old trade routes left more than footprints.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Umbar"
+                "Corsarn"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Pellardur",
-            "region": "Umbar",
+            "region": "Corsarn",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -9864,19 +9864,19 @@
         },
         {
             "cardId": 40136,
-            "name": "Raider Hold",
-            "quote": "At Raider Hold, the water carries old news, and none can tell which tidings are friendly.",
+            "name": "Reaver Hold",
+            "quote": "At Reaver Hold, the water carries old news, and none can tell which tidings are friendly.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "SeaOfRhun"
+                "AmberSea"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "RaiderHold",
-            "region": "SeaOfRhun",
+            "region": "AmberSea",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -9937,19 +9937,19 @@
         },
         {
             "cardId": 40137,
-            "name": "Rendul",
-            "quote": "Rendul's shepherds watch the long grass-hills of Anfalas, where news of the wide world arrives a season late.",
+            "name": "Rendhal",
+            "quote": "Rendhal's shepherds watch the long grass-hills of Longstrand, where news of the wide world arrives a season late.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Anfalas"
+                "Longstrand"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Rendul",
-            "region": "Anfalas",
+            "region": "Longstrand",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -10010,19 +10010,19 @@
         },
         {
             "cardId": 40138,
-            "name": "Rhosgobel",
-            "quote": "In Rhosgobel, the trees keep their own counsel, and none should presume to answer for them.",
+            "name": "Mossgable",
+            "quote": "In Mossgable, the trees keep their own counsel, and none should presume to answer for them.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "SouthernMirkwood"
+                "SouthNightwood"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Rhosgobel",
-            "region": "SouthernMirkwood",
+            "region": "SouthNightwood",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -10083,19 +10083,19 @@
         },
         {
             "cardId": 40139,
-            "name": "Rhubar",
-            "quote": "Rhubar lies beneath the weight of old kings, and the stones still know their names.",
+            "name": "Rhubarr",
+            "quote": "Rhubarr lies beneath the weight of old kings, and the stones still know their names.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "SeaOfRhun"
+                "AmberSea"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Rhubar",
-            "region": "SeaOfRhun",
+            "region": "AmberSea",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -10156,19 +10156,19 @@
         },
         {
             "cardId": 40140,
-            "name": "Riavod",
-            "quote": "Riavod is crossed by old rumors and older streams, and neither has lost its way.",
+            "name": "Rivadd",
+            "quote": "Rivadd is crossed by old rumors and older streams, and neither has lost its way.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Dorwinion"
+                "Dorvain"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Riavod",
-            "region": "Dorwinion",
+            "region": "Dorvain",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -10229,19 +10229,19 @@
         },
         {
             "cardId": 40141,
-            "name": "Rul",
-            "quote": "Rul sits like a watchfire long gone cold, but the ground around it still knows watchfulness.",
+            "name": "Rulth",
+            "quote": "Rulth sits like a watchfire long gone cold, but the ground around it still knows watchfulness.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Nurn"
+                "Nurhal"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Rul",
-            "region": "Nurn",
+            "region": "Nurhal",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -10302,19 +10302,19 @@
         },
         {
             "cardId": 40142,
-            "name": "Sarn Ford",
-            "quote": "At Sarn Ford the river keeps the western gate.",
+            "name": "Stoneford",
+            "quote": "At Stoneford the river keeps the western gate.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Cardolan"
+                "Caldwold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "SarnFord",
-            "region": "Cardolan",
+            "region": "Caldwold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -10375,19 +10375,19 @@
         },
         {
             "cardId": 40143,
-            "name": "Sarn Lothduin",
-            "quote": "Sarn Lothduin lies by the water like a watching stone, patient and unadorned.",
+            "name": "Blossomford",
+            "quote": "Blossomford lies by the water like a watching stone, patient and unadorned.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Anduin"
+                "Longwater"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "SarnLothduin",
-            "region": "Anduin",
+            "region": "Longwater",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -10448,19 +10448,19 @@
         },
         {
             "cardId": 40144,
-            "name": "SarnGoriwing",
-            "quote": "SarnGoriwing crouches beneath the forest edge, where tree-shadow and river-mist meet in secrecy.",
+            "name": "Gorwing Stair",
+            "quote": "Gorwing Stair crouches beneath the forest edge, where tree-shadow and river-mist meet in secrecy.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "MountainsOfMirkwood"
+                "NightwoodPeaks"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "SarnGoriwing",
-            "region": "MountainsOfMirkwood",
+            "region": "NightwoodPeaks",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -10521,19 +10521,19 @@
         },
         {
             "cardId": 40145,
-            "name": "Seregost",
-            "quote": "Snow lies deep on the walls of Seregost, and at sundown the garrison reads red omens in it.",
+            "name": "Sarragost",
+            "quote": "Snow lies deep on the walls of Sarragost, and at sundown the garrison reads red omens in it.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Lithlad"
+                "Ashflats"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Seregost",
-            "region": "Lithlad",
+            "region": "Ashflats",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -10594,19 +10594,19 @@
         },
         {
             "cardId": 40146,
-            "name": "Shelob's Lair",
-            "quote": "Shelob's Lair breathes with old malice, and even the stone seems to shy from the dark within it.",
+            "name": "The Weaver's Lair",
+            "quote": "The Weaver's Lair breathes with old malice, and even the stone seems to shy from the dark within it.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Ungol"
+                "TheWeftmarch"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "ShelobSLair",
-            "region": "Ungol",
+            "region": "TheWeftmarch",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -10667,19 +10667,19 @@
         },
         {
             "cardId": 40147,
-            "name": "Shrel-Kain",
-            "quote": "Shrel-Kain broods in silence, as if the dark there had learned to wait.",
+            "name": "Skarrenkain",
+            "quote": "Skarrenkain broods in silence, as if the dark there had learned to wait.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Dorwinion"
+                "Dorvain"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "ShrelKain",
-            "region": "Dorwinion",
+            "region": "Dorvain",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -10740,19 +10740,19 @@
         },
         {
             "cardId": 40148,
-            "name": "Stock",
-            "quote": "Stock keeps watch upon the Buckland road, where a lamp in the window still means comfort against the dark.",
+            "name": "Stockleigh",
+            "quote": "Stockleigh keeps watch upon the Bramblemarch road, where a lamp in the window still means comfort against the dark.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "TheShire"
+                "Thornhollow"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Stock",
-            "region": "TheShire",
+            "region": "Thornhollow",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -10813,19 +10813,19 @@
         },
         {
             "cardId": 40149,
-            "name": "Stowburg",
-            "quote": "In Stowburg the horses are stabled nearer the hearth than the men, and no one thinks it strange.",
+            "name": "Stowbury",
+            "quote": "In Stowbury the horses are stabled nearer the hearth than the men, and no one thinks it strange.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rohan"
+                "Mearhold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Stowburg",
-            "region": "Rohan",
+            "region": "Mearhold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -10886,19 +10886,19 @@
         },
         {
             "cardId": 40150,
-            "name": "Sturlurtsa Khand",
-            "quote": "Sturlurtsa Khand keeps the hard memory of a road where riders once vanished into dust.",
+            "name": "Sturlurtsa Kharda",
+            "quote": "Sturlurtsa Kharda keeps the hard memory of a road where riders once vanished into dust.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Khand"
+                "Kharda"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "SturlurtsaKhand",
-            "region": "Khand",
+            "region": "Kharda",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -10959,19 +10959,19 @@
         },
         {
             "cardId": 40151,
-            "name": "Tarmabar",
-            "quote": "The Rangers of Tarmabar mend their grey cloaks by fires that cast no light beyond the palisade.",
+            "name": "Tarnbar",
+            "quote": "The Rangers of Tarnbar mend their grey cloaks by fires that cast no light beyond the palisade.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Arthedain"
+                "Ardwyn"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Tarmabar",
-            "region": "Arthedain",
+            "region": "Ardwyn",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11032,19 +11032,19 @@
         },
         {
             "cardId": 40152,
-            "name": "Telenaug",
-            "quote": "Telenaug watches the western road, and its lanterns have guided many a kinsman home.",
+            "name": "Tallenvar",
+            "quote": "Tallenvar watches the western road, and its lanterns have guided many a kinsman home.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "EredLuin"
+                "Bluecrags"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Telenaug",
-            "region": "EredLuin",
+            "region": "Bluecrags",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11105,19 +11105,19 @@
         },
         {
             "cardId": 40153,
-            "name": "Tharbad",
-            "quote": "Great piers of stone still stride across the Greyflood at Tharbad, carrying a bridge that ends in air.",
+            "name": "Tharrow",
+            "quote": "Great piers of stone still stride across the Greyflood at Tharrow, carrying a bridge that ends in air.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Cardolan"
+                "Caldwold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Tharbad",
-            "region": "Cardolan",
+            "region": "Caldwold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11178,19 +11178,19 @@
         },
         {
             "cardId": 40154,
-            "name": "The Angle",
-            "quote": "Between Hoarwell and Loudwater the Dunedain of the Angle keep their hidden watch, remembered by few and forgetting nothing.",
+            "name": "The Wedge",
+            "quote": "Between Hoarwell and Loudwater the Firstbloods of the Angle keep their hidden watch, remembered by few and forgetting nothing.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rivendell"
+                "Hollowvale"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "TheAngle",
-            "region": "Rivendell",
+            "region": "Hollowvale",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11251,19 +11251,19 @@
         },
         {
             "cardId": 40155,
-            "name": "The Carrock",
-            "quote": "The Carrock rises from the river like a held breath, old as the ford beneath it.",
+            "name": "The Crag",
+            "quote": "The Crag rises from the river like a held breath, old as the ford beneath it.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Anduin"
+                "Longwater"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "TheCarrock",
-            "region": "Anduin",
+            "region": "Longwater",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11324,19 +11324,19 @@
         },
         {
             "cardId": 40156,
-            "name": "The Ettenmoors",
+            "name": "The Giantmoors",
             "quote": "The fogs of the Ettenmoors roll downhill like a tide, and what walks within them is best left unnamed.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Angmar"
+                "Grimhold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "TheEttenmoors",
-            "region": "Angmar",
+            "region": "Grimhold",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11397,19 +11397,19 @@
         },
         {
             "cardId": 40157,
-            "name": "The Grey Havens",
-            "quote": "The Grey Havens look west with a sorrow that has long since learned grace.",
+            "name": "The Last Quays",
+            "quote": "The Last Quays look west with a sorrow that has long since learned grace.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Lindon"
+                "Aelmere"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "TheGreyHavens",
-            "region": "Lindon",
+            "region": "Aelmere",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11470,19 +11470,19 @@
         },
         {
             "cardId": 40158,
-            "name": "The Lockholes",
-            "quote": "The Lockholes keep what the Chief does not wish spoken of â€” and those who spoke too freely.",
+            "name": "The Deepholes",
+            "quote": "The Deepholes keep what the Chief does not wish spoken of â€” and those who spoke too freely.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "TheShire"
+                "Thornhollow"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "TheLockholes",
-            "region": "TheShire",
+            "region": "Thornhollow",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11543,19 +11543,19 @@
         },
         {
             "cardId": 40159,
-            "name": "The Trollshaws",
+            "name": "The Troll Thickets",
             "quote": "Three shapes of weathered stone stand in the Trollshaws yet, quarrelling forever over how to cook their supper.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Rhudaur"
+                "Ruhdar"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "TheTrollshaws",
-            "region": "Rhudaur",
+            "region": "Ruhdar",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11616,19 +11616,19 @@
         },
         {
             "cardId": 40160,
-            "name": "ThorinHall",
-            "quote": "ThorinHall holds the hush of a dwarf-kingÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s hall, where even fire seems to speak in runes.",
+            "name": "Durnhall",
+            "quote": "Durnhall holds the hush of a dwarf-kingÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s hall, where even fire seems to speak in runes.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "EredLuin"
+                "Bluecrags"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "ThorinHall",
-            "region": "EredLuin",
+            "region": "Bluecrags",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11689,19 +11689,19 @@
         },
         {
             "cardId": 40161,
-            "name": "Thranduil's Halls",
-            "quote": "The hush of Thranduil's Halls is deep as root and as old as the first road through the dark.",
+            "name": "The Woodking's Halls",
+            "quote": "The hush of The Woodking's Halls is deep as root and as old as the first road through the dark.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "NorthernMirkwood"
+                "NorthNightwood"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "ThanduilsHalls",
-            "region": "NorthernMirkwood",
+            "region": "NorthNightwood",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11762,19 +11762,19 @@
         },
         {
             "cardId": 40162,
-            "name": "Thuringwathost",
-            "quote": "Thuringwathost bears the mark of old terror, and the land around it has not forgotten the touch.",
+            "name": "Thurangost",
+            "quote": "Thurangost bears the mark of old terror, and the land around it has not forgotten the touch.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Dagorlad"
+                "The Battlewaste"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Thuringwathost",
-            "region": "Dagorlad",
+            "region": "The Battlewaste",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11835,19 +11835,19 @@
         },
         {
             "cardId": 40163,
-            "name": "Tol Buruth",
-            "quote": "Tol Buruth drifts on the Sea of RhÃƒÂ»n like a rumor that has learned to sail.",
+            "name": "Isle of Burath",
+            "quote": "Isle of Burath drifts on the Sea of RhÃƒÂ»n like a rumor that has learned to sail.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "SeaOfRhun"
+                "AmberSea"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "TolBuruth",
-            "region": "SeaOfRhun",
+            "region": "AmberSea",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11908,19 +11908,19 @@
         },
         {
             "cardId": 40164,
-            "name": "Treforn",
-            "quote": "Treforn holds to the land with a farmerÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s patience and a watchmanÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s eye.",
+            "name": "Trefarn",
+            "quote": "Trefarn holds to the land with a farmerÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s patience and a watchmanÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s eye.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Dunland"
+                "Wyldmoor"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Treforn",
-            "region": "Dunland",
+            "region": "Wyldmoor",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11981,19 +11981,19 @@
         },
         {
             "cardId": 40165,
-            "name": "UrlurtsuNurn",
-            "quote": "UrlurtsuNurn endures in the heat with a rough and stubborn silence, like a camp that refused to die.",
+            "name": "Urlutsun",
+            "quote": "Urlutsun endures in the heat with a rough and stubborn silence, like a camp that refused to die.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Nurn"
+                "Nurhal"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "UrlurtsuNurn",
-            "region": "Nurn",
+            "region": "Nurhal",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -12054,19 +12054,19 @@
         },
         {
             "cardId": 40166,
-            "name": "Ursh Lanna",
-            "quote": "Ursh Lanna squats upon the battle-plain like a camp that forgot to move on, its wells dug between old spears.",
+            "name": "Urshanna",
+            "quote": "Urshanna squats upon the battle-plain like a camp that forgot to move on, its wells dug between old spears.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Dagorlad"
+                "The Battlewaste"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "UrshLanna",
-            "region": "Dagorlad",
+            "region": "The Battlewaste",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -12127,19 +12127,19 @@
         },
         {
             "cardId": 40167,
-            "name": "Vamag",
-            "quote": "The trees of Vamag grow down to the tide line, and what is unloaded beneath them is never spoken of in the ports of the north.",
+            "name": "Vamagh",
+            "quote": "The trees of Vamagh grow down to the tide line, and what is unloaded beneath them is never spoken of in the ports of the north.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "FarHarad"
+                "FarSarrath"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Vamag",
-            "region": "FarHarad",
+            "region": "FarSarrath",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -12200,19 +12200,19 @@
         },
         {
             "cardId": 40168,
-            "name": "Wathduin",
-            "quote": "Wathduin leans into the wind with a grim pride that refuses to be bent.",
+            "name": "Wathdun",
+            "quote": "Wathdun leans into the wind with a grim pride that refuses to be bent.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "NearHarad"
+                "NearSarrath"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "Wathduin",
-            "region": "NearHarad",
+            "region": "NearSarrath",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -12273,19 +12273,19 @@
         },
         {
             "cardId": 40169,
-            "name": "WestFold",
-            "quote": "WestFold opens to the plains with a stubborn calm that no storm has taught to bow.",
+            "name": "Westerfold",
+            "quote": "Westerfold opens to the plains with a stubborn calm that no storm has taught to bow.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "GapOfRohan"
+                "Windgate"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "WestFold",
-            "region": "GapOfRohan",
+            "region": "Windgate",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -12346,19 +12346,19 @@
         },
         {
             "cardId": 40170,
-            "name": "Woodmen town",
-            "quote": "Woodmen town keeps a plain folk-stead’s courage, with smoke, timber, and the watch of the woods about it.",
+            "name": "Woodfolk Steading",
+            "quote": "Woodfolk Steading keeps a plain folk-stead’s courage, with smoke, timber, and the watch of the woods about it.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "SouthernMirkwood"
+                "SouthNightwood"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "WoodmenTown",
-            "region": "SouthernMirkwood",
+            "region": "SouthNightwood",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -12419,19 +12419,19 @@
         },
         {
             "cardId": 40171,
-            "name": "Zarak-dum",
+            "name": "Zarrakh",
             "quote": "The western halls remember the hammer, though few now walk their deep ways.",
             "actionEffect": "",
             "type": "PC",
             "tags": [
-                "Angmar"
+                "Grimhold"
             ],
             "deckId": "meta_pc",
             "alignment": 2,
             "actionClassName": "",
             "action": "PCAction",
             "spriteName": "ZarakDum",
-            "region": "Angmar",
+            "region": "Grimhold",
             "description": "",
             "requirementsText": "",
             "historyText": "",

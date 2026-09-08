@@ -1,7 +1,8 @@
 {
-    "deckId": "disturber_of_the_peace",
-    "nation": "Gandalf",
+    "deckId": "orren_greycloack",
+    "nation": "Orren",
     "alignment": 0,
+    "avatarCharacter": "Orren Greycloak",
     "cards": [],
     "cardRefs": [
         50156,

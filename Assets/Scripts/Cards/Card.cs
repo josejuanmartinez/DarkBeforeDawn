@@ -406,27 +406,52 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 tokenImage.gameObject.AddComponent<RectMask2D>();
         }
         if (combatStatsText == null)
-        {
-            GameObject go = new("CombatStats", typeof(RectTransform), typeof(TextMeshProUGUI));
-            go.transform.SetParent(compactParent, false);
-            combatStatsText = go.GetComponent<TextMeshProUGUI>();
-            ConfigureOverlay(combatStatsText, new Vector2(.52f, .02f), new Vector2(.98f, .32f), isTokenOnlyPresentation ? 18f : 34f, TextAlignmentOptions.BottomRight);
-            combatStatsText.spriteAsset = spriteAsset;
-        }
+            combatStatsText = CreateOverlay("CombatStats", compactParent);
         if (landResourcesText == null)
+            landResourcesText = CreateOverlay("LandResources", compactParent);
+
+        // Configured on every refresh, not just on creation: the card prefabs ship their own
+        // CombatStats and LandResources nodes, so anything left inside the creation branch is dead
+        // code for them and the prefab's own sizing silently wins.
+        //
+        // A token has no other bottom furniture, so the stats take its full width there; on a full
+        // card they sit in the bottom-right corner beside the art frame.
+        ConfigureOverlay(combatStatsText,
+            isTokenOnlyPresentation ? new Vector2(.02f, .00f) : new Vector2(.30f, .00f),
+            isTokenOnlyPresentation ? new Vector2(.98f, .40f) : new Vector2(.99f, .34f),
+            isTokenOnlyPresentation ? 54f : 102f,
+            isTokenOnlyPresentation ? TextAlignmentOptions.Bottom : TextAlignmentOptions.BottomRight);
+        // Both stats read as a single unit, so they must never wrap. With wrapping off and a low
+        // floor, auto-sizing settles on the largest size that fits them on one line.
+        combatStatsText.textWrappingMode = TextWrappingModes.NoWrap;
+        combatStatsText.fontSizeMin = 6f;
+
+        // The resource grid is the whole point of a land token, and a land can grant up to seven of
+        // them, so it claims the full art area -- auto-sizing is bounded by the box, and the old
+        // 64%-tall band was what kept the glyphs small however high the font ceiling went.
+        ConfigureOverlay(landResourcesText, new Vector2(.02f, .02f), new Vector2(.98f, .98f), isTokenOnlyPresentation ? 60f : 84f, TextAlignmentOptions.Center);
+        // The floor stays low so auto-sizing can settle on a fit instead of truncating a land that
+        // grants several resources.
+        landResourcesText.fontSizeMin = 6f;
+
+        if (spriteAsset != null)
         {
-            GameObject go = new("LandResources", typeof(RectTransform), typeof(TextMeshProUGUI));
-            go.transform.SetParent(compactParent, false);
-            landResourcesText = go.GetComponent<TextMeshProUGUI>();
-            ConfigureOverlay(landResourcesText, new Vector2(.04f, .18f), new Vector2(.96f, .82f), isTokenOnlyPresentation ? 22f : 42f, TextAlignmentOptions.Center);
+            combatStatsText.spriteAsset = spriteAsset;
             landResourcesText.spriteAsset = spriteAsset;
         }
+    }
+
+    private static TextMeshProUGUI CreateOverlay(string overlayName, Transform parent)
+    {
+        GameObject go = new(overlayName, typeof(RectTransform), typeof(TextMeshProUGUI));
+        go.transform.SetParent(parent, false);
+        return go.GetComponent<TextMeshProUGUI>();
     }
 
     private static void ConfigureOverlay(TextMeshProUGUI text, Vector2 min, Vector2 max, float size, TextAlignmentOptions alignment)
     {
         RectTransform rt = text.rectTransform; rt.anchorMin = min; rt.anchorMax = max; rt.offsetMin = rt.offsetMax = Vector2.zero;
-        text.fontSize = size; text.fontStyle = FontStyles.Bold; text.alignment = alignment; text.color = Color.white; text.outlineWidth = .25f; text.raycastTarget = false; text.richText = true;
+        text.fontSize = size; text.fontStyle = FontStyles.Bold; text.alignment = alignment; text.color = Color.white; text.raycastTarget = false; text.richText = true;
         text.enableAutoSizing = true; text.fontSizeMin = Mathf.Max(6f, size * .45f); text.fontSizeMax = size; text.overflowMode = TextOverflowModes.Truncate;
     }
 
@@ -434,22 +459,48 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         if (cardData == null) return;
         CardTypeEnum type = cardData.GetCardType();
-        combatStatsText.text = cardData.GetCombatStatsText(); combatStatsText.gameObject.SetActive(!string.IsNullOrEmpty(combatStatsText.text));
-        landResourcesText.text = type == CardTypeEnum.Land && isTokenOnlyPresentation ? BuildLandResourceVisual() : string.Empty;
-        landResourcesText.gameObject.SetActive(type == CardTypeEnum.Land && isTokenOnlyPresentation && !string.IsNullOrEmpty(landResourcesText.text));
+        ShowOverlay(combatStatsText, cardData.GetCombatStatsText());
+        ShowOverlay(landResourcesText, type == CardTypeEnum.Land && isTokenOnlyPresentation ? BuildLandResourceVisual() : string.Empty);
+    }
+
+    private static void ShowOverlay(TextMeshProUGUI text, string content)
+    {
+        text.text = content;
+        bool visible = !string.IsNullOrEmpty(content);
+        text.gameObject.SetActive(visible);
+        // Only once the object is live: the prefabs ship these overlays deactivated, so until now
+        // their TMP components have not run Awake and fontMaterial has no shared material to clone.
+        if (visible) ApplyOverlayFaceAndOutline(text);
+    }
+
+    // A white face on a black outline is what keeps these numbers readable against arbitrary card
+    // art. The outline needs its own black; left at the material default it comes through white, and
+    // a thick white outline simply floods each glyph into a solid white box.
+    private static void ApplyOverlayFaceAndOutline(TextMeshProUGUI text)
+    {
+        Material material = text.fontMaterial;
+        if (material == null) return;
+        material.SetColor(ShaderUtilities.ID_FaceColor, Color.white);
+        material.SetColor(ShaderUtilities.ID_OutlineColor, Color.black);
+        material.SetFloat(ShaderUtilities.ID_FaceDilate, .5f);
+        material.SetFloat(ShaderUtilities.ID_OutlineSoftness, .5f);
+        material.SetFloat(ShaderUtilities.ID_OutlineWidth, 1f);
+        // Dilate and outline both grow the glyph past its baked bounds; without this the extra
+        // coverage is clipped at the character rect.
+        text.UpdateMeshPadding();
     }
 
     private string BuildLandResourceVisual()
     {
         List<string> parts = new();
-        if (cardData.leatherGranted > 0) parts.Add($"{cardData.leatherGranted}<sprite name=\"leather\">");
-        if (cardData.timberGranted > 0) parts.Add($"{cardData.timberGranted}<sprite name=\"timber\">");
-        if (cardData.mountsGranted > 0) parts.Add($"{cardData.mountsGranted}<sprite name=\"mounts\">");
-        if (cardData.ironGranted > 0) parts.Add($"{cardData.ironGranted}<sprite name=\"iron\">");
-        if (cardData.steelGranted > 0) parts.Add($"{cardData.steelGranted}<sprite name=\"steel\">");
-        if (cardData.mithrilGranted > 0) parts.Add($"{cardData.mithrilGranted}<sprite name=\"mithril\">");
-        if (cardData.goldGranted > 0) parts.Add($"{cardData.goldGranted}<sprite name=\"gold\">");
-        return string.Join("  ", parts);
+        if (cardData.leatherGranted > 0) parts.Add(cardData.leatherGranted + CardData.SpriteTag("leather"));
+        if (cardData.timberGranted > 0) parts.Add(cardData.timberGranted + CardData.SpriteTag("timber"));
+        if (cardData.mountsGranted > 0) parts.Add(cardData.mountsGranted + CardData.SpriteTag("mounts"));
+        if (cardData.ironGranted > 0) parts.Add(cardData.ironGranted + CardData.SpriteTag("iron"));
+        if (cardData.steelGranted > 0) parts.Add(cardData.steelGranted + CardData.SpriteTag("steel"));
+        if (cardData.mithrilGranted > 0) parts.Add(cardData.mithrilGranted + CardData.SpriteTag("mithril"));
+        if (cardData.goldGranted > 0) parts.Add(cardData.goldGranted + CardData.SpriteTag("gold"));
+        return string.Join(" ", parts);
     }
 
     // Reveals the environmental glyph, rendered via the normalized card name (the same scheme as the

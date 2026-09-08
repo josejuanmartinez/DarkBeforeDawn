@@ -5,7 +5,7 @@
     "cards": [
         {
             "cardId": 60001,
-            "name": "Angmarin",
+            "name": "Grimhold Levies",
             "quote": "March forth, children of darkness, to claim what is ours.",
             "actionEffect": "",
             "type": "Army",
@@ -151,7 +151,7 @@
         },
         {
             "cardId": 60003,
-            "name": "Balchoth",
+            "name": "Balkhoth",
             "quote": "From the depths of darkness, we rise to cleanse the earth with fire and steel.",
             "actionEffect": "",
             "type": "Army",
@@ -516,7 +516,7 @@
         },
         {
             "cardId": 60008,
-            "name": "Black Arrow Men",
+            "name": "Blackshaft Men",
             "quote": "With arrows black as night, we strike where hope dares to tread.",
             "actionEffect": "",
             "type": "Army",
@@ -589,7 +589,7 @@
         },
         {
             "cardId": 60009,
-            "name": "Black Numenoreans",
+            "name": "Black Andarim",
             "quote": "Fallen from grace, they wield darkness as their blade.",
             "actionEffect": "",
             "type": "Army",
@@ -662,7 +662,7 @@
         },
         {
             "cardId": 60010,
-            "name": "Black Númenórean Guard",
+            "name": "Black Andarim Guard",
             "quote": "They knew the towers of Westernesse and turned their backs on every light that once shone there.",
             "actionEffect": "",
             "type": "Army",
@@ -808,8 +808,8 @@
         },
         {
             "cardId": 60012,
-            "name": "Bounders",
-            "quote": "A quiet watch is the first wall of the Shire.",
+            "name": "Hedge Wardens",
+            "quote": "A quiet watch is the first wall of the Thornhollow.",
             "actionEffect": "",
             "type": "Army",
             "tags": [],
@@ -1244,8 +1244,8 @@
         },
         {
             "cardId": 60018,
-            "name": "Conquerors Of Moria",
-            "quote": "Moria yields only to those who remember the price of silence beneath the stone.",
+            "name": "Conquerors Of Durndelve",
+            "quote": "Durndelve yields only to those who remember the price of silence beneath the stone.",
             "actionEffect": "",
             "type": "Army",
             "tags": [],
@@ -1317,8 +1317,8 @@
         },
         {
             "cardId": 60019,
-            "name": "Corsairs Of Umbar",
-            "quote": "From the shadows of Umbar, they strike with blades dipped in treachery.",
+            "name": "Corsairs Of Corsarn",
+            "quote": "From the shadows of Corsarn, they strike with blades dipped in treachery.",
             "actionEffect": "",
             "type": "Army",
             "tags": [],
@@ -1463,7 +1463,7 @@
         },
         {
             "cardId": 60021,
-            "name": "Crebain",
+            "name": "Kreban",
             "quote": "From the shadows they come, cawing like harbingers of doom.",
             "actionEffect": "",
             "type": "Army",
@@ -1610,7 +1610,7 @@
         },
         {
             "cardId": 60023,
-            "name": "Dorwinion Bowmen",
+            "name": "Dorvain Bowmen",
             "quote": "With arrows swift as the river's flow, we guard our land.",
             "actionEffect": "",
             "type": "Army",
@@ -1683,7 +1683,7 @@
         },
         {
             "cardId": 60024,
-            "name": "Dorwinion Infantry",
+            "name": "Dorvain Infantry",
             "quote": "Strong as the vines of our vineyards, we stand united in battle.",
             "actionEffect": "",
             "type": "Army",
@@ -1756,7 +1756,7 @@
         },
         {
             "cardId": 60025,
-            "name": "Dorwinion Mariners",
+            "name": "Dorvain Mariners",
             "quote": "With the wind at our backs, we sail towards glory.",
             "actionEffect": "",
             "type": "Army",
@@ -1829,7 +1829,7 @@
         },
         {
             "cardId": 60026,
-            "name": "Dorwinion Riders",
+            "name": "Dorvain Riders",
             "quote": "Swift as the river, fierce as the lion, we ride forth.",
             "actionEffect": "",
             "type": "Army",
@@ -1973,8 +1973,8 @@
         },
         {
             "cardId": 60028,
-            "name": "Dunadan Rangers",
-            "quote": "The Dunedain keep the waste roads under secret watch.",
+            "name": "Firstblood Rangers",
+            "quote": "The Firstbloods keep the waste roads under secret watch.",
             "actionEffect": "",
             "type": "Army",
             "tags": [],
@@ -2046,7 +2046,7 @@
         },
         {
             "cardId": 60029,
-            "name": "Dunlending Archers",
+            "name": "Wyldmoor Archers",
             "quote": "With steady hands, they unleash arrows that sing of vengeance.",
             "actionEffect": "",
             "type": "Army",
@@ -2119,7 +2119,7 @@
         },
         {
             "cardId": 60030,
-            "name": "Dunlending Warriors",
+            "name": "Wyldmoor Warriors",
             "quote": "Fierce and proud, they charge forth to reclaim their lost lands.",
             "actionEffect": "",
             "type": "Army",
@@ -2190,7 +2190,7 @@
         },
         {
             "cardId": 60031,
-            "name": "Durthang Orcs",
+            "name": "Durthrang Orcs",
             "quote": "Marching forth, the dark tide swells, hungry for plunder.",
             "actionEffect": "",
             "type": "Army",
@@ -2263,7 +2263,7 @@
         },
         {
             "cardId": 60032,
-            "name": "Durthang Sorcerers",
+            "name": "Durthrang Sorcerers",
             "quote": "With shadows as our allies, we weave spells to doom our foes.",
             "actionEffect": "",
             "type": "Army",
@@ -2772,7 +2772,7 @@
         },
         {
             "cardId": 60039,
-            "name": "Easterling Cataphracts",
+            "name": "Vashkar Cataphracts",
             "quote": "Armored like the mountain, unyielding as the dawn they herald.",
             "actionEffect": "",
             "type": "Army",
@@ -3206,7 +3206,7 @@
         },
         {
             "cardId": 60045,
-            "name": "Elvenking Guards",
+            "name": "Woodking's Guards",
             "quote": "They stand where the trees grow oldest, and no lesser shadow passes unhindered.",
             "actionEffect": "",
             "type": "Army",
@@ -3279,7 +3279,7 @@
         },
         {
             "cardId": 60046,
-            "name": "Ents",
+            "name": "Woldwardens",
             "quote": "The shepherds of the forest are roused to wrath.",
             "actionEffect": "",
             "type": "Army",
@@ -3569,7 +3569,7 @@
         },
         {
             "cardId": 60050,
-            "name": "Galadhrim Archers",
+            "name": "Lumeneth Archers",
             "quote": "From the mallorn boughs their arrows fall like silver rain on the unwise.",
             "actionEffect": "",
             "type": "Army",
@@ -3788,8 +3788,8 @@
         },
         {
             "cardId": 60053,
-            "name": "Goblins Of Moria",
-            "quote": "In the dark of Moria, our laughter echoes like a death knell.",
+            "name": "Goblins Of Durndelve",
+            "quote": "In the dark of Durndelve, our laughter echoes like a death knell.",
             "actionEffect": "",
             "type": "Army",
             "tags": [],
@@ -3861,7 +3861,7 @@
         },
         {
             "cardId": 60054,
-            "name": "Gondorian Archers",
+            "name": "Ardanth Archers",
             "quote": "With eyes as sharp as their arrows, they guard the realm.",
             "actionEffect": "",
             "type": "Army",
@@ -3934,7 +3934,7 @@
         },
         {
             "cardId": 60055,
-            "name": "Gondorian Infantry",
+            "name": "Ardanth Infantry",
             "quote": "Steadfast and true, they stand like stone against the tide.",
             "actionEffect": "",
             "type": "Army",
@@ -4007,7 +4007,7 @@
         },
         {
             "cardId": 60056,
-            "name": "Gorgoroth Militia",
+            "name": "Cinderplain Militia",
             "quote": "Rally to the call of the Eye; we fight for the dark lord.",
             "actionEffect": "",
             "type": "Army",
@@ -4080,7 +4080,7 @@
         },
         {
             "cardId": 60057,
-            "name": "Grond",
+            "name": "The Maw",
             "quote": "The Hammer of the Underworld breaches walls with thunderous wrath.",
             "actionEffect": "",
             "type": "Army",
@@ -4153,7 +4153,7 @@
         },
         {
             "cardId": 60058,
-            "name": "Half Elves",
+            "name": "Half Vaelen",
             "quote": "They belong to two histories, and carry the strength of both when the road grows dark.",
             "actionEffect": "",
             "type": "Army",
@@ -4370,7 +4370,7 @@
         },
         {
             "cardId": 60061,
-            "name": "Hall Guards Of Thranduil",
+            "name": "Hall Guards Of Thandrion",
             "quote": "In the halls beneath the trees, their spears keep the hush unbroken.",
             "actionEffect": "",
             "type": "Army",
@@ -4443,7 +4443,7 @@
         },
         {
             "cardId": 60062,
-            "name": "Haradrim Cavalry",
+            "name": "Sarrath Cavalry",
             "quote": "Hooves pound the earth, echoing the call of conquest in the desert winds.",
             "actionEffect": "",
             "type": "Army",
@@ -4516,7 +4516,7 @@
         },
         {
             "cardId": 60063,
-            "name": "Haradrim Infantry",
+            "name": "Sarrath Infantry",
             "quote": "They stand as a wall of iron, resolute against the tides of war.",
             "actionEffect": "",
             "type": "Army",
@@ -4735,7 +4735,7 @@
         },
         {
             "cardId": 60066,
-            "name": "Hobbit Archers",
+            "name": "Hollowkin Archers",
             "quote": "From the green hedges, a small bow may yet speak boldly.",
             "actionEffect": "",
             "type": "Army",
@@ -4808,7 +4808,7 @@
         },
         {
             "cardId": 60067,
-            "name": "Hobbit Slingers",
+            "name": "Hollowkin Slingers",
             "quote": "The road will remember the sting of stones.",
             "actionEffect": "",
             "type": "Army",
@@ -5025,7 +5025,7 @@
         },
         {
             "cardId": 60070,
-            "name": "Khand Easterlings",
+            "name": "Kharda Easterners",
             "quote": "Warriors of the cold north, their spirits burn bright with the fire of battle.",
             "actionEffect": "",
             "type": "Army",
@@ -5098,7 +5098,7 @@
         },
         {
             "cardId": 60071,
-            "name": "Knights Of Dol Amroth",
+            "name": "Knights Of Swanhold",
             "quote": "Horns of the sea call us; we ride to glory.",
             "actionEffect": "",
             "type": "Army",
@@ -5386,8 +5386,8 @@
         },
         {
             "cardId": 60075,
-            "name": "Lossoth",
-            "quote": "Born of ice and hunger, the Lossoth strike where the frost bites deepest.",
+            "name": "Rimefolk",
+            "quote": "Born of ice and hunger, the Rimefolk strike where the frost bites deepest.",
             "actionEffect": "",
             "type": "Army",
             "tags": [],
@@ -5532,7 +5532,7 @@
         },
         {
             "cardId": 60077,
-            "name": "Meduseld Guards",
+            "name": "Mearsted Guards",
             "quote": "We are the shield of the Golden Hall, unyielding as the mountains.",
             "actionEffect": "",
             "type": "Army",
@@ -5676,7 +5676,7 @@
         },
         {
             "cardId": 60079,
-            "name": "Men Of Bree",
+            "name": "Men Of Crossway",
             "quote": "We are the watchful eyes and steady hands of the wilds.",
             "actionEffect": "",
             "type": "Army",
@@ -5893,7 +5893,7 @@
         },
         {
             "cardId": 60082,
-            "name": "Morannon Garrison",
+            "name": "Ironmaw Garrison",
             "quote": "Nothing passes the Black Gate that the Eye has not already named and numbered.",
             "actionEffect": "",
             "type": "Army",
@@ -5966,7 +5966,7 @@
         },
         {
             "cardId": 60083,
-            "name": "Mordor Wolf-riders",
+            "name": "Morgahd Wolf-riders",
             "quote": "Saddle a warg and you have doubled your cruelty without halving your speed.",
             "actionEffect": "",
             "type": "Army",
@@ -6039,8 +6039,8 @@
         },
         {
             "cardId": 60084,
-            "name": "Morgul Orcs",
-            "quote": "From the dead city they pour, bearing the dread of Minas Morgul.",
+            "name": "Pale City Orcs",
+            "quote": "From the dead city they pour, bearing the dread of The Pale City.",
             "actionEffect": "",
             "type": "Army",
             "tags": [],
@@ -6112,7 +6112,7 @@
         },
         {
             "cardId": 60085,
-            "name": "Morgul Pass Guards",
+            "name": "Weft Stair Guards",
             "quote": "Silent sentinels of shadow, ever watchful and unyielding.",
             "actionEffect": "",
             "type": "Army",
@@ -6185,8 +6185,8 @@
         },
         {
             "cardId": 60086,
-            "name": "Mounted Dunadan Rangers",
-            "quote": "On swift horses the Dunedain pass like wind and shadow.",
+            "name": "Mounted Firstblood Rangers",
+            "quote": "On swift horses the Firstbloods pass like wind and shadow.",
             "actionEffect": "",
             "type": "Army",
             "tags": [],
@@ -6402,7 +6402,7 @@
         },
         {
             "cardId": 60089,
-            "name": "Mounted Rangers Of The North",
+            "name": "Mounted Rangers Of The Marches",
             "quote": "The Rangers of the North ride as one at the edge of peril.",
             "actionEffect": "",
             "type": "Army",
@@ -6475,7 +6475,7 @@
         },
         {
             "cardId": 60090,
-            "name": "Mumakan Spearmen",
+            "name": "Grumakh Spearmen",
             "quote": "Their spears are as relentless as the desert sun.",
             "actionEffect": "",
             "type": "Army",
@@ -6548,7 +6548,7 @@
         },
         {
             "cardId": 60091,
-            "name": "Mumakils",
+            "name": "Grumakhs",
             "quote": "Titans of the battlefield, their rampage reshapes the very land.",
             "actionEffect": "",
             "type": "Army",
@@ -6621,7 +6621,7 @@
         },
         {
             "cardId": 60092,
-            "name": "Noldo Cavalry",
+            "name": "Firstborn Cavalry",
             "quote": "The Noldor ride as if exile were a spur and memory a banner.",
             "actionEffect": "",
             "type": "Army",
@@ -6694,7 +6694,7 @@
         },
         {
             "cardId": 60093,
-            "name": "Nurn Cavalry",
+            "name": "Nurhal Cavalry",
             "quote": "With speed and fury, they ride like the storm itself.",
             "actionEffect": "",
             "type": "Army",
@@ -6767,8 +6767,8 @@
         },
         {
             "cardId": 60094,
-            "name": "Nurn Reavers",
-            "quote": "The plains of Nurn remember no harvest but war; its people have grown to suit the yield.",
+            "name": "Nurhal Reavers",
+            "quote": "The plains of Nurhal remember no harvest but war; its people have grown to suit the yield.",
             "actionEffect": "",
             "type": "Army",
             "tags": [],
@@ -6838,7 +6838,7 @@
         },
         {
             "cardId": 60095,
-            "name": "Olog Hai",
+            "name": "Warbred Trolls",
             "quote": "Brutality incarnate, they charge with the wrath of a mountain's fall.",
             "actionEffect": "",
             "type": "Army",
@@ -6982,7 +6982,7 @@
         },
         {
             "cardId": 60097,
-            "name": "Pelargir Fleet",
+            "name": "Kingsquay Fleet",
             "quote": "Through stormy seas, our sails are the harbingers of hope.",
             "actionEffect": "",
             "type": "Army",
@@ -7128,7 +7128,7 @@
         },
         {
             "cardId": 60099,
-            "name": "Rammas Echor Catapults",
+            "name": "Rampart Catapults",
             "quote": "Where the wall thunders, the road beyond grows quiet.",
             "actionEffect": "",
             "type": "Army",
@@ -7274,7 +7274,7 @@
         },
         {
             "cardId": 60101,
-            "name": "Rangers Of Ithilien",
+            "name": "Rangers Of The Greenmarch",
             "quote": "Unseen, we tread the paths of shadow and light.",
             "actionEffect": "",
             "type": "Army",
@@ -7347,7 +7347,7 @@
         },
         {
             "cardId": 60102,
-            "name": "Reclaimers Of Erebor",
+            "name": "Reclaimers Of Erenkarr",
             "quote": "The Lonely Mountain remembers every oath spoken for its return.",
             "actionEffect": "",
             "type": "Army",
@@ -7420,7 +7420,7 @@
         },
         {
             "cardId": 60103,
-            "name": "Rhun Corsairs",
+            "name": "Vashkar Corsairs",
             "quote": "Swift as the wind, we strike like the very storms of the sea.",
             "actionEffect": "",
             "type": "Army",
@@ -7493,7 +7493,7 @@
         },
         {
             "cardId": 60104,
-            "name": "Rhun Easterlings",
+            "name": "Vashkar Easterners",
             "quote": "In the face of adversity, our resolve becomes our greatest weapon.",
             "actionEffect": "",
             "type": "Army",
@@ -7566,7 +7566,7 @@
         },
         {
             "cardId": 60105,
-            "name": "Riders Of Rohan",
+            "name": "Riders Of Mearhold",
             "quote": "The thunder of our horses shall echo in victory.",
             "actionEffect": "",
             "type": "Army",
@@ -7712,8 +7712,8 @@
         },
         {
             "cardId": 60107,
-            "name": "Rohirrim Guards",
-            "quote": "Beneath Orthanc's shadow, once-proud riders stand watch in silence.",
+            "name": "Mearhost Guards",
+            "quote": "Beneath Thornspire's shadow, once-proud riders stand watch in silence.",
             "actionEffect": "",
             "type": "Army",
             "tags": [],
@@ -8073,7 +8073,7 @@
         },
         {
             "cardId": 60112,
-            "name": "Southron Assassins",
+            "name": "Sarrath Assassins",
             "quote": "Silent shadows, they strike without warning from the sands.",
             "actionEffect": "",
             "type": "Army",
@@ -8146,7 +8146,7 @@
         },
         {
             "cardId": 60113,
-            "name": "Southrons",
+            "name": "Sarrathim",
             "quote": "With fierce hearts, they tread the sands, claiming the day as their own.",
             "actionEffect": "",
             "type": "Army",
@@ -8219,7 +8219,7 @@
         },
         {
             "cardId": 60114,
-            "name": "Spawns of Ungoliant",
+            "name": "Spawn Of The Weaver",
             "quote": "Born from shadow and hunger, we know no fear.",
             "actionEffect": "",
             "type": "Army",
@@ -8438,7 +8438,7 @@
         },
         {
             "cardId": 60117,
-            "name": "Swan Fleet",
+            "name": "Swanhold Fleet",
             "quote": "With the grace of swans, we sail upon the waters, ready for the call of destiny.",
             "actionEffect": "",
             "type": "Army",
@@ -8804,7 +8804,7 @@
         {
             "cardId": 60122,
             "name": "Tower Wardens",
-            "quote": "The wardens of Orthanc stand unshaken, for they guard more than stone.",
+            "quote": "The wardens of Thornspire stand unshaken, for they guard more than stone.",
             "actionEffect": "",
             "type": "Army",
             "tags": [],
@@ -8949,7 +8949,7 @@
         },
         {
             "cardId": 60124,
-            "name": "Umbar Cavalry",
+            "name": "Corsarn Cavalry",
             "quote": "Swift like the tide, they crash upon their foes with relentless fury.",
             "actionEffect": "",
             "type": "Army",
@@ -9022,8 +9022,8 @@
         },
         {
             "cardId": 60125,
-            "name": "Umbar Riders",
-            "quote": "The dark sails of Umbar herald their arrival, swift and merciless.",
+            "name": "Corsarn Riders",
+            "quote": "The dark sails of Corsarn herald their arrival, swift and merciless.",
             "actionEffect": "",
             "type": "Army",
             "tags": [],
@@ -9168,7 +9168,7 @@
         },
         {
             "cardId": 60127,
-            "name": "Ungol Orcs",
+            "name": "Weftmarch Orcs",
             "quote": "From the depths, we arise, relentless and unyielding.",
             "actionEffect": "",
             "type": "Army",
@@ -9241,7 +9241,7 @@
         },
         {
             "cardId": 60128,
-            "name": "Uruk Hai",
+            "name": "Graukh",
             "quote": "Steel-clad and relentless, we march as one unyielding force.",
             "actionEffect": "",
             "type": "Army",
@@ -9314,7 +9314,7 @@
         },
         {
             "cardId": 60129,
-            "name": "Wain Riders",
+            "name": "Wainfolk Riders",
             "quote": "With wheels that thunder and hearts that burn, we conquer the roads of men.",
             "actionEffect": "",
             "type": "Army",
@@ -9460,8 +9460,8 @@
         },
         {
             "cardId": 60131,
-            "name": "Wardens Of Annuminas",
-            "quote": "The wardens of Annuminas keep watch over a dead crown.",
+            "name": "Wardens Of Aumeneth",
+            "quote": "The wardens of Aumeneth keep watch over a dead crown.",
             "actionEffect": "",
             "type": "Army",
             "tags": [],
@@ -9679,7 +9679,7 @@
         },
         {
             "cardId": 60134,
-            "name": "White Tower Wardens",
+            "name": "Sunspire Wardens",
             "quote": "Guardians of the White City, we defend against the dark.",
             "actionEffect": "",
             "type": "Army",
@@ -9823,7 +9823,7 @@
         },
         {
             "cardId": 60136,
-            "name": "Wood Elves",
+            "name": "Nightwood Vaelen",
             "quote": "Older than many songs, they move as if the woodland were their first home.",
             "actionEffect": "",
             "type": "Army",
@@ -9969,7 +9969,7 @@
         },
         {
             "cardId": 60138,
-            "name": "Woodelf Archers",
+            "name": "Nightwood Archers",
             "quote": "The forest teaches them patience, and patience is the deadliest bow.",
             "actionEffect": "",
             "type": "Army",
@@ -10042,7 +10042,7 @@
         },
         {
             "cardId": 60139,
-            "name": "Woodelf Warriors",
+            "name": "Nightwood Warriors",
             "quote": "They fight with the rough grace of leaf and branch, and do not yield easily.",
             "actionEffect": "",
             "type": "Army",
@@ -10259,7 +10259,7 @@
         },
         {
             "cardId": 60142,
-            "name": "Woses",
+            "name": "Drusan Woodfolk",
             "quote": "We are the whispers of the forest, fierce in our silence.",
             "actionEffect": "",
             "type": "Army",

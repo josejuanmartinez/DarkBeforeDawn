@@ -1,7 +1,8 @@
 {
-    "deckId": "the_necromancer",
-    "nation": "Sauron",
+    "deckId": "zhamor",
+    "nation": "Zhamor",
     "alignment": 1,
+    "avatarCharacter": "Zhamor",
     "cards": [],
     "cardRefs": [
         40048,

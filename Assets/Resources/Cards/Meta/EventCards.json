@@ -290,7 +290,7 @@
         {
             "cardId": 20005,
             "name": "AriseRidersOfTheoden",
-            "quote": "At Theoden's call, riders are awakened from grief.",
+            "quote": "At Thedric's call, riders are awakened from grief.",
             "actionEffect": "Allied cavalry <sprite name=\"ca\"> units in radius 2 gain Haste <sprite name=\"haste\"> (1 turn) and Encouraged <sprite name=\"encouraged\"> (1 turn).",
             "type": "Event",
             "tags": [],
@@ -361,7 +361,7 @@
         {
             "cardId": 20006,
             "name": "Arrows of the Galadhrim",
-            "quote": "The Galadhrim loose their arrows like leaves in storm.",
+            "quote": "The Lumeneth host loose their arrows like leaves in storm.",
             "actionEffect": "Target enemy in same/adjacent hex: deal moderate damage and, if the target is on forest terrain, apply Fear <sprite name=\"fear\"> (1 turn).",
             "type": "Event",
             "tags": [],
@@ -651,7 +651,7 @@
             "cardId": 20010,
             "name": "BagginsDontLeaveHere",
             "quote": "A small foot may slip where a dark thought would stumble.",
-            "actionEffect": "Hobbits within a personal radius of 2-4 hexes gain Hidden <sprite name=\"hidden\"> for 1 turn and lose Fear <sprite name=\"fear\">.",
+            "actionEffect": "Hollowkin within a personal radius of 2-4 hexes gain Hidden <sprite name=\"hidden\"> for 1 turn and lose Fear <sprite name=\"fear\">.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -873,7 +873,7 @@
         {
             "cardId": 20013,
             "name": "Beacon Fires of Anorien",
-            "quote": "One flame answers another, and the hills remember that Gondor still stands.",
+            "quote": "One flame answers another, and the hills remember that Ardanth still stands.",
             "actionEffect": "The beacons are lit. Allied units here gain Encouraged <sprite name=\"encouraged\"> and lose Fear <sprite name=\"fear\">; enemies here are Halted <sprite name=\"halted\">.",
             "type": "Event",
             "tags": [
@@ -1819,7 +1819,7 @@
             "cardId": 20026,
             "name": "CaptainOfTheOuterWall",
             "quote": "To guard the outer wall is to hold the very heart of our realm.",
-            "actionEffect": "A wall-captain snaps the defense into motion. Choose one allied Human or Dunedain in radius 2; they may act again this turn.",
+            "actionEffect": "A wall-captain snaps the defense into motion. Choose one allied Human or Firstbloods in radius 2; they may act again this turn.",
             "type": "Event",
             "tags": [
                 "stormcrow",
@@ -1967,7 +1967,7 @@
             "cardId": 20028,
             "name": "Chains of the Lidless Eye",
             "quote": "Bound by the unseen chains, his minions rise to do his bidding.",
-            "actionEffect": "All Nazgul gain Haste <sprite name=\"haste\"> (3 turns).",
+            "actionEffect": "All Wraithlords gain Haste <sprite name=\"haste\"> (3 turns).",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -2108,7 +2108,7 @@
         {
             "cardId": 20030,
             "name": "Clad in Many Colours",
-            "quote": "I am not Saruman the White. That name belongs to another — if indeed it still belongs to anyone.",
+            "quote": "I am not Vaskar the Pale. That name belongs to another — if indeed it still belongs to anyone.",
             "actionEffect": "Reveal hidden enemies in radius 2. Wound enemies in radius 2 (25 HP). Strip and steal their positive status effects (2 turns).",
             "type": "Event",
             "tags": [],
@@ -2180,7 +2180,7 @@
             "cardId": 20031,
             "name": "Climbing the White Hills",
             "quote": "From high stones, the world opens and the heart remembers hope.",
-            "actionEffect": "If played on hills or mountains, reveal the surrounding area in radius 2, and allied Hobbit and Elf units gain Hope <sprite name=\"hope\"> for 1 turn.",
+            "actionEffect": "If played on hills or mountains, reveal the surrounding area in radius 2, and allied Hollowkin and Elf units gain Hope <sprite name=\"hope\"> for 1 turn.",
             "type": "Event",
             "tags": [
                 "hills",
@@ -2625,7 +2625,7 @@
         {
             "cardId": 20037,
             "name": "Counsel to Elrond",
-            "quote": "In the House of Elrond, even deep wounds remember how to close.",
+            "quote": "In the House of Vaeloth, even deep wounds remember how to close.",
             "actionEffect": "Target allied character in this hex is fully healed. Gain Hope <sprite name=\"hope\"> (2 turns).",
             "type": "Event",
             "tags": [],
@@ -2768,7 +2768,7 @@
             "cardId": 20039,
             "name": "CounselNoOneWanted",
             "quote": "The truth is a bitter draught that weighs heavy on the heart.",
-            "actionEffect": "Hard truths steady some and undo others. Allied Humans and Dunedain in radius 2 gain Hope <sprite name=\"hope\">; enemies gain Despair <sprite name=\"despair\">.",
+            "actionEffect": "Hard truths steady some and undo others. Allied Humans and Firstbloods in radius 2 gain Hope <sprite name=\"hope\">; enemies gain Despair <sprite name=\"despair\">.",
             "type": "Event",
             "tags": [
                 "stormcrow",
@@ -3006,7 +3006,7 @@
             "actionClassName": "DolAmrothShipyardAction",
             "action": "DolAmrothShipyardAction",
             "spriteName": "DolAmrothShipyard",
-            "region": "SouthernGondor",
+            "region": "LowerArdanth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -3139,7 +3139,7 @@
         {
             "cardId": 20044,
             "name": "Doors of the Deep Delved",
-            "quote": "Where others see only stone and dark, the house of Durin remembers how to look deeper.",
+            "quote": "Where others see only stone and dark, the house of Durn remembers how to look deeper.",
             "actionEffect": "A hidden door opens into the deep places: the character is delved straight to the nearest Underground hex.",
             "type": "Event",
             "tags": [
@@ -3357,7 +3357,7 @@
         {
             "cardId": 20047,
             "name": "DreamsOfNumenor",
-            "quote": "Dreams of Numenor drift westward on the salt wind.",
+            "quote": "Dreams of Andareth drift westward on the salt wind.",
             "actionEffect": "All allied units on shore/water-adjacent tiles gain Haste <sprite name=\"haste\"> and Encouraged <sprite name=\"encouraged\"> (1 turn).",
             "type": "Event",
             "tags": [],
@@ -3500,7 +3500,7 @@
             "cardId": 20049,
             "name": "Elven Lull",
             "quote": "Soft song and bright lament can still the dark and quicken the hidden road.",
-            "actionEffect": "A hush falls as starlight settles on the wood. Allied Hobbits and Elves in radius 2 gain Haste <sprite name=\"haste\">; Nazgul gain Blocked <sprite name=\"blocked\">, and Orcs and Trolls gain Halted <sprite name=\"halted\">.",
+            "actionEffect": "A hush falls as starlight settles on the wood. Allied Hollowkin and Elves in radius 2 gain Haste <sprite name=\"haste\">; Wraithlords gain Blocked <sprite name=\"blocked\">, and Orcs and Trolls gain Halted <sprite name=\"halted\">.",
             "type": "Event",
             "tags": [
                 "elves",
@@ -3646,7 +3646,7 @@
         {
             "cardId": 20051,
             "name": "Engines from Isengard",
-            "quote": "Timber, iron, and fire answer Saruman's mind; the furnaces labour and the war-machine rolls.",
+            "quote": "Timber, iron, and fire answer Vaskar's mind; the furnaces labour and the war-machine rolls.",
             "actionEffect": "All allied armies in radius 2 gain +25 proc chance to trigger their army ability this turn.",
             "type": "Event",
             "tags": [
@@ -3723,7 +3723,7 @@
             "cardId": 20052,
             "name": "Erebor Beckons",
             "quote": "The Mountain remembers its heirs, and the road grows shorter beneath a loyal heart.",
-            "actionEffect": "All Dwarves and Hobbits in this hex gain Haste <sprite name=\"haste\"> for 2 turns.",
+            "actionEffect": "All Dwarves and Hollowkin in this hex gain Haste <sprite name=\"haste\"> for 2 turns.",
             "type": "Event",
             "tags": [
                 "erebor",
@@ -4016,7 +4016,7 @@
         {
             "cardId": 20056,
             "name": "Flame of Udun",
-            "quote": "In darkness, I ignite fear, for the flames of Udun consume all.",
+            "quote": "In darkness, I ignite fear, for the flames of TheEmberpit consume all.",
             "actionEffect": "In radius 2, apply Burning <sprite name=\"burning\"> (1 turn) and Fear <sprite name=\"fear\"> (1 turn) to all enemy units.",
             "type": "Event",
             "tags": [],
@@ -4088,7 +4088,7 @@
             "cardId": 20057,
             "name": "Floating in Barrels",
             "quote": "When the river bears them onward, even a poor barrel may hide a quiet road.",
-            "actionEffect": "Allied Hobbit and Dwarf units on the sea in radius 5 move to the nearest land hex and gain Hidden <sprite name=\"hidden\"> for 1 turn.",
+            "actionEffect": "Allied Hollowkin and Dwarf units on the sea in radius 5 move to the nearest land hex and gain Hidden <sprite name=\"hidden\"> for 1 turn.",
             "type": "Event",
             "tags": [
                 "river",
@@ -4164,7 +4164,7 @@
             "cardId": 20058,
             "name": "FordOfBruinen",
             "quote": "Bruinen's ford grants passage only on the river's terms.",
-            "actionEffect": "The ford rises at Elrond’s command and does not forget allegiance. Allied units on shore or water in radius 2 gain Encouraged <sprite name=\"encouraged\">; non-army allies gain Hidden <sprite name=\"hidden\">; enemies there are Halted <sprite name=\"halted\">.",
+            "actionEffect": "The ford rises at Vaeloth’s command and does not forget allegiance. Allied units on shore or water in radius 2 gain Encouraged <sprite name=\"encouraged\">; non-army allies gain Hidden <sprite name=\"hidden\">; enemies there are Halted <sprite name=\"halted\">.",
             "type": "Event",
             "tags": [
                 "environmental"
@@ -4526,7 +4526,7 @@
             "cardId": 20063,
             "name": "GoingOnAnAdventure",
             "quote": "A road once named calls the stout-hearted forth.",
-            "actionEffect": "Hobbits and Dwarves in radius 2 gain Encouraged<sprite name=\"encouraged\">.",
+            "actionEffect": "Hollowkin and Dwarves in radius 2 gain Encouraged<sprite name=\"encouraged\">.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -4610,7 +4610,7 @@
             "actionClassName": "GondorMusteringAction",
             "action": "GondorMusteringAction",
             "spriteName": "GondorMustering",
-            "region": "NorthernGondor",
+            "region": "UpperArdanth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -4824,7 +4824,7 @@
             "cardId": 20067,
             "name": "HallFellSilent",
             "quote": "Silence drapes the hall, a prelude to the storm’s arrival.",
-            "actionEffect": "A hard truth reveals danger around the hall. Reveal all hexes in radius 2, then one allied Human or Dunedain nearby may immediately reposition 1 step.",
+            "actionEffect": "A hard truth reveals danger around the hall. Reveal all hexes in radius 2, then one allied Human or Firstbloods nearby may immediately reposition 1 step.",
             "type": "Event",
             "tags": [
                 "stormcrow",
@@ -4901,7 +4901,7 @@
             "cardId": 20068,
             "name": "Hallow the Road",
             "quote": "Hallow the road, and the night grows less bold.",
-            "actionEffect": "Hobbits and Dwarves in radius 2 gain Encouraged <sprite name=\"encouraged\">.",
+            "actionEffect": "Hollowkin and Dwarves in radius 2 gain Encouraged <sprite name=\"encouraged\">.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -5193,7 +5193,7 @@
             "cardId": 20072,
             "name": "Heir to Barahir",
             "quote": "The heir of Barahir bears a line that the years could not break.",
-            "actionEffect": "Allied Humans/Dunedain in radius 1 gain Hope <sprite name=\"hope\"> (1 turn); caster gains Arcane Insight <sprite name=\"arcaneinsight\"> (1 turn).",
+            "actionEffect": "Allied Humans/Firstbloods in radius 1 gain Hope <sprite name=\"hope\"> (1 turn); caster gains Arcane Insight <sprite name=\"arcaneinsight\"> (1 turn).",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -5481,7 +5481,7 @@
         {
             "cardId": 20076,
             "name": "Hood of Pallando",
-            "quote": "Beneath Pallando's hood, even the road forgets its traveler.",
+            "quote": "Beneath Corvan's hood, even the road forgets its traveler.",
             "actionEffect": "Target allied character in this hex gains Hidden <sprite name=\"hidden\"> (2 turns). The caster reveals radius 2 for 1 turn.",
             "type": "Event",
             "tags": [],
@@ -5624,7 +5624,7 @@
             "cardId": 20078,
             "name": "Host of Orthanc",
             "quote": "The Stewards gave him the tower's keys long ago, yet the guest has barred the gate from within.",
-            "actionEffect": "Can only be played at Orthanc. All allied units in radius 1 become Hidden <sprite name=\"hidden\"> (1 turn).",
+            "actionEffect": "Can only be played at Thornspire. All allied units in radius 1 become Hidden <sprite name=\"hidden\"> (1 turn).",
             "type": "Event",
             "tags": [
                 "orthanc",
@@ -5776,7 +5776,7 @@
         {
             "cardId": 20080,
             "name": "Imprisonment",
-            "quote": "The Lockholes do not kill — they merely forget. You are there until the Chief decides otherwise.",
+            "quote": "The Deepholes do not kill — they merely forget. You are there until the Chief decides otherwise.",
             "actionEffect": "Kidnap a target enemy character in the caster's hex.",
             "type": "Event",
             "tags": [
@@ -5851,7 +5851,7 @@
         {
             "cardId": 20081,
             "name": "Industrialization",
-            "quote": "Trees fell, water ran foul, and smoke lay low over the hills. The Shire was being improved, they said.",
+            "quote": "Trees fell, water ran foul, and smoke lay low over the hills. The Thornhollow was being improved, they said.",
             "actionEffect": "Gain 5 iron <sprite name=\"iron\"> and 5 steel <sprite name=\"steel\">. All PCs in radius 5 lose 15 loyalty <sprite name=\"loyalty\">.",
             "type": "Event",
             "tags": [
@@ -5927,8 +5927,8 @@
         {
             "cardId": 20082,
             "name": "Ithilien camp",
-            "quote": "Ithilien keeps its skill beneath leaf and shadow.",
-            "actionEffect": "The rangers melt into the shadow of Ithilien. All allied Dunedain in radius 5 gain Hidden <sprite name=\"hidden\"> for 1 turn.",
+            "quote": "Greenmarch keeps its skill beneath leaf and shadow.",
+            "actionEffect": "The rangers melt into the shadow of Greenmarch. All allied Firstbloods in radius 5 gain Hidden <sprite name=\"hidden\"> for 1 turn.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -5999,7 +5999,7 @@
             "cardId": 20083,
             "name": "Joining the Rangers",
             "quote": "To join the Rangers is to take the long road and the long watch.",
-            "actionEffect": "Allied Dunedain in radius 2 gain Encouraged <sprite name=\"encouraged\"> (1 turn), and the caster scouts radius 2.",
+            "actionEffect": "Allied Firstbloods in radius 2 gain Encouraged <sprite name=\"encouraged\"> (1 turn), and the caster scouts radius 2.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -6070,7 +6070,7 @@
             "cardId": 20084,
             "name": "Khamul's Command",
             "quote": "No ringwraith speaks softly, yet his word moves armies where trumpets fail.",
-            "actionEffect": "Allied Nazgul and Orc units in radius 3 gain Strengthened <sprite name=\"strengthened\"> (2 turns) and Haste <sprite name=\"haste\"> (1 turn).",
+            "actionEffect": "Allied Wraithlords and Orc units in radius 3 gain Strengthened <sprite name=\"strengthened\"> (2 turns) and Haste <sprite name=\"haste\"> (1 turn).",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -6588,7 +6588,7 @@
         {
             "cardId": 20091,
             "name": "Lorien Belt",
-            "quote": "The belt of Lorien is woven for passing in secret.",
+            "quote": "The belt of Lumeneth is woven for passing in secret.",
             "actionEffect": "Target allied character: Hidden <sprite name=\"hidden\"> (2 turns) and Haste <sprite name=\"haste\"> (1 turn).",
             "type": "Event",
             "tags": [],
@@ -6804,8 +6804,8 @@
         {
             "cardId": 20094,
             "name": "Lured by Halflings' Leaf",
-            "quote": "The sweet scent of the Shire can ensnare even the mightiest of foes.",
-            "actionEffect": "Target enemy Maia in radius 2: Halted <sprite name=\"halted\"> (1 turn) and Blocked <sprite name=\"blocked\"> (2 turns).",
+            "quote": "The sweet scent of the Thornhollow can ensnare even the mightiest of foes.",
+            "actionEffect": "Target enemy Emberwrought in radius 2: Halted <sprite name=\"halted\"> (1 turn) and Blocked <sprite name=\"blocked\"> (2 turns).",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -6876,7 +6876,7 @@
             "cardId": 20095,
             "name": "LureOfTheEast",
             "quote": "Come, wanderers of the West, let the East call you into shadow.",
-            "actionEffect": "All enemy Maia aligned free or neutral in radius 2 are teleported to random eastmost non-water hexes and Blocked <sprite name=\"blocked\"> (1 turn).",
+            "actionEffect": "All enemy Emberwrought aligned free or neutral in radius 2 are teleported to random eastmost non-water hexes and Blocked <sprite name=\"blocked\"> (1 turn).",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -6946,7 +6946,7 @@
         {
             "cardId": 20096,
             "name": "Marked by a Nazgul",
-            "quote": "The shadow of the Nazgul brings a chilling touch of despair.",
+            "quote": "The shadow of the Wraithlords brings a chilling touch of despair.",
             "actionEffect": "Target enemy character in your hex: apply MorgulTouch (1 turn).",
             "type": "Event",
             "tags": [],
@@ -7160,7 +7160,7 @@
             "cardId": 20099,
             "name": "Morgul Passage",
             "quote": "The dark road cuts where no honest road dares run.",
-            "actionEffect": "The roads through Morgul Vale are not for the living. Teleport a target ally from your hex to any allied Nazgul’s hex within 5; they arrive Strengthened <sprite name=\"strengthened\">.",
+            "actionEffect": "The roads through Morgul Vale are not for the living. Teleport a target ally from your hex to any allied Wraithlords’s hex within 5; they arrive Strengthened <sprite name=\"strengthened\">.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -7373,7 +7373,7 @@
             "cardId": 20102,
             "name": "NewsFlyToTheMark",
             "quote": "Whispers of the world carry heavy tidings on the winds of fate.",
-            "actionEffect": "Dark tidings travel faster than hope. Allied Humans and Dunedain in radius 2 gain Encouraged <sprite name=\"encouraged\">; enemy Humans and Dunedain gain Fear <sprite name=\"fear\"> and Refusing Duels <sprite name=\"refusingduels\">.",
+            "actionEffect": "Dark tidings travel faster than hope. Allied Humans and Firstbloods in radius 2 gain Encouraged <sprite name=\"encouraged\">; enemy Humans and Firstbloods gain Fear <sprite name=\"fear\"> and Refusing Duels <sprite name=\"refusingduels\">.",
             "type": "Event",
             "tags": [
                 "stormcrow",
@@ -7451,7 +7451,7 @@
             "cardId": 20103,
             "name": "Northmen Stand Firm",
             "quote": "The Northmen stand as weathered timber in the storm.",
-            "actionEffect": "The men of the North do not break. Target allied Human or Dunedain wins any forced duel this turn and refuses further duels; the nearest allied PC gains +5 loyalty.",
+            "actionEffect": "The men of the North do not break. Target allied Human or Firstbloods wins any forced duel this turn and refuses further duels; the nearest allied PC gains +5 loyalty.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -7521,7 +7521,7 @@
         {
             "cardId": 20104,
             "name": "Numenor turned to Shadow",
-            "quote": "In the shadowed halls of Numenor, hope crumbled like ancient stone.",
+            "quote": "In the shadowed halls of Andareth, hope crumbled like ancient stone.",
             "actionEffect": "Even Núnmenor bowed, in the end. Remove Halted <sprite name=\"halted\"> from a target allied commander; they gain Encouraged <sprite name=\"encouraged\">, and enemies in their hex gain Fear <sprite name=\"fear\">.",
             "type": "Event",
             "tags": [],
@@ -7593,7 +7593,7 @@
             "cardId": 20105,
             "name": "Oath of the Westfold",
             "quote": "The Westfold keeps its oath when the reckoning comes.",
-            "actionEffect": "Humans and Dunedain in radius 3 gain Courage <sprite name=\"encouraged\"> and Hope <sprite name=\"hope\">.",
+            "actionEffect": "Humans and Firstbloods in radius 3 gain Courage <sprite name=\"encouraged\"> and Hope <sprite name=\"hope\">.",
             "type": "Event",
             "tags": [
                 "environmental"
@@ -7666,7 +7666,7 @@
             "cardId": 20106,
             "name": "Old Ruins of Arthedain",
             "quote": "Broken kings still leave a brightness in the stones.",
-            "actionEffect": "Arthedain, Cardolan, and Rhudaur each reveal 2 hexes as seen for 1 turn.",
+            "actionEffect": "Ardwyn, Caldwold, and Ruhdar each reveal 2 hexes as seen for 1 turn.",
             "type": "Event",
             "tags": [
                 "arthedain",
@@ -8102,7 +8102,7 @@
             "cardId": 20112,
             "name": "Orders on the Pelennor",
             "quote": "A sharp order can move a host faster than a trumpet.",
-            "actionEffect": "Choose 1 allied Human or Dunedain in radius 2; it becomes Hidden <sprite name=\"hidden\"> and may move again this turn.",
+            "actionEffect": "Choose 1 allied Human or Firstbloods in radius 2; it becomes Hidden <sprite name=\"hidden\"> and may move again this turn.",
             "type": "Event",
             "tags": [
                 "gondor",
@@ -8178,7 +8178,7 @@
             "cardId": 20113,
             "name": "OrdersInTheNight",
             "quote": "In shadow, the brave tread where others fear to go.",
-            "actionEffect": "One trusted soul, one quiet road. Choose 1 allied Human or Dunedain in radius 2; they gain Hidden <sprite name=\"hidden\"> and may move again this turn.",
+            "actionEffect": "One trusted soul, one quiet road. Choose 1 allied Human or Firstbloods in radius 2; they gain Hidden <sprite name=\"hidden\"> and may move again this turn.",
             "type": "Event",
             "tags": [
                 "stormcrow",
@@ -8344,7 +8344,7 @@
             "actionClassName": "OsgiliathQuartermastersAction",
             "action": "OsgiliathQuartermastersAction",
             "spriteName": "OsgiliathQuartermasters",
-            "region": "Nindalf",
+            "region": "Fenmire",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8572,7 +8572,7 @@
             "actionClassName": "PelargirShipCaptainAction",
             "action": "PelargirShipCaptainAction",
             "spriteName": "PelargirShipCaptain",
-            "region": "SouthernGondor",
+            "region": "LowerArdanth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -8710,7 +8710,7 @@
         {
             "cardId": 20120,
             "name": "Pipe-weed Monopoly",
-            "quote": "All the pipe-weed of the Shire flows through Lotho's hand, and Lotho's hand belongs to the Chief.",
+            "quote": "All the pipe-weed of the Thornhollow flows through Lotho's hand, and Lotho's hand belongs to the Chief.",
             "actionEffect": "Gain 5 gold <sprite name=\"gold\">. Draw Lured by Halflings' Leaf and The Lure of the Senses if hand size allows.",
             "type": "Event",
             "tags": [
@@ -9242,7 +9242,7 @@
             "actionClassName": "RammasEchorAction",
             "action": "RammasEchorAction",
             "spriteName": "RammasEchor",
-            "region": "NorthernGondor",
+            "region": "UpperArdanth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -9453,7 +9453,7 @@
         {
             "cardId": 20130,
             "name": "Reclaiming Erebor",
-            "quote": "To reclaim Erebor is to call the Dwarves home again.",
+            "quote": "To reclaim Erenkarr is to call the Dwarves home again.",
             "actionEffect": "Allied Dwarves in radius 2 gain Hope <sprite name=\"hope\"> (1 turn) and Strengthened <sprite name=\"strengthened\"> (1 turn).",
             "type": "Event",
             "tags": [],
@@ -9814,7 +9814,7 @@
             "cardId": 20135,
             "name": "Ring of Orthanc",
             "quote": "The ring upon the White Hand weighs heavier than iron, and those who see it know the tower's will.",
-            "actionEffect": "The stone sings to those of Saruman’s order. Allied characters here heal 15 (25 on Orthanc); allied army commanders gain 1 Heavy Infantry <sprite name=\"hi\"> (2 on Orthanc).",
+            "actionEffect": "The stone sings to those of Vaskar’s order. Allied characters here heal 15 (25 on Thornspire); allied army commanders gain 1 Heavy Infantry <sprite name=\"hi\"> (2 on Thornspire).",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -9885,7 +9885,7 @@
             "cardId": 20136,
             "name": "Rings of Lore",
             "quote": "The council remembers what the world has forgotten.",
-            "actionEffect": "Reveal as seen the hexes where Galadriel, Elrond, and Gandalf stand.",
+            "actionEffect": "Reveal as seen the hexes where Elduriel, Vaeloth, and Orren Greycloak stand.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -9956,7 +9956,7 @@
             "cardId": 20137,
             "name": "River Lillies",
             "quote": "Where the river runs clear, even shadow loosens its grip.",
-            "actionEffect": "All Hobbit characters in radius 2 shake off weariness: restore their action and movement, removing Blocked if present.",
+            "actionEffect": "All Hollowkin characters in radius 2 shake off weariness: restore their action and movement, removing Blocked if present.",
             "type": "Event",
             "tags": [
                 "river",
@@ -10032,7 +10032,7 @@
             "cardId": 20138,
             "name": "Road to Rivendell",
             "quote": "There are roads that remember the brave.",
-            "actionEffect": "The road west is ever kind to the small and the stubborn. Hobbits and Dwarves in radius 2 gain Encouraged <sprite name=\"encouraged\"> and Haste <sprite name=\"haste\">; Fear <sprite name=\"fear\"> and Halted <sprite name=\"halted\"> are cleared.",
+            "actionEffect": "The road west is ever kind to the small and the stubborn. Hollowkin and Dwarves in radius 2 gain Encouraged <sprite name=\"encouraged\"> and Haste <sprite name=\"haste\">; Fear <sprite name=\"fear\"> and Halted <sprite name=\"halted\"> are cleared.",
             "type": "Event",
             "tags": [
                 "travel",
@@ -10107,7 +10107,7 @@
         {
             "cardId": 20139,
             "name": "Robe of Many Colours",
-            "quote": "He was not Saruman the White; he was Saruman of Many Colours.",
+            "quote": "He was not Vaskar the Pale; he was Vaskar of Many Colours.",
             "actionEffect": "The colours dazzle and the moment passes. Strip all positive effects from a target enemy and their hex-mates; the caster gains Haste <sprite name=\"haste\"> and Hidden <sprite name=\"hidden\">.",
             "type": "Event",
             "tags": [],
@@ -10762,8 +10762,8 @@
         {
             "cardId": 20148,
             "name": "Shade of the Barrow-king",
-            "quote": "The grave-gold of Cardolan still calls to the hand that knew it first.",
-            "actionEffect": "The Barrow-wight remembers old oaths and older grudges. Steal 1 transferable artifact from a random enemy in radius 1; that enemy gains Fear <sprite name=\"fear\"> and Despair <sprite name=\"despair\">.",
+            "quote": "The grave-gold of Caldwold still calls to the hand that knew it first.",
+            "actionEffect": "The Cairn-wight remembers old oaths and older grudges. Steal 1 transferable artifact from a random enemy in radius 1; that enemy gains Fear <sprite name=\"fear\"> and Despair <sprite name=\"despair\">.",
             "type": "Event",
             "tags": [
                 "barrow-downs"
@@ -10907,7 +10907,7 @@
             "cardId": 20150,
             "name": "Shirriffs and Bounders",
             "quote": "A quiet watch keeps the lanes from forgetting themselves.",
-            "actionEffect": "All hexes of the Shire are seen for 1 turn.",
+            "actionEffect": "All hexes of the Thornhollow are seen for 1 turn.",
             "type": "Event",
             "tags": [
                 "shire",
@@ -11055,7 +11055,7 @@
         {
             "cardId": 20152,
             "name": "Signal Fires of Anorien",
-            "quote": "One flame answers another, and the hills remember that Gondor still stands.",
+            "quote": "One flame answers another, and the hills remember that Ardanth still stands.",
             "actionEffect": "Reveal 10 random mountain hexes as seen for 1 turn.",
             "type": "Event",
             "tags": [
@@ -11491,18 +11491,18 @@
         {
             "cardId": 20158,
             "name": "Storm from Orthanc",
-            "quote": "Saruman's word falls like iron from the tower, and the weary find themselves driven to one more deed.",
+            "quote": "Vaskar's word falls like iron from the tower, and the weary find themselves driven to one more deed.",
             "actionEffect": "All friendly units in this hex can action again.",
             "type": "Event",
             "tags": [
-                "MistyMountains"
+                "ThePalewall"
             ],
             "deckId": "meta_event",
             "alignment": 2,
             "actionClassName": "StormfromOrthanc",
             "action": "StormfromOrthanc",
             "spriteName": "StormFromOrthanc",
-            "region": "MistyMountains",
+            "region": "ThePalewall",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -11784,8 +11784,8 @@
         {
             "cardId": 20162,
             "name": "Swift as the Galadhrim",
-            "quote": "The Galadhrim go swift and soundless among the leaves.",
-            "actionEffect": "None move through forest as the Galadhrim do. Target ally gains Haste <sprite name=\"haste\"> and Hidden <sprite name=\"hidden\">; on forest tiles they also lose Fear <sprite name=\"fear\">.",
+            "quote": "The Lumeneth host go swift and soundless among the leaves.",
+            "actionEffect": "None move through forest as the Lumeneth host do. Target ally gains Haste <sprite name=\"haste\"> and Hidden <sprite name=\"hidden\">; on forest tiles they also lose Fear <sprite name=\"fear\">.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -11856,7 +11856,7 @@
             "cardId": 20163,
             "name": "The 5 ride again",
             "quote": "When the five kindle their fire, no shadow dares stand before them.",
-            "actionEffect": "The order convenes where power gathers. All allied Maia teleport to Orthanc or the nearest allied capital; those already at Orthanc gain +1 permanent Mage <sprite name=\"mage\">.",
+            "actionEffect": "The order convenes where power gathers. All allied Emberwrought teleport to Thornspire or the nearest allied capital; those already at Thornspire gain +1 permanent Mage <sprite name=\"mage\">.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -11926,7 +11926,7 @@
         {
             "cardId": 20164,
             "name": "The Battle of Bywater",
-            "quote": "At the Battle of Bywater they fell upon the ruffians from hedge and ditch — and the Shire was its own again.",
+            "quote": "At the Battle of Millpond they fell upon the ruffians from hedge and ditch — and the Thornhollow was its own again.",
             "actionEffect": "Destroy all enemy light infantry <sprite name=\"li\"> forces in radius 3.",
             "type": "Event",
             "tags": [
@@ -12362,7 +12362,7 @@
             "cardId": 20170,
             "name": "The Greenway",
             "quote": "Along the old road, quick feet and faithful hearts may yet outpace the shadow.",
-            "actionEffect": "Allied Hobbit, Dunedain, and Dwarf units in radius 2 gain Haste <sprite name=\"haste\"> for 2 turns.",
+            "actionEffect": "Allied Hollowkin, Firstbloods, and Dwarf units in radius 2 gain Haste <sprite name=\"haste\"> for 2 turns.",
             "type": "Event",
             "tags": [
                 "greenway",
@@ -12514,7 +12514,7 @@
             "cardId": 20172,
             "name": "The Horn Calls",
             "quote": "When the horn calls, fear is put to shame.",
-            "actionEffect": "When the horn sounds, the scattered answer. Reveal Hidden <sprite name=\"hidden\"> enemies in radius 3; allied Humans and Dunedain in radius 2 gain Encouraged <sprite name=\"encouraged\"> and close 1 hex; enemies here are Halted <sprite name=\"halted\">.",
+            "actionEffect": "When the horn sounds, the scattered answer. Reveal Hidden <sprite name=\"hidden\"> enemies in radius 3; allied Humans and Firstbloods in radius 2 gain Encouraged <sprite name=\"encouraged\"> and close 1 hex; enemies here are Halted <sprite name=\"halted\">.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -12798,7 +12798,7 @@
             "cardId": 20176,
             "name": "The Prancing Pony",
             "quote": "A welcoming inn can gather the far-wandered home.",
-            "actionEffect": "Move up to 2 Hobbit, Dunedain, or Dwarf allies from adjacent hexes into your hex, and heal them 10.",
+            "actionEffect": "Move up to 2 Hollowkin, Firstbloods, or Dwarf allies from adjacent hexes into your hex, and heal them 10.",
             "type": "Event",
             "tags": [
                 "bree",
@@ -13021,7 +13021,7 @@
             "cardId": 20179,
             "name": "The Tower's Kindness",
             "quote": "He spoke softly, as one who tends a friend, yet the door was locked from without.",
-            "actionEffect": "All mages at Orthanc gain Arcane Insight <sprite name=\"arcaneinsight\"> (3 turns), but are Halted <sprite name=\"halted\"> (1 turn).",
+            "actionEffect": "All mages at Thornspire gain Arcane Insight <sprite name=\"arcaneinsight\"> (3 turns), but are Halted <sprite name=\"halted\"> (1 turn).",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -13091,8 +13091,8 @@
         {
             "cardId": 20180,
             "name": "The Witch-king's Decree",
-            "quote": "No edict from Angmar arrives without a shadow at its back.",
-            "actionEffect": "None dispute the Witch-king’s decree. Allied Nazgul in radius 2 gain Strengthened <sprite name=\"strengthened\"> (2); enemies in radius 1 gain Fear <sprite name=\"fear\"> (2).",
+            "quote": "No edict from Grimhold arrives without a shadow at its back.",
+            "actionEffect": "None dispute the Witch-king’s decree. Allied Wraithlords in radius 2 gain Strengthened <sprite name=\"strengthened\"> (2); enemies in radius 1 gain Fear <sprite name=\"fear\"> (2).",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -13162,7 +13162,7 @@
         {
             "cardId": 20181,
             "name": "TheAwakeningOfTheoden",
-            "quote": "When Theoden awakes, the courage of Rohan wakes with him.",
+            "quote": "When Thedric awakes, the courage of Mearhold wakes with him.",
             "actionEffect": "The king returns to himself, and the shadow falls away. Target allied character permanently gains +1 <sprite name=\"commander\">, loses Fear <sprite name=\"fear\">, and gains Encouraged <sprite name=\"encouraged\"> (2).",
             "type": "Event",
             "tags": [],
@@ -13234,7 +13234,7 @@
             "cardId": 20182,
             "name": "TheDrownOfTheStone",
             "quote": "The waters whisper secrets of lost kings and shattered dreams.",
-            "actionEffect": "If any Free People character holds a Palantir, remove it from the character and hide it in a random water hex.",
+            "actionEffect": "If any Free People character holds a Seeing-stone, remove it from the character and hide it in a random water hex.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -13304,8 +13304,8 @@
         {
             "cardId": 20183,
             "name": "TheGreyCompany",
-            "quote": "The Grey Company rode from the North in silence, bearing the hope of the Dunedain.",
-            "actionEffect": "Choose allied Dunedain in radius 3 and distribute +1 <sprite name=\"commander\">, +1 <sprite name=\"agent\">, and +1 <sprite name=\"emmissary\"> among them.",
+            "quote": "The Grey Company rode from the North in silence, bearing the hope of the Firstbloods.",
+            "actionEffect": "Choose allied Firstbloods in radius 3 and distribute +1 <sprite name=\"commander\">, +1 <sprite name=\"agent\">, and +1 <sprite name=\"emmissary\"> among them.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -13376,7 +13376,7 @@
             "cardId": 20184,
             "name": "TheIronCrownRidesAgain",
             "quote": "Rise, my dark steed, and let the night reclaim the sky.",
-            "actionEffect": "Target allied Nazgul in your hex gains +1 Commander and +1 Mage.",
+            "actionEffect": "Target allied Wraithlords in your hex gains +1 Commander and +1 Mage.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -13447,7 +13447,7 @@
             "cardId": 20185,
             "name": "TheLureOfTheSenses",
             "quote": "In the haze of battle, the senses deceive, and danger lurks unseen.",
-            "actionEffect": "Block target enemy character for 1 turn. If it is a Maia, block it for 3 turns.",
+            "actionEffect": "Block target enemy character for 1 turn. If it is a Emberwrought, block it for 3 turns.",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -13518,7 +13518,7 @@
             "cardId": 20186,
             "name": "TheNineRideAgain",
             "quote": "Once more, the dark riders gallop forth, terror in their wake.",
-            "actionEffect": "All Nazgul gain Haste <sprite name=\"haste\"> (3 turns).",
+            "actionEffect": "All Wraithlords gain Haste <sprite name=\"haste\"> (3 turns).",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -14025,7 +14025,7 @@
             "cardId": 20193,
             "name": "Travel through the Marsh",
             "quote": "The mire keeps counsel with no one.",
-            "actionEffect": "The bogs swallow armies and hide the small. Enemies on swamp or shallow water in radius 2 gain Poisoned <sprite name=\"poisoned\"> and Halted <sprite name=\"halted\">; allied Hobbits there gain Hidden <sprite name=\"hidden\">.",
+            "actionEffect": "The bogs swallow armies and hide the small. Enemies on swamp or shallow water in radius 2 gain Poisoned <sprite name=\"poisoned\"> and Halted <sprite name=\"halted\">; allied Hollowkin there gain Hidden <sprite name=\"hidden\">.",
             "type": "Event",
             "tags": [
                 "marsh",
@@ -14172,7 +14172,7 @@
             "cardId": 20195,
             "name": "TreeParty",
             "quote": "There was laughter in the green, and the dark could not abide it.",
-            "actionEffect": "Hobbits, humans, and dwarves in radius 5 gain Encouraged<sprite name=\"encouraged\"> for 1 turn, and troll units are Halted <sprite name=\"halted\">.",
+            "actionEffect": "Hollowkin, humans, and dwarves in radius 5 gain Encouraged<sprite name=\"encouraged\"> for 1 turn, and troll units are Halted <sprite name=\"halted\">.",
             "type": "Event",
             "tags": [
                 "hobbiton",
@@ -14394,7 +14394,7 @@
             "cardId": 20198,
             "name": "Uncautious Supper",
             "quote": "A flame unwatched at meal may summon the long eye of night.",
-            "actionEffect": "At supper or rest, Hobbits in radius 2 lose Hidden <sprite name=\"hidden\"> and take 15 damage.",
+            "actionEffect": "At supper or rest, Hollowkin in radius 2 lose Hidden <sprite name=\"hidden\"> and take 15 damage.",
             "type": "Event",
             "tags": [
                 "beacon",
@@ -14470,7 +14470,7 @@
             "cardId": 20199,
             "name": "Under Elendil's Banner",
             "quote": "Elendil's banner is still a pledge to the Faithful.",
-            "actionEffect": "Allied Humans and Dunedain in radius 2 gain Hope <sprite name=\"hope\"> and Encouraged <sprite name=\"encouraged\"> (1 turn).",
+            "actionEffect": "Allied Humans and Firstbloods in radius 2 gain Hope <sprite name=\"hope\"> and Encouraged <sprite name=\"encouraged\"> (1 turn).",
             "type": "Event",
             "tags": [],
             "deckId": "meta_event",
@@ -14616,7 +14616,7 @@
         {
             "cardId": 20201,
             "name": "Under the White Hand",
-            "quote": "A shadow looms, and the banners of Saruman stir with dark promise.",
+            "quote": "A shadow looms, and the banners of Vaskar stir with dark promise.",
             "actionEffect": "All allied units in radius 2 gain Strengthened <sprite name=\"strengthened\"> (1 turn).",
             "type": "Event",
             "tags": [],
@@ -14688,7 +14688,7 @@
             "cardId": 20202,
             "name": "UnexpectedFireworks",
             "quote": "Bright sparks may unmask the wary and send the timid running.",
-            "actionEffect": "All Hobbits in radius 2 gain Hope <sprite name=\"hope\"> for 1 turn, and all hexes in radius 3 are seen for 1 turn.",
+            "actionEffect": "All Hollowkin in radius 2 gain Hope <sprite name=\"hope\"> for 1 turn, and all hexes in radius 3 are seen for 1 turn.",
             "type": "Event",
             "tags": [
                 "hobbit",
@@ -14763,7 +14763,7 @@
         {
             "cardId": 20203,
             "name": "Uruk Vanguard",
-            "quote": "March forth, Uruks! Let the banners fly in fierce honor!",
+            "quote": "March forth, Graukh! Let the banners fly in fierce honor!",
             "actionEffect": "All allied armies in radius 2 gain Fortified <sprite name=\"fortified\"> (1 turn).",
             "type": "Event",
             "tags": [],
@@ -14906,7 +14906,7 @@
             "cardId": 20205,
             "name": "Vein of True Silver",
             "quote": "What the mountain withholds from the idle, it yields to the stubborn and the wise.",
-            "actionEffect": "Gain 3 mithril <sprite name=\"mithril\"> and replace 1 card in your hand with the Balrog encounter card.",
+            "actionEffect": "Gain 3 mithril <sprite name=\"mithril\"> and replace 1 card in your hand with the The Deepflame encounter card.",
             "type": "Event",
             "tags": [
                 "mithril",
@@ -16014,7 +16014,7 @@
             "actionClassName": "WhiteTowerArsenalAction",
             "action": "WhiteTowerArsenalAction",
             "spriteName": "WhiteTowerArsenal",
-            "region": "NorthernGondor",
+            "region": "UpperArdanth",
             "description": "",
             "requirementsText": "",
             "historyText": "",
@@ -16370,7 +16370,7 @@
         {
             "cardId": 20225,
             "name": "Woven by the Galadhrim",
-            "quote": "The Galadhrim weave cloaks that hide even longing.",
+            "quote": "The Lumeneth host weave cloaks that hide even longing.",
             "actionEffect": "Target allied character: gain Haste <sprite name=\"haste\"> (1 turn) and Hidden <sprite name=\"hidden\"> (2 turns).",
             "type": "Event",
             "tags": [],

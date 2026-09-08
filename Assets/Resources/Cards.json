@@ -1,5 +1,5 @@
 {
-    "deckCount": 27,
+    "deckCount": 24,
     "decks": [
         {
             "deckId": "meta_action",
@@ -122,20 +122,8 @@
             "excluded": true
         },
         {
-            "deckId": "gandalf_base",
-            "nation": "Gandalf",
-            "thematic": "Core Free Peoples deck built around Men, Elves, Dwarves, Hobbits, Eagles, and other allied peoples working in concert. Its gameplay favors balanced development, card quality, scouting, diplomacy, defensive resilience, region access, and reliable utility over brute specialization; it should feel like the broad strategic foundation from which the more sharply themed Gandalf subdecks branch outward.",
-            "alignment": 0,
-            "resourcePath": "Cards/Modular/GandalfBase",
-            "cardCount": 64,
-            "sharedToAll": false,
-            "isMetaDeck": false,
-            "deckSpriteName": "gandalfDeck",
-            "excluded": false
-        },
-        {
-            "deckId": "gandalf_the_white",
-            "nation": "Gandalf",
+            "deckId": "orren_the_kindled",
+            "nation": "Orren",
             "thematic": "High-authority comeback deck built around renewal, courage, cleansing, and open leadership after the return in white. This deck should reward stabilization, morale swings, anti-fear and anti-corruption play, stronger army support, and decisive rally turns; it suits players who want to absorb pressure, reclaim control, and then swing the board through righteous momentum.",
             "alignment": 0,
             "resourcePath": "Cards/Modular/GandalfTheWhite",
@@ -146,8 +134,8 @@
             "excluded": false
         },
         {
-            "deckId": "mithrandir",
-            "nation": "Gandalf",
+            "deckId": "orren_farwalker",
+            "nation": "Orren",
             "thematic": "Pure wizardry deck focused on refined spellcraft, insight, wards, lore, and precise magical intervention. Elven wisdom, hidden knowledge, vision, revelation, and tightly targeted magic all belong here; in gameplay it emphasizes selective control, information advantage, safe setup, and elegant spell resolution rather than broad swarm or raw military output.",
             "alignment": 0,
             "resourcePath": "Cards/Modular/Mithrandir",
@@ -158,9 +146,9 @@
             "excluded": false
         },
         {
-            "deckId": "stormcrow",
-            "nation": "Gandalf",
-            "thematic": "Stormcrow is the Gandalf subdeck of uneasy wartime pressure among Men. It should frame the Grey Pilgrim not only as an ill omen or unwelcome counselor, but as the unsettling force who appears when Mannish realms are strained by encroaching evil and must harden themselves for survival. This includes fronts such as Rohan against the White Hand, Gondor against Mordor, the Northmen of Rhovanion against Easterlings, the Anduin Vale against Dol Guldur, Bree and wider Eriador under the long memory of Angmar, and similar regions where roads, ports, fords, courts, and frontier settlements live under gathering shadow. Gandalf is trying to help, organize, and strengthen resistance, yet many still see him as the sign that peace has already failed. In gameplay the deck should lean into morale strain, defensive hardening, political tension, frontier vigilance, war-readiness, movement pressure, intelligence and concealment, loyalty under stress, and reputation-based disruption rather than reducing itself to repeated warnings or bad-news delivery.",
+            "deckId": "orren_stormherald",
+            "nation": "Orren",
+            "thematic": "Orren Stormherald is the Orren Greycloak subdeck of uneasy wartime pressure among Men. It should frame the Grey Wanderer not only as an ill omen or unwelcome counselor, but as the unsettling force who appears when Mannish realms are strained by encroaching evil and must harden themselves for survival. This includes fronts such as Mearhold against the White Hand, Ardanth against Morgahd, the Northmen of Wildermark against Easterners, the Longwater Vale against Dol Vorrath, Crossway and wider the Marches under the long memory of Grimhold, and similar regions where roads, ports, fords, courts, and frontier settlements live under gathering shadow. Orren Greycloak is trying to help, organize, and strengthen resistance, yet many still see him as the sign that peace has already failed. In gameplay the deck should lean into morale strain, defensive hardening, political tension, frontier vigilance, war-readiness, movement pressure, intelligence and concealment, loyalty under stress, and reputation-based disruption rather than reducing itself to repeated warnings or bad-news delivery.",
             "alignment": 0,
             "resourcePath": "Cards/Modular/Stormcrow",
             "cardCount": 158,
@@ -170,9 +158,9 @@
             "excluded": false
         },
         {
-            "deckId": "disturber_of_the_peace",
-            "nation": "Gandalf",
-            "thematic": "Mischief, adventure, and social-chaos deck built around hobbits, roadside incidents, strange meetings, awkward interruptions, and unexpectedly powerful small-scale plays. Its regional flavor should stretch across Eriador, especially Bree-land, the roads and inns of the North, the Old Forest, the Barrow-downs, scattered settlements, and out toward Cardolan, so the deck can hold wandering locals, petty troublemakers, rural rumors, travel incidents, eerie borderland hazards, and small but meaningful frontier entanglements. It is less martial than other branches and more about quirky utility, board disturbance, off-angle events, and playful disruption that feels fair but annoying for the opponent.",
+            "deckId": "orren_greycloack",
+            "nation": "Orren",
+            "thematic": "Mischief, adventure, and social-chaos deck built around hollowkin, roadside incidents, strange meetings, awkward interruptions, and unexpectedly powerful small-scale plays. Its regional flavor should stretch across the Marches, especially Crossway-land, the roads and inns of the North, the The Elderwood, the The Cairnfields, scattered settlements, and out toward Caldwold, so the deck can hold wandering locals, petty troublemakers, rural rumors, travel incidents, eerie borderland hazards, and small but meaningful frontier entanglements. It is less martial than other branches and more about quirky utility, board disturbance, off-angle events, and playful disruption that feels fair but annoying for the opponent.",
             "alignment": 0,
             "resourcePath": "Cards/Modular/DisturberOfThePeace",
             "cardCount": 137,
@@ -182,9 +170,9 @@
             "excluded": false
         },
         {
-            "deckId": "tharkun",
-            "nation": "Gandalf",
-            "thematic": "Dwarf-friend archetype rooted in mountains, halls, treasure, mithril, endurance, and old alliances with the Durin folk. Expect Dwarven races, Erebor and Khazad themes, defensive economy, sturdy progression, fortress-like value, and reward for treasure or mountain cards; this deck suits slow-building players who want resilience, gear, and hard-to-shift board presence.",
+            "deckId": "orren_stonefriend",
+            "nation": "Orren",
+            "thematic": "Dwarf-friend archetype rooted in mountains, halls, treasure, mithril, endurance, and old alliances with the Durn folk. Expect Dwarven races, Erenkarr and Khazad themes, defensive economy, sturdy progression, fortress-like value, and reward for treasure or mountain cards; this deck suits slow-building players who want resilience, gear, and hard-to-shift board presence.",
             "alignment": 0,
             "resourcePath": "Cards/Modular/Tharkun",
             "cardCount": 141,
@@ -194,21 +182,9 @@
             "excluded": false
         },
         {
-            "deckId": "saruman_base",
-            "nation": "Saruman",
-            "thematic": "Core Isengard strategy deck blending manipulation, coercion, industrial preparation, mixed evil-men support, and practical force. Its races and allies can include Dunlendings, opportunistic Men, Orcs, and wizard-led control pieces; in play it is about pressure through planning, resource leverage, positioning, political influence, and midrange control before committing to a sharper Saruman identity.",
-            "alignment": 2,
-            "resourcePath": "Cards/Modular/SarumanBase",
-            "cardCount": 44,
-            "sharedToAll": false,
-            "isMetaDeck": false,
-            "deckSpriteName": "sarumanDeck",
-            "excluded": false
-        },
-        {
-            "deckId": "saruman_the_white",
-            "nation": "Saruman",
-            "thematic": "Orthanc mastermind deck focused on rhetoric, control, persuasion, voice, and polished strategic dominance. This is Saruman as the calculating high wizard who bends choices and states rather than simply rushing with troops; players should expect influence, deception, mind-affecting actions, elegant tactical denial, and carefully timed control cards.",
+            "deckId": "vaskar_the_pale",
+            "nation": "Vaskar",
+            "thematic": "Thornspire mastermind deck focused on rhetoric, control, persuasion, voice, and polished strategic dominance. This is Vaskar as the calculating high wizard who bends choices and states rather than simply rushing with troops; players should expect influence, deception, mind-affecting actions, elegant tactical denial, and carefully timed control cards.",
             "alignment": 2,
             "resourcePath": "Cards/Modular/SarumanTheWhite",
             "cardCount": 120,
@@ -218,9 +194,9 @@
             "excluded": false
         },
         {
-            "deckId": "of_many_colours",
-            "nation": "Saruman",
-            "thematic": "Arcane self-reinvention deck expressing Saruman's many-coloured identity: layered wizardry, vanity, broad magical reach, and power drawn from synthesis rather than purity. This subdeck is ideal for spell-oriented play with multi-axis magical effects, buffs and debuffs in the same action, symbolic robes-and-voice flavor, and flashy board manipulation that feels sophisticated and dangerous.",
+            "deckId": "vaskar_manyhued",
+            "nation": "Vaskar",
+            "thematic": "Arcane self-reinvention deck expressing Vaskar's many-coloured identity: layered wizardry, vanity, broad magical reach, and power drawn from synthesis rather than purity. This subdeck is ideal for spell-oriented play with multi-axis magical effects, buffs and debuffs in the same action, symbolic robes-and-voice flavor, and flashy board manipulation that feels sophisticated and dangerous.",
             "alignment": 2,
             "resourcePath": "Cards/Modular/OfManyColours",
             "cardCount": 154,
@@ -230,9 +206,9 @@
             "excluded": false
         },
         {
-            "deckId": "the_white_hand",
-            "nation": "Saruman",
-            "thematic": "War engine of Isengard built around Uruk-hai, Orc industry, furnaces, intimidation, and relentless production-to-pressure conversion. This is the aggressive Saruman branch: siege tools, military events, battlefield force multiplication, and sustained assault through disciplined evil infantry and industrial throughput rather than finesse.",
+            "deckId": "the_pale_hand",
+            "nation": "Vaskar",
+            "thematic": "War engine of Thornspire built around Graukh, Orc industry, furnaces, intimidation, and relentless production-to-pressure conversion. This is the aggressive Vaskar branch: siege tools, military events, battlefield force multiplication, and sustained assault through disciplined evil infantry and industrial throughput rather than finesse.",
             "alignment": 2,
             "resourcePath": "Cards/Modular/TheWhiteHand",
             "cardCount": 115,
@@ -242,9 +218,9 @@
             "excluded": false
         },
         {
-            "deckId": "sharkey",
-            "nation": "Saruman",
-            "thematic": "The fallen Saruman as Sharkey, master of the Shire's ruffians. This subdeck is about coercion, intimidation, and petty cruelty: agent and emissary tactics that dominate civilian settlements through fear, pipe-weed monopoly, and Grima's whispered betrayals. No magic remains — only spite, cunning, and the relentless grinding-down of everything pleasant.",
+            "deckId": "sharrow",
+            "nation": "Vaskar",
+            "thematic": "The fallen Vaskar as Sharrow, master of the Thornhollow's ruffians. This subdeck is about coercion, intimidation, and petty cruelty: agent and emissary tactics that dominate civilian settlements through fear, pipe-weed monopoly, and Skeil's whispered betrayals. No magic remains — only spite, cunning, and the relentless grinding-down of everything pleasant.",
             "alignment": 1,
             "resourcePath": "Cards/Modular/Sharkey",
             "cardCount": 118,
@@ -254,21 +230,9 @@
             "excluded": false
         },
         {
-            "deckId": "sauron_base",
-            "nation": "Sauron",
-            "thematic": "Foundational Shadow empire deck covering Mordor's broad military, corruption, fear, conquest, and attrition game plan. Orcs, evil men, monsters, siege assets, and oppressive utility belong here, giving a reliable shell for expansion into more specialized Sauron identities; it rewards steady pressure, resource denial, battlefield cruelty, and inevitability through accumulation.",
-            "alignment": 1,
-            "resourcePath": "Cards/Modular/SauronBase",
-            "cardCount": 57,
-            "sharedToAll": false,
-            "isMetaDeck": false,
-            "deckSpriteName": "sauronDeck",
-            "excluded": false
-        },
-        {
-            "deckId": "the_dark_eye",
-            "nation": "Sauron",
-            "thematic": "Lidless surveillance and Nazgul command deck centered on dread presence, revelation, control auras, and the feeling that no movement escapes Mordor's notice. It favors fear, despair, board locking, command projection, cursed riders, and oppressive events that squeeze the opponent's options turn by turn until resistance becomes inefficient.",
+            "deckId": "the_sleepless_eye",
+            "nation": "Nharok",
+            "thematic": "Lidless surveillance and Wraithlords command deck centered on dread presence, revelation, control auras, and the feeling that no movement escapes Morgahd's notice. It favors fear, despair, board locking, command projection, cursed riders, and oppressive events that squeeze the opponent's options turn by turn until resistance becomes inefficient.",
             "alignment": 1,
             "resourcePath": "Cards/Modular/TheDarkEye",
             "cardCount": 141,
@@ -278,9 +242,9 @@
             "excluded": false
         },
         {
-            "deckId": "the_deceiver",
-            "nation": "Sauron",
-            "thematic": "Subversion-and-false-gifts deck for Sauron as Annatar and corrupter: persuasive command, fallen Numenorean legacy, palantir theft, temptation, and domination achieved through trust, seduction, and crooked counsel before open conquest.",
+            "deckId": "the_giftbearer",
+            "nation": "Nharok",
+            "thematic": "Subversion-and-false-gifts deck for Nharok as Annatar and corrupter: persuasive command, fallen Andarim legacy, seeing-stone theft, temptation, and domination achieved through trust, seduction, and crooked counsel before open conquest.",
             "alignment": 1,
             "resourcePath": "Cards/Modular/TheDeceiver",
             "cardCount": 141,
@@ -290,9 +254,9 @@
             "excluded": false
         },
         {
-            "deckId": "the_necromancer",
-            "nation": "Sauron",
-            "thematic": "Dol Guldur horror deck built around dark sorcery, ruined strongholds, cursed creatures, lingering effects, and monster-heavy occult pressure. Goblins, spirits, spiders, dragons, undead presences, and slow magical decay all fit here; gameplay leans toward attrition, haunting pressure, corruption-adjacent status play, and a more monstrous, supernatural style than the disciplined Dark Eye branch.",
+            "deckId": "zhamor",
+            "nation": "Zhamor",
+            "thematic": "Dol Vorrath horror deck built around dark sorcery, ruined strongholds, cursed creatures, lingering effects, and monster-heavy occult pressure. Goblins, spirits, spiders, dragons, undead presences, and slow magical decay all fit here; gameplay leans toward attrition, haunting pressure, corruption-adjacent status play, and a more monstrous, supernatural style than the disciplined Dark Eye branch.",
             "alignment": 1,
             "resourcePath": "Cards/Modular/TheNecromancer",
             "cardCount": 131,
@@ -302,9 +266,9 @@
             "excluded": false
         },
         {
-            "deckId": "shadow_of_the_east",
-            "nation": "Sauron",
-            "thematic": "Eastern shadow and dark diplomacy deck built around Sauron's influence over the Easterling tribes beyond the Sea of Rhûn. It favors horde raising through emissary pressure, whispered threats, iron promises, and the patient swelling of eastern war-bands that look westward with hungry patience.",
+            "deckId": "the_eastern_shadow",
+            "nation": "Nharok",
+            "thematic": "Eastern shadow and dark diplomacy deck built around Nharok's influence over the Easterner tribes beyond the Sea of Rhûn. It favors horde raising through emissary pressure, whispered threats, iron promises, and the patient swelling of eastern war-bands that look westward with hungry patience.",
             "alignment": 1,
             "resourcePath": "Cards/Modular/ShadowOfTheEast",
             "cardCount": 134,
@@ -314,9 +278,9 @@
             "excluded": false
         },
         {
-            "deckId": "the_iron_crown",
-            "nation": "Sauron",
-            "thematic": "Witch-realm of Angmar deck centered on the Witch-king's iron crown: deception, slaving, and the breaking of hope among the Men of Eriador. It breeds Orcs and Trolls from northern mountain holds, gnaws at Arnor and Cardolan through false counsel and terror, and pours dark sorcery from Carn Dûm like a black river that bends wills before blades are drawn.",
+            "deckId": "the_iron_diadem",
+            "nation": "Nharok",
+            "thematic": "Witch-realm of Grimhold deck centered on the Witch-king's iron crown: deception, slaving, and the breaking of hope among the Men of the Marches. It breeds Orcs and Trolls from northern mountain holds, gnaws at Ardwyn and Caldwold through false counsel and terror, and pours dark sorcery from Carn Dûm like a black river that bends wills before blades are drawn.",
             "alignment": 1,
             "resourcePath": "Cards/Modular/TheIronCrown",
             "cardCount": 134,

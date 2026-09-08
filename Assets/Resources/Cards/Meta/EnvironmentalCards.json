@@ -78,7 +78,7 @@
             "cardId": 100002,
             "name": "Adunaphel Unleashed",
             "quote": "The Silent One speaks no word, yet her will moves unseen through every court and shadow.",
-            "actionEffect": "<sprite name=\"darkServants\"> emissaries gain +1 Emissary on play; emissaries become Hidden <sprite name=\"hidden\"> each turn; Southrons gain +1 Commander on play\n<sprite name=\"Neutral\"> unaffected",
+            "actionEffect": "<sprite name=\"darkServants\"> emissaries gain +1 Emissary on play; emissaries become Hidden <sprite name=\"hidden\"> each turn; Sarrathim gain +1 Commander on play\n<sprite name=\"Neutral\"> unaffected",
             "type": "Environmental",
             "tags": [
                 "environmental"
@@ -150,7 +150,7 @@
         {
             "cardId": 100003,
             "name": "Akhorahil Unleashed",
-            "quote": "The Eye of the East sees all. No spell remains hidden, no secret safe from the gaze of Akhorahil.",
+            "quote": "The Eye of the East sees all. No spell remains hidden, no secret safe from the gaze of Akhorrin.",
             "actionEffect": "<sprite name=\"darkServants\"> mages gain +1 Mage on play; all mages gain Arcane Insight <sprite name=\"arcaneinsight\"> each turn\n<sprite name=\"freePeople\"> all mages gain Arcane Insight <sprite name=\"arcaneinsight\"> each turn\n<sprite name=\"Neutral\"> unaffected",
             "type": "Environmental",
             "tags": [
@@ -1030,7 +1030,7 @@
         {
             "cardId": 100015,
             "name": "Durin's Day",
-            "quote": "On Durin's Day the mountain door may yet remember.",
+            "quote": "On Durn's Day the mountain door may yet remember.",
             "actionEffect": "<sprite name=\"freePeople\"> Dwarves gain Hope; mountain Dwarves Encouraged; Dwarves on plains slowed\n<sprite name=\"darkServants\"> mountain emissaries gain Arcane Insight; mountain chars slowed; armies -8% attack\n<sprite name=\"Neutral\"> unaffected",
             "type": "Environmental",
             "tags": [
@@ -1392,7 +1392,7 @@
             "cardId": 100020,
             "name": "FirstLightOnTheThirdDay",
             "quote": "On the third day, the first light is the sweetest.",
-            "actionEffect": "<sprite name=\"freePeople\"> Humans/Dunedain Encouraged and Hopeful; cavalry Hasted; mages slowed; armies +8% attack\n<sprite name=\"darkServants\"> emissaries gain Arcane Insight; in open Despaired; armies -12% attack\n<sprite name=\"Neutral\"> unaffected",
+            "actionEffect": "<sprite name=\"freePeople\"> Humans/Firstbloods Encouraged and Hopeful; cavalry Hasted; mages slowed; armies +8% attack\n<sprite name=\"darkServants\"> emissaries gain Arcane Insight; in open Despaired; armies -12% attack\n<sprite name=\"Neutral\"> unaffected",
             "type": "Environmental",
             "tags": [
                 "environmental"
@@ -1684,7 +1684,7 @@
             "cardId": 100024,
             "name": "Full Moon",
             "quote": "The night sky glows, awakening ancient horrors to ride forth.",
-            "actionEffect": "<sprite name=\"darkServants\"> Nazgul and agents hasted; non-Nazgul in open slowed; armies +10% attack\n<sprite name=\"freePeople\"> emissaries gain Hope; near Nazgul revealed and feared\n<sprite name=\"Neutral\"> unaffected",
+            "actionEffect": "<sprite name=\"darkServants\"> Wraithlords and agents hasted; non-Wraithlords in open slowed; armies +10% attack\n<sprite name=\"freePeople\"> emissaries gain Hope; near Wraithlords revealed and feared\n<sprite name=\"Neutral\"> unaffected",
             "type": "Environmental",
             "tags": [
                 "environmental"
@@ -1975,7 +1975,7 @@
         {
             "cardId": 100028,
             "name": "Hoarmurath Unleashed",
-            "quote": "Hoarmurath of Dir walks in winter that never thaws. Where he passes, armies seize and die in the cold.",
+            "quote": "Hoarveth of Dir walks in winter that never thaws. Where he passes, armies seize and die in the cold.",
             "actionEffect": "<sprite name=\"darkServants\"> all frozen units: -8 movement, -20% attack, -30% defense\n<sprite name=\"freePeople\"> all frozen units: -8 movement, -20% attack, -30% defense\n<sprite name=\"Neutral\"> unaffected",
             "type": "Environmental",
             "tags": [
@@ -2121,7 +2121,7 @@
         {
             "cardId": 100030,
             "name": "Khamul Unleashed",
-            "quote": "The Shadow of the East cannot be chained. The Easterlings march under my eye, and no forest will hide those who oppose the Dark Lord.",
+            "quote": "The The Eastern Shadow cannot be chained. The Easterners march under my eye, and no forest will hide those who oppose the Dark Lord.",
             "actionEffect": "<sprite name=\"darkServants\"> <sprite name=\"ma\"><sprite name=\"ar\"><sprite name=\"li\"> armies in forest or mountain hexes gain Fortified <sprite name=\"fortified\"> each turn\n<sprite name=\"Neutral\"> unaffected",
             "type": "Environmental",
             "tags": [
@@ -2417,7 +2417,7 @@
             "cardId": 100034,
             "name": "Moon",
             "quote": "The pale moon stirs dark things where light has left the field.",
-            "actionEffect": "<sprite name=\"darkServants\"> Encouraged; Nazgul gain Hidden; in open slowed\n<sprite name=\"freePeople\"> emissaries gain Arcane Insight; gain Fear; armies -10% attack\n<sprite name=\"Neutral\"> unaffected",
+            "actionEffect": "<sprite name=\"darkServants\"> Encouraged; Wraithlords gain Hidden; in open slowed\n<sprite name=\"freePeople\"> emissaries gain Arcane Insight; gain Fear; armies -10% attack\n<sprite name=\"Neutral\"> unaffected",
             "type": "Environmental",
             "tags": [
                 "environmental"
@@ -2565,7 +2565,7 @@
         {
             "cardId": 100036,
             "name": "Murazor Unleashed",
-            "quote": "Angmar was forged in darkness, and I am its master unchained. Let no army stand against the shadow of my coming.",
+            "quote": "Grimhold was forged in darkness, and I am its master unchained. Let no army stand against the shadow of my coming.",
             "actionEffect": "<sprite name=\"darkServants\"> commanders in northern regions/mountains gain +1 Commander and Fortified <sprite name=\"fortified\"> on play; armies there gain Fortified each turn\n<sprite name=\"Neutral\"> unaffected",
             "type": "Environmental",
             "tags": [
@@ -2712,7 +2712,7 @@
             "cardId": 100038,
             "name": "Old Man Willow Song",
             "quote": "The old wood hums, and the unwary forget the way.",
-            "actionEffect": "<sprite name=\"freePeople\"> Hobbit characters in radius 1 gain Blocked <sprite name=\"blocked\"> and Halted <sprite name=\"halted\"> (2 turns)\n<sprite name=\"Neutral\"> unaffected",
+            "actionEffect": "<sprite name=\"freePeople\"> Hollowkin characters in radius 1 gain Blocked <sprite name=\"blocked\"> and Halted <sprite name=\"halted\"> (2 turns)\n<sprite name=\"Neutral\"> unaffected",
             "type": "Environmental",
             "tags": [
                 "old-forest",
@@ -2787,8 +2787,8 @@
         {
             "cardId": 100039,
             "name": "Ovatha Unleashed",
-            "quote": "The Easterlings do not break. Under the iron gaze of Ovatha, the wastes themselves rise to answer the Dark Lord's call.",
-            "actionEffect": "<sprite name=\"darkServants\"> Easterlings gain +1 Commander on play; commanders with Light Cavalry or in desert gain Strengthened <sprite name=\"strengthened\"> each turn\n<sprite name=\"Neutral\"> unaffected",
+            "quote": "The Easterners do not break. Under the iron gaze of Ovathir, the wastes themselves rise to answer the Dark Lord's call.",
+            "actionEffect": "<sprite name=\"darkServants\"> Easterners gain +1 Commander on play; commanders with Light Cavalry or in desert gain Strengthened <sprite name=\"strengthened\"> each turn\n<sprite name=\"Neutral\"> unaffected",
             "type": "Environmental",
             "tags": [
                 "environmental"
@@ -3080,7 +3080,7 @@
             "cardId": 100043,
             "name": "Ravens",
             "quote": "Dark wings span the sky, heralding secrets that tremble upon the earth.",
-            "actionEffect": "<sprite name=\"freePeople\"> Humans/Dunedain in radius 2 gain Haste <sprite name=\"haste\">\n<sprite name=\"darkServants\"> Humans/Dunedain gain Fear <sprite name=\"fear\"> and Halted <sprite name=\"halted\">\n<sprite name=\"Neutral\"> unaffected",
+            "actionEffect": "<sprite name=\"freePeople\"> Humans/Firstbloods in radius 2 gain Haste <sprite name=\"haste\">\n<sprite name=\"darkServants\"> Humans/Firstbloods gain Fear <sprite name=\"fear\"> and Halted <sprite name=\"halted\">\n<sprite name=\"Neutral\"> unaffected",
             "type": "Environmental",
             "tags": [
                 "stormcrow",
@@ -3159,7 +3159,7 @@
             "cardId": 100044,
             "name": "Red Sun",
             "quote": "The sun rises over the east, igniting the courage that lies within.",
-            "actionEffect": "<sprite name=\"darkServants\"><sprite name=\"Neutral\"> Easterling commanders reveal hexes (2 turns); 1 army gains +1 Light Cavalry <sprite name=\"lc\">; on patrol gain Encouraged <sprite name=\"encouraged\">\n<sprite name=\"freePeople\"> unaffected",
+            "actionEffect": "<sprite name=\"darkServants\"><sprite name=\"Neutral\"> Easterner commanders reveal hexes (2 turns); 1 army gains +1 Light Cavalry <sprite name=\"lc\">; on patrol gain Encouraged <sprite name=\"encouraged\">\n<sprite name=\"freePeople\"> unaffected",
             "type": "Environmental",
             "tags": [],
             "deckId": "meta_environmental",
@@ -3303,7 +3303,7 @@
             "cardId": 100046,
             "name": "Restless East",
             "quote": "The winds of the east carry whispers of strength and determination.",
-            "actionEffect": "<sprite name=\"darkServants\"><sprite name=\"Neutral\"> Easterlings on plains/wastelands gain Fortified <sprite name=\"fortified\"> and Strengthened <sprite name=\"strengthened\"> (1 turn)\n<sprite name=\"freePeople\"> unaffected",
+            "actionEffect": "<sprite name=\"darkServants\"><sprite name=\"Neutral\"> Easterners on plains/wastelands gain Fortified <sprite name=\"fortified\"> and Strengthened <sprite name=\"strengthened\"> (1 turn)\n<sprite name=\"freePeople\"> unaffected",
             "type": "Environmental",
             "tags": [],
             "deckId": "meta_environmental",
@@ -3374,7 +3374,7 @@
             "cardId": 100047,
             "name": "Sand Storm",
             "quote": "A tempest of sand engulfs the land, blinding friend and foe alike.",
-            "actionEffect": "<sprite name=\"darkServants\"> Southrons Encouraged; non-Southron in desert halted\n<sprite name=\"freePeople\"><sprite name=\"Neutral\"> non-Southron in desert halted",
+            "actionEffect": "<sprite name=\"darkServants\"> Sarrathim Encouraged; non-Southron in desert halted\n<sprite name=\"freePeople\"><sprite name=\"Neutral\"> non-Southron in desert halted",
             "type": "Environmental",
             "tags": [
                 "environmental"
@@ -3813,7 +3813,7 @@
             "cardId": 100053,
             "name": "Sun",
             "quote": "The sun lays bare what shadow would conceal.",
-            "actionEffect": "<sprite name=\"freePeople\"> Men, Hobbits, Dunedain Encouraged; cavalry Hasted; Undead slowed\n<sprite name=\"darkServants\"> Southrons/Easterlings gain movement; Trolls halted; Undead Despaired; armies -10% attack\n<sprite name=\"Neutral\"> unaffected",
+            "actionEffect": "<sprite name=\"freePeople\"> Men, Hollowkin, Firstbloods Encouraged; cavalry Hasted; Undead slowed\n<sprite name=\"darkServants\"> Sarrathim/Easterners gain movement; Trolls halted; Undead Despaired; armies -10% attack\n<sprite name=\"Neutral\"> unaffected",
             "type": "Environmental",
             "tags": [
                 "environmental"
@@ -3885,7 +3885,7 @@
         {
             "cardId": 100054,
             "name": "The Shadow Deepens",
-            "quote": "Night in Mirkwood is not the absence of light but the presence of something older.",
+            "quote": "Night in Nightwood is not the absence of light but the presence of something older.",
             "actionEffect": "<sprite name=\"darkServants\"> forest Spiders/Orcs/Goblins: Hasted and Hidden; agents Hidden; non-forest units slowed; armies +8% attack\n<sprite name=\"freePeople\"> forest emissaries gain Arcane Insight; forest chars feared and revealed\n<sprite name=\"Neutral\"> unaffected",
             "type": "Environmental",
             "tags": [],
