@@ -16,12 +16,11 @@ if(b.TryPlay(View(land))) throw new System.Exception("Board bypassed draw stage.
 m.AdvanceIfNoActions();
 if(r.Stage!=MatchStage.Realm || !b.TryPlay(View(land))) throw new System.Exception("Board land deployment failed.");
 foreach(var card in r.Players[0].Hand.ToArray()) if(card.GetCardType()==CardTypeEnum.Land) b.TryPlay(View(card));
-if(b.CanTap(View(land))) throw new System.Exception("Board allows mana outside stage 3.");
+if(b.CanTap(View(land))) throw new System.Exception("Board allows mana during Realms.");
 m.Advance();
 if(!b.TryTap(View(land)) || !b.IsTapped(View(land)) || b.TryTap(View(land))) throw new System.Exception("Board tapping integration failed.");
 if(!object.ReferenceEquals(b.HumanMaterials,r.Players[0].Mana)) throw new System.Exception("Board material pool not bound to rules.");
 foreach(var card in r.Players[0].Field.Where(u=>u.Card.GetCardType()==CardTypeEnum.Land).ToArray()) b.TryTap(View(card.Card));
-m.Advance();
 var army=r.Players[0].Hand.FirstOrDefault(c=>c.GetCardType()==CardTypeEnum.Army);
 if(army!=null && b.TryPlay(View(army)) && !b.humanArmies.Cards.Contains(army)) throw new System.Exception("Army did not appear in zone.");
 UnityEngine.ScreenCapture.CaptureScreenshot("Temp/MatchUI.png");

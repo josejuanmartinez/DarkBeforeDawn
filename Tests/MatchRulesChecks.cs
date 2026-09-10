@@ -10,7 +10,7 @@ r.Begin(0); Check(r.Players[0].Hand.Count==7,"Hand limit not respected"); Check(
 var land=r.Players[0].Hand[0]; Check(!r.Play(land),"Land played in draw stage"); r.Next(); Check(r.Play(land),"Land rejected in realm");
 var pc=Card("Home","PC"); pc.region="Missing"; r.Players[0].Hand.Add(pc); Check(!r.Play(pc),"PC without land accepted"); pc.region=land.name; Check(r.Play(pc),"PC with land rejected");
 r.Next(); var lu=r.Players[0].Field.Find(u=>u.Card==land); Check(r.TapLand(lu)&&!r.TapLand(lu),"Double tapping land accepted");
-r.Next(); var hero=Card("Hero","Character",2,2); hero.startingPC="Elsewhere"; r.Players[0].Hand.Add(hero); Check(!r.Play(hero),"Missing starting PC accepted"); hero.startingPC="Home"; Check(r.Play(hero),"Character deployment failed");
+var hero=Card("Hero","Character",2,2); hero.startingPC="Elsewhere"; r.Players[0].Hand.Add(hero); Check(!r.Play(hero),"Missing starting PC accepted"); hero.startingPC="Home"; Check(r.Play(hero),"Character deployment failed");
 var hu=r.Players[0].Field.Find(u=>u.Card==hero); var item=Card("Relic","Object"); r.Players[0].Hand.Add(item); Check(!r.Play(item),"Object played without character"); Check(r.Play(item,hu)&&hu.Objects.Contains(item),"Object not attached");
 r.Next(); var ev=Card("Unsupported event","Event"); r.Players[0].Hand.Add(ev); Check(!r.Play(ev)&&r.Players[0].Hand.Contains(ev),"Unsupported event consumed");
 r.Next(); Check(!r.Attack(hu),"Summoning sickness ignored"); Check(r.Attack(ready)&&!r.Attack(ready),"Attack tapping failed");

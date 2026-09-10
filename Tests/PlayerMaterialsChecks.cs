@@ -34,7 +34,7 @@ try {
  Check(b.hand.Count==1 && b.HumanMaterials[2]==4 && b.HumanMaterials[3]==3 && b.OpponentMaterials[2]==3,"Play accounting/ownership broken");
  Check(b.humanArmies.Cards[b.humanArmies.Count-1]==cheap,"Played card destination incorrect");
  b.BeginTurn(false);
- Check(b.HumanMaterials[2]==0 && b.OpponentMaterials[2]==0,"Turn did not empty pools");
+ Check(b.HumanMaterials[2]==4 && b.OpponentMaterials[2]==3,"Turn did not preserve pools");
  Check(!b.IsTapped(b.humanLands.GetComponentInChildren<BoardCardView>()) && b.IsTapped(b.opponentLands.GetComponentInChildren<BoardCardView>()),"Wrong player's lands readied");
  Check(b.GetComponentsInChildren<AvatarZoneVisualizer>().Length==2,"Missing avatars");
  foreach(var avatar in b.GetComponentsInChildren<AvatarZoneVisualizer>()) {

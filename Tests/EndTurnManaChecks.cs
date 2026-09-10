@@ -1,0 +1,21 @@
+void Check(bool ok,string message){if(!ok)throw new System.Exception(message);}
+var r=new MatchRules();
+MatchRules.Unit Land(int owner,int gold)=>new MatchRules.Unit{Owner=owner,Card=new CardData{type="Land",goldGranted=gold,timberGranted=2}};
+var ready=Land(0,3);var manual=Land(0,5);var enemy=Land(1,7);
+r.Players[0].Field.AddRange(new[]{ready,manual});r.Players[1].Field.Add(enemy);
+r.Begin(0);r.Next();r.Next();Check(r.TapLand(manual),"Manual tap failed");
+while(r.Stage!=MatchStage.Spoils)r.Next();
+r.Spoils.Enqueue(new MatchRules.Loot{Card=new CardData{type="Object"},Owner=0});
+Check(!r.Next()&&!ready.Tapped&&r.Players[0].Mana[6]==5,"Pending spoils triggered harvest");r.OfferLoot();
+Check(r.Next()&&r.Active==1,"Turn handoff");
+Check(ready.Tapped&&manual.Tapped&&!enemy.Tapped,"Wrong lands tapped");
+Check(r.Players[0].Mana[6]==8&&r.Players[0].Mana[2]==4&&r.Players[1].Mana[6]==0,"Harvest lost or doubled resources");
+while(r.Active==1)r.Next();
+Check(!ready.Tapped&&!manual.Tapped&&enemy.Tapped,"Next-turn untap");
+Check(r.Players[0].Mana[6]==8&&r.Players[1].Mana[6]==7,"Carryover/opponent harvest");
+r.Next();r.Next();
+var cost=new CardData{type="Army",goldRequired=8};r.Players[0].Hand.Add(cost);
+Check(r.Play(cost)&&r.Players[0].Mana[6]==0,"Cannot spend banked mana");
+while(r.Active==0)r.Next();
+Check(r.Players[0].Mana[6]==8&&r.Players[0].Mana[2]==8&&r.Players[1].Mana[6]==7,"Repeated harvest accumulation");
+return "PASS: automatic harvest, no double grant, both players, resource carryover, normal untap, spending banked mana, pending-spoils gate.";

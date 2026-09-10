@@ -261,6 +261,8 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
             // is resized to it two lines down.
             FitFullCardRoot(card);
             BoardPresentation.StyleFullCard(card);
+            if (zone is AvatarZoneVisualizer avatarZone)
+                instance.AddComponent<AvatarCardPresentation>().Initialize(card, avatarZone);
             size = skin.cards.size;
             rect.anchorMin = rect.anchorMax = rect.pivot = Vector2.one * .5f;
             rect.sizeDelta = size;

@@ -1,0 +1,22 @@
+void Check(bool value, string message) { if (!value) throw new System.Exception(message); }
+var r = new MatchRules();
+var land = new CardData { name="Vale", type="Land", goldGranted=3 };
+var army = new CardData { name="Army", type="Army", goldRequired=3 };
+var ev = new CardData { name="Event", type="Event", goldRequired=3 };
+r.Players[0].Hand.AddRange(new[]{land,army,ev});
+r.Begin(0);r.Next();r.Play(land);
+var first=r.Players[0].Field[0];
+var second=new MatchRules.Unit {Card=land,Owner=0};r.Players[0].Field.Add(second);
+Check(!r.TapLand(first)&&!first.Tapped,"Realm tapped a land");
+r.Next();Check(r.Stage==MatchStage.Muster,"Realms must go directly to Muster");
+Check(!r.CanPlay(army)&&r.HasLegalAction(),"Unfunded but affordable Muster skipped");
+Check(!first.Tapped&&r.Players[0].Mana[6]==0,"Affordability query mutated state");
+Check(r.TapLand(first)&&r.Play(army),"Cannot fund army during Muster");
+Check(!r.TapLand(first)&&!second.Tapped,"Duplicate tap or unrelated land changed");
+r.Next();Check(!r.HasLegalAction(),"Unsupported event held stage open");
+r.ResolveEvent=(c,p,s)=>{};
+Check(r.HasLegalAction()&&!r.CanPlay(ev),"Fundable event skipped");
+Check(r.TapLand(second)&&r.Play(ev),"Cannot fund event during Events");
+Check(!r.HasLegalAction(),"Empty events did not skip");
+r.Next();first.Tapped=false;Check(!r.CanTapLand(first),"Attack allows mana tapping");
+return "PASS: no Realm tapping; on-demand Muster/Event funding; no premature skip, duplicate grants or query mutation.";

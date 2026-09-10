@@ -11,6 +11,7 @@ public sealed class TowerMatchController : MonoBehaviour
     public bool diceDecideFirstPlayer = true;
     public int cinematicRendererIndex = -1;
     public Material towerStoneMaterial, towerTrimMaterial, towerInkMaterial, dieLightMaterial, dieDarkMaterial, towerAccentMaterial;
+    public Shader diceSurfaceShader;
     public string humanDeckId, opponentDeckId;
     public int startingLife = 20;
     [Tooltip("Build a playable opening from the chosen catalog deck while event effects are being authored.")]
@@ -31,7 +32,7 @@ public sealed class TowerMatchController : MonoBehaviour
     float aiAt;
     float autoAt;
     string selectionHint;
-    readonly string[] stages = { "", "REPLENISH", "BUILD YOUR REALM", "GATHER MANA", "MUSTER", "EVENTS", "DECLARE ATTACKS", "ASSIGN DEFENDERS", "RECOVER OBJECTS" };
+    readonly string[] stages = { "", "REPLENISH", "BUILD YOUR REALM", "MUSTER", "EVENTS", "DECLARE ATTACKS", "ASSIGN DEFENDERS", "RECOVER OBJECTS" };
 
     IEnumerator Start()
     {
@@ -55,6 +56,8 @@ public sealed class TowerMatchController : MonoBehaviour
             var avatar = CardCatalog.FindCardByName(i == 0 ? board.humanAvatarCardName : board.opponentAvatarCardName);
             if (string.IsNullOrWhiteSpace(id)) id = avatar?.deckId;
             var cards = CardCatalog.GetDeckCards(id).Select(c => c.Clone()).ToList();
+            if (avatar != null && !cards.Any(c => c.cardId == avatar.cardId && c.name == avatar.name))
+                cards.Add(avatar.Clone());
             if (cards.Count == 0) { selectionHint = "Assign both match deck IDs on TowerMatchController."; Busy = true; return; }
             for (int n = cards.Count - 1; n > 0; n--) { int j = Random.Range(0, n + 1); (cards[n], cards[j]) = (cards[j], cards[n]); }
             if (useStarterDeck) cards = StarterDeck(cards);
@@ -72,7 +75,7 @@ public sealed class TowerMatchController : MonoBehaviour
         var opening = lands.Take(3).ToList();
         var pc = supported.FirstOrDefault(c => c.GetCardType() == CardTypeEnum.PC && opening.Any(l => l.name == c.region));
         if (pc != null) opening.Add(pc);
-        var army = supported.Where(c => c.GetCardType() == CardTypeEnum.Army).OrderBy(c => c.GetTotalGoldCost()+c.jokerRequired+c.ironRequired+c.steelRequired+c.mithrilRequired+c.leatherRequired+c.mountsRequired+c.timberRequired).FirstOrDefault();
+        var army = supported.Where(c => c.GetCardType() == CardTypeEnum.Army).OrderBy(c => c.GetTotalMaterialCost()).FirstOrDefault();
         if (army != null) opening.Add(army);
         foreach(var c in opening) supported.Remove(c);
         opening.AddRange(supported);
@@ -153,7 +156,7 @@ public sealed class TowerMatchController : MonoBehaviour
         if (!IsActionable(view)) return null;
         if (pendingObject != null || pendingAttacker != null || Rules.Stage == MatchStage.Spoils) return "SELECT";
         if (view.Zone == board.hand) return "PLAY CARD";
-        return Rules.Stage == MatchStage.Mana ? "TAP LAND" : Rules.Stage == MatchStage.Attack ? "ATTACK" : "DEFEND";
+        return CanTap(view) ? "TAP LAND" : Rules.Stage == MatchStage.Attack ? "ATTACK" : "DEFEND";
     }
     public string InspectionHint(BoardCardView view)
     {
@@ -263,7 +266,8 @@ public sealed class TowerMatchController : MonoBehaviour
         }
         if (Rules.Active != 1 || Rules.Stage == MatchStage.Defend) return;
         var p = Rules.Players[1];
-        if (Rules.Stage == MatchStage.Mana)
+        if ((Rules.Stage == MatchStage.Muster || Rules.Stage == MatchStage.Events) &&
+            p.Hand.Any(c => !Rules.CanPlay(c) && Rules.PlayBlockReason(c, includeReadyMana: true) == null))
         {
             var land = p.Field.FirstOrDefault(Rules.CanTapLand);
             if (land != null) { Rules.TapLand(land); Sync(); return; }
@@ -298,8 +302,8 @@ public sealed class TowerMatchController : MonoBehaviour
     {
         if (Rules.Stage == MatchStage.Draw) return "Replenishing hand... play continues automatically.";
         if (Rules.Active == 0 && Rules.Stage == MatchStage.Realm) return "Glowing hand cards can build your realm: lands, PCs and environments.";
-        if (Rules.Active == 0 && Rules.Stage == MatchStage.Mana) return "Click a glowing land to gather mana. Each land taps once.";
-        if (Rules.Active == 0 && Rules.Stage == MatchStage.Muster) return "Glowing hand cards can deploy. New units can defend now and attack next turn.";
+        if (Rules.Active == 0 && Rules.Stage == MatchStage.Muster) return "Tap ready lands for mana, then deploy characters, armies or objects. New units attack next turn.";
+        if (Rules.Active == 0 && Rules.Stage == MatchStage.Events && Rules.ResolveEvent != null) return "Tap ready lands for mana as needed, then play events.";
         if (Rules.Stage == MatchStage.Attack && Rules.Active == 0)
             return "Click ready units to attack. " + Rules.Attacks.Count + " committed. " + Rules.Message;
         if (Rules.Stage == MatchStage.Defend && Rules.Active == 1)

@@ -23,7 +23,9 @@ System.Collections.IEnumerator Run() {
     m.Advance();Check(r.Stage==MatchStage.Draw,"Manual draw progression allowed");
     Check(m.AdvanceIfNoActions()&&r.Stage==MatchStage.Realm,"Replenish did not auto-progress");yield return null;
     Check(View(pc).ActionHighlighted&&!View(beast).ActionHighlighted,"Realm highlights incorrect");
-    m.Advance();Check(r.Stage==MatchStage.Mana,"Expected mana");yield return null;
+    m.Advance();Check(r.Stage==MatchStage.Muster,"Realms must go directly to Muster");yield return null;
+    var heading=(UnityEngine.UI.Text)typeof(TowerMatchController).GetField("headline",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance).GetValue(m);
+    Check(heading.text.Contains("3 · MUSTER")&&!heading.text.Contains("GATHER MANA"),"HUD still shows separate mana stage: "+heading.text);
     var v1=View(l1.Card);var v2=View(l2.Card);var ve=View(enemy.Card);var vv=View(veteran.Card);
     Check(v1.ActionHighlighted&&!v2.ActionHighlighted&&!ve.ActionHighlighted,"Mana highlighted wrong lands");
     var old2=v2.transform.localRotation;var oldEnemy=ve.transform.localRotation;
@@ -33,7 +35,7 @@ System.Collections.IEnumerator Run() {
     yield return new UnityEngine.WaitForSecondsRealtime(.5f);
     Check(UnityEngine.Quaternion.Angle(v1.transform.localRotation,UnityEngine.Quaternion.Euler(0,0,-90))<2,"Selected land did not animate");
     var old1=v1.transform.localRotation;
-    Check(m.AdvanceIfNoActions()&&r.Stage==MatchStage.Muster,"Exhausted mana did not auto-skip");
+    Check(!m.AdvanceIfNoActions()&&r.Stage==MatchStage.Muster,"Playable Muster auto-skipped");
     Check(v1==View(l1.Card)&&UnityEngine.Quaternion.Angle(v1.transform.localRotation,old1)<.01f,"Stage change restarted tap animation");
     Check(m.ActionLabel(View(pc))==null,"PC offered play during Muster");
     b.preview.Pin(View(pc));Check(b.preview.PreviewRect.Find("Card action")==null,"Preview exposed illegal Play card button");b.preview.Hide();

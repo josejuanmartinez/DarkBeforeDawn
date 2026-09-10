@@ -15,7 +15,7 @@ public sealed class BoardPresentation : MonoBehaviour
     private Board board;
     private Font font;
     private bool started;
-    private readonly List<(PlayerMaterials pool, int index, TMP_Text label)> materialLabels = new();
+    private readonly List<(bool opponent, int index, TMP_Text label)> materialLabels = new();
     private Text endTurnLabel;
     private Text actionStatus;
 
@@ -191,7 +191,7 @@ public sealed class BoardPresentation : MonoBehaviour
     private void LateUpdate()
     {
         foreach (var entry in materialLabels)
-            if (entry.label != null) entry.label.text = MaterialAmount(entry.pool, entry.index);
+            if (entry.label != null) entry.label.text = MaterialAmount(entry.opponent ? board.OpponentMaterials : board.HumanMaterials, entry.index);
         if (endTurnLabel != null) endTurnLabel.text = board.IsOpponentTurn ? "END OPPONENT TURN" : "END TURN";
         if (actionStatus != null) actionStatus.text = board.ActionStatus;
         foreach (var entry in counts)
@@ -232,7 +232,8 @@ public sealed class BoardPresentation : MonoBehaviour
             amount.raycastTarget = false;
             amount.text = MaterialAmount(pool, i);
             Stretch(amount.rectTransform, new Vector2(left,bottom+.11f), new Vector2(left+.24f,bottom+.34f));
-            materialLabels.Add((pool,i,amount));
+            // Match creation/retries replace the pools after the chrome has already been built.
+            materialLabels.Add((opponent,i,amount));
             Label(panel.transform, PlayerMaterials.Names[i].ToUpperInvariant(), style.materialSize, Skin.colors.muted,
                 new Vector2(left,bottom), new Vector2(left+.24f,bottom+.12f), TextAnchor.MiddleCenter);
         }
@@ -269,6 +270,8 @@ public sealed class BoardPresentation : MonoBehaviour
             area.offsetMin = new Vector2(6, 6);
             area.offsetMax = new Vector2(-6, -28);
             var zone = go.AddComponent<AvatarZoneVisualizer>(); zone.board = board;
+            zone.Owner = opponent ? 1 : 0;
+            zone.HealthLabel = avatarHeading;
             zone.SetCards(new[] { data.Clone() });
         }
         if (!opponent)

@@ -131,6 +131,19 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     }
 
     private bool lockedToRealCard;
+    public void SetAvatarUnlocked(bool unlocked)
+    {
+        if (descriptionText != null)
+            descriptionText.text = unlocked ? baseDescription : "Play from hand to unlock abilities";
+        foreach (var image in GetComponentsInChildren<UnityEngine.UI.Image>(true))
+        {
+            if (image.name != "Image") continue;
+            var color = image.color;
+            color.a = unlocked ? 1f : .4f;
+            image.color = color;
+        }
+    }
+
     private string baseDescription = string.Empty;
     private Image encounterArtOverlay;
     private TextMeshProUGUI encounterQuestionMark;
@@ -947,10 +960,13 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         if (data == null) return string.Empty;
         List<string> reqs = new();
 
+        if (data.GetCardType() != CardTypeEnum.Army)
+        {
         AppendRequirement(reqs, "commander", data.commanderSkillRequired);
         AppendRequirement(reqs, "agent", data.agentSkillRequired);
         AppendRequirement(reqs, "emmissary", data.emissarySkillRequired);
         AppendRequirement(reqs, "mage", data.mageSkillRequired);
+        }
 
         AppendRequirement(reqs, "gold", data.GetTotalGoldCost());
 

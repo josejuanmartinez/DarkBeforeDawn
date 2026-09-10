@@ -2,28 +2,29 @@
 
 Enter Play in `Assets/Scenes/TCGBoard.unity`. `TowerMatchController` presents five 3D floors, rolls two six-sided dice with automatic tie rerolls, and starts the higher roller. The human controls Orren. The second floor deliberately says **The Sleepless Eye vs ?**, as requested; higher pairings remain **? vs ?**.
 
+Known tower leaders display their existing card artwork in framed portrait slots with names underneath: Orren Dawnbringer and The Sleepless Eye on floor one, and The Sleepless Eye on floor two. Unrevealed slots retain a question mark. Portraits resolve through the same card-art library as the board avatars and preserve the artwork's proportions.
+
 ## Controls
 
 - Replenish continues automatically after the last draw animation. Any stage without a legal action advances automatically, including empty Events and Recover Objects. **Next stage** is shown only while you have optional actions remaining. During an opponent attack, select your ready defender, then the attacking enemy; use **Resolve combat** to decline any remaining blocks.
 - Pin a hand card and select **Play card** during its deployment stage. Objects prompt for a friendly character.
-- Click a glowing land during stage 3 to tap it for mana (or pin it and use **Tap land**).
-- Click your armies/characters during stage 6 to commit attacks. Cards tagged `ChooseTarget` prompt for an enemy target.
-- Stage 8 prompts for each dead character's object. Select a surviving friendly character, or offer it to the enemy and select an eligible enemy. If neither side has a character, the object is discarded.
+- Click a glowing land during Muster or Events to tap it for mana (or pin it and use **Tap land**). Mana can be gathered as cards are needed; Realms never allows land tapping. The opponent gathers mana during deployment as needed. Muster and Events remain available when ready lands can fund a valid card, and empty stages still skip.
+- Click your armies/characters during stage 5 to commit attacks. Cards tagged `ChooseTarget` prompt for an enemy target.
+- Stage 7 prompts for each dead character's object. Select a surviving friendly character, or offer it to the enemy and select an eligible enemy. If neither side has a character, the object is discarded.
 - The opponent plays automatically, except that the human chooses human blockers and human object recipients.
 - A pulsing mint border identifies legal cards/tokens for the current action, including object recipients, attack targets and blockers. Illegal actions have no button in the preview. New non-Mounted units enter untapped and show **NEW / ATTACK NEXT TURN**; they can defend immediately.
 
-The tower and dice reuse the Golden Vale's original limestone, sunlit stone, ink, blue slate and verdigris materials, including their printed surface shader and slate texture. Board updates preserve surviving card-view instances: only cards whose tapped state changes animate, and only the new turn owner's non-Halted units untap.
+The tower reuses the Golden Vale's original limestone, sunlit stone, ink, blue slate and verdigris materials. Dice use dedicated fine-grain ivory and slate surfaces derived from that palette, with polished gold details instead of enlarged masonry textures. Board updates preserve surviving card-view instances: only cards whose tapped state changes animate, and only the new turn owner's non-Halted units untap. Material counters read the current match pools, including after a match reset.
 
 ## Rules implemented
 
 1. Refill the active hand to its `HandLimit` (default 5; accepts 6/7), ready cards except Halted.
 2. Clear previous environmental cards; deploy lands, population centres and environments. PCs require their named region's land.
-3. Tap lands for the existing seven materials, serving as mana.
-4. Pay printed costs for characters, armies and objects. Characters require their exact starting PC; objects attach only to characters.
-5. Event stage and an explicit effect execution hook.
-6. Tap attacking units. New units wait a turn unless Mounted; Fear prevents attacks. Target selection is an explicit ability hook/tag.
-7. Ready defenders can each tap to block one attacker; multiple defenders may block the same attacker. Normal damage is simultaneous, assigned in blocker selection order up to lethal before the next blocker. Unblocked damage reduces life.
-8. Resolve objects from all simultaneous deaths, then hand over the turn. Both mana pools empty at the turn boundary.
+3. Tap lands as needed for the existing seven materials, serving as mana. Pay printed costs for characters, armies and objects. Characters require their exact starting PC; objects attach only to characters.
+4. Event stage and an explicit effect execution hook.
+5. Tap attacking units. New units wait a turn unless Mounted; Fear prevents attacks. Target selection is an explicit ability hook/tag.
+6. Ready defenders can each tap to block one attacker; multiple defenders may block the same attacker. Normal damage is simultaneous, assigned in blocker selection order up to lethal before the next blocker. Unblocked damage reduces life.
+7. Resolve objects from all simultaneous deaths, then hand over the turn. The ending player's untapped lands automatically tap and grant their materials. Both mana pools persist across turns; the next player's lands untap as usual.
 
 Combat uses the same base attack/defense calculation as the card face, including troop/character fallback values. Life defaults to 20 as a configurable prototype win condition. An empty deck currently draws no cards; it does not itself cause a loss.
 
@@ -39,8 +40,12 @@ The full keyword system (first strike, flying restrictions, triggered/probabilis
 
 ## Validation
 
+`Tests/ManaCounterChecks.cs` verifies all fourteen visible material counters after human/opponent land taps, prevents duplicate grants, checks spending and mana carryover, and verifies binding to replacement match pools. Run after the opening in Play mode, then restart Play.
+
 `unity command eval_file --file Tests/MatchRulesChecks.cs` checks stage gates, refill to seven, Halted, land/PC prerequisites, attachment validation, unsupported-event preservation, summon timing, tapping, multiple blockers, simultaneous deaths, mandatory spoils, and turn handoff. Live Play mode checks cover the cinematic transition, opponent initiative, board synchronization and UI captures. The cinematic uses `TournamentRenderer.asset` through a dedicated camera; the pipeline's default renderer stays unchanged.
 
 `Tests/MatchEdgeChecks.cs` also passes targeted combat, environmental cleanup, no-recipient object recovery, printed stat fallback and lethal victory. `Tests/MatchBoardChecks.cs` passes the live board-to-rules integration checks (run in Play mode after the opening); it disables automatic opponent updates for deterministic testing, so restart Play afterward.
 
 `Tests/MatchStageFeedbackChecks.cs` validates read-only legality, stage availability, new-unit readiness, mana ownership and untap boundaries. `Tests/MatchFeedbackLiveChecks.cs` checks automatic advancement, highlighted cards, removal of illegal preview buttons, direct attacks and preservation of token identities/rotations across actions and stages. The coroutine writes its result to `Temp/MatchFeedbackLiveResult.txt`; restart Play after running it.
+
+Realms advances directly to Muster: there is no separate Gather Mana stage. `Tests/ManaTimingChecks.cs` checks this transition and funding during Muster and Events.

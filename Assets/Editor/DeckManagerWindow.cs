@@ -525,6 +525,10 @@ public class DeckManagerWindow : EditorWindow
         EditorGUILayout.LabelField("Card Id", card.cardId.ToString(CultureInfo.InvariantCulture));
         EditorGUILayout.LabelField("Gold Cost", card.GetTotalGoldCost().ToString(CultureInfo.InvariantCulture));
         EditorGUILayout.LabelField("Costs", BuildCostSummary(card));
+        if (card.IsMissingCost())
+        {
+            EditorGUILayout.HelpBox($"{card.GetCardType()} cards are paid from hand and must print a cost.", MessageType.Warning);
+        }
         EditorGUILayout.LabelField("Grants", BuildGrantSummary(card));
 
         if (card.GetCardType() == CardTypeEnum.Land && !string.IsNullOrWhiteSpace(card.name))

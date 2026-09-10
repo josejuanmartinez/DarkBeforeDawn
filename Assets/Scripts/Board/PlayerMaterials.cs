@@ -8,6 +8,12 @@ public sealed class PlayerMaterials
     private readonly int[] amounts = new int[7];
     public int this[int index] => amounts[index];
     public void Clear() => Array.Clear(amounts, 0, amounts.Length);
+    public PlayerMaterials Copy()
+    {
+        var copy = new PlayerMaterials();
+        Array.Copy(amounts, copy.amounts, amounts.Length);
+        return copy;
+    }
     public void Grant(CardData land)
     {
         if (land == null || land.GetCardType() != CardTypeEnum.Land) return;

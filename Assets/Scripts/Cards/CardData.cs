@@ -169,12 +169,36 @@ public class CardData
 
     // A character is paid in coin rather than equipped out of stores, so their gold is derived
     // from their skill points instead of being authored on the card; the materials printed
-    // alongside are what arming them costs. The multiplier is deliberately small: the Lands are
-    // the only source of gold, and at five per point no character was ever affordable.
-    public const int GoldPerCharacterPoint = 2;
+    // alongside are what arming them costs. The curve is a flat base plus one per point rather
+    // than a multiplier: Lands are the only source of gold and mana empties every turn, so the
+    // deck avatars (the 4-5 point characters) must stay only a little dearer than the 1-2 point
+    // rank and file. At five per point an avatar cost 25 and was never affordable.
+    public const int CharacterGoldBase = 1;
+    public const int GoldPerCharacterPoint = 1;
 
     public int GetAdditionalGoldCost()
-        => GetCardType() == CardTypeEnum.Character ? GetCharacterPointTotal() * GoldPerCharacterPoint : 0;
+    {
+        if (GetCardType() != CardTypeEnum.Character) return 0;
+        int points = GetCharacterPointTotal();
+        return points > 0 ? CharacterGoldBase + points * GoldPerCharacterPoint : 0;
+    }
+
+    // Everything a player pays for out of the mana pool, gold included. Skill requirements are
+    // gates, not payments, so they are not counted here.
+    public int GetTotalMaterialCost()
+        => GetTotalGoldCost() + Mathf.Max(0, jokerRequired) + Mathf.Max(0, leatherRequired) + Mathf.Max(0, mountsRequired)
+         + Mathf.Max(0, timberRequired) + Mathf.Max(0, ironRequired) + Mathf.Max(0, steelRequired) + Mathf.Max(0, mithrilRequired);
+
+    // Card types that are spent from hand rather than founded or mustered: every one of them must
+    // print a cost, otherwise a free effect card is strictly better than anything on the field.
+    public bool IsPaidEffectCard()
+    {
+        CardTypeEnum cardType = GetCardType();
+        return cardType == CardTypeEnum.Event || cardType == CardTypeEnum.Action
+            || cardType == CardTypeEnum.Spell || cardType == CardTypeEnum.Object;
+    }
+
+    public bool IsMissingCost() => IsPaidEffectCard() && GetTotalMaterialCost() <= 0;
 
     public int GetTotalGoldCost()
     {

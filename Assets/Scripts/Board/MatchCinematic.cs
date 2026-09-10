@@ -15,9 +15,12 @@ public sealed class MatchCinematic : MonoBehaviour
     readonly List<Material> materials = new();
     readonly List<GameObject> dice = new();
     Material stone, gold, dark, ivory, teal;
+    Material ivoryDice, slateDice, diceTrim, diceInk;
+    Board board;
     const int Layer = 30;
     public void Initialize(Board board)
     {
+        this.board = board;
         stage = new GameObject("Tournament cinematic stage"); stage.transform.position = new Vector3(0,-2000,0);
         var match = board.Match;
         stone = match.towerStoneMaterial != null ? match.towerStoneMaterial : Material(new Color(.09f,.12f,.17f), .65f, .45f);
@@ -25,6 +28,11 @@ public sealed class MatchCinematic : MonoBehaviour
         dark = match.towerInkMaterial != null ? match.towerInkMaterial : Material(new Color(.018f,.025f,.04f), .4f, .65f);
         ivory = match.dieLightMaterial != null ? match.dieLightMaterial : Material(new Color(.94f,.84f,.61f), .35f, .75f);
         teal = match.towerAccentMaterial != null ? match.towerAccentMaterial : Material(new Color(.035f,.45f,.53f), .7f, .8f);
+        // The landscape's building textures are much too coarse for a hand-sized die.
+        ivoryDice = DiceMaterial(Color.Lerp(Pigment(match.dieLightMaterial, new Color(.66f,.48f,.25f)), new Color(.94f,.85f,.67f), .7f), 0, .46f);
+        slateDice = DiceMaterial(Color.Lerp(Pigment(match.dieDarkMaterial, new Color(.32f,.4f,.35f)), new Color(.035f,.10f,.115f), .72f), .05f, .52f);
+        diceTrim = DiceMaterial(new Color(.7f,.46f,.17f), .72f, .65f);
+        diceInk = DiceMaterial(new Color(.015f,.035f,.04f), .1f, .48f);
         var cam = new GameObject("Cinematic camera"); cam.transform.SetParent(stage.transform,false); camera3D = cam.AddComponent<Camera>();
         camera3D.GetUniversalAdditionalCameraData().SetRenderer(board.Match.cinematicRendererIndex);
         camera3D.cullingMask = 1 << Layer; camera3D.clearFlags = CameraClearFlags.SolidColor;
@@ -47,6 +55,15 @@ public sealed class MatchCinematic : MonoBehaviour
     {
         var shader = Shader.Find("Universal Render Pipeline/Lit") ?? Shader.Find("Standard");
         var mat = new Material(shader); mat.color = color; mat.SetFloat("_Metallic",metal); mat.SetFloat("_Smoothness",smooth); materials.Add(mat); return mat;
+    }
+    static Color Pigment(Material source, Color fallback) => source != null && source.HasProperty("_BaseColor") ? source.GetColor("_BaseColor") : fallback;
+    Material DiceMaterial(Color color, float metallic, float polish)
+    {
+        var shader = board.Match.diceSurfaceShader != null ? board.Match.diceSurfaceShader : Shader.Find("DarkBeforeDawn/CarvedDice");
+        if (shader == null) return Material(color,metallic,polish);
+        var result = new Material(shader) { name = "Carved dice surface" };
+        result.SetColor("_BaseColor",color); result.SetFloat("_Metallic",metallic); result.SetFloat("_Smoothness",polish);
+        result.SetFloat("_GrainStrength",.035f); materials.Add(result); return result;
     }
     void Light(string name, Vector3 position, Color color,float intensity,float range)
     {
@@ -83,13 +100,7 @@ public sealed class MatchCinematic : MonoBehaviour
                 Shape(PrimitiveType.Cylinder,tower.transform,new Vector3(side*2.2f,y+1.3f,-.6f),new Vector3(.24f,1.2f,.24f),gold,"Pillar");
                 Shape(PrimitiveType.Sphere,tower.transform,new Vector3(side*2.2f,y+2.4f,-.6f),Vector3.one*.33f,teal,"Beacon");
             }
-            var label = new GameObject("Floor pairing"); label.layer = Layer; label.transform.SetParent(tower.transform,false);
-            label.transform.localPosition = new Vector3(0,y+1.2f,-1.73f); label.transform.localRotation = Quaternion.Euler(0,180,0);
-            // TextMesh faces toward negative Z without reversing the glyphs.
-            label.transform.localRotation = Quaternion.identity;
-            var text = label.AddComponent<TextMesh>(); text.anchor = TextAnchor.MiddleCenter; text.alignment = TextAlignment.Center;
-            text.characterSize = .07f; text.fontSize = 48; text.color = i == floor ? new Color(1,.83f,.43f) : new Color(.65f,.7f,.78f);
-            text.text = i == 0 ? "I\nORREN\nvs\nTHE SLEEPLESS EYE" : i == 1 ? "II\nTHE SLEEPLESS EYE\nvs\n?" : (i+1)+"\n?\nvs\n?";
+            Pairing(i, y, i == floor);
         }
         Shape(PrimitiveType.Cylinder,tower.transform,new Vector3(0,-.35f,0),new Vector3(7,.2f,5),dark,"Tower foundation");
         title.text = floor == 0 ? "THE ASCENT" : "VICTORY · THE ASCENT";
@@ -103,13 +114,61 @@ public sealed class MatchCinematic : MonoBehaviour
         yield return new WaitForSecondsRealtime(1);
         tower.SetActive(false);
     }
+    void Pairing(int floor, float y, bool current)
+    {
+        var go = new GameObject("Floor pairing " + (floor + 1), typeof(RectTransform), typeof(Canvas));
+        go.transform.SetParent(tower.transform, false);
+        var rect = (RectTransform)go.transform;
+        rect.sizeDelta = new Vector2(420,180);
+        rect.localPosition = new Vector3(0,y+1.2f,-1.74f);
+        rect.localScale = Vector3.one * .01f;
+        var canvas = go.GetComponent<Canvas>(); canvas.renderMode = RenderMode.WorldSpace; canvas.worldCamera = camera3D;
+        var accent = current ? new Color(1,.83f,.43f) : new Color(.73f,.78f,.8f);
+        PairingText(rect, (floor+1).ToString("00"), new Vector2(0,73), new Vector2(55,24), 15, accent);
+        PairingText(rect, "VS", new Vector2(0,5), new Vector2(55,30), 19, accent);
+        string left = floor == 0 ? board.humanAvatarCardName : floor == 1 ? board.opponentAvatarCardName : null;
+        string right = floor == 0 ? board.opponentAvatarCardName : null;
+        LeaderPortrait(rect, -112, left, accent);
+        LeaderPortrait(rect, 112, right, accent);
+        foreach (var child in go.GetComponentsInChildren<Transform>(true)) child.gameObject.layer = Layer;
+    }
+    Text PairingText(Transform parent, string value, Vector2 position, Vector2 size, int fontSize, Color color)
+    {
+        var font = board.interfaceFont != null ? board.interfaceFont : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        var text = BoardPresentation.TextLabel(parent,value,font,fontSize,color,Vector2.one*.5f,Vector2.one*.5f,TextAnchor.MiddleCenter);
+        text.rectTransform.sizeDelta = size; text.rectTransform.anchoredPosition = position;
+        text.resizeTextForBestFit = true; text.resizeTextMinSize = 10; text.resizeTextMaxSize = fontSize;
+        return text;
+    }
+    void LeaderPortrait(Transform parent, float x, string leaderName, Color accent)
+    {
+        var frame = BoardPresentation.Panel(parent, string.IsNullOrWhiteSpace(leaderName) ? "Unknown leader" : "Leader " + leaderName, new Color(.015f,.03f,.035f));
+        frame.rectTransform.anchorMin = frame.rectTransform.anchorMax = Vector2.one * .5f;
+        frame.rectTransform.sizeDelta = new Vector2(150,128);
+        frame.rectTransform.anchoredPosition = new Vector2(x,12);
+        BoardPresentation.Border(frame.rectTransform,accent,2);
+        var data = string.IsNullOrWhiteSpace(leaderName) ? null : CardCatalog.FindCardByName(leaderName);
+        Sprite sprite = null;
+        if (data != null && CardServices.Art != null)
+            foreach (var candidate in new[] { data.spriteName, data.portraitName, data.name, data.actionClassName, data.action })
+                if (!string.IsNullOrWhiteSpace(candidate) && CardServices.Art.TryGetSprite(candidate,true,out sprite)) break;
+        if (sprite != null)
+        {
+            var portrait = BoardPresentation.Panel(frame.transform,"Leader portrait",Color.white);
+            BoardPresentation.Stretch(portrait.rectTransform,Vector2.zero,Vector2.one);
+            portrait.rectTransform.offsetMin = Vector2.one * 4; portrait.rectTransform.offsetMax = Vector2.one * -4;
+            portrait.sprite = sprite; portrait.preserveAspect = true;
+        }
+        else PairingText(frame.transform, string.IsNullOrWhiteSpace(leaderName) ? "?" : "NO ART",Vector2.zero,new Vector2(135,100),52,accent);
+        PairingText(parent,string.IsNullOrWhiteSpace(leaderName) ? "UNREVEALED" : leaderName.ToUpperInvariant(),new Vector2(x,-68),new Vector2(195,30),14,accent);
+    }
     GameObject Die(Material body,Material pips,int index)
     {
         var root = new GameObject(index == 0 ? "Orren ivory die" : "Sleepless Eye obsidian die"); root.transform.SetParent(stage.transform,false);
         // Layered inset faces and rounded corner studs give the dice a jewelled, bevelled silhouette.
         Shape(PrimitiveType.Cube,root.transform,Vector3.zero,Vector3.one*.94f,body,"Die core");
         for(int x=-1;x<=1;x+=2) for(int y=-1;y<=1;y+=2) for(int z=-1;z<=1;z+=2)
-            Shape(PrimitiveType.Sphere,root.transform,new Vector3(x,y,z)*.435f,Vector3.one*.14f,gold,"Gold corner");
+            Shape(PrimitiveType.Sphere,root.transform,new Vector3(x,y,z)*.435f,Vector3.one*.14f,diceTrim,"Gold corner");
         Vector3[] normals = { Vector3.back, Vector3.right, Vector3.up, Vector3.down, Vector3.left, Vector3.forward };
         for(int face=0;face<6;face++)
         {
@@ -129,34 +188,56 @@ public sealed class MatchCinematic : MonoBehaviour
     public IEnumerator Roll(int human,int opponent)
     {
         overlay.SetActive(true); overlay.transform.SetAsLastSibling();
-        // Leave the board visible around the floating 3D dice tray.
+        // Composite each die directly over its player's actual avatar slot.
         overlay.GetComponent<Image>().color = new Color(.01f,.02f,.03f,.42f);
-        BoardPresentation.Stretch(picture.rectTransform,new Vector2(.25f,.32f),new Vector2(.75f,.78f));
+        BoardPresentation.Stretch(picture.rectTransform,Vector2.zero,Vector2.one);
         foreach(var die in dice) if(die!=null) Destroy(die); dice.Clear();
-        var a=Die(ivory,dark,0); var b=Die(GetComponent<TowerMatchController>().dieDarkMaterial ?? dark,gold,1);
+        var a=Die(ivoryDice,diceInk,0); var b=Die(slateDice,diceTrim,1);
         title.text="ROLL FOR INITIATIVE"; subtitle.text="ORREN                                       THE SLEEPLESS EYE";
         Look(new Vector3(0,0,-6),Vector3.zero);
+        Canvas.ForceUpdateCanvases();
         BoardPresentation.Stretch(title.rectTransform,new Vector2(.2f,.76f),new Vector2(.8f,.87f));
         BoardPresentation.Stretch(subtitle.rectTransform,new Vector2(.2f,.22f),new Vector2(.8f,.32f));
         int[] values={human,opponent}; var objects=new[]{a,b};
+        var positions = new Vector3[2];
+        var sizes = new float[2];
         Vector3[] normals={Vector3.back,Vector3.right,Vector3.up,Vector3.down,Vector3.left,Vector3.forward};
         for(float t=0;t<1;t+=Time.unscaledDeltaTime/2.4f)
         {
             float s=1-Mathf.Pow(1-t,3);
             for(int i=0;i<2;i++)
             {
+                AvatarDiePlacement(i, out positions[i], out sizes[i]);
                 float side=i==0?-1:1;
-                objects[i].transform.localPosition=new Vector3(side*Mathf.Lerp(3.5f,1.1f,s),Mathf.Abs(Mathf.Sin(t*Mathf.PI*4))*(1-t)*1.5f,0);
+                objects[i].transform.localScale=Vector3.one*sizes[i];
+                objects[i].transform.localPosition=positions[i]+new Vector3(side*(1-s)*.2f,Mathf.Abs(Mathf.Sin(t*Mathf.PI*4))*(1-t)*.25f,0)*sizes[i];
                 var final=Quaternion.FromToRotation(normals[values[i]-1],Vector3.back);
                 var spin=Quaternion.Euler((1-t)*1080,(1-t)*720*side,(1-t)*540);
                 objects[i].transform.localRotation=Quaternion.Slerp(spin*final,final,Mathf.SmoothStep(0,1,Mathf.InverseLerp(.65f,1,t)));
             }
             yield return null;
         }
-        for(int i=0;i<2;i++) { objects[i].transform.localRotation=Quaternion.FromToRotation(normals[values[i]-1],Vector3.back); objects[i].transform.localPosition=new Vector3(i==0?-1.1f:1.1f,0,0); }
+        for(int i=0;i<2;i++) { objects[i].transform.localRotation=Quaternion.FromToRotation(normals[values[i]-1],Vector3.back); objects[i].transform.localPosition=positions[i]; }
         title.text=human==opponent?"TIE · ROLL AGAIN":(human>opponent?"ORREN":"THE SLEEPLESS EYE")+" STARTS";
         subtitle.text=$"ORREN  ·  {human}                         THE SLEEPLESS EYE  ·  {opponent}";
         yield return new WaitForSecondsRealtime(1.4f);
+    }
+    void AvatarDiePlacement(int owner, out Vector3 position, out float size)
+    {
+        var slot = (RectTransform)board.transform.Find(owner == 0 ? "Your avatar" : "Opponent avatar");
+        var rect = picture.rectTransform.rect;
+        Vector3 center = picture.rectTransform.InverseTransformPoint(slot.TransformPoint(slot.rect.center));
+        var corners = new Vector3[4];
+        slot.GetWorldCorners(corners);
+        Vector3 low = picture.rectTransform.InverseTransformPoint(corners[0]);
+        Vector3 high = picture.rectTransform.InverseTransformPoint(corners[2]);
+        float depth = Vector3.Dot(stage.transform.position-camera3D.transform.position,camera3D.transform.forward);
+        Vector3 viewport = new Vector3((center.x-rect.xMin)/rect.width,(center.y-rect.yMin)/rect.height,depth);
+        Vector3 world = camera3D.ViewportToWorldPoint(viewport);
+        position = stage.transform.InverseTransformPoint(world);
+        float width = Vector3.Distance(world,camera3D.ViewportToWorldPoint(viewport+new Vector3((high.x-low.x)/rect.width,0,0)));
+        float height = Vector3.Distance(world,camera3D.ViewportToWorldPoint(viewport+new Vector3(0,(high.y-low.y)/rect.height,0)));
+        size = Mathf.Min(width,height)*.55f;
     }
     public void Hide() { if(overlay!=null) overlay.SetActive(false); }
     void OnDestroy()

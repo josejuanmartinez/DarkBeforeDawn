@@ -62,17 +62,23 @@ public sealed class Board : MonoBehaviour
         return true;
     }
 
-    /// <summary>Explicit turn boundary: empty both pools and ready the next player's lands.</summary>
+    /// <summary>Ready the next player's lands while retaining both material pools.</summary>
     public void BeginTurn(bool opponent)
     {
         IsOpponentTurn = opponent;
-        HumanMaterials.Clear(); OpponentMaterials.Clear();
         (opponent ? opponentLands : humanLands)?.ReadyLands();
         ActionStatus = opponent ? "Opponent lands readied." : "Your lands readied.";
     }
 
     /// <summary>Manual board control until a match controller owns the opponent's turn.</summary>
-    public void EndTurn() { if (Match != null) Match.Advance(); else BeginTurn(!IsOpponentTurn); }
+    public void EndTurn()
+    {
+        if (Match != null) { Match.Advance(); return; }
+        var lands = IsOpponentTurn ? opponentLands : humanLands;
+        if (lands != null)
+            foreach (var view in lands.GetComponentsInChildren<BoardCardView>()) TryTap(view);
+        BeginTurn(!IsOpponentTurn);
+    }
 
     public void SetMatchStatus(bool opponent, string message) { IsOpponentTurn = opponent; ActionStatus = message; }
 

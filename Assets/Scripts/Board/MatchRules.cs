@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public enum MatchStage { Draw = 1, Realm, Mana, Muster, Events, Attack, Defend, Spoils }
+public enum MatchStage { Draw = 1, Realm, Muster, Events, Attack, Defend, Spoils }
 
 /// <summary>Match state independent of Unity views. Card instances retain identity through every zone.</summary>
 public sealed class MatchRules
@@ -45,7 +45,6 @@ public sealed class MatchRules
     void StartTurn(int player)
     {
         Active = player; Turn++; Stage = MatchStage.Draw; Attacks.Clear();
-        foreach (var p in Players) p.Mana.Clear();
         foreach (var u in Players[player].Field)
             if (!u.Card.statusEffects.Contains(StatusEffects.Halted)) u.Tapped = false;
         var current = Players[player];
@@ -57,7 +56,7 @@ public sealed class MatchRules
     }
     bool Reject(string message) { Message = message; return false; }
     public bool CanPlay(CardData card) => PlayBlockReason(card) == null;
-    public string PlayBlockReason(CardData card, Unit recipient = null, bool choosingRecipient = true)
+    public string PlayBlockReason(CardData card, Unit recipient = null, bool choosingRecipient = true, bool includeReadyMana = false)
     {
         var p = Players[Active];
         if (card == null || Winner >= 0 || !p.Hand.Contains(card)) return "That card is not in the active hand.";
@@ -75,7 +74,13 @@ public sealed class MatchRules
             return "Select one of your characters to carry this object.";
         if (type == CardTypeEnum.Event && ResolveEvent == null)
             return "This event needs a registered effect before it can be played.";
-        return p.Mana.CanAfford(card) ? null : "Not enough mana/materials.";
+        var available = p.Mana;
+        if (includeReadyMana)
+        {
+            available = p.Mana.Copy();
+            foreach (var land in p.Field.Where(CanTapLand)) available.Grant(land.Card);
+        }
+        return available.CanAfford(card) ? null : "Not enough mana/materials.";
     }
     public bool Play(CardData card, Unit recipient = null)
     {
@@ -90,12 +95,12 @@ public sealed class MatchRules
         Message = card.name + " played."; return true;
     }
     static bool Same(string a, string b) => !string.IsNullOrWhiteSpace(a) && string.Equals(a.Trim(), b?.Trim(), StringComparison.OrdinalIgnoreCase);
-    public bool CanTapLand(Unit unit) => unit != null && Winner < 0 && Stage == MatchStage.Mana && unit.Owner == Active &&
+    public bool CanTapLand(Unit unit) => unit != null && Winner < 0 && (Stage == MatchStage.Muster || Stage == MatchStage.Events) && unit.Owner == Active &&
         !unit.Tapped && Players[Active].Field.Contains(unit) && unit.Card.GetCardType() == CardTypeEnum.Land;
     public bool TapLand(Unit unit)
     {
         if (!CanTapLand(unit))
-            return Reject("Only your ready lands can produce mana in stage 3.");
+            return Reject("Tap your ready lands during Muster or Events to produce mana.");
         unit.Tapped = true; Players[Active].Mana.Grant(unit.Card); Message = unit.Card.name + " produced mana."; return true;
     }
     public bool IsNewUnit(Unit unit) => unit != null && unit.IsCombatant && unit.EnteredTurn == Turn &&
@@ -124,8 +129,8 @@ public sealed class MatchRules
         Attacks.Contains(strike) && defender.Owner == 1 - Active && !defender.Tapped && defender.IsCombatant && Players[1 - Active].Field.Contains(defender);
     public bool HasLegalAction() => Winner < 0 && (Stage switch
     {
-        MatchStage.Realm or MatchStage.Muster or MatchStage.Events => Players[Active].Hand.Any(CanPlay),
-        MatchStage.Mana => Players[Active].Field.Any(CanTapLand),
+        MatchStage.Realm => Players[Active].Hand.Any(CanPlay),
+        MatchStage.Muster or MatchStage.Events => Players[Active].Hand.Any(c => PlayBlockReason(c, includeReadyMana: true) == null),
         MatchStage.Attack => Players[Active].Field.Any(CanAttack),
         MatchStage.Defend => Players[1 - Active].Field.Any(u => Attacks.Any(a => CanBlock(u, a))),
         MatchStage.Spoils => Spoils.Count > 0,
@@ -143,7 +148,18 @@ public sealed class MatchRules
         if (Stage == MatchStage.Spoils)
         {
             if (Spoils.Count > 0) return Reject("Resolve the remaining objects first.");
-            CheckWinner(); if (Winner < 0) StartTurn(1 - Active); return true;
+            CheckWinner();
+            if (Winner < 0)
+            {
+                var ending = Players[Active];
+                foreach (var land in ending.Field.Where(u => !u.Tapped && u.Card.GetCardType() == CardTypeEnum.Land))
+                {
+                    land.Tapped = true;
+                    ending.Mana.Grant(land.Card);
+                }
+                StartTurn(1 - Active);
+            }
+            return true;
         }
         Stage++;
         if (Stage == MatchStage.Realm)
