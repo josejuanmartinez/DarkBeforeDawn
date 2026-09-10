@@ -48,7 +48,7 @@ public enum TroopsTypeEnum
     ws = 7 // Warships / Navy
 }
 
-public enum CharacterAndArmySpecialAbilityEnum
+public enum ObjectCharacterArmySpecialAbilityEnum
 {
     Ranged = 0, // Can attack flying creatures. Attacks first, and if the target unit does not die, then it takes damage.
     Mounted = 1, // Can attack same turn it's played. +1 to units that are tapped tapped 
@@ -91,7 +91,7 @@ public enum CharacterAndArmySpecialAbilityEnum
 }
 
 
-// Effects only valid while the status effect is active on a character
+// Effects valid while active on a Character or Army.
 public enum StatusEffects
 {
     Poisoned = 0, // The damage inflicted when the status was applied is applied again divided by 2 (minimum: 1)
@@ -104,7 +104,8 @@ public enum StatusEffects
     Blessed = 7, // Throws two dices when attacking instead of one, chooses highest result
     Bleeding = 8, // 25% of chance of getting double the damage fron an attack, once per turn
     Strenghtened = 10, // +2 to attack
-    Fortified = 11 // +2 to defense
+    Fortified = 11, // +2 to defense
+    Halted = 12 // Does not untap during the owner's draw stage.
 }
 
 public enum CharacterOnlySpecialAbilityEnum {

@@ -1,6 +1,6 @@
 {
     "deckId": "the_iron_diadem",
-    "nation": "Nharok",
+    "nation": "Shadow Dominion",
     "alignment": 1,
     "cards": [],
     "cardRefs": [
@@ -137,6 +137,23 @@
         100022,
         100009,
         100058,
-        60014
-    ]
+        60014,
+        10004,
+        10006,
+        10016,
+        10019,
+        10031,
+        10041,
+        80011,
+        80023,
+        80034,
+        90001,
+        90007,
+        90013,
+        90017,
+        110026,
+        110031,
+        110040
+    ],
+    "avatarCharacter": "The Wraith King"
 }

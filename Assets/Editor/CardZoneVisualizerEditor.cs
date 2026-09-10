@@ -66,11 +66,11 @@ public sealed class CardZoneVisualizerEditor : Editor
             Vector2 footprint = rect.rect.size;
             if (accepted)
             {
-                BoardCardView.PrepareForBoard(card, asToken);
+                footprint = BoardCardView.PrepareForBoard(card, asToken);
                 if (applySkin && asToken)
                 {
                     Font font = zone.board != null ? zone.board.interfaceFont : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-                    footprint = BoardPresentation.StyleTokenCard(card, font);
+                    footprint = BoardPresentation.StyleTokenCard(card, font, zone);
                 }
                 else if (applySkin)
                 {

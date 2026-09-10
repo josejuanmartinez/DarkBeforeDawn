@@ -9,7 +9,7 @@ public enum CardTypeEnum
     PC = 4,
     Character = 5,
     Army = 6,
-    Ally = 8,
+    Encounter = 8,
     Spell = 9,
     Environmental = 10,
     Object = 11

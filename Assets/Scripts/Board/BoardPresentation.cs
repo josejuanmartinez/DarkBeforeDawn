@@ -15,6 +15,9 @@ public sealed class BoardPresentation : MonoBehaviour
     private Board board;
     private Font font;
     private bool started;
+    private readonly List<(PlayerMaterials pool, int index, TMP_Text label)> materialLabels = new();
+    private Text endTurnLabel;
+    private Text actionStatus;
 
     private void Awake()
     {
@@ -31,10 +34,20 @@ public sealed class BoardPresentation : MonoBehaviour
 
     public static BoardSkin SkinFor(Transform target)
     {
-        var presentation = target.GetComponentInParent<BoardPresentation>();
-        var skin = presentation != null ? presentation.Skin : BoardSkin.Default;
+        var skin = SkinOrNull(target);
         if (skin == null) throw new System.InvalidOperationException("Assign a BoardSkin to SkinManager or create Resources/Skins/Default.");
         return skin;
+    }
+
+    /// <summary>
+    /// The skin governing this transform, or null when there is neither a board above it nor a
+    /// Default asset. For style decisions that have a sensible unskinned answer and so should not
+    /// take down a card that is being previewed outside a board.
+    /// </summary>
+    public static BoardSkin SkinOrNull(Transform target)
+    {
+        var presentation = target.GetComponentInParent<BoardPresentation>();
+        return presentation != null ? presentation.Skin : BoardSkin.Default;
     }
 
     private T Track<T>(T component) where T : Component
@@ -50,11 +63,13 @@ public sealed class BoardPresentation : MonoBehaviour
     private void ApplySkin(BoardSkin skin)
     {
         if (board == null || skin == null) return;
+        InstallCardFaceServices(skin);
         board.preview?.Hide();
         ClearStaleGeneratedBackdrops();
         // Clear cached labels before immediate edit-mode destruction, so LateUpdate never tries
         // to write to a label that belonged to the previous generated chrome.
         counts.Clear();
+        materialLabels.Clear();
         foreach (var go in generated)
         {
             if (go == null) continue;
@@ -71,6 +86,8 @@ public sealed class BoardPresentation : MonoBehaviour
         foreach (var label in skin.chrome.headerLabels) StyledLabel(header.transform, label);
         Rule(header.transform, skin.colors.gold, Vector2.zero, Vector2.right);
         foreach (var style in skin.zones) if (style != null) Zone(ResolveZone(style.zone), style);
+        PlayerPanel(false);
+        PlayerPanel(true);
         if (board.hand != null) board.hand.gap = skin.chrome.handGap;
         foreach (var label in skin.chrome.footerLabels) StyledLabel(transform, label);
         if (board.preview != null) board.preview.transform.SetAsLastSibling();
@@ -79,6 +96,20 @@ public sealed class BoardPresentation : MonoBehaviour
         // out of sync with the scene authoring surface.
         if (Application.isPlaying && started)
             foreach (var zone in board.GetComponentsInChildren<CardZoneVisualizer>()) zone.RefreshSkin();
+    }
+
+    // Hands the card face the parts of the skin it draws itself. Card never sees BoardSkin -- it
+    // asks CardServices, the same seam it uses for art and playability -- but with these installed
+    // the skin is still the single authority for every style decision on a board card.
+    //
+    // The palette is only installed when the skin actually carries one: leaving it empty means
+    // "whatever CardServicesInstaller set up", and overwriting that with the built-in defaults would
+    // silently undo a project's own palette. This runs at -40, after that installer's -100 Awake,
+    // so an assigned skin palette deliberately wins.
+    private static void InstallCardFaceServices(BoardSkin skin)
+    {
+        if (skin.CardTypePalette != null) CardServices.Palette = skin.CardTypePalette;
+        if (skin.face != null) CardServices.FaceStyle = skin.face;
     }
 
     private static void DestroyGenerated(GameObject go)
@@ -93,10 +124,20 @@ public sealed class BoardPresentation : MonoBehaviour
     // creating the current skin, otherwise their alpha values stack into an opaque black board.
     private void ClearStaleGeneratedBackdrops()
     {
+        foreach (var text in GetComponentsInChildren<Text>(true))
+        {
+            if (text.transform.parent != transform) continue;
+            if (text.name == "YOUR REALM" || text.name == "CARD INSPECTION"
+                || text.name == "Inspect a card\nto read its story." || text.name == "Click to pin\nEsc to close"
+                || text.name == "Material action status" || text.name.StartsWith("Pin a land to tap it."))
+                DestroyGenerated(text.gameObject);
+        }
         foreach (var image in GetComponentsInChildren<Image>(true))
         {
             if (image == null) continue;
-            if (image.name != "Atmosphere veil" && image.name != "Board masthead" && image.name != "Zone surface") continue;
+            if (image.name != "Atmosphere veil" && image.name != "Board masthead" && image.name != "Zone surface"
+                && image.name != "Your materials" && image.name != "Opponent materials"
+                && image.name != "Your avatar" && image.name != "Opponent avatar") continue;
             DestroyGenerated(image.gameObject);
         }
     }
@@ -149,13 +190,97 @@ public sealed class BoardPresentation : MonoBehaviour
 
     private void LateUpdate()
     {
+        foreach (var entry in materialLabels)
+            if (entry.label != null) entry.label.text = MaterialAmount(entry.pool, entry.index);
+        if (endTurnLabel != null) endTurnLabel.text = board.IsOpponentTurn ? "END OPPONENT TURN" : "END TURN";
+        if (actionStatus != null) actionStatus.text = board.ActionStatus;
         foreach (var entry in counts)
         {
             if (entry.zone == null || entry.label == null) continue;
-            var value = entry.zone.isHand ? $"{entry.zone.Count} / {board.maximumHandSize}" : entry.zone.Count.ToString("00");
+            int handLimit = board.Match != null ? board.Match.Rules?.Players[0].HandLimit ?? board.defaultHandSize : board.maximumHandSize;
+            var value = entry.zone.isHand ? $"{entry.zone.Count} / {handLimit}" : entry.zone.Count.ToString("00");
             if (entry.label.text != value) entry.label.text = value;
         }
     }
+
+    private void PlayerPanel(bool opponent)
+    {
+        var style = Skin.players;
+        var accent = opponent ? Skin.colors.gold : Skin.colors.teal;
+        var bounds = opponent ? style.opponentMaterials : style.humanMaterials;
+        var panel = Track(Panel(transform, opponent ? "Opponent materials" : "Your materials", Skin.colors.zoneSurface));
+        Stretch(panel.rectTransform, bounds.min, bounds.max);
+        Border(panel.rectTransform, accent);
+        Label(panel.transform, opponent ? "OPPONENT MATERIALS" : "YOUR MATERIALS", style.headingSize, accent,
+            new Vector2(.02f,.85f), new Vector2(.98f,1), TextAnchor.MiddleCenter);
+        var pool = opponent ? board.OpponentMaterials : board.HumanMaterials;
+        for (int i = 0; i < PlayerMaterials.Names.Length; i++)
+        {
+            int row = i / 4, column = i % 4;
+            float left = .02f + column * .24f;
+            float bottom = row == 0 ? .5f : .17f;
+            var amountObject = new GameObject(PlayerMaterials.Names[i] + " amount", typeof(RectTransform), typeof(TextMeshProUGUI));
+            amountObject.transform.SetParent(panel.transform, false);
+            var amount = amountObject.GetComponent<TextMeshProUGUI>();
+            amount.font = ReadingFontFor(Skin);
+            foreach (var source in board.fullCardPrefab.GetComponentsInChildren<TMP_Text>(true))
+                if (source.spriteAsset != null) { amount.spriteAsset = source.spriteAsset; break; }
+            amount.fontSize = style.amountSize;
+            amount.color = Color.white;
+            amount.alignment = TextAlignmentOptions.Center;
+            amount.textWrappingMode = TextWrappingModes.NoWrap;
+            amount.raycastTarget = false;
+            amount.text = MaterialAmount(pool, i);
+            Stretch(amount.rectTransform, new Vector2(left,bottom+.11f), new Vector2(left+.24f,bottom+.34f));
+            materialLabels.Add((pool,i,amount));
+            Label(panel.transform, PlayerMaterials.Names[i].ToUpperInvariant(), style.materialSize, Skin.colors.muted,
+                new Vector2(left,bottom), new Vector2(left+.24f,bottom+.12f), TextAnchor.MiddleCenter);
+        }
+        if (!opponent)
+        {
+            var next = Panel(panel.transform, "End turn", Skin.colors.button);
+            Stretch(next.rectTransform, new Vector2(.04f,.015f), new Vector2(.96f,.145f));
+            next.raycastTarget = true;
+            var button = next.gameObject.AddComponent<Button>(); button.targetGraphic = next;
+            button.onClick.AddListener(board.EndTurn);
+            endTurnLabel = Label(next.transform, board.IsOpponentTurn ? "END OPPONENT TURN" : "END TURN",
+                style.materialSize, accent, Vector2.zero, Vector2.one, TextAnchor.MiddleCenter);
+        }
+        var avatarBounds = opponent ? style.opponentAvatar : style.humanAvatar;
+        var avatar = Track(Panel(transform, opponent ? "Opponent avatar" : "Your avatar", Skin.colors.zoneSurface));
+        Stretch(avatar.rectTransform, avatarBounds.min, avatarBounds.max);
+        Border(avatar.rectTransform, accent);
+        var avatarHeading = Label(avatar.transform, opponent ? "OPPONENT AVATAR" : "YOUR AVATAR", style.headingSize, accent,
+            Vector2.up, Vector2.one, TextAnchor.MiddleCenter);
+        avatarHeading.rectTransform.pivot = new Vector2(.5f, 1);
+        avatarHeading.rectTransform.sizeDelta = new Vector2(-12, 24);
+        avatarHeading.rectTransform.anchoredPosition = new Vector2(0, -2);
+        var cardName = opponent ? board.opponentAvatarCardName : board.humanAvatarCardName;
+        var data = string.IsNullOrWhiteSpace(cardName) ? null : CardCatalog.FindCardByName(cardName);
+        if (data == null)
+            Label(avatar.transform, "Choose avatar\non Board", style.headingSize, Skin.colors.muted,
+                Vector2.zero, new Vector2(1,.82f), TextAnchor.MiddleCenter);
+        else
+        {
+            var go = new GameObject("Avatar card", typeof(RectTransform));
+            go.transform.SetParent(avatar.transform, false);
+            var area = (RectTransform)go.transform;
+            Stretch(area, Vector2.zero, Vector2.one);
+            area.offsetMin = new Vector2(6, 6);
+            area.offsetMax = new Vector2(-6, -28);
+            var zone = go.AddComponent<AvatarZoneVisualizer>(); zone.board = board;
+            zone.SetCards(new[] { data.Clone() });
+        }
+        if (!opponent)
+        {
+            actionStatus = Label(transform, board.ActionStatus, 11, Skin.colors.muted,
+                new Vector2(.153f,.564f), new Vector2(.863f,.572f), TextAnchor.MiddleCenter);
+            actionStatus.name = "Material action status";
+        }
+    }
+
+    private static string MaterialAmount(PlayerMaterials pool, int index)
+        => $"{pool[index]} <sprite name=\"{PlayerMaterials.Names[index].ToLowerInvariant()}\">";
 
     private Text Label(Transform parent, string value, int size, Color color, Vector2 min, Vector2 max, TextAnchor alignment = TextAnchor.MiddleLeft)
         => Track(TextLabel(parent, value, font, size, color, min, max, alignment));
@@ -187,28 +312,57 @@ public sealed class BoardPresentation : MonoBehaviour
         rect.localScale = Vector3.one;
     }
 
-    public static void Rule(Transform parent, Color color, Vector2 min, Vector2 max)
+    public static void Rule(Transform parent, Color color, Vector2 min, Vector2 max, float width = 0)
     {
         var line = Panel(parent, "Inlay", color);
         Stretch(line.rectTransform, min, max);
-        line.rectTransform.sizeDelta = new Vector2(0, SkinFor(parent).chrome.lineWidth);
+        line.rectTransform.sizeDelta = new Vector2(0, width > 0 ? width : SkinFor(parent).chrome.lineWidth);
     }
 
-    public static Image Border(RectTransform parent, Color color)
+    /// <summary>A width of 0 takes the skin's chrome.lineWidth, which is what board chrome uses.</summary>
+    public static Image Border(RectTransform parent, Color color, float width = 0)
     {
+        if (width <= 0) width = SkinFor(parent).chrome.lineWidth;
         var frame = Panel(parent, "Frame", Color.clear);
         Stretch(frame.rectTransform, Vector2.zero, Vector2.one);
         // Four thin strips avoid an opaque centre and remain crisp at different scales.
-        Rule(frame.transform, color, Vector2.zero, Vector2.right);
-        Rule(frame.transform, color, Vector2.up, Vector2.one);
+        Rule(frame.transform, color, Vector2.zero, Vector2.right, width);
+        Rule(frame.transform, color, Vector2.up, Vector2.one, width);
         foreach (float x in new[] { 0f, 1f })
         {
             var edge = Panel(frame.transform, "Edge", color);
             Stretch(edge.rectTransform, new Vector2(x, 0), new Vector2(x, 1));
-            edge.rectTransform.sizeDelta = new Vector2(SkinFor(parent).chrome.lineWidth, 0);
+            edge.rectTransform.sizeDelta = new Vector2(width, 0);
         }
         return frame;
     }
+
+    /// <summary>
+    /// The uniform scale a token visual needs to fill the skin's footprint, and the footprint a
+    /// layout slot should reserve for it. A skin that leaves tokens.size at zero gets the prefab's
+    /// own measurement and a scale of 1, so the authored token is untouched.
+    /// </summary>
+    public static float TokenScaleFor(BoardSkin skin, Card card, out Vector2 footprint)
+    {
+        Vector2 natural = card.TokenFootprint;
+        var style = skin.tokens;
+        footprint = style.size.x > 1f && style.size.y > 1f ? style.size : natural;
+        if (natural.x <= 1f || natural.y <= 1f) return 1f;
+        Vector2 box = footprint - Vector2.one * (style.artInset * 2f);
+        if (box.x <= 1f || box.y <= 1f) return 1f;
+        return Mathf.Min(box.x / natural.x, box.y / natural.y);
+    }
+
+    /// <summary>The reading font for card text, falling back to the skin's named resource.</summary>
+    public static TMP_FontAsset ReadingFontFor(BoardSkin skin)
+        => skin.typography.readingFont != null ? skin.typography.readingFont
+            : string.IsNullOrWhiteSpace(skin.typography.readingFontFallback) ? null
+            : Resources.Load<TMP_FontAsset>(skin.typography.readingFontFallback);
+
+    /// <summary>Which side's numerals a token shows. Full cards keep the prefab's own material.</summary>
+    public static Material StatMaterialFor(BoardSkin skin, CardZoneVisualizer zone)
+        => zone != null && zone.board != null && zone.board.IsOpponentZone(zone)
+            ? skin.colors.opponentTokenStats : skin.colors.ownTokenStats;
 
     public static void StyleFullCard(Card card)
     {
@@ -221,6 +375,7 @@ public sealed class BoardPresentation : MonoBehaviour
         real.anchorMin = real.anchorMax = Vector2.one * .5f;
         real.sizeDelta = style.size;
         real.anchoredPosition = Vector2.zero;
+        real.localScale = Vector3.one;
         var backing = Panel(root, "Obsidian card stock", skin.colors.ink);
         Stretch(backing.rectTransform, Vector2.zero, Vector2.one);
         backing.transform.SetAsFirstSibling();
@@ -231,10 +386,10 @@ public sealed class BoardPresentation : MonoBehaviour
         SetPiece(real, "DescriptionBackground", style.description.size, style.description.position, skin.colors.ink);
         SetPiece(real, "TypeBackground", style.badge.size, style.badge.position, skin.colors.ink);
         var border = real.Find("Border");
-        if (border != null) border.gameObject.SetActive(false);
-        foreach (var hover in root.GetComponentsInChildren<Hover>(true)) hover.gameObject.SetActive(false);
+        if (border != null) border.gameObject.SetActive(style.keepAuthoredBorder);
+        foreach (var hover in root.GetComponentsInChildren<Hover>(true)) hover.gameObject.SetActive(style.keepHoverEffects);
         var title = real.Find("TitleBackground/Title")?.GetComponent<TMP_Text>();
-        var readingFont = skin.typography.readingFont != null ? skin.typography.readingFont : Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
+        var readingFont = ReadingFontFor(skin);
         foreach (var text in real.GetComponentsInChildren<TMP_Text>(true))
         {
             if (readingFont != null) { text.font = readingFont; text.fontSharedMaterial = readingFont.material; }
@@ -270,27 +425,91 @@ public sealed class BoardPresentation : MonoBehaviour
                 requirementText.fontSize = skin.typography.requirementsSize;
                 height = Mathf.Clamp(requirementText.GetPreferredValues(requirementText.text, Mathf.Max(1, style.art.size.x - style.requirementMargin.x - style.requirementMargin.z), Mathf.Infinity).y + style.requirementMargin.y + style.requirementMargin.w, style.requirementHeightRange.x, style.requirementHeightRange.y);
                 requirementText.margin = style.requirementMargin;
-                requirementText.color = skin.colors.ivory;
-                var band = Panel(requirements.parent, "Requirement ribbon", skin.colors.requirementRibbon);
-                Stretch(band.rectTransform, Vector2.up, Vector2.one);
-                band.rectTransform.pivot = new Vector2(.5f, 1);
-                band.rectTransform.sizeDelta = new Vector2(0, height);
-                band.transform.SetSiblingIndex(requirements.GetSiblingIndex());
+                // Plain white by default, not the ivory the rest of the card reads in: this row is
+                // numerals beside coloured resource sprites, and a warm tint on it fights them.
+                // White is also what the font renders untinted, so the row matches the glyph art.
+                requirementText.color = skin.colors.requirements;
+                // No band behind the row: the costs read directly off the artwork. The measured
+                // height still drives the text rect, so a wrapped cost keeps its own space.
             }
             requirements.pivot = new Vector2(.5f, 1); requirements.sizeDelta = new Vector2(0, height);
         }
-        var accent = (skin.colors.cardTypes != null ? skin.colors.cardTypes : CardPalette.Default)
+        // One palette authority. The card face tints its own background and token ring from
+        // CardServices.Palette; reading anything else here is how the generated border and the
+        // card's own frame ended up able to disagree about what an Army is coloured. ApplySkin
+        // installs the skin's palette into CardServices, so this picks it up either way.
+        var accent = CardServices.Palette
             .GetCardTypeColor(card.cardData != null ? card.cardData.GetCardType() : CardTypeEnum.Unknown);
+        StyleCombatStats(card, root, skin, readingFont, accent);
         Border(root, Color.Lerp(skin.colors.gold, accent, style.typeBorderBlend));
         Rule(root, accent, Vector2.zero, Vector2.right);
     }
 
+    /// <summary>
+    /// Gives the combat numbers their own plaque on the artwork's lower-right corner. Card sizes the
+    /// overlay for a token, where the stats are the only thing along the bottom and may take the
+    /// whole width; a full card has a description and flavour line down there, so left at that size
+    /// the numerals sit on top of the story text at several times its size.
+    /// </summary>
+    private static void StyleCombatStats(Card card, RectTransform root, BoardSkin skin, TMP_FontAsset readingFont, Color accent)
+    {
+        var style = skin.cards;
+        StyleStatBadge(card.CombatStatsLabel, "Stat plaque", style.stats, root, skin, readingFont, accent);
+        float left = style.art.position.x - style.art.size.x * .5f + 4;
+        float right = style.stats.position.x - style.stats.size.x * .5f - 6;
+        var classes = new BoardSkin.Piece(new Vector2(Mathf.Max(40, right - left), style.stats.size.y),
+            new Vector2((left + right) * .5f, style.stats.position.y));
+        StyleStatBadge(card.ClassStatsLabel, "Class plaque", classes, root, skin, readingFont, accent);
+        var effects = new BoardSkin.Piece(new Vector2(style.art.size.x - 8, style.stats.size.y),
+            new Vector2(style.art.position.x, style.stats.position.y + style.stats.size.y + 4));
+        StyleStatBadge(card.StatusEffectsLabel, "Status plaque", effects, root, skin, readingFont, accent);
+    }
+
+    private static void StyleStatBadge(TMP_Text stats, string plaqueName, BoardSkin.Piece bounds,
+        RectTransform root, BoardSkin skin, TMP_FontAsset readingFont, Color accent)
+    {
+        // Card hides the overlay outright on a type that has no combat numbers -- no plaque either.
+        if (stats == null) return;
+        var style = skin.cards;
+        var plaque = Panel(root, plaqueName, skin.colors.ink);
+        plaque.raycastTarget = false;
+        Place(plaque.rectTransform, bounds);
+        Border(plaque.rectTransform, Color.Lerp(skin.colors.gold, accent, style.typeBorderBlend));
+        Place(stats.rectTransform, bounds);
+        if (readingFont != null) { stats.font = readingFont; stats.fontSharedMaterial = readingFont.material; }
+        stats.color = skin.colors.ivory;
+        stats.fontStyle = FontStyles.Bold;
+        stats.outlineWidth = 0;
+        stats.alignment = TextAlignmentOptions.Center;
+        stats.margin = style.statsMargin;
+        // Attack and defence read as one unit, so they never wrap; auto-sizing between the two ends
+        // of the range is what keeps a two-digit army inside the same plaque as a one-digit one.
+        stats.textWrappingMode = TextWrappingModes.NoWrap;
+        stats.enableAutoSizing = true;
+        stats.fontSizeMin = style.statsFontRange.x;
+        stats.fontSizeMax = style.statsFontRange.y;
+        // Both live on the card root beside RealCard, so the plaque only has to land immediately
+        // behind the numerals to sit between them and the artwork.
+        plaque.transform.SetSiblingIndex(stats.transform.GetSiblingIndex());
+        plaque.gameObject.SetActive(stats.gameObject.activeSelf);
+    }
+
+    private static void Place(RectTransform rect, BoardSkin.Piece piece)
+    {
+        rect.anchorMin = rect.anchorMax = rect.pivot = Vector2.one * .5f;
+        rect.sizeDelta = piece.size;
+        rect.anchoredPosition = piece.position;
+        rect.localScale = Vector3.one;
+    }
+
     private static void ClearGeneratedCardChrome(RectTransform root, RectTransform real)
     {
-        ClearChildrenNamed(root, "Obsidian card stock", "Frame", "Inlay");
+        ClearChildrenNamed(root, "Obsidian card stock", "Frame", "Inlay", "Stat plaque", "Class plaque", "Status plaque");
         for (int i = real.childCount - 1; i >= 0; i--)
         {
             var child = real.GetChild(i);
+            // Nothing draws a ribbon any more; this strips one left behind in a scene by an
+            // earlier styling pass, which would otherwise survive as authored hierarchy.
             foreach (var ribbon in child.GetComponentsInChildren<Transform>(true))
                 if (ribbon.name == "Requirement ribbon")
                 {
@@ -312,20 +531,21 @@ public sealed class BoardPresentation : MonoBehaviour
     }
 
     /// <summary>Styles an authored token card as the same framed, captioned token used at runtime.</summary>
-    public static Vector2 StyleTokenCard(Card card, Font interfaceFont)
+    public static Vector2 StyleTokenCard(Card card, Font interfaceFont, CardZoneVisualizer zone = null)
     {
         var skin = SkinFor(card.transform);
         var root = (RectTransform)card.transform;
         ClearGeneratedTokenChrome(root);
         card.ShowToken();
         card.CompactTokenInPlace();
-        Vector2 tokenSize = card.TokenFootprint;
+        card.ApplyCompactInfoMaterial(StatMaterialFor(skin, zone));
+        card.ScaleTokenVisual(TokenScaleFor(skin, card, out Vector2 tokenSize));
         root.sizeDelta = tokenSize + Vector2.up * skin.tokens.captionHeight;
         card.SetTokenPreviewOffset(Vector2.up * skin.tokens.captionHeight * .5f);
         var backing = Panel(root, "Token stock", skin.colors.ink);
         Stretch(backing.rectTransform, Vector2.zero, Vector2.one);
         backing.transform.SetAsFirstSibling();
-        Border(backing.rectTransform, skin.colors.tokenBorder);
+        Border(backing.rectTransform, skin.colors.tokenBorder, skin.tokens.borderWidth);
         string caption = System.Text.RegularExpressions.Regex.Replace(card.cardData?.name ?? string.Empty, "(?<=[a-z])(?=[A-Z])", " ");
         var label = TextLabel(root, caption, interfaceFont, skin.tokens.captionMaxSize, skin.colors.ivory,
             Vector2.zero, Vector2.right, TextAnchor.MiddleCenter);

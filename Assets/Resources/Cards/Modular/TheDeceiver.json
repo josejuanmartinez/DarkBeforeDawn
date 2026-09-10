@@ -1,6 +1,6 @@
 {
     "deckId": "the_giftbearer",
-    "nation": "Nharok",
+    "nation": "Shadow Dominion",
     "alignment": 1,
     "cards": [],
     "cardRefs": [
@@ -144,6 +144,18 @@
         100022,
         100009,
         100058,
-        60014
-    ]
+        60014,
+        10002,
+        10015,
+        10018,
+        10028,
+        10029,
+        10051,
+        10052,
+        80017,
+        80028,
+        80053,
+        90028
+    ],
+    "avatarCharacter": "The Giftbearer"
 }

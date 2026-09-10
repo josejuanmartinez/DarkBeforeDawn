@@ -48,7 +48,7 @@ public partial class CardPalette : ScriptableObject, ICardPalette
         CardTypeEnum.Action => action,
         CardTypeEnum.Spell => spell,
         CardTypeEnum.Object => @object,
-        CardTypeEnum.Ally => encounter,
+        CardTypeEnum.Encounter => encounter,
         CardTypeEnum.Environmental => environmental,
         _ => Color.clear
     };

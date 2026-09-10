@@ -1,6 +1,6 @@
 {
     "deckId": "the_pale_hand",
-    "nation": "Vaskar",
+    "nation": "Tower Council",
     "alignment": 2,
     "cards": [],
     "cardRefs": [
@@ -118,6 +118,20 @@
         20144,
         20190,
         100058,
-        40099
-    ]
+        40099,
+        10004,
+        10006,
+        10008,
+        10010,
+        10012,
+        10013,
+        10016,
+        10019,
+        10031,
+        10037,
+        10041,
+        80007,
+        80057
+    ],
+    "avatarCharacter": "Ironjaw"
 }

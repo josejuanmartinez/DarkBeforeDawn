@@ -1,8 +1,8 @@
 {
-    "deckId": "zhamor",
-    "nation": "Zhamor",
+    "deckId": "the_hollow_sorcerer",
+    "nation": "Shadow Dominion",
     "alignment": 1,
-    "avatarCharacter": "Zhamor",
+    "avatarCharacter": "The Black Rider",
     "cards": [],
     "cardRefs": [
         40048,
@@ -135,6 +135,24 @@
         100022,
         100009,
         100058,
-        60014
+        60014,
+        80004,
+        80005,
+        80012,
+        80014,
+        80022,
+        80024,
+        80032,
+        80038,
+        80045,
+        80055,
+        80061,
+        80065,
+        80071,
+        80075,
+        80080,
+        90001,
+        90007,
+        90017
     ]
 }

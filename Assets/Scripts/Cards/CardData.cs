@@ -49,11 +49,12 @@ public class CardData
     public TroopsTypeEnum troopType;
     // Open to both card types: an Army card may carry any number of these, and a Character card may
     // carry them alongside characterAbilities below.
-    public List<CharacterAndArmySpecialAbilityEnum> specialAbilities = new();
+    public List<ObjectCharacterArmySpecialAbilityEnum> specialAbilities = new();
     // Character-only half of the union. Ignored on every other card type, which is why it lives in
     // its own list rather than widening specialAbilities: the two enums overlap in ordinals, so one
     // list of ints could not say which enum a given value belongs to.
     public List<CharacterOnlySpecialAbilityEnum> characterAbilities = new();
+    public List<StatusEffects> statusEffects = new();
     public int procChance;
     // MTG-style combat line for armies and characters.
     public int attack;
@@ -124,12 +125,13 @@ public class CardData
         // so editing one card's tags would silently edit every clone's.
         copy.tags = tags != null ? new List<string>(tags) : new List<string>();
         copy.specialAbilities = specialAbilities != null
-            ? new List<CharacterAndArmySpecialAbilityEnum>(specialAbilities)
-            : new List<CharacterAndArmySpecialAbilityEnum>();
+            ? new List<ObjectCharacterArmySpecialAbilityEnum>(specialAbilities)
+            : new List<ObjectCharacterArmySpecialAbilityEnum>();
         copy.characterAbilities = characterAbilities != null
             ? new List<CharacterOnlySpecialAbilityEnum>(characterAbilities)
             : new List<CharacterOnlySpecialAbilityEnum>();
         copy.playability = new CardPlayabilityResult();
+        copy.statusEffects = statusEffects != null ? new List<StatusEffects>(statusEffects) : new();
         return copy;
     }
 
@@ -143,7 +145,7 @@ public class CardData
 
     public bool IsEventCard() => GetCardType() == CardTypeEnum.Event;
 
-    public bool IsEncounterCard() => GetCardType() == CardTypeEnum.Ally;
+    public bool IsEncounterCard() => GetCardType() == CardTypeEnum.Encounter;
 
     public bool HasTag(string tag)
     {
@@ -165,8 +167,14 @@ public class CardData
         return Mathf.Max(0, commander) + Mathf.Max(0, agent) + Mathf.Max(0, emmissary) + Mathf.Max(0, mage);
     }
 
+    // A character is paid in coin rather than equipped out of stores, so their gold is derived
+    // from their skill points instead of being authored on the card; the materials printed
+    // alongside are what arming them costs. The multiplier is deliberately small: the Lands are
+    // the only source of gold, and at five per point no character was ever affordable.
+    public const int GoldPerCharacterPoint = 2;
+
     public int GetAdditionalGoldCost()
-        => GetCardType() == CardTypeEnum.Character ? GetCharacterPointTotal() * 5 : 0;
+        => GetCardType() == CardTypeEnum.Character ? GetCharacterPointTotal() * GoldPerCharacterPoint : 0;
 
     public int GetTotalGoldCost()
     {
@@ -196,7 +204,7 @@ public class CardData
             CardTypeEnum.Land => GetLandDescription(),
             CardTypeEnum.PC => PcDescriptionBuilder.BuildBody(this, includeFoundingText),
             CardTypeEnum.Event or CardTypeEnum.Action or CardTypeEnum.Spell or CardTypeEnum.Environmental => GetActionEffectText(),
-            CardTypeEnum.Ally => !string.IsNullOrWhiteSpace(description) ? description.Trim() : string.Empty,
+            CardTypeEnum.Encounter => !string.IsNullOrWhiteSpace(description) ? description.Trim() : string.Empty,
             CardTypeEnum.Object => GetObjectDescription(),
             _ => string.Empty
         };
@@ -285,6 +293,15 @@ public class CardData
     {
         CardTypeEnum cardType = GetCardType();
         if (cardType != CardTypeEnum.Army && cardType != CardTypeEnum.Character) return string.Empty;
+        var (a, d) = GetCombatStats();
+        return a > 0 || d > 0
+            ? $"{Mathf.Max(0, a)}{SpriteTag("attack")} {Mathf.Max(0, d)}{SpriteTag("defense")}"
+            : string.Empty;
+    }
+
+    public (int attack, int defense) GetCombatStats()
+    {
+        CardTypeEnum cardType = GetCardType();
         int a = attack;
         int d = defense;
         if (a <= 0 && d <= 0 && cardType == CardTypeEnum.Army)
@@ -301,9 +318,35 @@ public class CardData
             int level = Mathf.Clamp(GetCharacterPointTotal(), 1, 6);
             a = d = level;
         }
-        return a > 0 || d > 0
-            ? $"{Mathf.Max(0, a)}{SpriteTag("attack")} {Mathf.Max(0, d)}{SpriteTag("defense")}"
-            : string.Empty;
+        return (Mathf.Max(0, a), Mathf.Max(0, d));
+    }
+
+    public string GetClassStatsText(bool compact = false)
+    {
+        if (GetCardType() != CardTypeEnum.Character) return string.Empty;
+        var parts = new List<string>();
+        AppendCharacterLevel(parts, "commander", commander);
+        AppendCharacterLevel(parts, "agent", agent);
+        AppendCharacterLevel(parts, "emmissary", emmissary);
+        AppendCharacterLevel(parts, "mage", mage);
+        if (compact && parts.Count > 2)
+            return string.Join(" ", parts.Take(2)) + "\n" + string.Join(" ", parts.Skip(2));
+        return string.Join(" ", parts);
+    }
+
+    public string GetStatusEffectsText(bool compact = false)
+    {
+        if (GetCardType() != CardTypeEnum.Character && GetCardType() != CardTypeEnum.Army)
+            return string.Empty;
+        if (statusEffects == null) return string.Empty;
+        var icons = statusEffects.Distinct()
+            .Where(effect => Enum.IsDefined(typeof(StatusEffects), effect))
+            .Select(effect => $"<link=\"status:{effect}\">{(effect == StatusEffects.Halted ? "Halted" : SpriteTag(CardKeywordGlossary.StatusSprite(effect)))}</link>").ToList();
+        if (!compact || icons.Count <= 4) return string.Join(" ", icons);
+        var rows = new List<string>();
+        for (int i = 0; i < icons.Count; i += 4) rows.Add(string.Join(" ", icons.Skip(i).Take(4)));
+        // Sprite-only TMP lines otherwise have no reliable baseline separation.
+        return "<line-height=100%>" + string.Join("\n", rows) + "</line-height>";
     }
 
     // Glyphs are never scaled inline: an inline <size> only enlarges the sprite, so auto-sizing
@@ -383,6 +426,7 @@ public class CardData
         if (scryAreaBonus > 0) details.Add($"+{scryAreaBonus} Scry Area range");
         if (scryObjectBonus > 0) details.Add($"+{scryObjectBonus} Find Object");
         if (grantsEnvironmentalImmunity) details.Add("immune to negative environmental cards");
+        details.AddRange(GetArmyAbilityLabels());
         if (!transferable) details.Add("non-transferable");
         return details;
     }
@@ -419,7 +463,7 @@ public class CardData
 
         int chance = GetProcChance();
         var labels = new List<string>();
-        foreach (CharacterAndArmySpecialAbilityEnum ability in specialAbilities)
+        foreach (ObjectCharacterArmySpecialAbilityEnum ability in specialAbilities)
         {
             string label = FormatArmyAbilityLabel(ability);
             if (!string.IsNullOrWhiteSpace(label)) labels.Add($"{label} {chance}%");
@@ -436,7 +480,7 @@ public class CardData
 
         if (specialAbilities != null)
         {
-            foreach (CharacterAndArmySpecialAbilityEnum ability in specialAbilities)
+            foreach (ObjectCharacterArmySpecialAbilityEnum ability in specialAbilities)
             {
                 string label = FormatArmyAbilityLabel(ability);
                 if (!string.IsNullOrWhiteSpace(label)) labels.Add($"{label} {chance}%");
@@ -490,10 +534,10 @@ public class CardData
             _ => "target"
         };
 
-        return $"{abilityName} <sprite name=\"{spriteName}\">";
+        return $"<link=\"character:{ability}\"><u>{abilityName}</u> <sprite name=\"{spriteName}\"></link>";
     }
 
-    public static string FormatArmyAbilityLabel(CharacterAndArmySpecialAbilityEnum ability)
+    public static string FormatArmyAbilityLabel(ObjectCharacterArmySpecialAbilityEnum ability)
     {
         const string bonusVersusPrefix = "BonusVersus";
         string raw = ability.ToString();
@@ -510,29 +554,29 @@ public class CardData
         // BonusVersusX shares the generic target icon.
         string spriteName = ability switch
         {
-            CharacterAndArmySpecialAbilityEnum.Ranged => "longrange",
-            CharacterAndArmySpecialAbilityEnum.Mounted => "mounts",
-            CharacterAndArmySpecialAbilityEnum.Poisoning => "poison",
-            CharacterAndArmySpecialAbilityEnum.Pyromancer => "fire",
-            CharacterAndArmySpecialAbilityEnum.Cursing => "cursed",
-            CharacterAndArmySpecialAbilityEnum.Raiding => "raid",
-            CharacterAndArmySpecialAbilityEnum.Pikemen => "pikemen",
-            CharacterAndArmySpecialAbilityEnum.Shielded => "shielded",
-            CharacterAndArmySpecialAbilityEnum.Encouraging => "encouraging",
-            CharacterAndArmySpecialAbilityEnum.Discouraging => "discouraging",
-            CharacterAndArmySpecialAbilityEnum.Berserker => "berserker",
-            CharacterAndArmySpecialAbilityEnum.Charging => "charging",
-            CharacterAndArmySpecialAbilityEnum.Fearsome => "fear",
-            CharacterAndArmySpecialAbilityEnum.Freezing => "frozen",
-            CharacterAndArmySpecialAbilityEnum.Blessing => "light",
-            CharacterAndArmySpecialAbilityEnum.Hidden => "hidden",
-            CharacterAndArmySpecialAbilityEnum.Slaughter => "bleeding",
-            CharacterAndArmySpecialAbilityEnum.Flying => "wing",
-            CharacterAndArmySpecialAbilityEnum.Sightseeing => "scout",
+            ObjectCharacterArmySpecialAbilityEnum.Ranged => "longrange",
+            ObjectCharacterArmySpecialAbilityEnum.Mounted => "mounts",
+            ObjectCharacterArmySpecialAbilityEnum.Poisoning => "poison",
+            ObjectCharacterArmySpecialAbilityEnum.Pyromancer => "fire",
+            ObjectCharacterArmySpecialAbilityEnum.Cursing => "cursed",
+            ObjectCharacterArmySpecialAbilityEnum.Raiding => "raid",
+            ObjectCharacterArmySpecialAbilityEnum.Pikemen => "pikemen",
+            ObjectCharacterArmySpecialAbilityEnum.Shielded => "shielded",
+            ObjectCharacterArmySpecialAbilityEnum.Encouraging => "encouraging",
+            ObjectCharacterArmySpecialAbilityEnum.Discouraging => "discouraging",
+            ObjectCharacterArmySpecialAbilityEnum.Berserker => "berserker",
+            ObjectCharacterArmySpecialAbilityEnum.Charging => "charging",
+            ObjectCharacterArmySpecialAbilityEnum.Fearsome => "fear",
+            ObjectCharacterArmySpecialAbilityEnum.Freezing => "frozen",
+            ObjectCharacterArmySpecialAbilityEnum.Blessing => "light",
+            ObjectCharacterArmySpecialAbilityEnum.Hidden => "hidden",
+            ObjectCharacterArmySpecialAbilityEnum.Slaughter => "bleeding",
+            ObjectCharacterArmySpecialAbilityEnum.Flying => "wing",
+            ObjectCharacterArmySpecialAbilityEnum.Sightseeing => "scout",
             _ => isBonusVersus ? "target" : raw.ToLowerInvariant()
         };
 
-        return $"{abilityName} <sprite name=\"{spriteName}\">";
+        return $"<link=\"ability:{ability}\"><u>{abilityName}</u> <sprite name=\"{spriteName}\"></link>";
     }
 }
 

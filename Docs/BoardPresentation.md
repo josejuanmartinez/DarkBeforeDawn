@@ -22,6 +22,32 @@ skinManager.ApplyActiveSkin();  // refresh after changing asset fields from code
 
 Full cards use a 300×410 frame, type-colored accents, separate title and rules panels, and a dark requirements ribbon. Tokens retain their artwork and type glow and gain a name caption. Piles show layered card stock. UI labels and card rules use the bundled sans-serif fonts; the masthead retains the existing display font.
 
+### Player materials and avatars
+
+Each player has a separate visible pool for Leather, Mounts, Timber, Iron, Steel, Mithril and Gold.
+Pin a land and select **TAP LAND** to add its printed grants; the same land cannot produce again
+until readied. Pin a card in your hand and select **PLAY CARD** to pay its printed material cost.
+Failed payment changes neither the pool nor the hand. Joker costs consume any remaining materials
+in the displayed order after specific costs. Character gold uses the existing character cost rule.
+
+The single **END TURN** button on your materials panel empties both floating pools and readies the
+next side's lands. It becomes **END OPPONENT TURN** for the manual return handoff; there is no
+opponent-side button or automatic opponent controller yet. Material totals show their matching
+card sprites, with the written names retained underneath. `board.HumanMaterials` and
+`board.OpponentMaterials` expose the same `TrySpend(CardData)` operation for match controllers.
+Skin refreshes preserve land tap state, including independent copies of the same card.
+
+Set **Human Avatar Card Name** and **Opponent Avatar Card Name** on Board to catalog names.
+The scene uses Orren Dawnbringer and Nharok as examples. Avatars show full cards and support the
+same hover/pin inspection as other cards. `BoardSkin.players` controls their bounds and materials
+panel typography. The avatar is separate from hand and battlefield collections.
+
+Playing currently pays and moves cards: lands, settlements, armies/characters/allies and
+environmental cards go to their board zones; actions/events/spells/objects go to discard.
+Effect resolution, object attachment, targeting and non-material play restrictions are not implemented.
+`Tests/PlayerMaterialsChecks.cs` checks payment atomicity, ownership, duplicate land taps,
+skin refresh, turn reset and avatar inspection through Unity CLI in Play mode.
+
 ```csharp
 // Populate from your match model. Collections retain the supplied order.
 board.hand.SetCards(openingHand);

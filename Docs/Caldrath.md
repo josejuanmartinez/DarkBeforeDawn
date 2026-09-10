@@ -1,14 +1,13 @@
-# Caldrath — The World of *Dark Before Dawn*
+# Caldrath - The World of *Dark Before Dawn*
 
-The setting bible. Everything the player reads on a card — characters, settlements,
-regions, armies — lives in this world. Objects, Encounters, Events and Spells still
-carry inherited names; see [Known residue](#known-residue).
+A fantasy world is growing colder as the fire that lights its sky fades. Free
+People defend their homes, neutral powers look to their own survival, and Dark
+Servants seek dominion over what remains. That is the background a player needs
+before starting a game.
 
-The mechanical shape of the game is unchanged. This is a reskin with its own
-mythology, not a redesign: three rival mage-powers, a three-way alignment split,
-the same peoples in the same places doing the same things.
-
----
+The setting supports the game: every nation has one fixed alignment, while
+race and avatar role remain separate. Use familiar fantasy terms and explain
+people and places by what they do.
 
 ## 1. The Ember and the Waning
 
@@ -28,7 +27,7 @@ arithmetic and independently declined to publish it.
 This age is called **the Waning**.
 
 The question the whole world is arguing about — with councils, with coin, with
-armies — is what comes after it. Three answers, and they are the three factions.
+armies — is what comes after it. People disagree about whether to restore the light, prepare for the cold, or use the crisis to seize power. These disagreements shape the conflict; they do not define anyone's race or nation.
 
 ### The Kindling
 
@@ -46,292 +45,270 @@ quote it.
 
 ---
 
-## 2. The three factions
+## 2. The three alignments
 
-The alignment split is unchanged (`alignment` 0 / 2 / 1 in the card data). Only
-the names are new, and they describe *what a card believes about the Ember*.
+The alignments are **Free People**, **Neutral**, and **Dark Servants**. They are
+allegiances, not races, nations, or three compulsory beliefs about the Ember.
 
-### The Dawnward — `alignment: 0`
-
-Those who spend themselves to see the Ember relit. Not "the good"; the Dawnward
-include grim, ruthless, and frankly unpleasant people. What unites them is a
-willingness to pay now for a light they will not live to see.
-
-Their weakness is the one you would expect: a faction that believes the worst
-night precedes the dawn can be talked into accepting almost any amount of
-suffering as evidence that things are going well.
-
-### The Unaligned — `alignment: 2`
-
-Realms, wanderers, monsters and old powers that answer to no vigil. Most of
-Caldrath is here — most people, most of the time, are trying to get a harvest in
-rather than settle a cosmological argument.
-
-The Unaligned are not neutral out of cowardice. Some have concluded the Ember's
-death is simply a fact, like a river changing course, and that the correct
-response is to move. Others were here before the Ember and expect to be here
-after it. The rest have noticed that both crusading factions burn through
-villages at roughly the same rate.
-
-### The Nightborn — `alignment: 1`
-
-Those who would let the Ember die, and rule what the dark leaves.
-
-The Nightborn are not nihilists, and this is the thing their enemies never
-understand. They believe the Kindling is a lie — a comfortable story that keeps
-the world docile while it freezes. Their reading is that the dark is *coming
-regardless*, that it cannot be bargained with, and that the only rational act
-is to build the thing that survives it: to become creatures of the night early,
-by choice, while there is still time to choose.
-
-They are recruiting well. They have the better argument about the evidence, and
-everyone can feel the winters.
-
----
-
-## 3. The Emberwrought
-
-Long ago, spirits were sent into Caldrath carrying coals of the original fire —
-not to rule, but to keep the Ember's memory until it was needed. There were
-several. Three still matter.
-
-They are the **Emberwrought** (`RacesEnum.Celestial`), and each is a playable
-power with its own subdecks. Every one of them has concluded the others are the
-reason the world is dying.
-
-### Orren Greycloak — the Dawnward power
-
-`nation: Orren` · Wanders. Owns nothing. Turns up where it is least convenient
-and most necessary, which is the same place. Carries his coal openly and spends
-it in small amounts on other people, which is the slowest possible strategy and
-the only one that has ever worked.
-
-| Persona | Deck | The angle |
+| Alignment | Card value | Meaning |
 |---|---|---|
-| **Orren Greycloak** | *(base)* | The wanderer himself |
-| **Orren Farwalker** | `orren_farwalker` | Refined spellcraft, lore, wards, precise intervention |
-| **Orren Stormherald** | `orren_stormherald` | The ill omen among Men; realms hardening for war |
-| **Orren Stonefriend** | `orren_stonefriend` | Mountain-halls, treasure, endurance, old alliances |
-| **Orren the Meddler** | `orren_greycloack` | Mischief, roadside incidents, small folk punching up |
-| **Orren the Kindled** | `orren_the_kindled` | The return: renewal, courage, cleansing, decisive rally |
+| **Free People** | `0` | Those who resist domination and defend the freedom of their peoples. Many hope to restore the Ember; others are fighting for their homes today. |
+| **Neutral** | `2` | Those who serve neither side: independent realms, travellers, creatures, and powers with interests of their own. They may help or oppose either side. |
+| **Dark Servants** | `1` | Those who serve the powers seeking to dominate the world. Some welcome the coming darkness; others seek power, act from fear, or obey their masters. |
 
-### Vaskar — the Unaligned power
+Individuals can be brave, selfish, cruel, or conflicted without needing a new
+alignment name. The Ember gives them something to struggle over, not a test of
+membership. "Dawnward", "Unaligned", and "Nightborn" are retired alignment labels.
 
-`nation: Vaskar` · The one who read the arithmetic first and correctly. Vaskar
-studied the Ember longer and more rigorously than anyone alive, concluded it
-cannot be relit, and drew the reasonable conclusion that the world needs a
-strong hand to manage the descent. Everything after that followed logically, one
-defensible step at a time, until he was somewhere indefensible.
+## 3. Nations, avatars, and races
 
-His seat is **Thornspire**, a black needle of a tower in the Windgate.
+These describe different things:
 
-| Persona | Deck | The angle |
+| Term | What it means |
+|---|---|
+| **Alignment** | Which side a nation and all its decks belong to. |
+| **Nation** | The realm or faction a deck belongs to. All its decks share one alignment; its peoples can have different races. |
+| **Avatar** | The character representing the chosen deck. Being an avatar is a role, not a race. |
+| **Race** | What an individual character is: Human, Elf, Dwarf, Halfling, Celestial, and so on. |
+| **Character group** | A data grouping for related character cards. It does not establish shared ancestry or prove that the cards are separate people. |
+
+**An avatar does not have to be a Celestial.** A human ruler, an elven leader, a
+dwarven lord, or another suitable character can represent a nation. Their race
+belongs to the character and must not be inferred from the nation, alignment,
+shared name, or avatar role. This principle does not automatically make every
+character selectable; deck selection remains governed by the game's rules.
+
+**Celestial** is the replacement term for Maia. It describes those particular
+beings, not all leaders, spellcasters, or avatars. There is no additional race
+called "Emberwrought".
+
+The previous account of three companies of spirits, each carrying a coal, is
+removed. It incorrectly made every nation a Celestial company and every avatar
+one of its members. Shared names and alternate character cards do not require
+that explanation. Alternate forms or titles can represent the same individual;
+distinct characters remain distinct where the design establishes that.
+
+### The current nations and avatars
+
+The current deck families are **Free Realms**, **Tower Council**, and **Shadow
+Dominion**: alliances of different peoples, not Celestial companies. Each nation
+has exactly one alignment, shared by every deck in that nation:
+
+| Nation | Alignment | Value |
 |---|---|---|
-| **Vaskar** | *(base)* | The high mage entire |
-| **Vaskar the Pale** | `vaskar_the_pale` | Rhetoric, control, persuasion, the Voice |
-| **Vaskar Manyhued** | `vaskar_manyhued` | Layered wizardry, vanity, power by synthesis |
-| **The Pale Hand** | `the_pale_hand` | The war engine: furnaces, industry, relentless assault |
-| **Sharrow** | `sharrow` | The fallen ruin of him — coercion, spite, no magic left |
+| Free Realms | Free People | `0` |
+| Tower Council | Neutral | `2` |
+| Shadow Dominion | Dark Servants | `1` |
 
-**Skeil** is his whisperer at foreign courts.
+Village Tyrants is Neutral, like every other Tower Council deck. Its human
+enforcers act from self-interest rather than serving the Shadow Dominion.
 
-### Nharok — the Nightborn power
+Every playable deck now has an explicit `avatarCharacter` pointing to a character
+present in its `cardRefs`. The roster selects existing characters without
+changing anyone's race, stats, or artwork. Titles below describe the decks;
+existing `deckId` values remain stable internal identifiers.
 
-`nation: Nharok` · Let his coal go out on purpose. Nharok's position is the
-Nightborn position stated by the only being with standing to state it: he has
-*held* the Ember's fire and reports that it is finite, failing, and not
-renewable. He offers the dark instead — organised, survivable, and his.
+| Nation | Deck | Avatar | Race | Alignment | Card ID |
+|---|---|---|---|---|---|
+| Free Realms | Dawn Rally | Orren Dawnbringer | Celestial | Free People | `50066` |
+| Free Realms | Elven Wisdom | Elder Rowan | Elf | Free People | `50049` |
+| Free Realms | Border Kingdoms | King Alden | Human | Free People | `50150` |
+| Free Realms | Roadside Mischief | Mat Heatherthorn | Human | Free People | `50107` |
+| Free Realms | Mountain Halls | Thorgrim | Dwarf | Free People | `50151` |
+| Tower Council | Tower Council | Vaskar the Pale | Celestial | Neutral | `50128` |
+| Tower Council | Arcane Studies | Corvan | Celestial | Neutral | `50120` |
+| Tower Council | Ironworks | Ironjaw | Orc | Neutral | `50106` |
+| Tower Council | Village Tyrants | Bill Thistlewood | Human | Neutral | `50025` |
+| Shadow Dominion | Watchful Shadow | The Sleepless Eye | Celestial | Dark Servants | `50143` |
+| Shadow Dominion | False Gifts | The Giftbearer | Celestial | Dark Servants | `50144` |
+| Shadow Dominion | Haunted Wood | The Black Rider | Wraithlord | Dark Servants | `50099` |
+| Shadow Dominion | Eastern Warbands | The Eastern Warlord | Easterner (Human) | Dark Servants | `50161` |
+| Shadow Dominion | Frozen Throne | The Wraith King | Wraithlord | Dark Servants | `50115` |
 
-His seat is **Nharoth** on the Cinderplain, under the smoke of **the Emberwound**,
-the wound in the earth where his coal was put out.
+**Dawn Rally**, led by Orren Dawnbringer, is the Halfling-focused Free Realms
+deck. It includes Merric, the other Halfling adventurers, Halfling archers and
+slingers, Hedge Wardens, their villages, and their travel and courage support.
+Orren remains a Celestial leading and protecting those people.
 
-| Persona | Deck | The angle |
-|---|---|---|
-| **Nharok** | *(base)* | The Nightborn power entire |
-| **The Sleepless Eye** | `the_sleepless_eye` | Surveillance, dread, control auras, board lock |
-| **The Giftbearer** | `the_giftbearer` | Subversion and false gifts; conquest through trust |
-| **The Eastern Shadow** | `the_eastern_shadow` | Dark diplomacy; the swelling of eastern war-bands |
-| **The Iron Diadem** | `the_iron_diadem` | The witch-realm of Grimhold; terror, slaving, sorcery |
+**Roadside Mischief** is purely human-based, led by Mat Heatherthorn. Its units
+are human townsfolk, adventurers, and rangers, including Firstbloods (humans of
+the old blood). It uses rumours, concealment, theft, and practical tricks. It has
+no Halflings, Halfling-specific support, or nonhuman units. The Halfling package
+has moved to Dawn Rally; the other removed characters and encounters have homes
+in appropriate decks such as Elven Wisdom and Dawn Rally.
 
-### Zhamor — the fourth seat
+Orren, Vaskar, and Nharok remain individual Celestials. Their related character
+cards depict titles, guises, or stages of those individuals, not separate members
+of three spirit companies. `orren` and `vaskar` group their respective forms;
+`sharrow` identifies Vaskar's fallen form, and `nharok` groups Nharok's forms.
+Orren Dawnbringer, Vaskar the Pale, the Sleepless Eye, and the Giftbearer remain
+appropriate Celestial avatars. Corvan is a separate Celestial scholar.
 
-`nation: Zhamor` · First and greatest of the **Wraithlords**, and the only one
-who acts on his own account. Zhamor holds **Dol Vorrath** in the South Nightwood
-and runs a horror-court of spirits, spiders, dragons and slow magical decay.
-Nominally Nharok's. Not reliably so.
-
-The other eight Wraithlords: **Vorhal** (the Iron Diadem's own crowned wraith),
-**Aduneth**, **Akhorrin**, **Dendrath**, **Hoarveth**, **Jindhur**, **Ovathir**,
-**Rhenn the Defiled**.
-
----
+The other forms remain available as existing support cards. For example, a
+Dwarf leads Mountain Halls while Orren Stonefriend can accompany him. The Black
+Rider leads Haunted Wood; the Hollow Sorcerer remains a separate Celestial card
+in that deck. The Wraith King leads Frozen Throne; the Iron Crown remains a
+Nharok form. Selecting a new avatar neither deletes nor transforms those cards.
 
 ## 4. The peoples
 
-`RacesEnum` values are unchanged — only three display names moved.
+Use recognizable names first. A player should not need a glossary to discover
+that a character is an elf or a halfling.
 
-| Race | Standing | Note |
+| Name used in prose | Existing race value | Description |
 |---|---|---|
-| **Common** | The bulk of the world | Men of every realm |
-| **Vaelen** *(Elf)* | Oldest of the speaking kindreds | Remember the Kindling; will not say what they remember |
-| **Dwarf** | Deep-delvers | Of the line of **Durn**. Their halls are warm without the Ember, which they mention often |
-| **Hollowkin** *(Halfling)* | Small folk of Thornhollow | Have opinions about cosmology and stronger ones about lunch |
-| **Emberwrought** *(Celestial)* | The coal-bearers | See §3 |
-| **Wraithlord** *(was Nazgul)* | The Nine | Chose the dark early, as the Nightborn doctrine advises |
-| **Emberfiend** *(was Balrog)* | Fire that outlived its purpose | **The Deepflame** sleeps under Durndelve |
-| **Woldwarden** *(was Ent)* | Tree-shepherds | **Barkfather** at the Dern Ring. Older than the argument |
-| **Firstbloods** | Long-lived Men of the old blood | Rangers of the Marches |
-| **Skinchanger** | Shape-takers of the Longwater | |
-| Orc · Troll · Goblin · Spider · Dragon · Undead · Wildman · Southerner · Easterner · Beast · Machine · Vampire | | Unchanged |
+| **Human** | `Common = 0` | Humans of the ordinary realms. |
+| **Elf** | `Elf = 1` | An ancient people with long memories. |
+| **Dwarf** | `Dwarf = 2` | People of the mountain halls, known for craft and endurance. |
+| **Halfling** | `Halfling = 3` | Small folk of farms, villages, and country roads. |
+| **Celestial** | `Celestial = 4` | A spirit being; the renamed Maia race. Neither nation nor alignment determines this race. |
+| **Wraithlord** | `Wraithlord = 7` | A once-mortal lord bound to an unnatural existence. |
+| **Fire demon** | `Emberfiend = 10` | An ancient creature of fire and destruction. |
+| **Humans of the old blood** | `Firstbloods = 12` | Long-lived humans descended from an older people. |
+| **Skinchanger** | `Skinchanger = 13` | Someone who can take an animal form. |
+| **Tree guardian** | `Woldwarden = 16` | A living guardian of the forests. |
 
-Two peoples are named in prose but are not races: the **Andarim**, the black-blooded
-lords of drowned **Andareth**; and the **Mearhost**, the horse-lords of Mearhold.
+Orc, Troll, Goblin, Spider, Dragon, Undead, Wildman, Southerner, Easterner, Beast,
+Machine, and Vampire keep their existing terms. The table explains vocabulary;
+it does not change enum names, numeric values, or any individual card's race.
+
+Use **Elf**, **Halfling**, and **Celestial** instead of "Vaelen", "Hollowkin", and
+"Emberwrought". Say "horse-lords" or "southern soldiers" when that is all the
+reader needs to know. Do not introduce another people's name just to replace an
+already clear description.
+
+## 5. Writing and naming
+
+Keep the Ember, the Waning, and the hope of a new dawn as the story background.
+Characters can disagree about the fading light without explaining the entire
+mythology on every card.
+
+- Use familiar words for races, alignments, roles, and creatures.
+- Introduce a place with its purpose: "Thornspire, the wizard's tower".
+- Prefer readable place names such as Longwater, Ironreach, and Swanhold.
+- Give a character a clear name or useful title. Do not manufacture a shared
+  prefix to make every avatar sound like part of a supernatural family.
+- Write about concrete motives: protecting a town, hoarding food, holding a
+  mountain pass, seeking a cure, or gaining power.
+- Keep invented names when they help identify someone or somewhere. Avoid
+  near-spelling replacements and extra cultural labels that add memorization
+  without helping the player understand the card.
+
+For example: "An elven scholar searching for a way to restore the Ember" gives
+us race, role, and motive in one sentence. No new vocabulary is needed.
+
+## Data and migration reference
+
+[`CaldrathMigration.json`](CaldrathMigration.json) defines the current roster by
+stable card ID and deck ID, readable names, and specific text corrections.
+[`CaldrathRenameManifest.json`](CaldrathRenameManifest.json) maps inherited names
+to their current equivalents. Run the migration with
+`python AgentScripts/migrate_caldrath.py`; validate it with
+`python Tests/validate_caldrath.py`.
+
+The migration populates all 14 playable decks' avatar fields, updates nation
+labels in both the manifest and deck files, and rewrites deck themes around the
+actual leaders. It also updates race vocabulary, prominent place names, linked
+starting settlements, and inherited names in visible card text. Artwork lookup
+keys are retained, with old names pinned when a renamed card relied on its name
+for artwork. Card IDs, deck IDs, resource paths, individual races, costs, skills, and effects
+remain unchanged. The current composition correction moves the Halfling package
+to Dawn Rally and rebuilds Roadside Mischief around humans. Village Tyrants now
+uses Neutral (`2`). These authorized deck changes are recorded in `deckEdits`
+and `nationAlignments`; the migration updates references and counts together.
+
+The completed catalog migration reviews all **1,034 cards**. Every card now has
+a reference in at least one playable deck; a meta ownership pool does not count
+as usage. The 224 previously unused cards received 285 thematic deck references,
+including all Allies and Objects and the missing Actions and Spells. A final tag
+audit also moved Travel in Safety to Dawn Rally and removed Through Nightwood
+Shadows from Mischief; the latter remains in Mountain Halls. The full
+catalog now has **2,190 playable-deck references**.
+
+See [the complete card catalog](CardCatalog.md) for every card name, stable ID,
+and deck assignment. `cardNames` is the complete name ledger in the migration
+plan; `coverageAssignments` records why each previously unused card was placed.
+Validation checks complete usage, name migration, fixed nation alignments, the
+human-only Mischief composition, and the Halfling package in Dawn Rally.
+Regenerate the report with `python AgentScripts/report_caldrath.py`.
+
+Personal and settlement names still identify characters and places; they do not
+introduce additional races or alignment systems. The `mithril` resource keyword
+and existing art and implementation identifiers remain in use. This migration
+does not replace the inherited artwork.
 
 ---
 
-## 5. The world map
+## Map reference: existing names
 
-43 regions, grouped as the world groups them.
+These are the names currently used by the card data, kept here for lookup. Players should meet places through play, with a short description of what they are, rather than needing to learn this list. These names are not a requirement to invent more names in the same style.
 
 ### The Marches — the north-west, where the Ember fails first
 
 | Region | Was | Holdings |
 |---|---|---|
 | **Thornhollow** | The Shire | Hollyburrow, Millpond, Bramblemarch, Crook Hollow, Great Delving, The Elderwood, Stockleigh, The Deepholes |
-| **Ardwyn** | Arthedain | Windtop, Crossway, Silverwatch, Tarnbar |
-| **The Barrowfells** | The North Downs | Aumeneth, Kingsfast, Marlbourne High |
-| **Caldwold** | Cardolan | The Cairnfields, Blackwold, Greymouth Haven, Stoneford, Tharrow |
-| **Ruhdar** | Rhudaur | Kamreth, Fenngate, The Troll Thickets |
-| **Hollowvale** | Rivendell | Imravel, The Wedge |
-| **Aelmere** | Lindon | Vaelstir, Northhaven, Southhaven, The Last Quays |
-| **Bluecrags** | Ered Luin | Bargost, Norgrad, Tallenvar, Durnhall |
-| **Elderforge** | Eregion | Songhill, The Swanfens, Ostvaelin |
+| **North Kingdom** | Arthedain | Windtop, Crossway, Silverwatch, Lakewatch |
+| **The Barrowfells** | The North Downs | Old Kingshold, Kingsfast, Marlbourne High |
+| **West Downs** | Cardolan | The Cairnfields, Blackwold, Greymouth Haven, Stoneford, Old Bridge |
+| **Troll Hills** | Rhudaur | High Bluff, Fenngate, The Troll Thickets |
+| **Hollowvale** | Rivendell | Hidden Refuge, The Wedge |
+| **West Coast** | Lindon | Starlight Tower, Northhaven, Southhaven, The Last Quays |
+| **Bluecrags** | Ered Luin | Broadforge, Deepforge, Copperhall, Stonehall |
+| **Elderforge** | Eregion | Songhill, The Swanfens, Old Elven City |
 | **The Rimewater** | Bay of Forochel | Rimewatch |
-| **The Palewall** | Misty Mountains | Cruachan, The Skyrie, The Under Gate, **Durndelve**, Kraghold |
-| **Grimhold** | Angmar | **Kern Duhl**, Gunnabar, Mount Grunn, The Giantmoors, Zarrakh |
+| **The Palewall** | Misty Mountains | Redhorn Pass, The Skyrie, The Under Gate, **Deepdelve**, Kraghold |
+| **Grimhold** | Angmar | **Frostkeep**, Goblin Mountain, Mount Frostfang, The Giantmoors, Blackdelve |
 
 ### The Middle Lands
 
 | Region | Was | Holdings |
 |---|---|---|
-| **Longwater** | Anduin | Bearhall, Frennsburg, The Irisfields, Methelburg, Blossomford, The Crag |
-| **Wyldmoor** | Dunland | Angarn, Aralt, Ennodir, Larach Dunn, Trefarn |
+| **Longwater** | Anduin | Bearhall, Dragonwatch, The Irisfields, Rivermeet, Blossomford, The Crag |
+| **Wyldmoor** | Dunland | Ironford, Hillcross, Moorhall, Moor Market, Moorfarm |
 | **Windgate** | Gap of Rohan | Glimmerhold, Wealdwatch Camp, The Deepgard, **Thornspire**, Westerfold |
-| **Mearhold** | Rohan | Aldenburg, The Dern Ring, Dunbarrow, Easterfold, **Mearsted**, Stowbury |
-| **The Whitespine** | White Mountains | The Oathstone, Frewold, The Dead Roads |
-| **Upper Ardanth** | North Gondor | Drusan Forest, Imdorath, **Sunspire**, Mornspire, Kingsquay |
-| **Lower Ardanth** | South Gondor | Swanhold, Whitestrand, Linhar, Blackroot Post |
-| **Longstrand** | Anfalas | Aelhaven, Rendhal |
-| **Greenmarch** | Ithilien | Durthrang, The Sunset Window, Skarra Camp, Starholt |
+| **Horse Plains** | Rohan | Aldenburg, The Forest Circle, Dunbarrow, Easterfold, **Kingshall**, Stowbury |
+| **The Whitespine** | White Mountains | The Oathstone, Stonefield, The Dead Roads |
+| **Upper Sunlands** | North Gondor | Oldgrowth Forest, Sunwatch, **Sunspire**, Mornspire, Kingsquay |
+| **Lower Sunlands** | South Gondor | Swanhold, Whitestrand, Riverhaven, Blackroot Post |
+| **Longstrand** | Anfalas | Elven Haven, Shorewatch |
+| **Greenmarch** | Ithilien | Blackfort, The Sunset Window, Blackfort Camp, Starholt |
 | **Fenmire** | Nindalf | The Seeing Hill, Foamisle, The Drowned Fen |
-| **Scorchlands** | Brown Lands | The Hearing Hill, Buthavais, Onghazar |
+| **Scorchlands** | Brown Lands | The Hearing Hill, Burnt Crossing, Scorched Hold |
 
 ### The North-East
 
 | Region | Was | Holdings |
 |---|---|---|
-| **Wildermark** | Rhovanion | Burwidd, Dalemoot, **Erenkarr (Lost)**, Merehaven |
-| **North Nightwood** | N. Mirkwood | Amarath, Silverbourne, The Woodking's Halls |
-| **South Nightwood** | S. Mirkwood | Cevrun, **Dol Vorrath**, Mossgable, Woodfolk Steading |
-| **Nightwood Peaks** | Mtns of Mirkwood | Galbrand, Gorwing Stair |
-| **Lumeneth** | Lothlórien | Amberhold, The Golden Mound, Nandruin |
-| **Ironreach** | Iron Hills | Azanhold, Barrakshor, Larhuzz |
-| **The Blightheath** | Withered Heath | Silverfast, Maglon Keep, Norrhold |
-| **Dorvain** | Dorwinion | Rivadd, Skarrenkain |
-| **Amber Sea** | Sea of Rhûn | Elgarr, Reaver Hold, Rhubarr, Isle of Burath |
-| **Vashkar** | Rhûn | Karvarad, Ilannin, Khelnala, Mistrande |
+| **Wildermark** | Rhovanion | Woodbridge, Dalemoot, **Lonely Mountain (Lost)**, Merehaven |
+| **North Nightwood** | N. Mirkwood | Greenhaven, Silverbourne, The Woodking's Halls |
+| **South Nightwood** | S. Mirkwood | Woodhill, **Blackwood Keep**, Mossgable, Woodfolk Steading |
+| **Nightwood Peaks** | Mtns of Mirkwood | Highwood, Raven Stair |
+| **Goldenwood** | Lothlórien | Amberhold, The Golden Mound, Silver Valley |
+| **Ironreach** | Iron Hills | Ironhall, Deepwatch, Deep Quarry |
+| **The Blightheath** | Withered Heath | Silverfast, Frostwatch Keep, Northdelve |
+| **Wine Country** | Dorwinion | Vineyard Landing, Vintners' Hall |
+| **Amber Sea** | Sea of Rhûn | Amberport, Reaver Hold, Amberwatch, Amber Isle |
+| **Eastlands** | Rhûn | Redwall, Starwatch, Copper Gorge, Eastport |
 
-### Morgahd — the Nightborn heartland
+### Ashlands — the Dark Servants' heartland
 
 | Region | Was | Holdings |
 |---|---|---|
-| **Cinderplain** | Gorgoroth | **Nharoth**, Wraithtower, Vraskar, **The Emberwound** |
+| **Cinderplain** | Gorgoroth | **Black Tower**, Wraithtower, Cinder Camp, **The Emberwound** |
 | **The Emberpit** | Udûn | The Iron Jaws, **The Ironmaw** |
-| **Nurhal** | Nurn | Kal Narghil, Lugrakh, Nurmurl, Ordugavais, Rulth, Urlutsun |
-| **Ashflats** | Lithlad | Lagleth, Durlith Spire, Ostgurth, Sarragost |
-| **The Weftmarch** | Ungol | Weftspire, The Weft Stair, **The Pale City**, Olbamar, The Weaver's Lair |
-| **The Battlewaste** | Dagorlad | Ashkirr, Thurangost, Urshanna |
+| **Slave Fields** | Nurn | Slave Barracks, Slavefort, Slave Mills, Slave Fields Watch, Slave Fields Storehouse, Slave Fields Garrison |
+| **Ashflats** | Lithlad | Ash Camp, Ashen Spire, Ashhold, Cinderfort |
+| **The Weftmarch** | Ungol | Weftspire, The Weft Stair, **The Pale City**, Pale Outpost, The Weaver's Lair |
+| **The Battlewaste** | Dagorlad | Ashwatch, Warwatch, War Camp |
 
 ### The South
 
 | Region | Was | Holdings |
 |---|---|---|
-| **Near Sarrath** | Near Harad | Tolfaras, Kashafra, Methira, Wathdun |
-| **Far Sarrath** | Far Harad | Barrahn, Jurajesh, Kashadoul, Lugarr, Vamagh |
-| **Corsarn** | Umbar | Ardhumir, Kaldhur, Miralond, The Corsarn Havens, Isighir, Pellandur |
-| **Kharda** | Khand | Karagmir, Khardamu, Lagorath, Laorkhi, Neburkha, Ovathrak, Sturlurtsa Kharda |
+| **Near Southlands** | Near Harad | Southhaven Isle, Oasis Keep, Palmford, Southford |
+| **Far Southlands** | Far Harad | Southwatch Tower, Dune Market, Sandfort, Dustfort, Far Southport |
+| **Corsair Coast** | Umbar | Saltwatch, Tidefort, Pearl Harbour, The Corsair Coast Havens, South Quay, Corsair Keep |
+| **Eastern Steppe** | Khand | Redstone Camp, Steppe Camp, Horse Market, Eastern Harbour, Dustwell, Redrock Fort, Great Steppe Camp |
 
 ---
-
-## 6. Naming conventions
-
-For anyone adding cards later. Keep new names inside their culture's sound.
-
-| Culture | Sound | Examples |
-|---|---|---|
-| **Vaelen** | Liquid; `ae`, `-iel`, `-thir`, `-oth` | Elduriel, Caelthorn, Aerthir, Faenlas, Vaeloth |
-| **Dwarves** | Hard, clipped, Norse-ward | Grimni, Thorgrim, Balgrin, Dvalin, Nagrin |
-| **Hollowkin** | Homely English; plant and burrow words | Dunn Marrow, Hobb Wattle, Bunce Roundbelly, Paldo Grubb |
-| **Men of the North** | Anglo-Saxon | Eadmar, Eadwyn, Thedric, Ercanbald, Ingemar |
-| **Ardanth** | Latinate, formal | Borrivan, Farrimar, Dorathen, Imrathil, Castarin |
-| **Orcs** | Guttural; `-kh`, `-gh` | Azghor, Gorbakh, Ughlukh, Bugrukh, Gothmakh |
-| **Sarrath** *(south)* | Open vowels, desert-ward | Adhumir, Herumar, Araudhul, Kashadoul |
-| **Vashkar / Kharda** *(east)* | Steppe; hard stops | Uvathan, Kav Makhow, Din Okhtar, Ovathrak |
-| **Wraithlords** | Truncated, hollowed | Vorhal, Zhamor, Aduneth, Akhorrin, Hoarveth |
-| **Morgahd** | Ash, iron, wounds | Nharoth, Vraskar, Ostgurth, Lugrakh |
-
----
-
-## Implementation notes
-
-Applied across `Assets/Resources/Cards/**` — 436 card names, plus every
-`startingPC`, `region`, `tags`, `characterGroup`, `nation`, `avatarCharacter`
-and `deckId`, plus the proper nouns embedded in flavour and rules text.
-
-**Art was not touched.** `Card.ResolveCardArtwork` tries
-`spriteName → portraitName → name`, so any card that had been resolving art
-through its `name` had `spriteName` backfilled with its **old** name before the
-rename. 36 cards needed this. Every card resolves to the same sprite it did
-before, and no image file was renamed. `cardId` values are unchanged, so all
-1,728 modular `cardRefs` still resolve.
-
-`RacesEnum` ordinals are unchanged; three members were renamed for display
-(`Nazgul→Wraithlord`, `Balrog→Emberfiend`, `Ent→Woldwarden`), along with
-`BonusVersusNazguls→BonusVersusWraithlords`.
-
-The full old→new table is in [`CaldrathRenameManifest.json`](CaldrathRenameManifest.json).
-
-### Quotations
-
-A proper-noun rename cannot catch a quotation. "All we have to decide is what to
-do with the time that is given to us" contains no proper noun at all, and it was
-sitting on the Orren Greycloak card. Twenty-two quotes were verbatim or
-near-verbatim book and film lines — the Ring-verse, *I am no man*, *one does not
-simply*, *my precious*, *there's some good in this world, Mr. Frodo* — and have
-been replaced with original lines written for this setting.
-
-A further four flavour lines named things the map did not cover (*Eorl's folk*,
-*where the Rings were forged*, *the Dark Lord* ×2) and were rewritten.
-
-Nine cards named themselves by their old name inside their own quote. Those
-survived the bulk pass because short common words (`Merry`, `Sam`, `Bard`,
-`Dale`, `Stock`, `Rul`…) were blacklisted from prose substitution to avoid
-false positives; they were repaired card by card afterwards.
-
-### Known residue
-
-Deliberately out of scope, and still carrying inherited names:
-
-- **Event cards** (43 names) — not discussed when scope was set; the largest
-  remaining gap, and all of it player-visible.
-- **Object cards** (16 names) — *Palantír of Orthanc*, etc.
-- **Encounter/Ally cards** (11 names) — *Warden of Lothlórien*, *Smaug at Home*, …
-- **Environmental cards** (2 names).
-- **`mithril`** — a Tolkien coinage, but here it is a *resource keyword*: a
-  `<sprite name="mithril">` tag, a sprite asset, and the `mithrilRequired` /
-  `mithrilGranted` fields on every card. Renaming it means touching art, TMP
-  sprite assets and C# field names together, so it was left for a decision of
-  its own rather than folded into this pass.
-- `spriteName` / `actionClassName` / `action` fields still hold the old strings.
-  These are asset keys and C# type references, never shown to the player.
-  Changing them would mean renaming image files and C# classes for no visible gain.

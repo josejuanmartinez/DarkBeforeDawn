@@ -1,0 +1,28 @@
+var m=UnityEngine.Object.FindFirstObjectByType<TowerMatchController>();
+if(m==null || !m.CanInteract) throw new System.Exception("Wait for the opening cinematic and draws first.");
+var b=m.GetComponent<Board>(); var r=new MatchRules();
+var catalog=CardCatalog.GetDeckCards(m.humanDeckId);
+r.Players[0].Hand.AddRange(catalog.Where(c=>c.GetCardType()==CardTypeEnum.Land).Take(3).Select(c=>c.Clone()));
+r.Players[0].Hand.AddRange(catalog.Where(c=>c.GetCardType()==CardTypeEnum.Army).Take(1).Select(c=>c.Clone()));
+typeof(TowerMatchController).GetProperty("Rules").SetValue(m,r);
+m.enabled=false; // Keep automatic opponent decisions out of this deterministic UI integration check.
+r.Begin(0);
+var sync=typeof(TowerMatchController).GetMethod("Sync",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance);
+sync.Invoke(m,null);
+var land=r.Players[0].Hand.FirstOrDefault(c=>c.GetCardType()==CardTypeEnum.Land);
+if(land==null) throw new System.Exception("Starter hand has no land.");
+BoardCardView View(CardData c) => b.GetComponentsInChildren<BoardCardView>().FirstOrDefault(v=>object.ReferenceEquals(v.Data,c));
+if(b.TryPlay(View(land))) throw new System.Exception("Board bypassed draw stage.");
+m.AdvanceIfNoActions();
+if(r.Stage!=MatchStage.Realm || !b.TryPlay(View(land))) throw new System.Exception("Board land deployment failed.");
+foreach(var card in r.Players[0].Hand.ToArray()) if(card.GetCardType()==CardTypeEnum.Land) b.TryPlay(View(card));
+if(b.CanTap(View(land))) throw new System.Exception("Board allows mana outside stage 3.");
+m.Advance();
+if(!b.TryTap(View(land)) || !b.IsTapped(View(land)) || b.TryTap(View(land))) throw new System.Exception("Board tapping integration failed.");
+if(!object.ReferenceEquals(b.HumanMaterials,r.Players[0].Mana)) throw new System.Exception("Board material pool not bound to rules.");
+foreach(var card in r.Players[0].Field.Where(u=>u.Card.GetCardType()==CardTypeEnum.Land).ToArray()) b.TryTap(View(card.Card));
+m.Advance();
+var army=r.Players[0].Hand.FirstOrDefault(c=>c.GetCardType()==CardTypeEnum.Army);
+if(army!=null && b.TryPlay(View(army)) && !b.humanArmies.Cards.Contains(army)) throw new System.Exception("Army did not appear in zone.");
+UnityEngine.ScreenCapture.CaptureScreenshot("Temp/MatchUI.png");
+return "PASS: live board stage routing, starter land deployment, mana-stage gate, tap state, shared mana pool and zone synchronization.";

@@ -1,6 +1,6 @@
 {
     "deckId": "vaskar_manyhued",
-    "nation": "Vaskar",
+    "nation": "Tower Council",
     "alignment": 2,
     "cards": [],
     "cardRefs": [
@@ -157,6 +157,21 @@
         20144,
         20190,
         100058,
-        40099
-    ]
+        40099,
+        10005,
+        10020,
+        20204,
+        80002,
+        80036,
+        80072,
+        80081,
+        80082,
+        90024,
+        90026,
+        90027,
+        110011,
+        110012,
+        110023
+    ],
+    "avatarCharacter": "Corvan"
 }

@@ -1,0 +1,14 @@
+var m=UnityEngine.Object.FindFirstObjectByType<TowerMatchController>();
+if(m==null || UnityEngine.Application.isPlaying) throw new System.Exception("Open the board in Edit mode.");
+UnityEngine.Material Material(string name) => UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Material>("Assets/Art/RetroValley/"+name+".mat") ?? throw new System.Exception("Missing Golden Vale material: "+name);
+UnityEditor.Undo.RecordObject(m,"Use Golden Vale tournament materials");
+m.towerStoneMaterial=Material("Citadel honey limestone");
+m.towerTrimMaterial=Material("Citadel sunlit edges");
+m.towerInkMaterial=Material("Window and arch ink");
+m.dieLightMaterial=Material("Citadel honey limestone");
+m.dieDarkMaterial=Material("Blue slate cliffs");
+m.towerAccentMaterial=Material("Verdigris spires");
+UnityEditor.EditorUtility.SetDirty(m);
+UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(m.gameObject.scene);
+UnityEditor.SceneManagement.EditorSceneManager.SaveScene(m.gameObject.scene);
+return "Tower and dice now reference the Golden Vale's original limestone, sunlit stone, ink, slate and verdigris materials.";

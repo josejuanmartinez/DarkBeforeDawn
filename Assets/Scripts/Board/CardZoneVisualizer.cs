@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum BoardCardLayout { FullRow, TokenGrid, TokenRow }
@@ -15,6 +16,10 @@ public class CardZoneVisualizer : MonoBehaviour
     // Deliberately not serialized: a zone is authored by dropping card prefabs onto the anchor,
     // never by filling in card data field by field in the inspector. This list is runtime state.
     private readonly List<CardData> cards = new();
+    private readonly System.Collections.Generic.HashSet<int> tapped = new();
+    public bool IsTapped(BoardCardView view) => tapped.Contains(views.IndexOf(view));
+    public void Tap(BoardCardView view) { int index = views.IndexOf(view); if (index >= 0) tapped.Add(index); }
+    public void ReadyLands() => tapped.Clear();
     protected readonly List<BoardCardView> views = new();
     public IReadOnlyList<CardData> Cards => cards.AsReadOnly();
     public int Count => cards.Count;
@@ -111,7 +116,35 @@ public class CardZoneVisualizer : MonoBehaviour
             throw new ArgumentException("The hand exceeds Board.maximumHandSize.");
         cards.Clear();
         cards.AddRange(replacement);
+        tapped.Clear();
         Rebuild();
+    }
+
+    /// <summary>Keep surviving slots and their animation state when match collections change.</summary>
+    public void SynchronizeCards(IEnumerable<CardData> source)
+    {
+        var replacement = source.ToList();
+        if (cards.SequenceEqual(replacement)) return;
+        if (this is DeckVisualizer) { SetCards(replacement); return; }
+        if (replacement.Any(c => c == null) || (isHand && replacement.Count > board.maximumHandSize))
+            throw new ArgumentException("Invalid match zone contents.");
+        var previous = views.ToList();
+        var tappedCards = tapped.Where(i => i >= 0 && i < cards.Count).Select(i => cards[i]).ToHashSet();
+        cards.Clear(); cards.AddRange(replacement); tapped.Clear(); views.Clear();
+        for (int i = 0; i < cards.Count; i++)
+        {
+            var retained = previous.FirstOrDefault(v => ReferenceEquals(v.Data, cards[i]));
+            if (retained != null) { views.Add(retained); previous.Remove(retained); }
+            else AddView(cards[i]);
+            if (tappedCards.Contains(cards[i])) tapped.Add(i);
+        }
+        foreach (var removed in previous)
+        {
+            board.preview?.HideFor(this);
+            removed.gameObject.SetActive(false);
+            if (Application.isPlaying) Destroy(removed.gameObject); else DestroyImmediate(removed.gameObject);
+        }
+        Arrange();
     }
 
     public bool TryAdd(CardData card)
@@ -124,7 +157,13 @@ public class CardZoneVisualizer : MonoBehaviour
 
     public bool Remove(CardData card)
     {
-        if (!cards.Remove(card)) return false;
+        int index = cards.IndexOf(card);
+        if (index < 0) return false;
+        cards.RemoveAt(index);
+        var shifted = new List<int>();
+        foreach (int slot in tapped) if (slot != index) shifted.Add(slot > index ? slot - 1 : slot);
+        tapped.Clear();
+        foreach (int slot in shifted) tapped.Add(slot);
         Rebuild();
         return true;
     }

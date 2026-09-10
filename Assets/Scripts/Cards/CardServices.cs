@@ -31,6 +31,19 @@ public static partial class CardServices
         set => palette = value;
     }
 
+    // --- Face style ------------------------------------------------------------------------------
+    // Style for the pieces the card face builds itself at refresh time -- the requirement-failure
+    // messages and the face-down encounter veil -- which board chrome cannot reach afterwards.
+    // BoardPresentation installs the active BoardSkin's section here, so the skin stays the single
+    // authority without Card ever referencing BoardSkin. Falls back to the values the face shipped.
+    [AutoStaticsCleanup]
+    private static ICardFaceStyle faceStyle;
+    public static ICardFaceStyle FaceStyle
+    {
+        get => faceStyle ??= DefaultCardFaceStyle.Instance;
+        set => faceStyle = value;
+    }
+
     // --- Playability -----------------------------------------------------------------------------
     // Replaces CardData.EvaluatePlayability + ActionsManager.ResolveActionByRef + the Leader's
     // resource piles. Null means "everything is playable", which is the right answer for a project
@@ -54,6 +67,7 @@ public static partial class CardServices
     {
         Art = null;
         palette = null;
+        faceStyle = null;
         Playability = null;
         Interaction = null;
         Feedback = null;
@@ -73,6 +87,30 @@ public interface ICardPalette
     // Return a color with alpha 0 to mean "no color for this type" — the face then leaves the
     // authored border color alone rather than painting it transparent.
     Color GetCardTypeColor(CardTypeEnum cardType);
+}
+
+public interface ICardFaceStyle
+{
+    // Colour of the "Need 3<sprite name="gold">" lines under the description.
+    Color RequirementsMessageColor { get; }
+
+    // The veil laid over a face-down encounter's artwork, and the '?' drawn on top of it.
+    Color EncounterOverlayColor { get; }
+    Color EncounterGlyphColor { get; }
+    float EncounterGlyphSize { get; }
+}
+
+// What the face used before any of this was skinnable. Kept as the no-install default so the
+// prefabs still render correctly in a project that never sets up a board.
+public sealed class DefaultCardFaceStyle : ICardFaceStyle
+{
+    // Immutable and stateless, so there is nothing for the auto cleanup to reset to.
+    [NoAutoStaticsCleanup]
+    public static readonly DefaultCardFaceStyle Instance = new();
+    public Color RequirementsMessageColor => Color.red;
+    public Color EncounterOverlayColor => Color.black;
+    public Color EncounterGlyphColor => Color.white;
+    public float EncounterGlyphSize => 64f;
 }
 
 public interface ICardPlayabilitySource

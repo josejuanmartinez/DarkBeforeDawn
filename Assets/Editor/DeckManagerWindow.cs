@@ -120,7 +120,7 @@ public class DeckManagerWindow : EditorWindow
 
     private TroopsTypeEnum editedTroopType;
     private int editedProcChance;
-    private CharacterAndArmySpecialAbilityEnum editedSharedAbilityToAdd;
+    private ObjectCharacterArmySpecialAbilityEnum editedSharedAbilityToAdd;
     private CharacterOnlySpecialAbilityEnum editedCharacterAbilityToAdd;
 
     private int editedCharacterCommander;
@@ -735,7 +735,7 @@ public class DeckManagerWindow : EditorWindow
     private void DrawEditableAbilities(CardData card, bool includeCharacterOnly)
     {
         if (card == null) return;
-        card.specialAbilities ??= new List<CharacterAndArmySpecialAbilityEnum>();
+        card.specialAbilities ??= new List<ObjectCharacterArmySpecialAbilityEnum>();
         card.characterAbilities ??= new List<CharacterOnlySpecialAbilityEnum>();
         SyncEditableCardFields(card);
 
@@ -1094,8 +1094,8 @@ public class DeckManagerWindow : EditorWindow
         if (!TryGetSaveTarget(card, out DeckEntryView deckView, out CardData target)) return;
 
         target.specialAbilities = card.specialAbilities != null
-            ? new List<CharacterAndArmySpecialAbilityEnum>(card.specialAbilities)
-            : new List<CharacterAndArmySpecialAbilityEnum>();
+            ? new List<ObjectCharacterArmySpecialAbilityEnum>(card.specialAbilities)
+            : new List<ObjectCharacterArmySpecialAbilityEnum>();
         target.characterAbilities = card.characterAbilities != null
             ? new List<CharacterOnlySpecialAbilityEnum>(card.characterAbilities)
             : new List<CharacterOnlySpecialAbilityEnum>();
@@ -2283,9 +2283,11 @@ public class DeckManagerWindow : EditorWindow
         if (view?.manifest == null) return string.Empty;
 
         string deckId = string.IsNullOrWhiteSpace(view.manifest.deckId) ? "(no id)" : view.manifest.deckId;
+        string displayName = !view.IsMeta && !string.IsNullOrWhiteSpace(view.deckData?.avatarCharacter)
+            ? view.deckData.avatarCharacter.Trim() : deckId;
         string nation = string.IsNullOrWhiteSpace(view.manifest.nation) ? "(no nation)" : view.manifest.nation;
         string kind = view.IsMeta ? "owns" : "refs";
-        return $"{nation} / {deckId} ({kind} {view.manifest.cardCount})";
+        return $"{nation} / {displayName} ({kind} {view.manifest.cardCount})";
     }
 
     // --- Finalized flag ------------------------------------------------------------------------------------
@@ -2364,7 +2366,7 @@ public class DeckManagerWindow : EditorWindow
             CardTypeEnum.Event => "Event",
             CardTypeEnum.Action => "Action",
             CardTypeEnum.Spell => "Spell",
-            CardTypeEnum.Ally => "Encounter",
+            CardTypeEnum.Encounter => "Encounter",
             CardTypeEnum.Environmental => "Environmental",
             CardTypeEnum.Object => "Object",
             _ => string.Empty,

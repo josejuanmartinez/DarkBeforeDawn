@@ -1,0 +1,22 @@
+var r = new MatchRules();
+void Check(bool ok, string message) { if(!ok) throw new System.Exception(message); }
+CardData Card(string name,string type,int attack=0,int defense=0) => new CardData { name=name,type=type,attack=attack,defense=defense };
+for(int i=0;i<10;i++) r.Players[0].Deck.Add(Card("Land"+i,"Land"));
+r.Players[0].HandLimit=7;
+var halted=new MatchRules.Unit {Card=Card("Halted","Army",2,2),Owner=0,Tapped=true};
+halted.Card.statusEffects.Add(StatusEffects.Halted); r.Players[0].Field.Add(halted);
+var ready=new MatchRules.Unit {Card=Card("Ready","Army",3,3),Owner=0,Tapped=true}; r.Players[0].Field.Add(ready);
+r.Begin(0); Check(r.Players[0].Hand.Count==7,"Hand limit not respected"); Check(halted.Tapped&&!ready.Tapped,"Untap/Halted failed");
+var land=r.Players[0].Hand[0]; Check(!r.Play(land),"Land played in draw stage"); r.Next(); Check(r.Play(land),"Land rejected in realm");
+var pc=Card("Home","PC"); pc.region="Missing"; r.Players[0].Hand.Add(pc); Check(!r.Play(pc),"PC without land accepted"); pc.region=land.name; Check(r.Play(pc),"PC with land rejected");
+r.Next(); var lu=r.Players[0].Field.Find(u=>u.Card==land); Check(r.TapLand(lu)&&!r.TapLand(lu),"Double tapping land accepted");
+r.Next(); var hero=Card("Hero","Character",2,2); hero.startingPC="Elsewhere"; r.Players[0].Hand.Add(hero); Check(!r.Play(hero),"Missing starting PC accepted"); hero.startingPC="Home"; Check(r.Play(hero),"Character deployment failed");
+var hu=r.Players[0].Field.Find(u=>u.Card==hero); var item=Card("Relic","Object"); r.Players[0].Hand.Add(item); Check(!r.Play(item),"Object played without character"); Check(r.Play(item,hu)&&hu.Objects.Contains(item),"Object not attached");
+r.Next(); var ev=Card("Unsupported event","Event"); r.Players[0].Hand.Add(ev); Check(!r.Play(ev)&&r.Players[0].Hand.Contains(ev),"Unsupported event consumed");
+r.Next(); Check(!r.Attack(hu),"Summoning sickness ignored"); Check(r.Attack(ready)&&!r.Attack(ready),"Attack tapping failed");
+var d1=new MatchRules.Unit {Card=Card("Defender A","Army",2,2),Owner=1}; var d2=new MatchRules.Unit {Card=Card("Defender B","Character",2,2),Owner=1};
+r.Players[1].Field.Add(d1); r.Players[1].Field.Add(d2); r.Next(); Check(r.Block(d1,r.Attacks[0])&&!r.Block(d1,r.Attacks[0]),"Tapped defender accepted"); Check(r.Block(d2,r.Attacks[0]),"Multiple blockers failed");
+r.Next(); Check(!r.Players[0].Field.Contains(ready)&&!r.Players[1].Field.Contains(d1)&&r.Players[1].Field.Contains(d2),"Simultaneous lethal assignment failed");
+r.Spoils.Enqueue(new MatchRules.Loot {Card=Card("Spoil","Object"),Owner=0}); Check(!r.Next(),"Unresolved spoils skipped"); r.OfferLoot(); Check(r.Recipients().Contains(d2),"Enemy loot recipients missing"); Check(r.Transfer(d2)&&d2.Objects.Count==1,"Enemy transfer failed");
+Check(r.Next()&&r.Active==1&&r.Stage==MatchStage.Draw,"Turn handoff failed");
+return "PASS: refill to 7, Halted, stage gates, land/PC requirements, character/object deployment, event safety, summon timing, attack tap, multiple blockers, simultaneous deaths, spoils and opponent handoff.";

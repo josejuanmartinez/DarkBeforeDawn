@@ -1,0 +1,14 @@
+var b=UnityEngine.Object.FindFirstObjectByType<Board>();
+if(b==null) throw new System.Exception("Open the TCG board scene first.");
+UnityEditor.Undo.RecordObject(b,"Configure first tournament");
+var match=b.GetComponent<TowerMatchController>();
+if(match==null) match=UnityEditor.Undo.AddComponent<TowerMatchController>(b.gameObject);
+UnityEditor.Undo.RecordObject(match,"Configure match decks");
+match.humanDeckId="orren_the_kindled";
+match.opponentDeckId="the_sleepless_eye";
+match.diceDecideFirstPlayer=true;
+b.opponentAvatarCardName="The Sleepless Eye";
+UnityEditor.EditorUtility.SetDirty(b); UnityEditor.EditorUtility.SetDirty(match);
+UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(b.gameObject.scene);
+UnityEditor.SceneManagement.EditorSceneManager.SaveScene(b.gameObject.scene);
+return new {human=CardCatalog.GetDeckCards(match.humanDeckId).Count,opponent=CardCatalog.GetDeckCards(match.opponentDeckId).Count,eye=CardCatalog.FindCardByName(b.opponentAvatarCardName)?.name};

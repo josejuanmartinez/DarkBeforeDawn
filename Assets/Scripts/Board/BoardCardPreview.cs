@@ -44,7 +44,7 @@ public sealed class BoardCardPreview : MonoBehaviour
         panel = background.rectTransform;
         panel.anchorMin = panel.anchorMax = panel.pivot = Vector2.one * .5f;
         var deck = source.Zone as DeckVisualizer;
-        background.raycastTarget = deck != null || pinned;
+        background.raycastTarget = true;
         var shadow = background.gameObject.AddComponent<Shadow>();
         shadow.effectColor = Skin.colors.previewShadow; shadow.effectDistance = Skin.preview.shadowOffset;
         BoardPresentation.Border(panel, Skin.colors.gold);
@@ -70,6 +70,9 @@ public sealed class BoardCardPreview : MonoBehaviour
             board.interfaceFont, Skin.typography.previewLabelSize, Skin.colors.gold, Vector2.up, Vector2.one);
         title.rectTransform.pivot = new Vector2(.5f, 1); title.rectTransform.sizeDelta = new Vector2(-Skin.preview.labelInset * 2, header);
         string hint = deck != null ? $"{deck.SelectedIndex + 1} / {deck.Count}" : pinned ? "ESC TO CLOSE" : "CLICK CARD TO PIN";
+        var unit = board.Match?.Unit(source);
+        if (board.Match != null) hint = board.Match.InspectionHint(source) ?? hint;
+        if (unit != null && unit.Objects.Count > 0) hint = "Objects: " + string.Join(", ", unit.Objects.ConvertAll(c => c.name));
         var status = BoardPresentation.TextLabel(panel, hint, board.interfaceFont, Skin.typography.previewLabelSize, Skin.colors.muted,
             Vector2.zero, Vector2.right, TextAnchor.MiddleCenter);
         status.rectTransform.pivot = new Vector2(.5f, 0); status.rectTransform.sizeDelta = new Vector2(-Skin.preview.statusInset * 2, footer);
@@ -82,6 +85,30 @@ public sealed class BoardCardPreview : MonoBehaviour
         }
         if (pinned)
         {
+            if (board.Match != null)
+            {
+                var label = board.Match.ActionLabel(source);
+                if (label != null)
+                {
+                    status.text = "";
+                    var action = MakeButton("Card action", label, panel, new Vector2(.5f, 0), new Vector2(0, footer * .5f), new Vector2(180, footer - 8));
+                    var selected = source;
+                    action.onClick.AddListener(() => board.Match.PerformAction(selected));
+                }
+            }
+            else if (source.Zone == board.hand || source.Zone == board.humanLands || source.Zone == board.opponentLands)
+            {
+                status.text = "";
+                bool land = source.Zone != board.hand;
+                var action = MakeButton("Card action", land ? (board.IsTapped(source) ? "TAPPED" : "TAP LAND") : "PLAY CARD",
+                    panel, new Vector2(.5f, 0), new Vector2(0, footer * .5f), new Vector2(180, footer - 8));
+                action.interactable = !land || board.CanTap(source);
+                action.onClick.AddListener(() => {
+                    if (board.Match != null) { if (land) board.TryTap(source); else board.TryPlay(source); return; }
+                    if (land) { board.TryTap(source); Build(); }
+                    else if (!board.TryPlay(source)) action.GetComponentInChildren<Text>().text = "CANNOT AFFORD";
+                });
+            }
             var close = MakeButton("Close", "x", panel, new Vector2(1, 1), Skin.preview.closeOffset, Skin.preview.closeSize);
             close.onClick.AddListener(Hide);
         }
@@ -127,6 +154,7 @@ public sealed class BoardCardPreview : MonoBehaviour
     }
 
     public void RefreshDeck(DeckVisualizer deck) { if (source != null && source.Zone == deck) Build(); }
+    public void RefreshCard(BoardCardView view) { if (source == view && panel != null) Build(); }
 
     private void Update()
     {
@@ -139,7 +167,7 @@ public sealed class BoardCardPreview : MonoBehaviour
         var canvas = GetComponentInParent<Canvas>().rootCanvas;
         Camera camera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
         bool inside = RectTransformUtility.RectangleContainsScreenPoint(source.Rect, pointer, camera);
-        if (source.Zone is DeckVisualizer) inside |= RectTransformUtility.RectangleContainsScreenPoint(panel, pointer, camera);
+        inside |= RectTransformUtility.RectangleContainsScreenPoint(panel, pointer, camera);
         if (inside) outsideSince = -1;
         else if (outsideSince < 0) outsideSince = Time.unscaledTime;
         else if (Time.unscaledTime - outsideSince > Skin.preview.exitGrace) Hide();

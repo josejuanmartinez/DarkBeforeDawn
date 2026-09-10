@@ -1,6 +1,6 @@
 {
     "deckId": "the_sleepless_eye",
-    "nation": "Nharok",
+    "nation": "Shadow Dominion",
     "alignment": 1,
     "cards": [],
     "cardRefs": [
@@ -144,6 +144,20 @@
         100022,
         100009,
         100058,
-        60014
-    ]
+        60014,
+        10003,
+        80009,
+        80021,
+        80069,
+        80079,
+        110001,
+        110002,
+        110014,
+        110022,
+        110025,
+        110027,
+        110035,
+        110047
+    ],
+    "avatarCharacter": "The Sleepless Eye"
 }

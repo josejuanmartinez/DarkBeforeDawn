@@ -66,11 +66,19 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     [SerializeField] private CanvasGroup realCardCanvasGroup;
     [SerializeField] private TextMeshProUGUI environmentalSprite;
     [SerializeField] private TMP_SpriteAsset compactSpriteAsset;
+    [Tooltip("Material for the combat/resource numerals. Left empty the overlays keep the prefab's " +
+             "own material, which is what full cards use; the board assigns a per-side material to " +
+             "tokens. Re-applied on every refresh, so it never reverts.")]
+    [SerializeField] private Material compactInfoMaterial;
     [SerializeField] private TextMeshProUGUI combatStatsText;
     [SerializeField] private TextMeshProUGUI landResourcesText;
+    [SerializeField] private TextMeshProUGUI classStatsText;
+    [SerializeField] private TextMeshProUGUI statusEffectsText;
 
     [Header("Tuning")]
-    [SerializeField] private Color requirementsMessageColor = Color.red;
+    // Requirement-message colour used to live here as a per-prefab field, which meant two cards in
+    // the same scene could disagree and no skin could reach either. It comes from
+    // CardServices.FaceStyle now -- see ICardFaceStyle.
     [SerializeField] private bool showRequirementWarnings = true;
     [SerializeField] private bool showCloseIcon = true;
     [Tooltip("If false, the card's description text appears instantly instead of being typed out.")]
@@ -389,6 +397,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     private void EnsureCompactInfoVisuals()
     {
+        if (GetComponent<CardKeywordHover>() == null) gameObject.AddComponent<CardKeywordHover>();
         TMP_SpriteAsset spriteAsset = compactSpriteAsset != null ? compactSpriteAsset : (descriptionText != null ? descriptionText.spriteAsset : null);
         if (spriteAsset == null)
         {
@@ -409,18 +418,37 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             combatStatsText = CreateOverlay("CombatStats", compactParent);
         if (landResourcesText == null)
             landResourcesText = CreateOverlay("LandResources", compactParent);
+        if (classStatsText == null)
+            classStatsText = CreateOverlay("ClassStats", compactParent);
+        if (statusEffectsText == null)
+            statusEffectsText = CreateOverlay("StatusEffects", compactParent);
+
+        ConfigureOverlay(classStatsText,
+            isTokenOnlyPresentation ? new Vector2(.08f, .60f) : new Vector2(.03f, .30f),
+            isTokenOnlyPresentation ? new Vector2(.92f, .96f) : new Vector2(.60f, .40f),
+            isTokenOnlyPresentation ? 36f : 20f, TextAlignmentOptions.Center);
+        classStatsText.textWrappingMode = TextWrappingModes.NoWrap;
+        classStatsText.fontSizeMin = 6f;
+        ConfigureOverlay(statusEffectsText,
+            isTokenOnlyPresentation ? new Vector2(.12f, .34f) : new Vector2(.04f, .42f),
+            isTokenOnlyPresentation ? new Vector2(.88f, .58f) : new Vector2(.96f, .52f),
+            isTokenOnlyPresentation ? 28f : 20f, TextAlignmentOptions.Center);
+        statusEffectsText.fontSizeMin = 6f;
+        statusEffectsText.textWrappingMode = TextWrappingModes.NoWrap;
 
         // Configured on every refresh, not just on creation: the card prefabs ship their own
         // CombatStats and LandResources nodes, so anything left inside the creation branch is dead
         // code for them and the prefab's own sizing silently wins.
         //
-        // A token has no other bottom furniture, so the stats take its full width there; on a full
-        // card they sit in the bottom-right corner beside the art frame.
+        // A token has no other bottom furniture, so the stats take its full width there and may be
+        // as large as they like. A full card is the opposite case: the bottom third is the
+        // description and the flavour line, so the numerals get a small badge tucked into the
+        // artwork's lower-right corner instead -- a token-sized band there buries the story text.
         ConfigureOverlay(combatStatsText,
-            isTokenOnlyPresentation ? new Vector2(.02f, .00f) : new Vector2(.30f, .00f),
-            isTokenOnlyPresentation ? new Vector2(.98f, .40f) : new Vector2(.99f, .34f),
-            isTokenOnlyPresentation ? 54f : 102f,
-            isTokenOnlyPresentation ? TextAlignmentOptions.Bottom : TextAlignmentOptions.BottomRight);
+            isTokenOnlyPresentation ? new Vector2(.02f, .00f) : new Vector2(.62f, .30f),
+            isTokenOnlyPresentation ? new Vector2(.98f, .40f) : new Vector2(.97f, .40f),
+            isTokenOnlyPresentation ? 54f : 20f,
+            isTokenOnlyPresentation ? TextAlignmentOptions.Bottom : TextAlignmentOptions.Center);
         // Both stats read as a single unit, so they must never wrap. With wrapping off and a low
         // floor, auto-sizing settles on the largest size that fits them on one line.
         combatStatsText.textWrappingMode = TextWrappingModes.NoWrap;
@@ -438,8 +466,17 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             combatStatsText.spriteAsset = spriteAsset;
             landResourcesText.spriteAsset = spriteAsset;
+            classStatsText.spriteAsset = spriteAsset;
+            statusEffectsText.spriteAsset = spriteAsset;
         }
+        ApplyCompactInfoMaterial(compactInfoMaterial);
+        GetComponent<CardKeywordHover>().RefreshTargets();
     }
+
+    /// <summary>The combat numerals overlay, so presentation code can restyle it for a full card.</summary>
+    public TMP_Text CombatStatsLabel => combatStatsText;
+    public TMP_Text ClassStatsLabel => classStatsText;
+    public TMP_Text StatusEffectsLabel => statusEffectsText;
 
     private static TextMeshProUGUI CreateOverlay(string overlayName, Transform parent)
     {
@@ -451,7 +488,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private static void ConfigureOverlay(TextMeshProUGUI text, Vector2 min, Vector2 max, float size, TextAlignmentOptions alignment)
     {
         RectTransform rt = text.rectTransform; rt.anchorMin = min; rt.anchorMax = max; rt.offsetMin = rt.offsetMax = Vector2.zero;
-        text.fontSize = size; text.fontStyle = FontStyles.Bold; text.alignment = alignment; text.color = Color.white; text.raycastTarget = false; text.richText = true;
+        // Colour is deliberately not set here: this runs on every refresh, and it used to reset the
+        // per-side tint (and any hand edit in the inspector) back to white. EnsureCompactInfoVisuals
+        // re-applies compactInfoColor instead.
+        text.fontSize = size; text.fontStyle = FontStyles.Bold; text.alignment = alignment; text.raycastTarget = false; text.richText = true;
         text.enableAutoSizing = true; text.fontSizeMin = Mathf.Max(6f, size * .45f); text.fontSizeMax = size; text.overflowMode = TextOverflowModes.Truncate;
     }
 
@@ -460,6 +500,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         if (cardData == null) return;
         CardTypeEnum type = cardData.GetCardType();
         ShowOverlay(combatStatsText, cardData.GetCombatStatsText());
+        ShowOverlay(classStatsText, cardData.GetClassStatsText(isTokenOnlyPresentation));
+        ShowOverlay(statusEffectsText, cardData.GetStatusEffectsText(isTokenOnlyPresentation));
         ShowOverlay(landResourcesText, type == CardTypeEnum.Land && isTokenOnlyPresentation ? BuildLandResourceVisual() : string.Empty);
     }
 
@@ -468,26 +510,30 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         text.text = content;
         bool visible = !string.IsNullOrEmpty(content);
         text.gameObject.SetActive(visible);
-        // Only once the object is live: the prefabs ship these overlays deactivated, so until now
-        // their TMP components have not run Awake and fontMaterial has no shared material to clone.
-        if (visible) ApplyOverlayFaceAndOutline(text);
     }
 
-    // A white face on a black outline is what keeps these numbers readable against arbitrary card
-    // art. The outline needs its own black; left at the material default it comes through white, and
-    // a thick white outline simply floods each glyph into a solid white box.
-    private static void ApplyOverlayFaceAndOutline(TextMeshProUGUI text)
+    /// <summary>
+    /// Puts the stat overlays on a shared material. One asset per side rather than a per-card tint,
+    /// so face colour, outline and dilate are all editable in the inspector and every card of that
+    /// side follows. A null material leaves whatever the prefab authored.
+    /// </summary>
+    public void ApplyCompactInfoMaterial(Material material)
     {
-        Material material = text.fontMaterial;
+        compactInfoMaterial = material;
         if (material == null) return;
-        material.SetColor(ShaderUtilities.ID_FaceColor, Color.white);
-        material.SetColor(ShaderUtilities.ID_OutlineColor, Color.black);
-        material.SetFloat(ShaderUtilities.ID_FaceDilate, .5f);
-        material.SetFloat(ShaderUtilities.ID_OutlineSoftness, .5f);
-        material.SetFloat(ShaderUtilities.ID_OutlineWidth, 1f);
-        // Dilate and outline both grow the glyph past its baked bounds; without this the extra
-        // coverage is clipped at the character rect.
-        text.UpdateMeshPadding();
+        if (combatStatsText != null) combatStatsText.fontSharedMaterial = material;
+        if (landResourcesText != null) landResourcesText.fontSharedMaterial = material;
+        if (classStatsText != null) classStatsText.fontSharedMaterial = material;
+        if (statusEffectsText != null) statusEffectsText.fontSharedMaterial = material;
+    }
+
+    public void SetStatusEffects(IEnumerable<StatusEffects> effects)
+    {
+        if (cardData == null) return;
+        cardData.statusEffects = effects != null ? new List<StatusEffects>(effects) : new();
+        RefreshCompactInfoVisuals();
+        var plaque = transform.Find("Status plaque");
+        if (plaque != null) plaque.gameObject.SetActive(statusEffectsText.gameObject.activeSelf);
     }
 
     private string BuildLandResourceVisual()
@@ -599,11 +645,14 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
     }
 
-    // Covers an unrevealed encounter card's art with a black "?" panel, on both the card face and
-    // the token. RevealEncounterCard fades these back off.
+    // Covers an unrevealed encounter card's art with a veiled "?" panel, on both the card face and
+    // the token. RevealEncounterCard fades these back off. Colours and glyph size come from
+    // CardServices.FaceStyle so a skin owns them; the built-in default is the black/white/64 this
+    // shipped with.
     private void SetupEncounterHiddenVisuals(CardData data)
     {
         if (titleText != null) titleText.text = "Encounter";
+        var faceStyle = CardServices.FaceStyle;
 
         if (encounterArtOverlay == null && cardArtImage != null)
         {
@@ -615,7 +664,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             overlayRect.offsetMin = Vector2.zero;
             overlayRect.offsetMax = Vector2.zero;
             encounterArtOverlay = overlayGo.GetComponent<Image>();
-            encounterArtOverlay.color = Color.black;
+            encounterArtOverlay.color = faceStyle.EncounterOverlayColor;
 
             var qGo = new GameObject("QuestionMark", typeof(RectTransform), typeof(TextMeshProUGUI));
             qGo.transform.SetParent(overlayGo.transform, false);
@@ -626,9 +675,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             qRect.offsetMax = Vector2.zero;
             encounterQuestionMark = qGo.GetComponent<TextMeshProUGUI>();
             encounterQuestionMark.text = "?";
-            encounterQuestionMark.fontSize = 64f;
+            encounterQuestionMark.fontSize = faceStyle.EncounterGlyphSize;
             encounterQuestionMark.alignment = TextAlignmentOptions.Center;
-            encounterQuestionMark.color = Color.white;
+            encounterQuestionMark.color = faceStyle.EncounterGlyphColor;
             encounterQuestionMark.fontStyle = FontStyles.Bold;
         }
 
@@ -642,7 +691,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             tokenOverlayRect.offsetMin = Vector2.zero;
             tokenOverlayRect.offsetMax = Vector2.zero;
             encounterTokenOverlay = tokenOverlayGo.GetComponent<Image>();
-            encounterTokenOverlay.color = Color.black;
+            encounterTokenOverlay.color = faceStyle.EncounterOverlayColor;
             encounterTokenOverlay.raycastTarget = false;
 
             var tqGo = new GameObject("QuestionMark", typeof(RectTransform), typeof(TextMeshProUGUI));
@@ -654,9 +703,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             tqRect.offsetMax = Vector2.zero;
             encounterTokenQuestionMark = tqGo.GetComponent<TextMeshProUGUI>();
             encounterTokenQuestionMark.text = "?";
-            encounterTokenQuestionMark.fontSize = 64f;
+            encounterTokenQuestionMark.fontSize = faceStyle.EncounterGlyphSize;
             encounterTokenQuestionMark.alignment = TextAlignmentOptions.Center;
-            encounterTokenQuestionMark.color = Color.white;
+            encounterTokenQuestionMark.color = faceStyle.EncounterGlyphColor;
             encounterTokenQuestionMark.fontStyle = FontStyles.Bold;
             encounterTokenQuestionMark.raycastTarget = false;
         }
@@ -880,7 +929,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             CardTypeEnum.Action => "Action",
             CardTypeEnum.Spell => "Spell",
             CardTypeEnum.Object => "Object",
-            CardTypeEnum.Ally => "Encounter",
+            CardTypeEnum.Encounter => "Encounter",
             CardTypeEnum.Environmental => "Environmental",
             _ => string.Empty
         };
@@ -929,22 +978,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         CardSituationEnum situation = data.GetSituation();
         if (situation == CardSituationEnum.None) return string.Empty;
 
-        string label = situation switch
-        {
-            CardSituationEnum.ArmyAtEnemyPC => "Army at enemy PC",
-            CardSituationEnum.AgentAtEnemyPC => "Agent at enemy PC",
-            CardSituationEnum.EmmissaryAtEnemyPC => "Emissary at enemy PC",
-            CardSituationEnum.ArmyAtFriendlyPC => "Army at friendly PC",
-            CardSituationEnum.EmmissaryAtOwnPC => "Emissary at own PC",
-            CardSituationEnum.AgentAtOwnPC => "Agent at own PC",
-            CardSituationEnum.ArmyAtHexWithEnemyArmyAndNoPC => "Army meets enemy army",
-            CardSituationEnum.AgentAtHexWithEnemyCharacter => "Agent meets enemy",
-            CardSituationEnum.EmmissaryAtHexWithEnemyCharacter => "Emissary meets enemy",
-            CardSituationEnum.MageAtHexWithEnemyCharacter => "Mage meets enemy",
-            CardSituationEnum.MageAtArtifactHex => "Mage at artifact",
-            CardSituationEnum.CommanderAtOwnPC => "Commander at own PC",
-            _ => string.Empty
-        };
+        // TODO: We will to format the name once situations are in
+        string label = situation.ToString();
 
         return string.IsNullOrWhiteSpace(label) ? string.Empty : $"When: {label}";
     }
@@ -1002,7 +1037,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 string errorText = BuildRequirementsMessageText();
                 if (!string.IsNullOrWhiteSpace(errorText))
                 {
-                    string colorHex = ColorUtility.ToHtmlStringRGB(requirementsMessageColor);
+                    string colorHex = ColorUtility.ToHtmlStringRGB(CardServices.FaceStyle.RequirementsMessageColor);
                     string separator = string.IsNullOrWhiteSpace(baseDescription) ? string.Empty : "\n";
                     descriptionText.text = $"{baseDescription}{separator}<color=#{colorHex}>{errorText}</color>";
                 }
@@ -1292,6 +1327,21 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
         Transform environmentalChild = tokenCanvasGroup.transform.Find("Environmental");
         if (environmentalChild != null) environmentalChild.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// Scales the compact token artwork uniformly. The token is composed of a border ring, art and
+    /// numeral overlays carrying authored offsets relative to one another, so a caller that wants a
+    /// different token size scales the whole subtree rather than resizing the pieces: that keeps the
+    /// composition the prefab authored and lets a skin own the footprint. 1 restores the prefab's
+    /// own size.
+    /// </summary>
+    public void ScaleTokenVisual(float scale)
+    {
+        if (scale <= 0f) return;
+        BindLegacyPrefabReferences();
+        Transform visual = tokenCanvasGroup != null ? tokenCanvasGroup.transform : tokenImage != null ? tokenImage.transform : null;
+        if (visual != null) visual.localScale = Vector3.one * scale;
     }
 
     /// <summary>Moves the compact token artwork within an authored board-preview card.</summary>
