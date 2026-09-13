@@ -2,7 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public enum MatchStage { Draw = 1, Realm, Destination, Muster, Events, Attack, Defend, Spoils }
+public enum MatchStage { Draw = 1, Realm, Destination, Travel, Muster, Events, Spoils }
+/// <summary>Within Travel, at each stop: the other company declares its attacks, then the traveller assigns defenders.</summary>
+public enum TravelPhase { Attack, Defend }
+/// <summary>How a settlement receives a company: its own, or of its side (Friendly); of no side (Neutral); of the other side (Hostile).</summary>
+public enum Standing { Friendly, Neutral, Hostile }
+/// <summary>How a duel ends for its loser: the winner's margin against the loser's defense.</summary>
+public enum Blow { None, Tapped, Wounded, Killed }
+/// <summary>What each stop of a journey yields, in order. Stop five is a character while the deck still has one, else another army.</summary>
+public enum TravelReward { Land, EventOrAction, Encounter, Army, Character }
 
 /// <summary>Match state independent of Unity views. Card instances retain identity through every zone.</summary>
 public sealed class MatchRules
@@ -12,32 +20,104 @@ public sealed class MatchRules
         public CardData Card;
         public int Owner, EnteredTurn;
         public bool Tapped;
+        // A character that took lethal damage: out of action until healed. A healed character comes
+        // back tapped and misses its next untap (Recovering), so it cannot act the turn after either.
+        public bool Wounded, Recovering;
+        // Settlement only. Secured: the company may act here this turn, because the place is its own
+        // or the dwellers were beaten. Garrison: the owner's last unit to act here, who answers when
+        // both companies end up in the same town.
+        public bool Secured;
+        public Unit Garrison;
+        // A card that struck from the hand during the other company's travel. It stands on the field
+        // only for that stop's fight, then goes back into the deck whatever happened to it.
+        public bool Roadside;
         public readonly List<CardData> Objects = new();
         public bool IsCharacter => Card.GetCardType() == CardTypeEnum.Character;
         public bool IsCombatant => IsCharacter || Card.GetCardType() == CardTypeEnum.Army;
+        public bool IsReady => IsCombatant && !Tapped && !Wounded;
     }
     public sealed class Player
     {
         public int Life = 20, HandLimit = 5;
+        public int Alignment = CardData.NeutralAlignment;
         public readonly List<CardData> Deck = new(), Hand = new(), Discard = new();
-        // Population centres are never drawn: the whole pool is on the table from the first turn, and
-        // one of them is picked as the turn's destination once its land has been played.
-        public readonly List<CardData> Settlements = new();
+        // Population centres are never drawn: the deck's own (Settlements, the company's homes) are on
+        // the table from the first turn, and one of them is picked as the turn's destination once its
+        // land has been played. Foreign holds every other settlement in the world: reachable the same
+        // way, but held by its dwellers until the company earns its way in.
+        public readonly List<CardData> Settlements = new(), Foreign = new();
         public readonly List<Unit> Field = new();
         public readonly PlayerMaterials Mana = new();
         /// <summary>The settlement in play this turn. Also in Field, so it taps and untaps like any unit.</summary>
         public Unit Destination;
+        /// <summary>Where the company is bound this turn, chosen in Select Destination and reached at the end of Travel.</summary>
+        public CardData Bound;
+        /// <summary>One journey per turn: the choice cannot be re-picked within the stage.</summary>
+        public bool Travelled;
+    }
+    /// <summary>
+    /// A turn's journey: the regions entered, one stop at a time. At each stop the company draws the
+    /// stop's card, then the other company may fall on it with characters and with armies of the
+    /// region's terrain, and it defends under the same rule. Staying is a journey of one stop, the
+    /// region the company is already in.
+    /// </summary>
+    public sealed class Journey
+    {
+        public CardData Destination;
+        public bool Moving;
+        public readonly List<string> Stops = new();
+        public int Stop;
+        public string Region => Stops[Math.Clamp(Stop, 0, Stops.Count - 1)];
+        public bool Last => Stop >= Stops.Count - 1;
     }
     public sealed class Strike
     {
         public Unit Attacker, Target;
+        // Taken as the attack or block is declared: attacking and blocking tap the unit, and that tap
+        // is not the -1/-1 a unit fighting while already tapped suffers.
+        public (int attack, int defense) Stats;
         public readonly List<Unit> Blockers = new();
+        public readonly Dictionary<Unit, (int attack, int defense)> BlockerStats = new();
     }
     public sealed class Loot { public CardData Card; public int Owner; public bool Offered; }
+    /// <summary>
+    /// One duel: each side adds a die to its attack; the higher total wins and deals the difference
+    /// to the loser. Over the loser's defense kills, equal wounds, under merely taps. A tie does nothing.
+    /// </summary>
+    public sealed class Fight
+    {
+        public Unit Attacker, Defender;
+        public (int attack, int defense) AttackerStats, DefenderStats;
+        public int AttackerRoll, DefenderRoll;
+        public int AttackerTotal => AttackerStats.attack + AttackerRoll;
+        public int DefenderTotal => DefenderStats.attack + DefenderRoll;
+        public Unit Loser;
+        public Blow Blow;
+        public int Margin => Math.Abs(AttackerTotal - DefenderTotal);
+        public override string ToString()
+        {
+            string line = Attacker.Card.name + " " + AttackerStats.attack + "+" + AttackerRoll + "=" + AttackerTotal + " vs " + Defender.Card.name + " " + DefenderStats.attack + "+" + DefenderRoll + "=" + DefenderTotal + ": ";
+            if (Loser == null) return line + "a stand-off.";
+            var stats = Loser == Attacker ? AttackerStats : DefenderStats;
+            return line + Loser.Card.name + " takes " + Margin + " against defense " + stats.defense + " — " + (Blow == Blow.Killed ? (Loser.IsCharacter ? "struck down, wounded." : "killed.") : Blow == Blow.Wounded ? "wounded." : "tapped.");
+        }
+    }
+    /// <summary>The duels of the last resolution (a stop's fight, a dwellers fight, an ambush or a meeting).</summary>
+    public readonly List<Fight> Fights = new();
+    /// <summary>A settlement being tapped while the other player holds a card born there: they may answer before play goes on.</summary>
+    public sealed class Ambush
+    {
+        public int Tapper, Defender;
+        public CardData Settlement;
+        /// <summary>The tapper's unit that acted there, if any; the one an ambushing character strikes.</summary>
+        public Unit Target;
+        public readonly List<CardData> Options = new();
+    }
     // Everything a play touched, so it can be put back. Cleared at every stage change: once the
     // stage is passed there is no way back.
     sealed class Played { public CardData Card; public int HandIndex; public Unit Unit, Recipient; public PlayerMaterials Spent; public bool TappedDestination, Discarded; }
     readonly Stack<Played> played = new();
+    readonly Random random = new();
     public readonly Player[] Players = { new(), new() };
     public readonly List<Strike> Attacks = new();
     public readonly Queue<Loot> Spoils = new();
@@ -46,6 +126,19 @@ public sealed class MatchRules
     public int Winner { get; private set; } = -1;
     public MatchStage Stage { get; private set; }
     public string Message { get; private set; }
+    public Ambush PendingAmbush { get; private set; }
+    /// <summary>The journey under way while the stage is Travel.</summary>
+    public Journey Travel { get; private set; }
+    public TravelPhase Phase { get; private set; }
+    /// <summary>The company being attacked on the road is the active player's; its foe declares the attacks.</summary>
+    public int Attacker => 1 - Active;
+    /// <summary>The ground at the current stop, which decides which armies can fight there.</summary>
+    public TerrainEnum Ground => Travel != null ? TerrainOf(Travel.Region) : TerrainEnum.None;
+    /// <summary>Which regions border which, and their terrain; null means every journey is one stop on unknown ground.</summary>
+    public RegionMap Map;
+    /// <summary>The terrain of a region. Defaults to the map; replace to test without one.</summary>
+    public Func<string, TerrainEnum> ResolveTerrain;
+    public TerrainEnum TerrainOf(string region) => ResolveTerrain != null ? ResolveTerrain(region) : Map?.TerrainOf(region) ?? TerrainEnum.None;
     public event Action<CardData, int> Drawn;
     // Explicit extension seams for future card abilities; no inference from flavour text.
     public Func<Unit, bool> CanChooseTarget = u => u.Card.HasTag("ChooseTarget");
@@ -53,24 +146,51 @@ public sealed class MatchRules
     // An encounter's outcome. Left null, investigating it simply spends the card: the face promises
     // nothing about what happens, so an unauthored outcome is not a blocked play.
     public Action<CardData, int, MatchRules> ResolveEncounter;
-    public void Begin(int first) { Turn = 0; Winner = -1; StartTurn(first); }
+    /// <summary>The army holding a settlement, from its `dwellers` name. Replace to test without the catalog.</summary>
+    public Func<CardData, CardData> ResolveDwellers = pc => CardCatalog.FindCardByName(pc.dwellers);
+    /// <summary>An index below the given count. Replace for deterministic tests.</summary>
+    public Func<int, int> Pick;
+    /// <summary>One six-sided die. Replace for deterministic tests.</summary>
+    public Func<int> Roll;
+    public MatchRules() { Pick = count => random.Next(count); Roll = () => random.Next(1, 7); }
+    public void Begin(int first) { Turn = 0; Winner = -1; PendingAmbush = null; StartTurn(first); }
     void StartTurn(int player)
     {
-        Active = player; Turn++; Stage = MatchStage.Draw; Attacks.Clear(); played.Clear();
-        foreach (var u in Players[player].Field)
-            if (!u.Card.statusEffects.Contains(StatusEffects.Halted)) u.Tapped = false;
+        Active = player; Turn++; Stage = MatchStage.Draw; Attacks.Clear(); played.Clear(); PendingAmbush = null; Travel = null;
         var current = Players[player];
-        while (current.Hand.Count < current.HandLimit && current.Deck.Count > 0)
+        foreach (var u in current.Field)
         {
-            var card = current.Deck[0]; current.Deck.RemoveAt(0); current.Hand.Add(card); Drawn?.Invoke(card, player);
+            if (u.Wounded || u.Card.statusEffects.Contains(StatusEffects.Halted)) continue;
+            // Healed last turn: stays tapped through this one, and readies normally after.
+            if (u.Recovering) { u.Recovering = false; continue; }
+            u.Tapped = false;
         }
-        Message = "Hand replenished. Halted cards remain tapped.";
+        current.Travelled = false; current.Bound = null;
+        if (current.Destination != null)
+        {
+            // Yesterday's fight does not hold the town: a company that stays somewhere it is not
+            // welcome faces the dwellers again.
+            current.Destination.Secured = StandingAt(player, current.Destination.Card) == Standing.Friendly;
+            current.Destination.Garrison = null;
+        }
+        Draw(player, current.HandLimit - current.Hand.Count);
+        Message = "Hand replenished. Halted and wounded cards remain tapped.";
+    }
+    void Draw(int player, int count)
+    {
+        var p = Players[player];
+        for (int i = 0; i < count && p.Deck.Count > 0; i++)
+        {
+            var card = p.Deck[0]; p.Deck.RemoveAt(0); p.Hand.Add(card); Drawn?.Invoke(card, player);
+        }
     }
     bool Reject(string message) { Message = message; return false; }
+    static string Fraction((int attack, int defense) stats) => stats.attack + "/" + stats.defense;
     public bool CanPlay(CardData card) => PlayBlockReason(card) == null;
     public string PlayBlockReason(CardData card, Unit recipient = null, bool choosingRecipient = true, bool includeReadyMana = false)
     {
         var p = Players[Active];
+        if (PendingAmbush != null) return "The ambush at " + PendingAmbush.Settlement.name + " must be answered first.";
         if (card == null || Winner >= 0 || !p.Hand.Contains(card)) return "That card is not in the active hand.";
         var type = card.GetCardType();
         if (type == CardTypeEnum.PC) return "Settlements are chosen as your destination, not played from the hand.";
@@ -100,6 +220,12 @@ public sealed class MatchRules
         var destination = Players[Active].Destination;
         if (destination == null) return "Choose a destination first: " + DestinationWanted(card) + ".";
         if (!card.CanBePlayedAt(destination.Card)) return "Not playable at " + destination.Card.name + ". Needs " + DestinationWanted(card) + ".";
+        if (!destination.Secured)
+        {
+            if (destination.Tapped) return destination.Card.name + " is closed to your company this turn: the dwellers held.";
+            var dwellers = Dwellers(destination.Card);
+            return destination.Card.name + " is held by its dwellers" + (dwellers != null ? " (" + dwellers.name + " " + Fraction(dwellers.GetCombatStats()) + ")" : "") + ": fight them with a ready unit first.";
+        }
         if (destination.Tapped) return destination.Card.name + " has already hosted a play this turn.";
         return null;
     }
@@ -118,14 +244,24 @@ public sealed class MatchRules
         if (type == CardTypeEnum.Object) recipient.Objects.Add(card);
         else if (type == CardTypeEnum.Event) { ResolveEvent(card, Active, this); p.Discard.Add(card); }
         else if (type == CardTypeEnum.Encounter) { ResolveEncounter?.Invoke(card, Active, this); p.Discard.Add(card); record.Discarded = true; }
-        else p.Field.Add(record.Unit = new Unit { Card = card, Owner = Active, EnteredTurn = Turn });
-        if (card.RequiresDestination()) { p.Destination.Tapped = true; record.TappedDestination = true; }
+        // A recruit spends the turn mustering: it enters tapped and readies with the next turn. Mounted
+        // troops are the exception and can ride out at once.
+        else
+        {
+            record.Unit = new Unit { Card = card, Owner = Active, EnteredTurn = Turn };
+            record.Unit.Tapped = record.Unit.IsCombatant && !card.specialAbilities.Contains(ObjectCharacterArmySpecialAbilityEnum.Mounted);
+            p.Field.Add(record.Unit);
+        }
+        Message = type == CardTypeEnum.Encounter ? card.name + " investigated at " + p.Destination.Card.name + "." : card.name + " played.";
         // An event's effect is whatever its handler did and cannot be walked back, so nothing
-        // played before it can be either. The same goes for an encounter with an authored outcome.
-        if (type == CardTypeEnum.Event || type == CardTypeEnum.Encounter && ResolveEncounter != null) played.Clear(); else played.Push(record);
-        Message = type == CardTypeEnum.Encounter ? card.name + " investigated at " + p.Destination.Card.name + "." : card.name + " played."; return true;
+        // played before it can be either. The same goes for an encounter with an authored outcome,
+        // and for a tap that brought the other company out.
+        bool irreversible = type == CardTypeEnum.Event || type == CardTypeEnum.Encounter && ResolveEncounter != null;
+        if (card.RequiresDestination()) { record.TappedDestination = true; irreversible |= TapDestination(record.Unit ?? recipient); }
+        if (irreversible) played.Clear(); else played.Push(record);
+        return true;
     }
-    public bool CanUndo => Winner < 0 && played.Count > 0;
+    public bool CanUndo => Winner < 0 && played.Count > 0 && PendingAmbush == null;
     public CardData LastPlayed => played.Count > 0 ? played.Peek().Card : null;
     /// <summary>Returns the last card played this stage to the hand and refunds what it cost.</summary>
     public bool Undo()
@@ -135,47 +271,341 @@ public sealed class MatchRules
         if (record.Unit != null) p.Field.Remove(record.Unit);
         else if (record.Discarded) p.Discard.Remove(record.Card);
         else record.Recipient?.Objects.Remove(record.Card);
-        if (record.TappedDestination && p.Destination != null) p.Destination.Tapped = false;
+        if (record.TappedDestination && p.Destination != null) { p.Destination.Tapped = false; p.Destination.Garrison = null; }
         p.Hand.Insert(Math.Clamp(record.HandIndex, 0, p.Hand.Count), record.Card);
         p.Mana.Refund(record.Spent);
         Message = record.Card.name + " returned to hand."; return true;
     }
     static bool Same(string a, string b) => !string.IsNullOrWhiteSpace(a) && string.Equals(a.Trim(), b?.Trim(), StringComparison.OrdinalIgnoreCase);
     // --- Destinations ---------------------------------------------------------------------------------
-    /// <summary>The settlements a player could travel to: every one in the pool whose land is on the board.</summary>
+    /// <summary>The region a land card opens: itself, unless the map says it is an alternate card for another.</summary>
+    public string LandRegion(CardData land) => Map != null ? Map.RegionOfLand(land.name) : land.name;
+    /// <summary>Every settlement a player knows of: the deck's own and the wider world.</summary>
+    public IEnumerable<CardData> KnownSettlements(int player) => Players[player].Settlements.Concat(Players[player].Foreign);
+    /// <summary>
+    /// The settlements a player could travel to: any whose land is on the board, whether the player
+    /// or the opponent holds it. A land opens its region for both companies.
+    /// </summary>
     public IEnumerable<CardData> DestinationChoices(int player)
     {
-        var p = Players[player];
-        return p.Settlements.Where(pc => p.Field.Any(u => u.Card.GetCardType() == CardTypeEnum.Land && Same(u.Card.name, pc.region)));
+        var regions = Players.SelectMany(p => p.Field).Where(u => u.Card.GetCardType() == CardTypeEnum.Land)
+            .Select(u => LandRegion(u.Card)?.Trim()).Where(r => !string.IsNullOrEmpty(r)).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        return KnownSettlements(player).Where(pc => !string.IsNullOrWhiteSpace(pc.region) && regions.Contains(pc.region.Trim()));
     }
+    /// <summary>
+    /// The choices ranked for the picker, best first: the most hand cards playable there, then the
+    /// warmest welcome (the company's own side before neutral before hostile), then the shortest
+    /// road. Ties keep the pool's order so the pile does not shuffle between refreshes.
+    /// </summary>
+    public IEnumerable<CardData> RankedDestinations(int player) => DestinationChoices(player)
+        .OrderByDescending(pc => DestinationDemand(player, pc)).ThenBy(pc => (int)StandingAt(player, pc)).ThenBy(pc => Stops(player, pc).Count);
     public bool IsDestination(int player, CardData pc) => pc != null && Players[player].Destination != null && ReferenceEquals(Players[player].Destination.Card, pc);
-    public bool CanChooseDestination(CardData pc) => Winner < 0 && Stage == MatchStage.Destination && pc != null &&
+    /// <summary>A settlement of the company's own deck that it has claimed; the only kind that is safe whatever its side.</summary>
+    public bool IsHome(int player, CardData pc) => pc != null && Players[player].Settlements.Any(s => ReferenceEquals(s, pc) || Same(s.name, pc.name));
+    public Standing StandingAt(int player, CardData pc)
+    {
+        if (pc == null || IsHome(player, pc) || pc.settlementAlignment == Players[player].Alignment) return Standing.Friendly;
+        return pc.IsNeutralSettlement() ? Standing.Neutral : Standing.Hostile;
+    }
+    public CardData Dwellers(CardData pc) => pc == null || string.IsNullOrWhiteSpace(pc.dwellers) ? null : ResolveDwellers?.Invoke(pc);
+    /// <summary>Puts a company at a settlement before the first turn: each starts at a random one of its own.</summary>
+    public void StartAt(int player, CardData pc)
+    {
+        var p = Players[player];
+        if (pc == null) return;
+        if (!p.Settlements.Contains(pc)) p.Settlements.Add(pc);
+        if (p.Destination != null) p.Field.Remove(p.Destination);
+        p.Destination = new Unit { Card = pc, Owner = player, EnteredTurn = Turn, Secured = true };
+        p.Field.Add(p.Destination);
+    }
+    public bool CanChooseDestination(CardData pc) => Winner < 0 && Stage == MatchStage.Destination && pc != null && !Players[Active].Travelled &&
         !IsDestination(Active, pc) && DestinationChoices(Active).Contains(pc);
-    /// <summary>Travels to a settlement for the turn. Staying is simply advancing the stage.</summary>
+    // --- Journeys -------------------------------------------------------------------------------------
+    /// <summary>
+    /// The regions a company enters on its way to a settlement, one per stop: the shortest route on
+    /// the map, or the destination's own region when it is the same, unknown, or there is no map.
+    /// </summary>
+    public List<string> Stops(int player, CardData pc)
+    {
+        var origin = Players[player].Destination?.Card.region;
+        var route = Map != null && origin != null ? Map.Route(origin, pc.region) : null;
+        return route == null || route.Count < 2 ? new List<string> { pc.region } : route.Skip(1).ToList();
+    }
+    /// <summary>How many rewards the journey pays: one per region entered, at least one and at most five.</summary>
+    public int Rewards(int player, CardData pc) => RegionMap.Journey(Stops(player, pc).Count);
+    public static TravelReward RewardAt(int stop) => (TravelReward)Math.Clamp(stop - 1, 0, 4);
+    public static string RewardLabel(TravelReward reward) => reward switch
+    {
+        TravelReward.Land => "Land", TravelReward.EventOrAction => "Event or Action",
+        TravelReward.Encounter => "Encounter", TravelReward.Army => "Army", _ => "Character"
+    };
+    static readonly CardTypeEnum[][] rewardTypes =
+    {
+        new[] { CardTypeEnum.Land }, new[] { CardTypeEnum.Event, CardTypeEnum.Action },
+        new[] { CardTypeEnum.Encounter }, new[] { CardTypeEnum.Army }, new[] { CardTypeEnum.Character }
+    };
+    /// <summary>Draws one reward: a random card of the stop's kinds still in the deck, else the top card.</summary>
+    CardData Claim(int player, TravelReward reward)
+    {
+        var p = Players[player];
+        var types = rewardTypes[(int)reward];
+        var pool = p.Deck.Where(c => types.Contains(c.GetCardType())).ToList();
+        if (pool.Count == 0 && reward == TravelReward.Character) pool = p.Deck.Where(c => c.GetCardType() == CardTypeEnum.Army).ToList();
+        var card = pool.Count > 0 ? pool[Math.Clamp(Pick(pool.Count), 0, pool.Count - 1)] : p.Deck.FirstOrDefault();
+        if (card == null) return null;
+        p.Deck.Remove(card); p.Hand.Add(card); Drawn?.Invoke(card, player);
+        return card;
+    }
+    /// <summary>Sets out for a settlement: the road is walked, stop by stop, in the Travel stage. Staying is simply advancing the stage.</summary>
     public bool ChooseDestination(CardData pc)
     {
-        if (!CanChooseDestination(pc)) return Reject("Choose a settlement whose land you have played, or stay where you are.");
+        if (!CanChooseDestination(pc)) return Reject(Players[Active].Travelled ? "The company has already chosen its road this turn." : "Choose a settlement whose land you have played, or stay where you are.");
         var p = Players[Active];
-        if (p.Destination != null) p.Field.Remove(p.Destination);
-        p.Destination = new Unit { Card = pc, Owner = Active, EnteredTurn = Turn };
-        p.Field.Add(p.Destination);
-        Message = "Travelling to " + pc.name + "."; return true;
+        int journey = Rewards(Active, pc);
+        p.Bound = pc; p.Travelled = true;
+        Message = "Bound for " + pc.name + ": " + journey + (journey == 1 ? " stop" : " stops") + " on the road.";
+        return true;
     }
+    // --- Travel ---------------------------------------------------------------------------------------
+    /// <summary>Leaving Select Destination: lay out the road. A company with nowhere to be skips the stage.</summary>
+    void BeginTravel()
+    {
+        var p = Players[Active];
+        var target = p.Bound ?? p.Destination?.Card;
+        if (target == null) { Travel = null; Stage = MatchStage.Muster; Message = "No settlement to travel to."; return; }
+        bool moving = p.Bound != null && !IsDestination(Active, p.Bound);
+        Travel = new Journey { Destination = target, Moving = moving, Stop = -1 };
+        Travel.Stops.AddRange(moving ? Stops(Active, target) : new List<string> { p.Destination.Card.region });
+        NextStop();
+    }
+    /// <summary>Enter the next region: draw its card, then open the floor to the other company's attacks.</summary>
+    void NextStop()
+    {
+        Travel.Stop++; Attacks.Clear(); Phase = TravelPhase.Attack;
+        int stop = Travel.Stop + 1;
+        var drawn = stop <= RegionMap.MaxDistance ? Claim(Active, RewardAt(stop)) : null;
+        Message = (Travel.Moving ? "On the road to " + Travel.Destination.name : "Holding at " + Travel.Destination.name) + ": stop " + stop + " of " + Travel.Stops.Count + ", " + Travel.Region
+            + (Ground != TerrainEnum.None ? " (" + Ground + ")" : "") + "." + (drawn != null ? " Drew " + drawn.name + "." : "");
+    }
+    /// <summary>The road's end: the company takes up its new destination, welcome or not.</summary>
+    void Arrive()
+    {
+        var p = Players[Active];
+        if (Travel != null && Travel.Moving)
+        {
+            if (p.Destination != null) p.Field.Remove(p.Destination);
+            p.Destination = new Unit { Card = Travel.Destination, Owner = Active, EnteredTurn = Turn, Secured = StandingAt(Active, Travel.Destination) == Standing.Friendly };
+            p.Field.Add(p.Destination);
+            Message = "Arrived at " + Travel.Destination.name + (p.Destination.Secured ? "." : ": its dwellers hold it.");
+        }
+        else Message = "The company holds at " + (p.Destination?.Card.name ?? "no settlement") + ".";
+        p.Bound = null; Travel = null;
+    }
+    /// <summary>The other company's units that could fall on the traveller at this stop.</summary>
+    public IEnumerable<Unit> Raiders() => Stage == MatchStage.Travel ? Players[Attacker].Field.Where(CanAttack) : Enumerable.Empty<Unit>();
+    /// <summary>The cards in the raider's hand that could strike at this stop.</summary>
+    public IEnumerable<CardData> HandRaiders() => Stage == MatchStage.Travel ? Players[Attacker].Hand.Where(CanAttackWith) : Enumerable.Empty<CardData>();
     /// <summary>How many cards in a player's hand could be played at a settlement. What the opponent travels by.</summary>
     public int DestinationDemand(int player, CardData pc) => Players[player].Hand.Count(c => c.RequiresDestination() && c.CanBePlayedAt(pc));
-    /// <summary>The choice with the most hand cards waiting for it; the current destination on a tie. Null to stay.</summary>
+    /// <summary>Hand cards that could be played at a settlement were it the destination.</summary>
+    public IEnumerable<CardData> PlayableAt(int player, CardData pc) => Players[player].Hand.Where(c => c.RequiresDestination() && c.CanBePlayedAt(pc));
+    /// <summary>
+    /// The opponent's pick: the most hand cards waiting, then the warmest welcome, then the longest
+    /// journey; anywhere it would have to fight needs a unit ready to fight. Null to stay.
+    /// </summary>
     public CardData PreferredDestination(int player)
     {
-        var current = Players[player].Destination?.Card;
-        CardData best = null; int bestDemand = current != null ? DestinationDemand(player, current) : -1;
+        var p = Players[player];
+        var current = p.Destination?.Card;
+        bool canFight = p.Field.Any(u => u.IsReady);
+        int Score(CardData pc, bool travel)
+        {
+            var standing = StandingAt(player, pc);
+            if (standing != Standing.Friendly && !canFight) return int.MinValue;
+            return DestinationDemand(player, pc) * 4 + (standing == Standing.Friendly ? 3 : standing == Standing.Neutral ? 1 : -2) + (travel ? Rewards(player, pc) : 0);
+        }
+        CardData best = null; int bestScore = current != null ? Score(current, false) : -1;
         foreach (var pc in DestinationChoices(player))
         {
-            int demand = DestinationDemand(player, pc);
-            if (demand > bestDemand) { best = pc; bestDemand = demand; }
+            if (ReferenceEquals(pc, current)) continue;
+            int score = Score(pc, true);
+            if (score > bestScore) { best = pc; bestScore = score; }
         }
-        return best != null && !ReferenceEquals(best, current) ? best : null;
+        return best;
     }
-    public bool CanTapLand(Unit unit) => unit != null && Winner < 0 && (Stage == MatchStage.Muster || Stage == MatchStage.Events) && unit.Owner == Active &&
+    // --- Dwellers, ambushes and meetings ---------------------------------------------------------------
+    /// <summary>Combat values as a unit fights now: a unit already tapped when it fights acts at -1/-1.</summary>
+    public (int attack, int defense) Stats(Unit unit)
+    {
+        var (attack, defense) = unit.Card.GetCombatStats();
+        if (unit.Tapped) { attack--; defense--; }
+        return (Math.Max(0, attack), Math.Max(0, defense));
+    }
+    /// <summary>
+    /// Rolls a duel and, unless told otherwise, lands the blow on the loser. The dwellers of a town are
+    /// a unit off the field, so a blow to them is nothing; a hand raider rides back into the deck
+    /// whatever happens to it.
+    /// </summary>
+    Fight Duel(Unit attacker, (int attack, int defense) attackerStats, Unit defender, (int attack, int defense) defenderStats, bool apply = true)
+    {
+        var fight = new Fight { Attacker = attacker, Defender = defender, AttackerStats = attackerStats, DefenderStats = defenderStats, AttackerRoll = Roll(), DefenderRoll = Roll() };
+        if (fight.AttackerTotal != fight.DefenderTotal)
+        {
+            bool attackerWins = fight.AttackerTotal > fight.DefenderTotal;
+            fight.Loser = attackerWins ? defender : attacker;
+            int defense = (attackerWins ? defenderStats : attackerStats).defense;
+            fight.Blow = fight.Margin > defense ? Blow.Killed : fight.Margin == defense ? Blow.Wounded : Blow.Tapped;
+            if (apply) Land(fight.Loser, fight.Blow);
+        }
+        Fights.Add(fight);
+        return fight;
+    }
+    /// <summary>Lands a blow. Armies can be killed; characters never die, a killing blow wounds them.</summary>
+    void Land(Unit unit, Blow blow)
+    {
+        if (unit == null || unit.Roadside || !Players[unit.Owner].Field.Contains(unit)) return;
+        if (blow == Blow.Killed && !unit.IsCharacter) { Fell(unit); return; }
+        if (blow == Blow.Killed || blow == Blow.Wounded) unit.Wounded = true;
+        if (blow != Blow.None) unit.Tapped = true;
+    }
+    void Fell(Unit unit)
+    {
+        var owner = Players[unit.Owner];
+        owner.Field.Remove(unit); owner.Discard.Add(unit.Card);
+        foreach (var item in unit.Objects) Spoils.Enqueue(new Loot { Card = item, Owner = unit.Owner });
+        unit.Objects.Clear();
+        if (owner.Destination != null && owner.Destination.Garrison == unit) owner.Destination.Garrison = null;
+    }
+    public bool CanSecure(Unit unit) => SecureBlockReason(unit) == null;
+    public string SecureBlockReason(Unit unit)
+    {
+        var p = Players[Active];
+        if (PendingAmbush != null) return "The ambush at " + PendingAmbush.Settlement.name + " must be answered first.";
+        if (unit == null || Winner >= 0 || Stage != MatchStage.Muster || unit.Owner != Active || !p.Field.Contains(unit) || !unit.IsReady)
+            return "Choose a ready character or army to face the dwellers.";
+        var destination = p.Destination;
+        if (destination == null || destination.Secured) return "Nothing to secure at the destination.";
+        if (destination.Tapped) return destination.Card.name + " is closed to your company this turn.";
+        return null;
+    }
+    /// <summary>
+    /// Fights the destination's dwellers to be allowed to act there. Neutral ground is a retention
+    /// attack: winning opens the town, losing taps the unit and closes the town for the turn, and no
+    /// one bleeds. Hostile ground is a normal attack: the dwellers strike back and the unit taps.
+    /// </summary>
+    public bool Secure(Unit unit)
+    {
+        var reason = SecureBlockReason(unit);
+        if (reason != null) return Reject(reason);
+        var p = Players[Active]; var destination = p.Destination;
+        played.Clear();
+        var dwellers = Dwellers(destination.Card);
+        if (dwellers == null)
+        {
+            destination.Secured = true; destination.Garrison = unit;
+            Message = destination.Card.name + " is unguarded: the company may act here."; return true;
+        }
+        Fights.Clear();
+        var garrison = new Unit { Card = dwellers, Owner = 1 - Active };
+        bool neutral = StandingAt(Active, destination.Card) == Standing.Neutral;
+        // On neutral ground the dwellers only bar the gate: the duel decides, but no blow lands.
+        var fight = Duel(unit, Stats(unit), garrison, dwellers.GetCombatStats(), apply: !neutral);
+        bool won = fight.Loser == garrison;
+        string fought = fight + " At " + destination.Card.name + ": ";
+        if (neutral)
+        {
+            if (won) { destination.Secured = true; destination.Garrison = unit; Message = fought + "the dwellers stand aside."; }
+            else { unit.Tapped = true; destination.Tapped = true; Message = fought + "held back. " + unit.Card.name + " and " + destination.Card.name + " are tapped for the turn."; }
+            return true;
+        }
+        unit.Tapped = true;
+        bool standing = p.Field.Contains(unit) && !unit.Wounded;
+        if (won) { destination.Secured = true; destination.Garrison = standing ? unit : null; Message = fought + "the dwellers are driven off."; }
+        else { destination.Tapped = true; Message = fought + destination.Card.name + " is closed this turn."; }
+        return true;
+    }
+    /// <summary>
+    /// The first play at the destination taps it. That is the moment the other player may answer
+    /// with a card born there, and the moment two companies in one town come to blows. True when
+    /// something happened that a later Undo could not put back.
+    /// </summary>
+    bool TapDestination(Unit acting)
+    {
+        var p = Players[Active]; var destination = p.Destination;
+        destination.Tapped = true;
+        if (acting != null) destination.Garrison = acting;
+        var options = Players[1 - Active].Hand.Where(c => (c.GetCardType() == CardTypeEnum.Character || c.GetCardType() == CardTypeEnum.Encounter) && c.IsBornAt(destination.Card.name)).ToList();
+        if (options.Count > 0)
+        {
+            PendingAmbush = new Ambush { Tapper = Active, Defender = 1 - Active, Settlement = destination.Card, Target = acting ?? destination.Garrison };
+            PendingAmbush.Options.AddRange(options);
+            Message += " The other company has " + (options.Count == 1 ? "a card" : options.Count + " cards") + " born at " + destination.Card.name + " and may answer.";
+            return true;
+        }
+        return Meet();
+    }
+    public bool CanAmbush(CardData card) => PendingAmbush != null && card != null && PendingAmbush.Options.Contains(card) && Players[PendingAmbush.Defender].Hand.Contains(card);
+    /// <summary>
+    /// The defender answers a tap. A character born there was home all along: it enters the field for
+    /// nothing, strikes the unit that acted (or the tapper's weakest unit) and taps for the effort. An
+    /// encounter born there is sprung on the tapper through ResolveEncounter and spent.
+    /// </summary>
+    public bool AmbushWith(CardData card)
+    {
+        if (!CanAmbush(card)) return Reject(PendingAmbush == null ? "No ambush is pending." : "Choose one of your cards born at " + PendingAmbush.Settlement.name + ".");
+        var ambush = PendingAmbush; var defender = Players[ambush.Defender]; var tapper = Players[ambush.Tapper];
+        defender.Hand.Remove(card);
+        if (card.GetCardType() == CardTypeEnum.Encounter)
+        {
+            defender.Discard.Add(card);
+            ResolveEncounter?.Invoke(card, ambush.Tapper, this);
+            Message = card.name + " is sprung on the company at " + ambush.Settlement.name + ".";
+        }
+        else
+        {
+            var unit = new Unit { Card = card, Owner = ambush.Defender, EnteredTurn = Turn };
+            defender.Field.Add(unit);
+            var target = ambush.Target != null && tapper.Field.Contains(ambush.Target) && !ambush.Target.Wounded ? ambush.Target
+                : tapper.Field.Where(u => u.IsCombatant && !u.Wounded).OrderBy(u => Stats(u).defense).FirstOrDefault();
+            if (target == null) Message = card.name + " rises at " + ambush.Settlement.name + " but finds no one to strike.";
+            else
+            {
+                Fights.Clear();
+                var fight = Duel(unit, Stats(unit), target, Stats(target));
+                Message = card.name + " ambushes " + target.Card.name + " at " + ambush.Settlement.name + ". " + fight;
+            }
+            unit.Tapped = true;
+        }
+        PendingAmbush = null; Meet(); return true;
+    }
+    public bool DeclineAmbush()
+    {
+        if (PendingAmbush == null) return false;
+        Message = "The company at " + PendingAmbush.Settlement.name + " goes unchallenged.";
+        PendingAmbush = null; Meet(); return true;
+    }
+    /// <summary>Who answers for a company when the two meet: its garrison at the town, else its hardest hitter.</summary>
+    public Unit Champion(int player)
+    {
+        var p = Players[player];
+        var garrison = p.Destination?.Garrison;
+        if (garrison != null && p.Field.Contains(garrison) && !garrison.Wounded) return garrison;
+        return p.Field.Where(u => u.IsCombatant && !u.Wounded).OrderByDescending(u => Stats(u).attack).ThenByDescending(u => Stats(u).defense).FirstOrDefault();
+    }
+    /// <summary>Both companies at one settlement, both having acted there: their champions trade blows at once.</summary>
+    bool Meet()
+    {
+        var mine = Players[Active].Destination; var theirs = Players[1 - Active].Destination;
+        if (mine == null || theirs == null || !mine.Tapped || !theirs.Tapped || !Same(mine.Card.name, theirs.Card.name)) return false;
+        var ours = Champion(Active); var rival = Champion(1 - Active);
+        if (ours == null || rival == null) return false;
+        Fights.Clear();
+        var fight = Duel(ours, Stats(ours), rival, Stats(rival));
+        Message = (Message + " Both companies hold " + mine.Card.name + ". " + fight).Trim();
+        return true;
+    }
+    // --- Mana, attacks and defence ----------------------------------------------------------------------
+    public bool CanTapLand(Unit unit) => unit != null && Winner < 0 && PendingAmbush == null && (Stage == MatchStage.Muster || Stage == MatchStage.Events) && unit.Owner == Active &&
         !unit.Tapped && Players[Active].Field.Contains(unit) && unit.Card.GetCardType() == CardTypeEnum.Land;
     public bool TapLand(Unit unit)
     {
@@ -183,18 +613,19 @@ public sealed class MatchRules
             return Reject("Tap your ready lands during Muster or Events to produce mana.");
         unit.Tapped = true; Players[Active].Mana.Grant(unit.Card); Message = unit.Card.name + " produced mana."; return true;
     }
-    public bool IsNewUnit(Unit unit) => unit != null && unit.IsCombatant && unit.EnteredTurn == Turn &&
-        !unit.Card.specialAbilities.Contains(ObjectCharacterArmySpecialAbilityEnum.Mounted);
-    public bool IsEnemyTarget(Unit target) => target != null && target.Owner == 1 - Active && target.IsCombatant && Players[1 - Active].Field.Contains(target);
+    /// <summary>A unit of the travelling company that an attack can single out.</summary>
+    public bool IsAttackTarget(Unit target) => target != null && target.Owner == Active && target.IsCombatant && Players[Active].Field.Contains(target);
+    /// <summary>Whether a unit can fight at the current stop: characters anywhere, armies on their own ground.</summary>
+    public bool FightsHere(Unit unit) => unit != null && unit.Card.FightsOn(Ground);
     public bool CanAttack(Unit unit) => AttackBlockReason(unit) == null;
     public string AttackBlockReason(Unit unit, Unit target = null, bool choosingTarget = true)
     {
-        if (unit == null || Winner >= 0 || Stage != MatchStage.Attack || unit.Owner != Active || !Players[Active].Field.Contains(unit) || !unit.IsCombatant || unit.Tapped || unit.Card.statusEffects.Contains(StatusEffects.Fear))
-            return "Choose a ready character or army to attack.";
-        if (IsNewUnit(unit)) return "New unit: can defend now; can attack next turn (unless Mounted).";
-        if (CanChooseTarget(unit) && !IsEnemyTarget(target) &&
-            !(target == null && choosingTarget && Players[1 - Active].Field.Any(IsEnemyTarget)))
-            return "Select an enemy character or army as the target.";
+        if (unit == null || Winner >= 0 || Stage != MatchStage.Travel || Phase != TravelPhase.Attack || unit.Owner != Attacker || !Players[Attacker].Field.Contains(unit) || !unit.IsReady || unit.Card.statusEffects.Contains(StatusEffects.Fear))
+            return "Choose a ready character or army to fall on the travelling company.";
+        if (!FightsHere(unit)) return unit.Card.name + " fights on " + unit.Card.GetTerrain() + " ground, not " + Ground + ".";
+        if (CanChooseTarget(unit) && !IsAttackTarget(target) &&
+            !(target == null && choosingTarget && Players[Active].Field.Any(IsAttackTarget)))
+            return "Select a travelling character or army as the target.";
         if (!CanChooseTarget(unit) && target != null) return "This unit cannot choose a target.";
         return null;
     }
@@ -202,34 +633,112 @@ public sealed class MatchRules
     {
         var reason = AttackBlockReason(unit, target, false);
         if (reason != null) return Reject(reason);
-        unit.Tapped = true; Attacks.Add(new Strike { Attacker = unit, Target = target });
+        var stats = Stats(unit);
+        unit.Tapped = true; Attacks.Add(new Strike { Attacker = unit, Target = target, Stats = stats });
         Message = unit.Card.name + " attacks."; return true;
     }
-    public bool CanBlock(Unit defender, Strike strike) => defender != null && Winner < 0 && Stage == MatchStage.Defend &&
-        Attacks.Contains(strike) && defender.Owner == 1 - Active && !defender.Tapped && defender.IsCombatant && Players[1 - Active].Field.Contains(defender);
-    public bool HasLegalAction() => Winner < 0 && (Stage switch
+    /// <summary>A card in the raider's hand that could fall on the company at this stop: an army of this ground, or any character.</summary>
+    public bool CanAttackWith(CardData card) => AttackWithBlockReason(card) == null;
+    public string AttackWithBlockReason(CardData card, Unit target = null, bool choosingTarget = true)
+    {
+        if (card == null || Winner >= 0 || Stage != MatchStage.Travel || Phase != TravelPhase.Attack || !Players[Attacker].Hand.Contains(card))
+            return "Choose an army or character in your hand to fall on the travelling company.";
+        var type = card.GetCardType();
+        if (type != CardTypeEnum.Army && type != CardTypeEnum.Character) return "Only armies and characters strike from the hand.";
+        if (!card.FightsOn(Ground)) return card.name + " fights on " + card.GetTerrain() + " ground, not " + Ground + ".";
+        if (card.HasTag("ChooseTarget") && !IsAttackTarget(target) && !(target == null && choosingTarget && Players[Active].Field.Any(IsAttackTarget)))
+            return "Select a travelling character or army as the target.";
+        return null;
+    }
+    /// <summary>
+    /// Strikes from the hand: the card takes the field for this stop's fight only, and afterwards is
+    /// shuffled back into the deck, whatever the blows did to it. It costs the raider the card in hand.
+    /// </summary>
+    public bool AttackWith(CardData card, Unit target = null)
+    {
+        var reason = AttackWithBlockReason(card, target, false);
+        if (reason != null) return Reject(reason);
+        var raider = Players[Attacker];
+        raider.Hand.Remove(card);
+        var unit = new Unit { Card = card, Owner = Attacker, EnteredTurn = Turn, Roadside = true };
+        raider.Field.Add(unit);
+        Attacks.Add(new Strike { Attacker = unit, Target = target, Stats = Stats(unit) });
+        unit.Tapped = true;
+        Message = card.name + " strikes from the hand."; return true;
+    }
+    /// <summary>After a stop's fight the hand raiders leave the field and go back into the deck, which is reshuffled.</summary>
+    void RecallRoadside()
+    {
+        foreach (var player in Players)
+        {
+            var roadside = player.Field.Where(u => u.Roadside).ToList();
+            if (roadside.Count == 0) continue;
+            foreach (var unit in roadside) { player.Field.Remove(unit); player.Deck.Add(unit.Card); }
+            for (int n = player.Deck.Count - 1; n > 0; n--) { int j = Math.Clamp(Pick(n + 1), 0, n); (player.Deck[n], player.Deck[j]) = (player.Deck[j], player.Deck[n]); }
+            Message += " " + string.Join(", ", roadside.Select(u => u.Card.name)) + (roadside.Count == 1 ? " rides" : " ride") + " back into the deck.";
+        }
+    }
+    public bool CanBlock(Unit defender, Strike strike) => defender != null && Winner < 0 && Stage == MatchStage.Travel && Phase == TravelPhase.Defend &&
+        Attacks.Contains(strike) && defender.Owner == Active && defender.IsReady && FightsHere(defender) && Players[Active].Field.Contains(defender);
+    public string BlockBlockReason(Unit defender)
+    {
+        if (defender == null || Stage != MatchStage.Travel || Phase != TravelPhase.Defend || defender.Owner != Active || !defender.IsCombatant) return "Select an untapped defender, then an attacking unit.";
+        if (!defender.IsReady) return defender.Card.name + " is not ready to defend.";
+        if (!FightsHere(defender)) return defender.Card.name + " fights on " + defender.Card.GetTerrain() + " ground, not " + Ground + ".";
+        return null;
+    }
+    /// <summary>The active hand is over its limit and must shed cards before the turn can end.</summary>
+    public bool MustDiscard(int player) => Players[player].Hand.Count > Players[player].HandLimit;
+    public bool CanDiscard(CardData card) => card != null && Winner < 0 && Stage == MatchStage.Spoils && Spoils.Count == 0 && PendingAmbush == null &&
+        MustDiscard(Active) && Players[Active].Hand.Contains(card);
+    public bool Discard(CardData card)
+    {
+        if (!CanDiscard(card)) return Reject("Discard only when your hand is over its limit at the end of the turn.");
+        var p = Players[Active]; p.Hand.Remove(card); p.Discard.Add(card);
+        int over = p.Hand.Count - p.HandLimit;
+        Message = card.name + " discarded." + (over > 0 ? " Discard " + over + " more." : ""); return true;
+    }
+    public bool HasLegalAction() => Winner < 0 && (PendingAmbush != null || Stage switch
     {
         MatchStage.Realm => Players[Active].Hand.Any(CanPlay),
         MatchStage.Destination => DestinationChoices(Active).Any(CanChooseDestination),
-        MatchStage.Muster or MatchStage.Events => Players[Active].Hand.Any(c => PlayBlockReason(c, includeReadyMana: true) == null),
-        MatchStage.Attack => Players[Active].Field.Any(CanAttack),
-        MatchStage.Defend => Players[1 - Active].Field.Any(u => Attacks.Any(a => CanBlock(u, a))),
-        MatchStage.Spoils => Spoils.Count > 0,
+        MatchStage.Muster => Players[Active].Hand.Any(c => PlayBlockReason(c, includeReadyMana: true) == null) || NeedsSecuring() && Players[Active].Field.Any(CanSecure),
+        MatchStage.Events => Players[Active].Hand.Any(c => PlayBlockReason(c, includeReadyMana: true) == null),
+        MatchStage.Travel => Phase == TravelPhase.Attack ? Players[Attacker].Field.Any(CanAttack) || Players[Attacker].Hand.Any(CanAttackWith) : Players[Active].Field.Any(u => Attacks.Any(a => CanBlock(u, a))),
+        MatchStage.Spoils => Spoils.Count > 0 || MustDiscard(Active),
         _ => false
     });
-    public bool Block(Unit defender, Strike strike)
+    /// <summary>The destination is held against the company while cards in hand want to be played there.</summary>
+    public bool NeedsSecuring()
+    {
+        var d = Players[Active].Destination;
+        return d != null && !d.Secured && !d.Tapped && PlayableAt(Active, d.Card).Any();
+    }
+    /// <summary>What standing fast costs: a defender that keeps its feet under it fights at -2/-2.</summary>
+    public const int StandFastPenalty = 2;
+    /// <summary>
+    /// Assigns a defender. Tapping is the usual way and fights at full strength; standing fast keeps
+    /// the unit untapped, so it can still act on arrival, at -2/-2 for this fight.
+    /// </summary>
+    public bool Block(Unit defender, Strike strike, bool standFast = false)
     {
         if (!CanBlock(defender, strike))
-            return Reject("Select an untapped defender, then an attacking unit.");
-        defender.Tapped = true; strike.Blockers.Add(defender); Message = defender.Card.name + " defends against " + strike.Attacker.Card.name + "."; return true;
+            return Reject(BlockBlockReason(defender) ?? "Select an untapped defender, then an attacking unit.");
+        var stats = Stats(defender);
+        if (standFast) stats = (Math.Max(0, stats.attack - StandFastPenalty), Math.Max(0, stats.defense - StandFastPenalty));
+        strike.BlockerStats[defender] = stats;
+        defender.Tapped = !standFast; strike.Blockers.Add(defender);
+        Message = defender.Card.name + (standFast ? " stands fast (" + Fraction(stats) + ") against " : " defends against ") + strike.Attacker.Card.name + "."; return true;
     }
     public bool Next()
     {
         if (Winner >= 0) return false;
+        if (PendingAmbush != null) return Reject("The ambush at " + PendingAmbush.Settlement.name + " must be answered first.");
         played.Clear();
         if (Stage == MatchStage.Spoils)
         {
             if (Spoils.Count > 0) return Reject("Resolve the remaining objects first.");
+            if (MustDiscard(Active)) return Reject("Discard down to " + Players[Active].HandLimit + " cards first.");
             CheckWinner();
             if (Winner < 0)
             {
@@ -239,48 +748,63 @@ public sealed class MatchRules
                     land.Tapped = true;
                     ending.Mana.Grant(land.Card);
                 }
+                // Wounded characters mend where they can: carrying something that heals, or resting
+                // the night in one of the company's own towns. They come back tapped and sit out a turn.
+                bool home = ending.Destination != null && IsHome(Active, ending.Destination.Card);
+                foreach (var unit in ending.Field.Where(u => u.Wounded))
+                    if (home || unit.Objects.Any(o => o.healPerTurn > 0)) { unit.Wounded = false; unit.Tapped = true; unit.Recovering = true; }
                 StartTurn(1 - Active);
             }
             return true;
+        }
+        if (Stage == MatchStage.Travel && Travel != null)
+        {
+            // Each stop: the attacks are declared, then defended, then the blows land; then the next
+            // region, until the company arrives.
+            if (Phase == TravelPhase.Attack && Attacks.Count > 0) { Phase = TravelPhase.Defend; Message = Attacks.Count + (Attacks.Count == 1 ? " attack" : " attacks") + " on the company at " + Travel.Region + ": assign defenders."; return true; }
+            if (Attacks.Count > 0) Combat();
+            if (Winner >= 0) return true;
+            if (!Travel.Last) { NextStop(); return true; }
+            Arrive(); Stage = MatchStage.Muster; return true;
         }
         Stage++;
         if (Stage == MatchStage.Realm)
             foreach (var player in Players)
                 foreach (var environment in player.Field.Where(u => u.Card.GetCardType() == CardTypeEnum.Environmental).ToArray())
                 { player.Field.Remove(environment); player.Discard.Add(environment.Card); }
-        if (Stage == MatchStage.Spoils) Combat();
+        if (Stage == MatchStage.Travel) { BeginTravel(); return true; }
         Message = "Stage " + (int)Stage + " / " + Stage; return true;
     }
     void Combat()
     {
-        var damage = new Dictionary<Unit, int>();
-        void Hit(Unit u, int amount) { if (!damage.ContainsKey(u)) damage[u] = 0; damage[u] += Math.Max(0, amount); }
+        Fights.Clear();
+        var lines = new List<string>();
         foreach (var strike in Attacks)
         {
-            int power = strike.Attacker.Card.GetCombatStats().attack;
             var defenders = strike.Blockers.ToList();
-            if (defenders.Count == 0 && strike.Target != null) defenders.Add(strike.Target);
-            if (defenders.Count == 0) Players[1-Active].Life -= power;
+            if (defenders.Count == 0 && strike.Target != null && Players[Active].Field.Contains(strike.Target)) defenders.Add(strike.Target);
+            // Unanswered, the blow lands on the travelling company itself.
+            if (defenders.Count == 0) { Players[Active].Life -= strike.Stats.attack; lines.Add(strike.Attacker.Card.name + " hits the company for " + strike.Stats.attack + "."); continue; }
+            // The attacker duels each defender in turn, for as long as it is still on its feet.
             foreach (var defender in defenders)
             {
-                int assigned = Math.Min(power, defender.Card.GetCombatStats().defense);
-                Hit(defender, assigned); power -= assigned; Hit(strike.Attacker, defender.Card.GetCombatStats().attack);
+                if (!Players[strike.Attacker.Owner].Field.Contains(strike.Attacker) || strike.Attacker.Wounded) break;
+                if (!Players[defender.Owner].Field.Contains(defender)) continue;
+                var defence = strike.BlockerStats.TryGetValue(defender, out var braced) ? braced : Stats(defender);
+                lines.Add(Duel(strike.Attacker, strike.Stats, defender, defence).ToString());
             }
         }
-        foreach (var pair in damage)
-            if (pair.Value >= pair.Key.Card.GetCombatStats().defense)
-            {
-                var dead = pair.Key; Players[dead.Owner].Field.Remove(dead); Players[dead.Owner].Discard.Add(dead.Card);
-                foreach (var item in dead.Objects) Spoils.Enqueue(new Loot { Card = item, Owner = dead.Owner });
-                dead.Objects.Clear();
-            }
-        if (Spoils.Count == 0) CheckWinner();
+        Message = string.Join(" ", lines);
+        Attacks.Clear();
+        RecallRoadside();
+        CheckWinner();
     }
     public IEnumerable<Unit> Recipients()
     {
         if (Spoils.Count == 0) return Enumerable.Empty<Unit>();
         var loot = Spoils.Peek();
-        return Players[loot.Offered ? 1-loot.Owner : loot.Owner].Field.Where(u => u.IsCharacter);
+        // A wounded character is out of action and cannot pick anything up.
+        return Players[loot.Offered ? 1-loot.Owner : loot.Owner].Field.Where(u => u.IsCharacter && !u.Wounded);
     }
     public bool Transfer(Unit recipient)
     {

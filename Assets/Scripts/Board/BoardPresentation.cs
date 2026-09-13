@@ -223,8 +223,7 @@ public sealed class BoardPresentation : MonoBehaviour
             amountObject.transform.SetParent(panel.transform, false);
             var amount = amountObject.GetComponent<TextMeshProUGUI>();
             amount.font = ReadingFontFor(Skin);
-            foreach (var source in board.fullCardPrefab.GetComponentsInChildren<TMP_Text>(true))
-                if (source.spriteAsset != null) { amount.spriteAsset = source.spriteAsset; break; }
+            amount.spriteAsset = SpriteAssetFor(board);
             amount.fontSize = style.amountSize;
             amount.color = Color.white;
             amount.alignment = TextAlignmentOptions.Center;
@@ -354,6 +353,15 @@ public sealed class BoardPresentation : MonoBehaviour
         Vector2 box = footprint - Vector2.one * (style.artInset * 2f);
         if (box.x <= 1f || box.y <= 1f) return 1f;
         return Mathf.Min(box.x / natural.x, box.y / natural.y);
+    }
+
+    /// <summary>The icon sheet the card faces use, so chrome text can show the same sprite tags. Null when none is wired.</summary>
+    public static TMP_SpriteAsset SpriteAssetFor(Board board)
+    {
+        if (board == null || board.fullCardPrefab == null) return null;
+        foreach (var source in board.fullCardPrefab.GetComponentsInChildren<TMP_Text>(true))
+            if (source.spriteAsset != null) return source.spriteAsset;
+        return null;
     }
 
     /// <summary>The reading font for card text, falling back to the skin's named resource.</summary>

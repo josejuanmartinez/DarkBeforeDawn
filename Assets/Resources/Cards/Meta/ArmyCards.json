@@ -77,7 +77,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60002,
@@ -154,7 +155,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60003,
@@ -231,7 +233,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60004,
@@ -308,7 +311,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60005,
@@ -384,7 +388,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60006,
@@ -460,7 +465,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60007,
@@ -536,7 +542,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60008,
@@ -612,7 +619,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60009,
@@ -688,7 +696,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Wasteland"
         },
         {
             "cardId": 60010,
@@ -764,7 +773,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Wasteland"
         },
         {
             "cardId": 60011,
@@ -840,7 +850,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Marsh"
         },
         {
             "cardId": 60012,
@@ -917,7 +928,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60013,
@@ -994,7 +1006,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Desert"
         },
         {
             "cardId": 60014,
@@ -1071,7 +1084,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60015,
@@ -1147,7 +1161,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60016,
@@ -1223,7 +1238,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60017,
@@ -1300,7 +1316,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60018,
@@ -1376,7 +1393,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60019,
@@ -1452,7 +1470,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Coast"
         },
         {
             "cardId": 60020,
@@ -1528,7 +1547,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Coast"
         },
         {
             "cardId": 60021,
@@ -1605,7 +1625,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60022,
@@ -1683,7 +1704,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60023,
@@ -1759,7 +1781,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60024,
@@ -1835,7 +1858,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60025,
@@ -1911,7 +1935,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Coast"
         },
         {
             "cardId": 60026,
@@ -1987,7 +2012,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60027,
@@ -2064,7 +2090,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Wasteland"
         },
         {
             "cardId": 60028,
@@ -2141,7 +2168,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60029,
@@ -2218,7 +2246,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60030,
@@ -2294,7 +2323,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60031,
@@ -2371,7 +2401,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60032,
@@ -2447,7 +2478,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60033,
@@ -2524,7 +2556,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60034,
@@ -2600,7 +2633,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60035,
@@ -2676,7 +2710,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60036,
@@ -2752,7 +2787,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60037,
@@ -2829,7 +2865,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60038,
@@ -2906,7 +2943,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60039,
@@ -2983,7 +3021,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60040,
@@ -3059,7 +3098,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60041,
@@ -3136,7 +3176,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60042,
@@ -3212,7 +3253,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Coast"
         },
         {
             "cardId": 60043,
@@ -3289,7 +3331,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60044,
@@ -3363,7 +3406,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60045,
@@ -3440,7 +3484,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60046,
@@ -3516,7 +3561,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60047,
@@ -3590,7 +3636,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60048,
@@ -3666,7 +3713,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60049,
@@ -3742,7 +3790,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60050,
@@ -3819,7 +3868,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60051,
@@ -3896,7 +3946,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60052,
@@ -3972,7 +4023,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60053,
@@ -4048,7 +4100,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60054,
@@ -4124,7 +4177,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60055,
@@ -4201,7 +4255,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60056,
@@ -4277,7 +4332,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Wasteland"
         },
         {
             "cardId": 60057,
@@ -4353,7 +4409,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Wasteland"
         },
         {
             "cardId": 60058,
@@ -4427,7 +4484,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60059,
@@ -4503,7 +4561,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60060,
@@ -4580,7 +4639,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Wasteland"
         },
         {
             "cardId": 60061,
@@ -4658,7 +4718,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60062,
@@ -4735,7 +4796,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Desert"
         },
         {
             "cardId": 60063,
@@ -4812,7 +4874,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Desert"
         },
         {
             "cardId": 60064,
@@ -4889,7 +4952,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Wasteland"
         },
         {
             "cardId": 60065,
@@ -4965,7 +5029,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60066,
@@ -5042,7 +5107,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60067,
@@ -5118,7 +5184,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60068,
@@ -5194,7 +5261,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60069,
@@ -5271,7 +5339,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60070,
@@ -5347,7 +5416,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60071,
@@ -5424,7 +5494,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Coast"
         },
         {
             "cardId": 60072,
@@ -5498,7 +5569,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60073,
@@ -5574,7 +5646,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60074,
@@ -5651,7 +5724,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60075,
@@ -5727,7 +5801,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Coast"
         },
         {
             "cardId": 60076,
@@ -5804,7 +5879,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60077,
@@ -5881,7 +5957,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60078,
@@ -5955,7 +6032,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60079,
@@ -6032,7 +6110,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60080,
@@ -6106,7 +6185,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60081,
@@ -6182,7 +6262,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60082,
@@ -6258,7 +6339,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Wasteland"
         },
         {
             "cardId": 60083,
@@ -6335,7 +6417,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Wasteland"
         },
         {
             "cardId": 60084,
@@ -6412,7 +6495,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60085,
@@ -6489,7 +6573,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60086,
@@ -6566,7 +6651,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60087,
@@ -6643,7 +6729,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60088,
@@ -6720,7 +6807,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60089,
@@ -6797,7 +6885,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60090,
@@ -6874,7 +6963,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Desert"
         },
         {
             "cardId": 60091,
@@ -6952,7 +7042,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Desert"
         },
         {
             "cardId": 60092,
@@ -7029,7 +7120,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60093,
@@ -7106,7 +7198,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60094,
@@ -7182,7 +7275,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60095,
@@ -7260,7 +7354,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Wasteland"
         },
         {
             "cardId": 60096,
@@ -7334,7 +7429,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60097,
@@ -7411,7 +7507,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Coast"
         },
         {
             "cardId": 60098,
@@ -7487,7 +7584,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Coast"
         },
         {
             "cardId": 60099,
@@ -7564,7 +7662,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60100,
@@ -7641,7 +7740,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60101,
@@ -7718,7 +7818,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60102,
@@ -7794,7 +7895,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60103,
@@ -7870,7 +7972,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Coast"
         },
         {
             "cardId": 60104,
@@ -7946,7 +8049,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60105,
@@ -8023,7 +8127,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60106,
@@ -8099,7 +8204,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Marsh"
         },
         {
             "cardId": 60107,
@@ -8176,7 +8282,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60108,
@@ -8252,7 +8359,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60109,
@@ -8329,7 +8437,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Wasteland"
         },
         {
             "cardId": 60110,
@@ -8403,7 +8512,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Coast"
         },
         {
             "cardId": 60111,
@@ -8479,7 +8589,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60112,
@@ -8556,7 +8667,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Desert"
         },
         {
             "cardId": 60113,
@@ -8632,7 +8744,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Desert"
         },
         {
             "cardId": 60114,
@@ -8708,7 +8821,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60115,
@@ -8785,7 +8899,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60116,
@@ -8861,7 +8976,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60117,
@@ -8937,7 +9053,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Coast"
         },
         {
             "cardId": 60118,
@@ -9013,7 +9130,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60119,
@@ -9090,7 +9208,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60120,
@@ -9166,7 +9285,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Wasteland"
         },
         {
             "cardId": 60121,
@@ -9243,7 +9363,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60122,
@@ -9320,7 +9441,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60123,
@@ -9396,7 +9518,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60124,
@@ -9474,7 +9597,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Coast"
         },
         {
             "cardId": 60125,
@@ -9551,7 +9675,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Desert"
         },
         {
             "cardId": 60126,
@@ -9628,7 +9753,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Marsh"
         },
         {
             "cardId": 60127,
@@ -9704,7 +9830,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Mountains"
         },
         {
             "cardId": 60128,
@@ -9780,7 +9907,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60129,
@@ -9857,7 +9985,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60130,
@@ -9934,7 +10063,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Wasteland"
         },
         {
             "cardId": 60131,
@@ -10012,7 +10142,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Hills"
         },
         {
             "cardId": 60132,
@@ -10089,7 +10220,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Wasteland"
         },
         {
             "cardId": 60133,
@@ -10165,7 +10297,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60134,
@@ -10241,7 +10374,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Plains"
         },
         {
             "cardId": 60135,
@@ -10315,7 +10449,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60136,
@@ -10391,7 +10526,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60137,
@@ -10467,7 +10603,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60138,
@@ -10543,7 +10680,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60139,
@@ -10617,7 +10755,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60140,
@@ -10693,7 +10832,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60141,
@@ -10771,7 +10911,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         },
         {
             "cardId": 60142,
@@ -10847,7 +10988,8 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "terrain": "Forest"
         }
     ],
     "cardRefs": []

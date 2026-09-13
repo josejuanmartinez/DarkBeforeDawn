@@ -537,7 +537,7 @@ public class DeckManagerWindow : EditorWindow
         if (card.GetCardType() == CardTypeEnum.Land && !string.IsNullOrWhiteSpace(card.name))
         {
             EditorGUILayout.LabelField(
-                $"Allows playing Population Centers from {PcDescriptionBuilder.FormatDisplayRegionName(card.name)}.",
+                $"Allows travelling to Population Centers from {PcDescriptionBuilder.FormatDisplayRegionName(card.name)}.",
                 EditorStyles.wordWrappedLabel);
         }
 

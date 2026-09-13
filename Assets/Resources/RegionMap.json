@@ -1,0 +1,615 @@
+{
+    "regions": [
+        {
+            "name": "The Rimewater",
+            "group": "The Marches",
+            "terrain": "Coast",
+            "x": 2.0,
+            "y": 0.5,
+            "adjacent": [
+                "Bluecrags",
+                "Grimhold",
+                "North Kingdom",
+                "The Barrowfells"
+            ]
+        },
+        {
+            "name": "Grimhold",
+            "group": "The Marches",
+            "terrain": "Mountains",
+            "x": 4.2,
+            "y": 1.0,
+            "adjacent": [
+                "Hollowvale",
+                "Longwater",
+                "North Kingdom",
+                "The Barrowfells",
+                "The Blightheath",
+                "The Palewall",
+                "The Rimewater",
+                "Troll Hills"
+            ]
+        },
+        {
+            "name": "West Coast",
+            "group": "The Marches",
+            "terrain": "Coast",
+            "x": 0.6,
+            "y": 2.2,
+            "adjacent": [
+                "Bluecrags",
+                "North Kingdom",
+                "Thornhollow"
+            ]
+        },
+        {
+            "name": "Bluecrags",
+            "group": "The Marches",
+            "terrain": "Mountains",
+            "x": 1.6,
+            "y": 2.0,
+            "adjacent": [
+                "North Kingdom",
+                "The Rimewater",
+                "Thornhollow",
+                "West Coast"
+            ]
+        },
+        {
+            "name": "The Barrowfells",
+            "group": "The Marches",
+            "terrain": "Hills",
+            "x": 3.1,
+            "y": 1.8,
+            "adjacent": [
+                "Grimhold",
+                "North Kingdom",
+                "The Rimewater",
+                "Troll Hills"
+            ]
+        },
+        {
+            "name": "North Kingdom",
+            "group": "The Marches",
+            "terrain": "Plains",
+            "x": 2.6,
+            "y": 2.9,
+            "adjacent": [
+                "Bluecrags",
+                "Grimhold",
+                "The Barrowfells",
+                "The Rimewater",
+                "Thornhollow",
+                "Troll Hills",
+                "West Coast",
+                "West Downs"
+            ]
+        },
+        {
+            "name": "Troll Hills",
+            "group": "The Marches",
+            "terrain": "Hills",
+            "x": 4.3,
+            "y": 2.4,
+            "adjacent": [
+                "Grimhold",
+                "Hollowvale",
+                "North Kingdom",
+                "The Barrowfells",
+                "The Palewall",
+                "West Downs"
+            ]
+        },
+        {
+            "name": "Hollowvale",
+            "group": "The Marches",
+            "terrain": "Hills",
+            "x": 5.1,
+            "y": 2.9,
+            "adjacent": [
+                "Elderforge",
+                "Grimhold",
+                "The Palewall",
+                "Troll Hills"
+            ]
+        },
+        {
+            "name": "Thornhollow",
+            "group": "The Marches",
+            "terrain": "Plains",
+            "x": 2.1,
+            "y": 3.4,
+            "adjacent": [
+                "Bluecrags",
+                "North Kingdom",
+                "West Coast",
+                "West Downs"
+            ]
+        },
+        {
+            "name": "West Downs",
+            "group": "The Marches",
+            "terrain": "Hills",
+            "x": 3.1,
+            "y": 3.9,
+            "adjacent": [
+                "Elderforge",
+                "North Kingdom",
+                "Thornhollow",
+                "Troll Hills",
+                "Wyldmoor"
+            ]
+        },
+        {
+            "name": "Elderforge",
+            "group": "The Marches",
+            "terrain": "Forest",
+            "x": 4.5,
+            "y": 4.1,
+            "adjacent": [
+                "Hollowvale",
+                "The Palewall",
+                "West Downs",
+                "Wyldmoor"
+            ]
+        },
+        {
+            "name": "The Palewall",
+            "group": "The Marches",
+            "terrain": "Mountains",
+            "x": 5.4,
+            "y": 3.7,
+            "adjacent": [
+                "Elderforge",
+                "Goldenwood",
+                "Grimhold",
+                "Hollowvale",
+                "Longwater",
+                "Troll Hills",
+                "Windgate",
+                "Wyldmoor"
+            ]
+        },
+        {
+            "name": "Longwater",
+            "group": "The Middle Lands",
+            "terrain": "Plains",
+            "x": 6.1,
+            "y": 3.1,
+            "adjacent": [
+                "Fenmire",
+                "Goldenwood",
+                "Grimhold",
+                "Horse Plains",
+                "North Nightwood",
+                "Scorchlands",
+                "South Nightwood",
+                "The Blightheath",
+                "The Palewall"
+            ]
+        },
+        {
+            "name": "Wyldmoor",
+            "group": "The Middle Lands",
+            "terrain": "Hills",
+            "x": 4.3,
+            "y": 5.1,
+            "adjacent": [
+                "Elderforge",
+                "Longstrand",
+                "The Palewall",
+                "West Downs",
+                "Windgate"
+            ]
+        },
+        {
+            "name": "Windgate",
+            "group": "The Middle Lands",
+            "terrain": "Plains",
+            "x": 5.3,
+            "y": 5.7,
+            "adjacent": [
+                "Horse Plains",
+                "The Palewall",
+                "The Whitespine",
+                "Wyldmoor"
+            ]
+        },
+        {
+            "name": "Goldenwood",
+            "group": "The Middle Lands",
+            "terrain": "Forest",
+            "x": 6.3,
+            "y": 4.3,
+            "adjacent": [
+                "Horse Plains",
+                "Longwater",
+                "South Nightwood",
+                "The Palewall"
+            ]
+        },
+        {
+            "name": "Horse Plains",
+            "group": "The Middle Lands",
+            "terrain": "Plains",
+            "x": 6.1,
+            "y": 6.1,
+            "adjacent": [
+                "Fenmire",
+                "Goldenwood",
+                "Longwater",
+                "The Whitespine",
+                "Upper Sunlands",
+                "Windgate"
+            ]
+        },
+        {
+            "name": "The Whitespine",
+            "group": "The Middle Lands",
+            "terrain": "Mountains",
+            "x": 5.5,
+            "y": 6.9,
+            "adjacent": [
+                "Horse Plains",
+                "Longstrand",
+                "Lower Sunlands",
+                "Upper Sunlands",
+                "Windgate"
+            ]
+        },
+        {
+            "name": "Longstrand",
+            "group": "The Middle Lands",
+            "terrain": "Coast",
+            "x": 4.3,
+            "y": 7.4,
+            "adjacent": [
+                "Lower Sunlands",
+                "The Whitespine",
+                "Wyldmoor"
+            ]
+        },
+        {
+            "name": "Upper Sunlands",
+            "group": "The Middle Lands",
+            "terrain": "Plains",
+            "x": 6.7,
+            "y": 7.1,
+            "adjacent": [
+                "Fenmire",
+                "Greenmarch",
+                "Horse Plains",
+                "Lower Sunlands",
+                "The Whitespine"
+            ]
+        },
+        {
+            "name": "Lower Sunlands",
+            "group": "The Middle Lands",
+            "terrain": "Coast",
+            "x": 5.9,
+            "y": 7.9,
+            "adjacent": [
+                "Corsair Coast",
+                "Greenmarch",
+                "Longstrand",
+                "Near Southlands",
+                "The Whitespine",
+                "Upper Sunlands"
+            ]
+        },
+        {
+            "name": "Fenmire",
+            "group": "The Middle Lands",
+            "terrain": "Marsh",
+            "x": 7.1,
+            "y": 5.8,
+            "adjacent": [
+                "Greenmarch",
+                "Horse Plains",
+                "Longwater",
+                "Scorchlands",
+                "The Battlewaste",
+                "Upper Sunlands"
+            ]
+        },
+        {
+            "name": "Scorchlands",
+            "group": "The Middle Lands",
+            "terrain": "Wasteland",
+            "x": 7.4,
+            "y": 4.9,
+            "adjacent": [
+                "Fenmire",
+                "Longwater",
+                "South Nightwood",
+                "The Battlewaste",
+                "Wildermark"
+            ]
+        },
+        {
+            "name": "Greenmarch",
+            "group": "The Middle Lands",
+            "terrain": "Forest",
+            "x": 7.6,
+            "y": 7.1,
+            "adjacent": [
+                "Fenmire",
+                "Lower Sunlands",
+                "Near Southlands",
+                "The Battlewaste",
+                "The Emberpit",
+                "The Weftmarch",
+                "Upper Sunlands"
+            ]
+        },
+        {
+            "name": "The Blightheath",
+            "group": "The North-East",
+            "terrain": "Wasteland",
+            "x": 7.1,
+            "y": 1.2,
+            "adjacent": [
+                "Grimhold",
+                "Ironreach",
+                "Longwater",
+                "North Nightwood",
+                "Wildermark"
+            ]
+        },
+        {
+            "name": "North Nightwood",
+            "group": "The North-East",
+            "terrain": "Forest",
+            "x": 7.3,
+            "y": 2.3,
+            "adjacent": [
+                "Longwater",
+                "Nightwood Peaks",
+                "South Nightwood",
+                "The Blightheath",
+                "Wildermark"
+            ]
+        },
+        {
+            "name": "Nightwood Peaks",
+            "group": "The North-East",
+            "terrain": "Mountains",
+            "x": 7.7,
+            "y": 3.2,
+            "adjacent": [
+                "North Nightwood",
+                "South Nightwood",
+                "Wildermark"
+            ]
+        },
+        {
+            "name": "South Nightwood",
+            "group": "The North-East",
+            "terrain": "Forest",
+            "x": 7.1,
+            "y": 3.9,
+            "adjacent": [
+                "Goldenwood",
+                "Longwater",
+                "Nightwood Peaks",
+                "North Nightwood",
+                "Scorchlands",
+                "Wildermark"
+            ]
+        },
+        {
+            "name": "Wildermark",
+            "group": "The North-East",
+            "terrain": "Plains",
+            "x": 8.4,
+            "y": 2.6,
+            "adjacent": [
+                "Amber Sea",
+                "Eastlands",
+                "Ironreach",
+                "Nightwood Peaks",
+                "North Nightwood",
+                "Scorchlands",
+                "South Nightwood",
+                "The Blightheath",
+                "Wine Country"
+            ]
+        },
+        {
+            "name": "Ironreach",
+            "group": "The North-East",
+            "terrain": "Hills",
+            "x": 9.2,
+            "y": 1.6,
+            "adjacent": [
+                "Eastlands",
+                "The Blightheath",
+                "Wildermark",
+                "Wine Country"
+            ]
+        },
+        {
+            "name": "Wine Country",
+            "group": "The North-East",
+            "terrain": "Plains",
+            "x": 9.3,
+            "y": 3.3,
+            "adjacent": [
+                "Amber Sea",
+                "Eastlands",
+                "Ironreach",
+                "Wildermark"
+            ]
+        },
+        {
+            "name": "Amber Sea",
+            "group": "The North-East",
+            "terrain": "Coast",
+            "x": 9.6,
+            "y": 4.3,
+            "adjacent": [
+                "Eastlands",
+                "Wildermark",
+                "Wine Country"
+            ]
+        },
+        {
+            "name": "Eastlands",
+            "group": "The North-East",
+            "terrain": "Plains",
+            "x": 9.2,
+            "y": 5.5,
+            "adjacent": [
+                "Amber Sea",
+                "Eastern Steppe",
+                "Ironreach",
+                "The Battlewaste",
+                "Wildermark",
+                "Wine Country"
+            ]
+        },
+        {
+            "name": "The Battlewaste",
+            "group": "Ashlands",
+            "terrain": "Wasteland",
+            "x": 8.1,
+            "y": 5.7,
+            "adjacent": [
+                "Eastlands",
+                "Fenmire",
+                "Greenmarch",
+                "Scorchlands",
+                "The Emberpit"
+            ]
+        },
+        {
+            "name": "The Emberpit",
+            "group": "Ashlands",
+            "terrain": "Wasteland",
+            "x": 8.4,
+            "y": 6.4,
+            "adjacent": [
+                "Ashflats",
+                "Cinderplain",
+                "Greenmarch",
+                "The Battlewaste",
+                "The Weftmarch"
+            ]
+        },
+        {
+            "name": "Cinderplain",
+            "group": "Ashlands",
+            "terrain": "Wasteland",
+            "x": 8.7,
+            "y": 7.2,
+            "adjacent": [
+                "Ashflats",
+                "Slave Fields",
+                "The Emberpit",
+                "The Weftmarch"
+            ]
+        },
+        {
+            "name": "The Weftmarch",
+            "group": "Ashlands",
+            "terrain": "Mountains",
+            "x": 8.0,
+            "y": 7.4,
+            "adjacent": [
+                "Cinderplain",
+                "Greenmarch",
+                "Slave Fields",
+                "The Emberpit"
+            ]
+        },
+        {
+            "name": "Ashflats",
+            "group": "Ashlands",
+            "terrain": "Wasteland",
+            "x": 9.4,
+            "y": 7.0,
+            "adjacent": [
+                "Cinderplain",
+                "Eastern Steppe",
+                "Slave Fields",
+                "The Emberpit"
+            ]
+        },
+        {
+            "name": "Slave Fields",
+            "group": "Ashlands",
+            "terrain": "Plains",
+            "x": 8.9,
+            "y": 8.1,
+            "adjacent": [
+                "Ashflats",
+                "Cinderplain",
+                "Eastern Steppe",
+                "Near Southlands",
+                "The Weftmarch"
+            ]
+        },
+        {
+            "name": "Near Southlands",
+            "group": "The South",
+            "terrain": "Desert",
+            "x": 7.2,
+            "y": 8.6,
+            "adjacent": [
+                "Corsair Coast",
+                "Eastern Steppe",
+                "Far Southlands",
+                "Greenmarch",
+                "Lower Sunlands",
+                "Slave Fields"
+            ]
+        },
+        {
+            "name": "Corsair Coast",
+            "group": "The South",
+            "terrain": "Coast",
+            "x": 6.0,
+            "y": 9.0,
+            "adjacent": [
+                "Far Southlands",
+                "Lower Sunlands",
+                "Near Southlands"
+            ]
+        },
+        {
+            "name": "Far Southlands",
+            "group": "The South",
+            "terrain": "Desert",
+            "x": 7.0,
+            "y": 9.7,
+            "adjacent": [
+                "Corsair Coast",
+                "Near Southlands"
+            ]
+        },
+        {
+            "name": "Eastern Steppe",
+            "group": "The South",
+            "terrain": "Plains",
+            "x": 9.6,
+            "y": 8.7,
+            "adjacent": [
+                "Ashflats",
+                "Eastlands",
+                "Near Southlands",
+                "Slave Fields"
+            ]
+        }
+    ],
+    "landAliases": [
+        {
+            "land": "Greenmarch Ruins",
+            "region": "Greenmarch"
+        },
+        {
+            "land": "Fenmire Marshes",
+            "region": "Fenmire"
+        }
+    ]
+}

@@ -13,35 +13,45 @@ public static class PcDescriptionBuilder
         return new string(value.Where(char.IsLetterOrDigit).ToArray()).ToLowerInvariant();
     }
 
+    // One line per fact, so the face reads as a plaque rather than a paragraph. Card prefixes the
+    // type label ("PC. ") to the first line and appends the quote after a blank line:
+    //   PC. Region (Alignment)
+    //   Dwellers: Army.
+    //   Allows recruiting characters born here.
+    //   Playable objects: Weapon, Armour
     public static string BuildBody(CardData data, bool includeFoundingText)
     {
         if (data == null) return string.Empty;
 
         string regionName = FormatDisplayRegionName(data.region);
-        bool hasRegion = !string.IsNullOrWhiteSpace(regionName);
-
-        System.Text.StringBuilder sb = new();
-        if (hasRegion)
+        string alignment = CardData.AlignmentLabel(data.settlementAlignment);
+        List<string> lines = new()
         {
-            sb.Append(regionName).Append(". ");
-        }
+            string.IsNullOrWhiteSpace(regionName) ? alignment : regionName + " (" + alignment + ")"
+        };
 
         // Population centres do not produce resources. Resource grants belong exclusively to Land
         // cards, whose own face and compact token render the granted materials.
 
         // A settlement is never played from the hand: it is picked as the turn's destination once
-        // its land is on the board, and one play there (a character or encounter born here, or an
-        // object of a kind it trades in) taps it until the next turn.
+        // its land is on the board, and one play there (a character born here, or an object of a
+        // kind it trades in) taps it until the next turn.
+        // Whose town it is and who holds it: a company of another side fights the dwellers before it
+        // can act here. The dwellers' name is a link the keyword hover expands into the army card.
+        if (!string.IsNullOrWhiteSpace(data.dwellers))
+            lines.Add("Dwellers: " + DwellersLink(data.dwellers) + ".");
         if (includeFoundingText)
         {
-            sb.Append("Destination: recruit characters and investigate encounters born here.");
+            lines.Add("Allows recruiting characters born here.");
             string wares = FormatObjectTypes(data);
-            if (!string.IsNullOrEmpty(wares)) sb.Append(" Trades in ").Append(wares).Append('.');
-            sb.Append(" One play here taps it for the turn.");
+            if (!string.IsNullOrEmpty(wares)) lines.Add("Playable objects: " + wares);
         }
 
-        return sb.ToString().Trim();
+        return string.Join("\n", lines);
     }
+
+    public const string CardLinkPrefix = "card:";
+    public static string DwellersLink(string cardName) => $"<link=\"{CardLinkPrefix}{cardName}\"><u>{cardName}</u></link>";
 
     public static string FormatObjectTypes(CardData data)
     {

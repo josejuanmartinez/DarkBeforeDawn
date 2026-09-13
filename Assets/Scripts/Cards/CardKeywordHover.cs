@@ -18,6 +18,11 @@ public sealed class CardKeywordHover : MonoBehaviour
     // One non-text target: the card's deck badge, an Image with nothing in the glossary to key on.
     private RectTransform badgeRect;
     private string badgeTitle, badgeBody;
+    // A "card:Name" link (the settlement's dwellers) expands into the named card itself rather than
+    // a glossary line. The board it is built with is looked up once; without one the text falls back.
+    private RectTransform cardHolder;
+    private Board board;
+    private bool boardLooked;
 
     public void RefreshTargets() => labels = GetComponentsInChildren<TMP_Text>(true);
 
@@ -43,7 +48,7 @@ public sealed class CardKeywordHover : MonoBehaviour
             if (character < link.linkTextfirstCharacterIndex || character >= link.linkTextfirstCharacterIndex + link.linkTextLength)
                 continue;
             string candidate = link.GetLinkID();
-            if (CardKeywordGlossary.TryGet(candidate, out _, out _)) { id = candidate; return true; }
+            if (CardKeywordGlossary.TryGet(candidate, out _, out _) || IsCardLink(candidate)) { id = candidate; return true; }
         }
         if (info.elementType != TMP_TextElementType.Sprite || !(info.textElement is TMP_SpriteCharacter spriteCharacter)) return false;
         string sprite = spriteCharacter.name;
@@ -69,6 +74,7 @@ public sealed class CardKeywordHover : MonoBehaviour
             var canvas = label.canvas != null ? label.canvas.rootCanvas : null;
             Camera camera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay ? canvas.worldCamera : null;
             if (!TryResolve(label, pointer, camera, out string id)) continue;
+            if (IsCardLink(id)) { ShowCard(id, pointer, label.font); return; }
             CardKeywordGlossary.TryGet(id, out string title, out string body);
             Show(id, title, body, pointer, label.font);
             return;
@@ -84,6 +90,39 @@ public sealed class CardKeywordHover : MonoBehaviour
             }
         }
         Hide();
+    }
+
+    public static bool IsCardLink(string id) => !string.IsNullOrEmpty(id) && id.StartsWith(PcDescriptionBuilder.CardLinkPrefix, System.StringComparison.Ordinal);
+
+    // The named card, drawn full size beside the pointer. Falls back to its text when the catalog
+    // does not know it or there is no board to build the visual with.
+    private void ShowCard(string id, Vector2 pointer, TMP_FontAsset font)
+    {
+        string name = id.Substring(PcDescriptionBuilder.CardLinkPrefix.Length);
+        var data = CardCatalog.FindCardByName(name);
+        if (!boardLooked) { board = FindAnyObjectByType<Board>(); boardLooked = true; }
+        if (data == null || board == null)
+        {
+            Show(id, name, data != null ? data.GetRenderedDescription() : "Dwellers of this settlement.", pointer, font);
+            return;
+        }
+        bool fresh = id != currentId;
+        Show(id, string.Empty, string.Empty, pointer, font);
+        if (fresh)
+        {
+            var holder = new GameObject("Card", typeof(RectTransform));
+            holder.transform.SetParent(panel, false);
+            cardHolder = holder.GetComponent<RectTransform>();
+            cardHolder.anchorMin = cardHolder.anchorMax = cardHolder.pivot = Vector2.one * .5f;
+            var natural = BoardCardView.BuildVisual(board, data, false, cardHolder);
+            BoardCardView.EnablePreviewArtworkMotion(cardHolder);
+            cardHolder.sizeDelta = natural;
+            float scale = Mathf.Min(1, Screen.height * .55f / natural.y);
+            cardHolder.localScale = Vector3.one * scale;
+            panel.sizeDelta = natural * scale + new Vector2(24, 24);
+            popupText.gameObject.SetActive(false);
+        }
+        Place(pointer, panel.sizeDelta.x, panel.sizeDelta.y);
     }
 
     private void Show(string id, string title, string body, Vector2 pointer, TMP_FontAsset font)
@@ -114,12 +153,21 @@ public sealed class CardKeywordHover : MonoBehaviour
         if (id != currentId)
         {
             currentId = id;
+            if (cardHolder != null) { Destroy(cardHolder.gameObject); cardHolder = null; }
+            popupText.gameObject.SetActive(true);
             if (font != null) popupText.font = font;
             popupText.text = "<b><color=#E8C681>" + title + "</color></b>\n" + body;
         }
+        // A card popup sizes and places itself once its visual exists.
+        if (cardHolder != null || IsCardLink(id) && string.IsNullOrEmpty(title)) return;
         float width = Mathf.Min(340, Screen.width - 16);
         float height = popupText.GetPreferredValues(popupText.text, width - 28, Mathf.Infinity).y + 24;
         panel.sizeDelta = new Vector2(width, height);
+        Place(pointer, width, height);
+    }
+
+    private void Place(Vector2 pointer, float width, float height)
+    {
         float x = pointer.x + 18, y = pointer.y - height - 18;
         if (x + width > Screen.width - 8) x = pointer.x - width - 18;
         if (y < 8) y = pointer.y + 18;
@@ -127,7 +175,12 @@ public sealed class CardKeywordHover : MonoBehaviour
             Mathf.Clamp(y, 8, Mathf.Max(8, Screen.height - height - 8)));
     }
 
-    private void Hide() { if (popupCanvas != null) popupCanvas.SetActive(false); currentId = null; }
+    private void Hide()
+    {
+        if (popupCanvas != null) popupCanvas.SetActive(false);
+        if (cardHolder != null) { Destroy(cardHolder.gameObject); cardHolder = null; }
+        currentId = null;
+    }
     private void OnDisable() => Hide();
     private void OnDestroy() { if (popupCanvas != null) Destroy(popupCanvas); }
 }

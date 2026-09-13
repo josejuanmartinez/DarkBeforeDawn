@@ -29,6 +29,22 @@ public enum RacesEnum
     Vampire = 21
 }
 
+// The ground a land is, and the ground an army fights on. A company travelling through a region can
+// only be attacked by, and defended with, armies of that region's terrain; characters fight anywhere.
+// Serialized by name (see CardData.terrain), so the order here is free.
+public enum TerrainEnum
+{
+    None = 0,
+    Plains,
+    Forest,
+    Hills,
+    Mountains,
+    Marsh,
+    Desert,
+    Coast,
+    Wasteland
+}
+
 public enum SexEnum
 {
     Male = 0,

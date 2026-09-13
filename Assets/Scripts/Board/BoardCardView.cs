@@ -74,7 +74,7 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
             tappedLabel.gameObject.AddComponent<Outline>().effectColor = Color.black;
         }
         // Recreated views start in their actual pose. Only subsequent state changes animate.
-        if (zone.board.Match != null) transform.localRotation = Quaternion.Euler(0, 0, zone.board.IsTapped(this) ? -90 : 0);
+        if (zone.board.Match != null) transform.localRotation = Quaternion.Euler(0, 0, PoseAngle());
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -105,18 +105,27 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
             var unit = Zone.board.Match?.Unit(this);
             string objects = unit != null && unit.Objects.Count > 0 ? "\n" + unit.Objects.Count + " OBJECTS" : "";
             var match = Zone.board.Match;
-            string state = Zone.board.IsTapped(this) ? (Data.GetCardType() == CardTypeEnum.PC ? "USED" : "TAPPED")
-                : match != null && match.Rules != null && match.Rules.IsNewUnit(unit) ? "NEW\nATTACK NEXT TURN"
+            bool settlement = Data.GetCardType() == CardTypeEnum.PC;
+            string state = unit != null && unit.Wounded ? "WOUNDED"
+                : Zone.board.IsTapped(this) ? (settlement ? (unit != null && !unit.Secured ? "CLOSED" : "USED") : unit != null && unit.Roadside ? "FROM HAND" : unit != null && unit.Recovering ? "HEALING" : unit != null && unit.IsCombatant && unit.EnteredTurn == match.Rules.Turn && unit.Owner == match.Rules.Active ? "MUSTERING" : "TAPPED")
+                : settlement && unit != null && !unit.Secured ? "HELD BY\nDWELLERS"
                 : match != null && match.IsDestination(this) && match.Rules.Stage == MatchStage.Destination ? "CURRENT" : "";
             tappedLabel.text = state + objects;
             tappedLabel.gameObject.SetActive(tappedLabel.text.Length > 0);
         }
         if (Zone != null && Zone.board.Match != null && Zone != Zone.board.hand)
-            transform.localRotation = Quaternion.Slerp(transform.localRotation,
-                Quaternion.Euler(0, 0, Zone.board.IsTapped(this) ? -90 : 0), Time.unscaledDeltaTime * 12);
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(0, 0, PoseAngle()), Time.unscaledDeltaTime * 12);
         if (highlight != null) highlight.alpha = Mathf.MoveTowards(highlight.alpha, targetHighlight, Time.unscaledDeltaTime * BoardPresentation.SkinFor(transform).tokens.highlightFadeSpeed);
         ActionHighlighted = Zone != null && Zone.board.Match != null && Zone.board.Match.IsActionable(this);
         if (actionHighlight != null) actionHighlight.alpha = ActionHighlighted ? .75f + .25f * Mathf.Sin(Time.unscaledTime * 3) : 0;
+    }
+
+    // A tapped card lies on its side; a wounded character is turned on its head.
+    private float PoseAngle()
+    {
+        var unit = Zone.board.Match?.Unit(this);
+        if (unit != null && unit.Wounded) return 180;
+        return Zone.board.IsTapped(this) ? -90 : 0;
     }
 
     private void SetArtworkHover(bool hovered)

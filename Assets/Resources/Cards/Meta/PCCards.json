@@ -81,7 +81,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Dwarven Pikeshields"
         },
         {
             "cardId": 40002,
@@ -161,7 +163,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Riders of Horse Plains"
         },
         {
             "cardId": 40003,
@@ -241,7 +245,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Lore Seekers"
         },
         {
             "cardId": 40004,
@@ -321,7 +327,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Hillmen"
         },
         {
             "cardId": 40005,
@@ -401,7 +409,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Elven Scouts"
         },
         {
             "cardId": 40006,
@@ -481,7 +491,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Firstblood Rangers"
         },
         {
             "cardId": 40007,
@@ -561,7 +573,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Wyldmoor Warriors"
         },
         {
             "cardId": 40008,
@@ -641,7 +655,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Eastern Raiders"
         },
         {
             "cardId": 40009,
@@ -721,7 +737,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Wardens of Old Kingshold"
         },
         {
             "cardId": 40010,
@@ -801,7 +819,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Wyldmoor Archers"
         },
         {
             "cardId": 40011,
@@ -881,7 +901,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Corsair Coast Riders"
         },
         {
             "cardId": 40012,
@@ -961,7 +983,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Eastern Warbands"
         },
         {
             "cardId": 40013,
@@ -1041,7 +1065,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Dwarven Axemen"
         },
         {
             "cardId": 40014,
@@ -1121,7 +1147,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Weftmarch Orcs"
         },
         {
             "cardId": 40015,
@@ -1201,7 +1229,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Cinderplain Militia"
         },
         {
             "cardId": 40016,
@@ -1281,7 +1311,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Southlands Infantry"
         },
         {
             "cardId": 40017,
@@ -1361,7 +1393,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Fallen Men Guard"
         },
         {
             "cardId": 40018,
@@ -1441,7 +1475,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Dwarven Pikeshields"
         },
         {
             "cardId": 40019,
@@ -1521,7 +1557,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Undead"
         },
         {
             "cardId": 40020,
@@ -1601,7 +1639,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Dwarven Miners"
         },
         {
             "cardId": 40021,
@@ -1681,7 +1721,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Bears"
         },
         {
             "cardId": 40022,
@@ -1761,7 +1803,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Men of Crossway"
         },
         {
             "cardId": 40023,
@@ -1841,7 +1885,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Halfling Archers"
         },
         {
             "cardId": 40024,
@@ -1921,7 +1967,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Woodmen"
         },
         {
             "cardId": 40025,
@@ -2001,7 +2049,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Wainfolk Riders"
         },
         {
             "cardId": 40026,
@@ -2081,7 +2131,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Halfling Slingers"
         },
         {
             "cardId": 40027,
@@ -2161,7 +2213,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Kingsquay Fleet"
         },
         {
             "cardId": 40028,
@@ -2241,7 +2295,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Corsair Coast Cavalry"
         },
         {
             "cardId": 40029,
@@ -2321,7 +2377,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Hillmen"
         },
         {
             "cardId": 40030,
@@ -2401,7 +2459,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Ironmaw Garrison"
         },
         {
             "cardId": 40031,
@@ -2481,7 +2541,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Black Crows"
         },
         {
             "cardId": 40032,
@@ -2561,7 +2623,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "The Golden Host"
         },
         {
             "cardId": 40033,
@@ -2641,7 +2705,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Nightwood Elves"
         },
         {
             "cardId": 40034,
@@ -2721,7 +2787,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Blackshaft Men"
         },
         {
             "cardId": 40035,
@@ -2801,7 +2869,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Pirates"
         },
         {
             "cardId": 40036,
@@ -2881,7 +2951,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Coastal Corsairs"
         },
         {
             "cardId": 40037,
@@ -2961,7 +3033,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Grimhold Levies"
         },
         {
             "cardId": 40038,
@@ -3041,7 +3115,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Eastlands Cataphracts"
         },
         {
             "cardId": 40039,
@@ -3122,7 +3198,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Nightwood Warriors"
         },
         {
             "cardId": 40040,
@@ -3202,7 +3280,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Nightwood Archers"
         },
         {
             "cardId": 40041,
@@ -3282,7 +3362,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Dragon Hunters"
         },
         {
             "cardId": 40042,
@@ -3362,7 +3444,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Goldenwood Archers"
         },
         {
             "cardId": 40043,
@@ -3442,7 +3526,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Weft Stair Guards"
         },
         {
             "cardId": 40044,
@@ -3522,7 +3608,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Hedge Wardens"
         },
         {
             "cardId": 40045,
@@ -3602,7 +3690,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Blackshaft Men"
         },
         {
             "cardId": 40046,
@@ -3682,7 +3772,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Bog Swarm"
         },
         {
             "cardId": 40047,
@@ -3762,7 +3854,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Tree Guardians"
         },
         {
             "cardId": 40048,
@@ -3842,7 +3936,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Undead"
         },
         {
             "cardId": 40049,
@@ -3922,7 +4018,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Knights of Swanhold"
         },
         {
             "cardId": 40050,
@@ -4002,7 +4100,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Oldgrowth Woodfolk"
         },
         {
             "cardId": 40051,
@@ -4082,7 +4182,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Riders of Horse Plains"
         },
         {
             "cardId": 40052,
@@ -4162,7 +4264,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Blackfort Orcs"
         },
         {
             "cardId": 40053,
@@ -4242,7 +4346,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Beasts"
         },
         {
             "cardId": 40054,
@@ -4322,7 +4428,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Riders of Horse Plains"
         },
         {
             "cardId": 40055,
@@ -4402,7 +4510,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Elven Fleet"
         },
         {
             "cardId": 40056,
@@ -4482,7 +4592,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Kingshall Guards"
         },
         {
             "cardId": 40057,
@@ -4562,7 +4674,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Coastal Corsairs"
         },
         {
             "cardId": 40058,
@@ -4643,7 +4757,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Elven Warriors"
         },
         {
             "cardId": 40059,
@@ -4723,7 +4839,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Wyldmoor Warriors"
         },
         {
             "cardId": 40060,
@@ -4803,7 +4921,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Reclaimers of Lonely Mountain"
         },
         {
             "cardId": 40061,
@@ -4883,7 +5003,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Sunlands Infantry"
         },
         {
             "cardId": 40062,
@@ -4963,7 +5085,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Woodmen"
         },
         {
             "cardId": 40063,
@@ -5043,7 +5167,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Wine Country Mariners"
         },
         {
             "cardId": 40064,
@@ -5123,7 +5249,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "War Orcs"
         },
         {
             "cardId": 40065,
@@ -5205,7 +5333,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Sunlands Archers"
         },
         {
             "cardId": 40066,
@@ -5285,7 +5415,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Hillmen"
         },
         {
             "cardId": 40067,
@@ -5365,7 +5497,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Elven Fleet"
         },
         {
             "cardId": 40068,
@@ -5445,7 +5579,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Wardens of Old Kingshold"
         },
         {
             "cardId": 40069,
@@ -5525,7 +5661,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Rimefolk"
         },
         {
             "cardId": 40070,
@@ -5605,7 +5743,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Blackshaft Men"
         },
         {
             "cardId": 40071,
@@ -5685,7 +5825,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Wyldmoor Warriors"
         },
         {
             "cardId": 40072,
@@ -5765,7 +5907,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Nightwood Warriors"
         },
         {
             "cardId": 40073,
@@ -5845,7 +5989,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Rivermen"
         },
         {
             "cardId": 40074,
@@ -5925,7 +6071,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Cave Goblins"
         },
         {
             "cardId": 40075,
@@ -6005,7 +6153,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Cave Trolls"
         },
         {
             "cardId": 40076,
@@ -6085,7 +6235,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "War Wolf Riders"
         },
         {
             "cardId": 40077,
@@ -6165,7 +6317,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Elven Fleet"
         },
         {
             "cardId": 40078,
@@ -6245,7 +6399,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Coastal Corsairs"
         },
         {
             "cardId": 40079,
@@ -6325,7 +6481,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Riders of Horse Plains"
         },
         {
             "cardId": 40080,
@@ -6405,7 +6563,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Rangers of the Greenmarch"
         },
         {
             "cardId": 40081,
@@ -6485,7 +6645,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Hedge Wardens"
         },
         {
             "cardId": 40082,
@@ -6565,7 +6727,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Eastlands Cataphracts"
         },
         {
             "cardId": 40083,
@@ -6645,7 +6809,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Sunlands Infantry"
         },
         {
             "cardId": 40084,
@@ -6725,7 +6891,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Half Elves"
         },
         {
             "cardId": 40085,
@@ -6805,7 +6973,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Pirates"
         },
         {
             "cardId": 40086,
@@ -6885,7 +7055,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Camel Riders"
         },
         {
             "cardId": 40087,
@@ -6965,7 +7137,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Slave Fields Reavers"
         },
         {
             "cardId": 40088,
@@ -7045,7 +7219,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Southlands Infantry"
         },
         {
             "cardId": 40089,
@@ -7125,7 +7301,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Southlands Cavalry"
         },
         {
             "cardId": 40090,
@@ -7205,7 +7383,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Steppe Warriors"
         },
         {
             "cardId": 40091,
@@ -7285,7 +7465,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Goblins of Deepdelve"
         },
         {
             "cardId": 40092,
@@ -7365,7 +7547,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Dwarven Miners"
         },
         {
             "cardId": 40093,
@@ -7445,7 +7629,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Ashlands Wolf-riders"
         },
         {
             "cardId": 40094,
@@ -7525,7 +7711,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Goblin Sappers"
         },
         {
             "cardId": 40095,
@@ -7605,7 +7793,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Steppe Warriors"
         },
         {
             "cardId": 40096,
@@ -7685,7 +7875,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Blackfort Orcs"
         },
         {
             "cardId": 40097,
@@ -7765,7 +7957,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Cinderplain Militia"
         },
         {
             "cardId": 40098,
@@ -7845,7 +8039,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Eastlands Corsairs"
         },
         {
             "cardId": 40099,
@@ -7925,7 +8121,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Wyldmoor Archers"
         },
         {
             "cardId": 40100,
@@ -8005,7 +8203,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Hobgoblins"
         },
         {
             "cardId": 40101,
@@ -8085,7 +8285,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Sunlands Infantry"
         },
         {
             "cardId": 40102,
@@ -8165,7 +8367,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Ships"
         },
         {
             "cardId": 40103,
@@ -8245,7 +8449,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Southlands Infantry"
         },
         {
             "cardId": 40104,
@@ -8325,7 +8531,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Slave Fields Cavalry"
         },
         {
             "cardId": 40105,
@@ -8405,7 +8613,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Rivermen"
         },
         {
             "cardId": 40106,
@@ -8485,7 +8695,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Wardens of Old Kingshold"
         },
         {
             "cardId": 40107,
@@ -8565,7 +8777,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Southlands Infantry"
         },
         {
             "cardId": 40108,
@@ -8645,7 +8859,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Halfling Archers"
         },
         {
             "cardId": 40109,
@@ -8725,7 +8941,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Fallen Men Guard"
         },
         {
             "cardId": 40110,
@@ -8805,7 +9023,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Pale City Orcs"
         },
         {
             "cardId": 40111,
@@ -8887,7 +9107,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Sunspire Wardens"
         },
         {
             "cardId": 40112,
@@ -8967,7 +9189,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Tower Guards"
         },
         {
             "cardId": 40113,
@@ -9047,7 +9271,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Eastlands Corsairs"
         },
         {
             "cardId": 40114,
@@ -9127,7 +9353,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Ironmaw Garrison"
         },
         {
             "cardId": 40115,
@@ -9207,7 +9435,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Sunlands Archers"
         },
         {
             "cardId": 40116,
@@ -9287,7 +9517,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Cinderplain Militia"
         },
         {
             "cardId": 40117,
@@ -9367,7 +9599,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Snow Trolls"
         },
         {
             "cardId": 40118,
@@ -9447,7 +9681,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Goldenwood Archers"
         },
         {
             "cardId": 40119,
@@ -9527,7 +9763,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Eastern Raiders"
         },
         {
             "cardId": 40120,
@@ -9607,7 +9845,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Bog Swarm"
         },
         {
             "cardId": 40121,
@@ -9687,7 +9927,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Dwarven Pikeshields"
         },
         {
             "cardId": 40122,
@@ -9767,7 +10009,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Dwarven Explorers"
         },
         {
             "cardId": 40123,
@@ -9847,7 +10091,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Slave Fields Reavers"
         },
         {
             "cardId": 40124,
@@ -9927,7 +10173,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Weftmarch Orcs"
         },
         {
             "cardId": 40125,
@@ -10007,7 +10255,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Tree Guardians"
         },
         {
             "cardId": 40126,
@@ -10087,7 +10337,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Forest Orcs"
         },
         {
             "cardId": 40127,
@@ -10167,7 +10419,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Slave Fields Reavers"
         },
         {
             "cardId": 40128,
@@ -10248,7 +10502,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Tower Wardens"
         },
         {
             "cardId": 40129,
@@ -10329,7 +10585,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Rangers of the Greenmarch"
         },
         {
             "cardId": 40130,
@@ -10409,7 +10667,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Lore Seekers"
         },
         {
             "cardId": 40131,
@@ -10489,7 +10749,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Fallen Men Guard"
         },
         {
             "cardId": 40132,
@@ -10569,7 +10831,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Steppe Warriors"
         },
         {
             "cardId": 40133,
@@ -10649,7 +10913,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Black Crows"
         },
         {
             "cardId": 40134,
@@ -10729,7 +10995,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Kingsquay Fleet"
         },
         {
             "cardId": 40135,
@@ -10809,7 +11077,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Corsair Coast Cavalry"
         },
         {
             "cardId": 40136,
@@ -10889,7 +11159,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Coastal Corsairs"
         },
         {
             "cardId": 40137,
@@ -10969,7 +11241,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Sunlands Infantry"
         },
         {
             "cardId": 40138,
@@ -11049,7 +11323,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Beast of the Woods"
         },
         {
             "cardId": 40139,
@@ -11129,7 +11405,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Dragon Hunters"
         },
         {
             "cardId": 40140,
@@ -11209,7 +11487,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Coastal Corsairs"
         },
         {
             "cardId": 40141,
@@ -11289,7 +11569,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Slave Fields Reavers"
         },
         {
             "cardId": 40142,
@@ -11369,7 +11651,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Firstblood Rangers"
         },
         {
             "cardId": 40143,
@@ -11449,7 +11733,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Rivermen"
         },
         {
             "cardId": 40144,
@@ -11529,7 +11815,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Forest Spiders"
         },
         {
             "cardId": 40145,
@@ -11609,7 +11897,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Torch Bearers"
         },
         {
             "cardId": 40146,
@@ -11689,7 +11979,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Spawn of the Weaver"
         },
         {
             "cardId": 40147,
@@ -11769,7 +12061,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Wine Country Bowmen"
         },
         {
             "cardId": 40148,
@@ -11849,7 +12143,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Halfling Slingers"
         },
         {
             "cardId": 40149,
@@ -11929,7 +12225,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Riders of Horse Plains"
         },
         {
             "cardId": 40150,
@@ -12009,7 +12307,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Steppe Warriors"
         },
         {
             "cardId": 40151,
@@ -12089,7 +12389,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Rivermen"
         },
         {
             "cardId": 40152,
@@ -12169,7 +12471,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Dwarven Miners"
         },
         {
             "cardId": 40153,
@@ -12249,7 +12553,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Ruffians"
         },
         {
             "cardId": 40154,
@@ -12329,7 +12635,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Mounted Firstblood Rangers"
         },
         {
             "cardId": 40155,
@@ -12409,7 +12717,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Bears"
         },
         {
             "cardId": 40156,
@@ -12489,7 +12799,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Stone Trolls"
         },
         {
             "cardId": 40157,
@@ -12569,7 +12881,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Elven Fleet"
         },
         {
             "cardId": 40158,
@@ -12649,7 +12963,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Ruffians"
         },
         {
             "cardId": 40159,
@@ -12729,7 +13045,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Stone Trolls"
         },
         {
             "cardId": 40160,
@@ -12809,7 +13127,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Dwarven Axemen"
         },
         {
             "cardId": 40161,
@@ -12890,7 +13210,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Woodking's Guards"
         },
         {
             "cardId": 40162,
@@ -12970,7 +13292,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "War Trolls"
         },
         {
             "cardId": 40163,
@@ -13050,7 +13374,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Creatures of the Deeps"
         },
         {
             "cardId": 40164,
@@ -13130,7 +13456,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Wyldmoor Warriors"
         },
         {
             "cardId": 40165,
@@ -13210,7 +13538,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Slave Fields Cavalry"
         },
         {
             "cardId": 40166,
@@ -13290,7 +13620,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "War Elephants"
         },
         {
             "cardId": 40167,
@@ -13370,7 +13702,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Coastal Corsairs"
         },
         {
             "cardId": 40168,
@@ -13450,7 +13784,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 1,
+            "dwellers": "Southlands Infantry"
         },
         {
             "cardId": 40169,
@@ -13530,7 +13866,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 2,
+            "dwellers": "Horse-lord Guards"
         },
         {
             "cardId": 40170,
@@ -13610,7 +13948,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Woodmen"
         },
         {
             "cardId": 40171,
@@ -13690,7 +14030,9 @@
             "scryObjectBonus": 0,
             "grantsEnvironmentalImmunity": false,
             "situation": "",
-            "situation2": ""
+            "situation2": "",
+            "settlementAlignment": 0,
+            "dwellers": "Dwarven Explorers"
         }
     ],
     "cardRefs": []

@@ -62,6 +62,8 @@ public class CardData
     // MTG-style combat line for armies and characters.
     public int attack;
     public int defense;
+    // Land and Army: the ground it is / fights on, as a TerrainEnum name (AgentScripts/assign_terrains.py).
+    public string terrain = string.Empty;
 
     // --- Requirement icons (the cost row under the art) ----------------------------------------
     public int commanderSkillRequired;
@@ -89,6 +91,14 @@ public class CardData
     public bool isUnderground;
     // PC-only: the kinds of object that can be equipped while this settlement is the destination.
     public List<ObjectTypeEnum> objectTypes = new();
+    // PC-only: the side the settlement itself belongs to (0 Free People, 1 Dark Servants, 2 Neutral),
+    // derived from which decks list it (AgentScripts/assign_settlements.py). Kept apart from
+    // `alignment`, which a reference deck re-stamps with its own side when it deals the card.
+    public int settlementAlignment = NeutralAlignment;
+    // PC-only: the army card that holds the settlement. A company that is not welcome fights it
+    // before it can act there.
+    public string dwellers = string.Empty;
+    public const int FreePeople = 0, DarkServants = 1, NeutralAlignment = 2;
 
     // --- Object card face -----------------------------------------------------------------------
     public bool hidden;
@@ -178,6 +188,24 @@ public class CardData
             return (birthplaces ?? new List<string>()).Where(b => !string.IsNullOrWhiteSpace(b));
         return Enumerable.Empty<string>();
     }
+
+    public TerrainEnum GetTerrain() => Enum.TryParse(terrain, true, out TerrainEnum value) ? value : TerrainEnum.None;
+    /// <summary>Whether this unit can fight on the given ground: characters anywhere, armies only on their own terrain.</summary>
+    public bool FightsOn(TerrainEnum ground)
+    {
+        var cardType = GetCardType();
+        if (cardType == CardTypeEnum.Character) return true;
+        if (cardType != CardTypeEnum.Army) return false;
+        var own = GetTerrain();
+        return own == TerrainEnum.None || ground == TerrainEnum.None || own == ground;
+    }
+
+    public bool IsSettlement() => GetCardType() == CardTypeEnum.PC;
+    public bool IsNeutralSettlement() => IsSettlement() && settlementAlignment == NeutralAlignment;
+    public static string AlignmentLabel(int alignment) => alignment switch
+    {
+        FreePeople => "Free People", DarkServants => "Dark Servants", _ => "Neutral"
+    };
 
     public bool IsBornAt(string pcName)
         => GetBirthplaces().Any(b => string.Equals(b.Trim(), pcName?.Trim(), StringComparison.OrdinalIgnoreCase));
@@ -369,6 +397,8 @@ public class CardData
         string baseText = string.IsNullOrWhiteSpace(raceLabel)
             ? $"{troopLabel} {spriteTag}."
             : $"{raceLabel}. {troopLabel} {spriteTag}.";
+        // Where it fights: on the road an army only strikes or stands in regions of its own ground.
+        if (GetTerrain() != TerrainEnum.None) baseText += $" {GetTerrain()} ground.";
         return abilities.Count > 0 ? $"{baseText} {string.Join(". ", abilities)}." : baseText;
     }
 
@@ -446,6 +476,8 @@ public class CardData
         {
             parts.Add($"{PcDescriptionBuilder.FormatDisplayRegionName(region)}.");
         }
+        // The ground a company crosses here, and so which armies can fall on it.
+        if (GetTerrain() != TerrainEnum.None) parts.Add($"{GetTerrain()} ground.");
 
         List<string> grants = new();
         if (leatherGranted > 0) grants.Add(leatherGranted + SpriteTag("leather"));
@@ -460,7 +492,7 @@ public class CardData
         // A land is named after its region (the region field itself is blank on land cards).
         if (!string.IsNullOrWhiteSpace(name))
         {
-            parts.Add($"Allows playing Population Centers from {PcDescriptionBuilder.FormatDisplayRegionName(name)}.");
+            parts.Add($"Allows travelling to Population Centers from {PcDescriptionBuilder.FormatDisplayRegionName(name)}.");
         }
 
         return string.Join(" ", parts.Where(part => !string.IsNullOrWhiteSpace(part)));
