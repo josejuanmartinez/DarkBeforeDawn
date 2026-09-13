@@ -29,6 +29,10 @@ public sealed class MatchRules
         public readonly List<Unit> Blockers = new();
     }
     public sealed class Loot { public CardData Card; public int Owner; public bool Offered; }
+    // Everything a play touched, so it can be put back. Cleared at every stage change: once the
+    // stage is passed there is no way back.
+    sealed class Played { public CardData Card; public int HandIndex; public Unit Unit, Recipient; public PlayerMaterials Spent; }
+    readonly Stack<Played> played = new();
     public readonly Player[] Players = { new(), new() };
     public readonly List<Strike> Attacks = new();
     public readonly Queue<Loot> Spoils = new();
@@ -44,7 +48,7 @@ public sealed class MatchRules
     public void Begin(int first) { Turn = 0; Winner = -1; StartTurn(first); }
     void StartTurn(int player)
     {
-        Active = player; Turn++; Stage = MatchStage.Draw; Attacks.Clear();
+        Active = player; Turn++; Stage = MatchStage.Draw; Attacks.Clear(); played.Clear();
         foreach (var u in Players[player].Field)
             if (!u.Card.statusEffects.Contains(StatusEffects.Halted)) u.Tapped = false;
         var current = Players[player];
@@ -87,12 +91,30 @@ public sealed class MatchRules
         var reason = PlayBlockReason(card, recipient, false);
         if (reason != null) return Reject(reason);
         var p = Players[Active]; var type = card.GetCardType();
+        var before = p.Mana.Copy();
         if (!p.Mana.TrySpend(card)) return Reject("Not enough mana/materials.");
+        var record = new Played { Card = card, HandIndex = p.Hand.IndexOf(card), Recipient = recipient, Spent = p.Mana.SpentSince(before) };
         p.Hand.Remove(card);
         if (type == CardTypeEnum.Object) recipient.Objects.Add(card);
         else if (type == CardTypeEnum.Event) { ResolveEvent(card, Active, this); p.Discard.Add(card); }
-        else p.Field.Add(new Unit { Card = card, Owner = Active, EnteredTurn = Turn });
+        else p.Field.Add(record.Unit = new Unit { Card = card, Owner = Active, EnteredTurn = Turn });
+        // An event's effect is whatever its handler did and cannot be walked back, so nothing
+        // played before it can be either.
+        if (type == CardTypeEnum.Event) played.Clear(); else played.Push(record);
         Message = card.name + " played."; return true;
+    }
+    public bool CanUndo => Winner < 0 && played.Count > 0;
+    public CardData LastPlayed => played.Count > 0 ? played.Peek().Card : null;
+    /// <summary>Returns the last card played this stage to the hand and refunds what it cost.</summary>
+    public bool Undo()
+    {
+        if (!CanUndo) return Reject("Nothing to take back this stage.");
+        var record = played.Pop(); var p = Players[Active];
+        if (record.Unit != null) p.Field.Remove(record.Unit);
+        else record.Recipient?.Objects.Remove(record.Card);
+        p.Hand.Insert(Math.Clamp(record.HandIndex, 0, p.Hand.Count), record.Card);
+        p.Mana.Refund(record.Spent);
+        Message = record.Card.name + " returned to hand."; return true;
     }
     static bool Same(string a, string b) => !string.IsNullOrWhiteSpace(a) && string.Equals(a.Trim(), b?.Trim(), StringComparison.OrdinalIgnoreCase);
     public bool CanTapLand(Unit unit) => unit != null && Winner < 0 && (Stage == MatchStage.Muster || Stage == MatchStage.Events) && unit.Owner == Active &&
@@ -145,6 +167,7 @@ public sealed class MatchRules
     public bool Next()
     {
         if (Winner >= 0) return false;
+        played.Clear();
         if (Stage == MatchStage.Spoils)
         {
             if (Spoils.Count > 0) return Reject("Resolve the remaining objects first.");

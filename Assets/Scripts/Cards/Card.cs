@@ -331,6 +331,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             // placeholder sprite is authored on the prefab enabled (most cards have no deck badge).
             deckTypeImage.sprite = deckSprite;
             deckTypeImage.enabled = deckSprite != null;
+            // The badge is the one glyph on the face that no text explains, so it gets the same
+            // popup the keyword icons use.
+            GetComponent<CardKeywordHover>()?.SetBadge(deckTypeImage.rectTransform, DeckBadgeTitle(data), DeckBadgeBody(data));
         }
 
         if (data.IsEncounterCard() && !data.encounterRevealed)
@@ -958,34 +961,57 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private string BuildRequirementsText(CardData data)
     {
         if (data == null) return string.Empty;
-        List<string> reqs = new();
+        // Skill ratings gate the card; materials pay for it. Labelled apart so a commander
+        // rating never reads as something the card consumes.
+        List<string> needs = new(), costs = new();
 
         if (data.GetCardType() != CardTypeEnum.Army)
         {
-        AppendRequirement(reqs, "commander", data.commanderSkillRequired);
-        AppendRequirement(reqs, "agent", data.agentSkillRequired);
-        AppendRequirement(reqs, "emmissary", data.emissarySkillRequired);
-        AppendRequirement(reqs, "mage", data.mageSkillRequired);
+        AppendRequirement(needs, "commander", data.commanderSkillRequired);
+        AppendRequirement(needs, "agent", data.agentSkillRequired);
+        AppendRequirement(needs, "emmissary", data.emissarySkillRequired);
+        AppendRequirement(needs, "mage", data.mageSkillRequired);
         }
 
-        AppendRequirement(reqs, "gold", data.GetTotalGoldCost());
+        AppendRequirement(costs, "gold", data.GetTotalGoldCost());
 
-        AppendRequirement(reqs, "leather", data.leatherRequired);
-        AppendRequirement(reqs, "timber", data.timberRequired);
-        AppendRequirement(reqs, "mounts", data.mountsRequired);
-        AppendRequirement(reqs, "iron", data.ironRequired);
-        AppendRequirement(reqs, "steel", data.steelRequired);
-        AppendRequirement(reqs, "mithril", data.mithrilRequired);
+        AppendRequirement(costs, "leather", data.leatherRequired);
+        AppendRequirement(costs, "timber", data.timberRequired);
+        AppendRequirement(costs, "mounts", data.mountsRequired);
+        AppendRequirement(costs, "iron", data.ironRequired);
+        AppendRequirement(costs, "steel", data.steelRequired);
+        AppendRequirement(costs, "mithril", data.mithrilRequired);
+
+        List<string> reqs = new();
+        if (needs.Count > 0) reqs.Add($"Needs: {string.Join(" ", needs)}");
+        if (costs.Count > 0) reqs.Add($"Costs: {string.Join(" ", costs)}");
 
         string situationLabel = FormatSituationLabel(data);
         if (!string.IsNullOrWhiteSpace(situationLabel))
         {
-            string costPart = reqs.Count > 0 ? $"\n{string.Join(" ", reqs)}" : string.Empty;
+            string costPart = reqs.Count > 0 ? $"\n{string.Join("   ", reqs)}" : string.Empty;
             return $"{situationLabel}{costPart}";
         }
 
         if (reqs.Count == 0) return string.Empty;
-        return string.Join(" ", reqs);
+        return string.Join("   ", reqs);
+    }
+
+    // The deck badge marks which deck dealt this card: the same card drawn from two avatars' decks
+    // differs only in this glyph, so the popup names the deck rather than the card.
+    private static string DeckBadgeTitle(CardData data)
+    {
+        if (!CardCatalog.TryResolveDeck(data.deckId, out DeckManifestEntry deck)) return "Deck symbol";
+        string name = PcDescriptionBuilder.FormatDisplayRegionName(deck.deckId.Replace('_', ' '));
+        return deck.isMetaDeck ? $"{name} pool" : $"{name} deck";
+    }
+
+    private static string DeckBadgeBody(CardData data)
+    {
+        if (!CardCatalog.TryResolveDeck(data.deckId, out DeckManifestEntry deck))
+            return "Marks the deck this card was dealt from.";
+        string nation = !string.IsNullOrWhiteSpace(deck.nation) && deck.nation != "Meta" ? deck.nation + ". " : string.Empty;
+        return $"{nation}{deck.thematic}".Trim();
     }
 
     private string FormatSituationLabel(CardData data)

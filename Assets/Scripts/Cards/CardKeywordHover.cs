@@ -15,8 +15,16 @@ public sealed class CardKeywordHover : MonoBehaviour
     private RectTransform panel;
     private TextMeshProUGUI popupText;
     private string currentId;
+    // One non-text target: the card's deck badge, an Image with nothing in the glossary to key on.
+    private RectTransform badgeRect;
+    private string badgeTitle, badgeBody;
 
     public void RefreshTargets() => labels = GetComponentsInChildren<TMP_Text>(true);
+
+    public void SetBadge(RectTransform rect, string title, string body)
+    {
+        badgeRect = rect; badgeTitle = title; badgeBody = body;
+    }
 
     public static bool TryResolve(TMP_Text label, Vector2 pointer, Camera camera, out string id)
     {
@@ -53,19 +61,32 @@ public sealed class CardKeywordHover : MonoBehaviour
         Transform hit = hits[0].gameObject.transform;
         if (!hit.IsChildOf(transform) && !transform.IsChildOf(hit)) { Hide(); return; }
         if (labels == null) RefreshTargets();
+        TMP_FontAsset font = null;
         foreach (var label in labels)
         {
             if (label == null) continue;
+            font ??= label.font;
             var canvas = label.canvas != null ? label.canvas.rootCanvas : null;
             Camera camera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay ? canvas.worldCamera : null;
             if (!TryResolve(label, pointer, camera, out string id)) continue;
-            Show(id, pointer, label.font);
+            CardKeywordGlossary.TryGet(id, out string title, out string body);
+            Show(id, title, body, pointer, label.font);
             return;
+        }
+        if (badgeRect != null && badgeRect.gameObject.activeInHierarchy && badgeRect.GetComponent<Image>()?.enabled == true)
+        {
+            var canvas = badgeRect.GetComponentInParent<Canvas>()?.rootCanvas;
+            Camera camera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay ? canvas.worldCamera : null;
+            if (RectTransformUtility.RectangleContainsScreenPoint(badgeRect, pointer, camera))
+            {
+                Show("badge", badgeTitle, badgeBody, pointer, font);
+                return;
+            }
         }
         Hide();
     }
 
-    private void Show(string id, Vector2 pointer, TMP_FontAsset font)
+    private void Show(string id, string title, string body, Vector2 pointer, TMP_FontAsset font)
     {
         if (popupCanvas == null)
         {
@@ -93,8 +114,7 @@ public sealed class CardKeywordHover : MonoBehaviour
         if (id != currentId)
         {
             currentId = id;
-            CardKeywordGlossary.TryGet(id, out string title, out string body);
-            popupText.font = font;
+            if (font != null) popupText.font = font;
             popupText.text = "<b><color=#E8C681>" + title + "</color></b>\n" + body;
         }
         float width = Mathf.Min(340, Screen.width - 16);

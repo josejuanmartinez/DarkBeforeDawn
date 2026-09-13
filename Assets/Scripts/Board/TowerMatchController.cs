@@ -21,7 +21,7 @@ public sealed class TowerMatchController : MonoBehaviour
     public int Floor { get; private set; }
     Board board;
     Text headline, hint, nextText, deckLabel;
-    Button next, offer;
+    Button next, offer, undo;
     RectTransform deckAnchor;
     MatchCinematic cinematic;
     CardData pendingObject;
@@ -102,8 +102,10 @@ public sealed class TowerMatchController : MonoBehaviour
         ownedUI.Add(bar.gameObject);
         BoardPresentation.Stretch(bar.rectTransform, new Vector2(.15f,.91f), new Vector2(.87f,.995f));
         BoardPresentation.Border(bar.rectTransform, new Color(.72f,.53f,.26f));
-        headline = Label(bar.transform, "THE ASCENT", 20, new Vector2(.02f,.46f), new Vector2(.76f,.98f));
-        hint = Label(bar.transform, "Orren vs The Sleepless Eye", 12, new Vector2(.02f,.02f), new Vector2(.76f,.46f));
+        headline = Label(bar.transform, "THE ASCENT", 20, new Vector2(.02f,.46f), new Vector2(.62f,.98f));
+        hint = Label(bar.transform, "Orren vs The Sleepless Eye", 12, new Vector2(.02f,.02f), new Vector2(.62f,.46f));
+        undo = Button(bar.transform, "\u2190 UNDO", new Vector2(.63f,.15f), new Vector2(.76f,.85f), Undo);
+        undo.gameObject.SetActive(false);
         next = Button(bar.transform, "CONTINUE", new Vector2(.77f,.15f), new Vector2(.98f,.85f), Advance);
         nextText = next.GetComponentInChildren<Text>();
         var old = transform.Find("Your materials/End turn"); if (old != null) old.gameObject.SetActive(false);
@@ -180,6 +182,16 @@ public sealed class TowerMatchController : MonoBehaviour
         { pendingObject = view.Data; selectionHint = "Select your character to carry " + pendingObject.name + "."; board.preview?.Hide(); UpdateHUD(); return true; }
         bool result = Rules.Play(view.Data); selectionHint = null; Sync(); return result;
     }
+    /// <summary>Takes back the human's last play of this stage. A stage change forgets the stack.</summary>
+    public void Undo()
+    {
+        if (!CanInteract || Rules.Active != 0 || !Rules.CanUndo) return;
+        pendingObject = null; selectionHint = null;
+        Rules.Undo(); Sync();
+    }
+    // While a play can still be taken back the stage waits for NEXT STAGE, otherwise the automatic
+    // advance would quietly wipe the undo half a second after the last card was played.
+    bool HoldingForUndo => Rules.Active == 0 && Rules.CanUndo;
     public bool Select(BoardCardView view)
     {
         if (!CanInteract) return false;
@@ -227,7 +239,7 @@ public sealed class TowerMatchController : MonoBehaviour
     /// <summary>Called only after draw animations finish. One transition per tick avoids runaway empty turns.</summary>
     public bool AdvanceIfNoActions()
     {
-        if (!CanInteract || Rules.HasLegalAction()) return false;
+        if (!CanInteract || Rules.HasLegalAction() || HoldingForUndo) return false;
         pendingObject = null; pendingAttacker = pendingDefender = null; selectionHint = null;
         Rules.Next(); Sync(); return true;
     }
@@ -290,11 +302,13 @@ public sealed class TowerMatchController : MonoBehaviour
         if (Rules.Stage == MatchStage.Spoils && Rules.Spoils.Count > 0 && selectionHint == null)
             hint.text = "Assign " + Rules.Spoils.Peek().Card.name + " to a surviving " + (Rules.Spoils.Peek().Offered ? "enemy" : "friendly") + " character.";
         deckLabel.text = $"ORREN {Rules.Players[0].Life}  /  EYE {Rules.Players[1].Life}\nDRAW DECK · {Rules.Players[0].Deck.Count}\nHAND {Rules.Players[0].Hand.Count}/{Rules.Players[0].HandLimit}";
-        bool manual = Rules.Stage != MatchStage.Draw && Rules.Stage != MatchStage.Spoils && Rules.HasLegalAction() &&
+        bool manual = Rules.Stage != MatchStage.Draw && Rules.Stage != MatchStage.Spoils && (Rules.HasLegalAction() || HoldingForUndo) &&
             (Rules.Active == 0 && Rules.Stage != MatchStage.Defend || Rules.Active == 1 && Rules.Stage == MatchStage.Defend);
         next.gameObject.SetActive(Rules.Winner >= 0 || manual);
         next.interactable = !Busy && !animating && draws.Count == 0 && (Rules.Winner >= 0 || manual);
         nextText.text = Rules.Winner >= 0 ? "TOWER" : Rules.Stage == MatchStage.Defend ? "RESOLVE COMBAT" : "NEXT STAGE";
+        undo.gameObject.SetActive(Rules.Winner < 0 && HoldingForUndo);
+        undo.interactable = CanInteract;
         offer.gameObject.SetActive(!Busy && Rules.Stage == MatchStage.Spoils && Rules.Spoils.Count > 0 && !Rules.Spoils.Peek().Offered && Rules.Spoils.Peek().Owner == 0);
         board.SetMatchStatus(Rules.Active == 1, hint.text);
     }

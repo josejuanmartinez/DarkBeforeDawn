@@ -417,13 +417,20 @@ public sealed class BoardPresentation : MonoBehaviour
             description.fontSizeMin = skin.typography.descriptionFontRange.x; description.fontSizeMax = skin.typography.descriptionFontRange.y;
             description.outlineWidth = 0;
         }
+        // One palette authority. The card face tints its own background and token ring from
+        // CardServices.Palette; reading anything else here is how the generated border and the
+        // card's own frame ended up able to disagree about what an Army is coloured. ApplySkin
+        // installs the skin's palette into CardServices, so this picks it up either way.
+        var accent = CardServices.Palette
+            .GetCardTypeColor(card.cardData != null ? card.cardData.GetCardType() : CardTypeEnum.Unknown);
         var requirements = real.Find("Image/Requirements") as RectTransform;
         if (requirements != null)
         {
             Stretch(requirements, new Vector2(0, 1), new Vector2(1, 1));
             var requirementText = requirements.GetComponent<TMP_Text>();
             float height = style.requirementHeightRange.x;
-            if (requirementText != null && !string.IsNullOrWhiteSpace(requirementText.text))
+            bool hasCost = requirementText != null && !string.IsNullOrWhiteSpace(requirementText.text);
+            if (hasCost)
             {
                 requirementText.fontSize = skin.typography.requirementsSize;
                 height = Mathf.Clamp(requirementText.GetPreferredValues(requirementText.text, Mathf.Max(1, style.art.size.x - style.requirementMargin.x - style.requirementMargin.z), Mathf.Infinity).y + style.requirementMargin.y + style.requirementMargin.w, style.requirementHeightRange.x, style.requirementHeightRange.y);
@@ -432,17 +439,20 @@ public sealed class BoardPresentation : MonoBehaviour
                 // numerals beside coloured resource sprites, and a warm tint on it fights them.
                 // White is also what the font renders untinted, so the row matches the glyph art.
                 requirementText.color = skin.colors.requirements;
-                // No band behind the row: the costs read directly off the artwork. The measured
-                // height still drives the text rect, so a wrapped cost keeps its own space.
             }
             requirements.pivot = new Vector2(.5f, 1); requirements.sizeDelta = new Vector2(0, height);
+            // The costs get the same ink-and-border plaque as the combat and class rows below. It
+            // has to be a sibling drawn just before the text rather than a child of it: a child
+            // renders after its parent, so it would paint over the numerals. The measured height
+            // drives both rects, so a wrapped cost keeps its own space.
+            var plaque = Panel(requirements.parent, "Cost plaque", skin.colors.ink);
+            var plaqueRect = plaque.rectTransform;
+            Stretch(plaqueRect, new Vector2(0, 1), new Vector2(1, 1));
+            plaqueRect.pivot = new Vector2(.5f, 1); plaqueRect.sizeDelta = new Vector2(0, height);
+            Border(plaqueRect, Color.Lerp(skin.colors.gold, accent, style.typeBorderBlend));
+            plaque.transform.SetSiblingIndex(requirements.GetSiblingIndex());
+            plaque.gameObject.SetActive(hasCost && requirements.gameObject.activeSelf);
         }
-        // One palette authority. The card face tints its own background and token ring from
-        // CardServices.Palette; reading anything else here is how the generated border and the
-        // card's own frame ended up able to disagree about what an Army is coloured. ApplySkin
-        // installs the skin's palette into CardServices, so this picks it up either way.
-        var accent = CardServices.Palette
-            .GetCardTypeColor(card.cardData != null ? card.cardData.GetCardType() : CardTypeEnum.Unknown);
         StyleCombatStats(card, root, skin, readingFont, accent);
         Border(root, Color.Lerp(skin.colors.gold, accent, style.typeBorderBlend));
         Rule(root, accent, Vector2.zero, Vector2.right);
@@ -511,13 +521,14 @@ public sealed class BoardPresentation : MonoBehaviour
         for (int i = real.childCount - 1; i >= 0; i--)
         {
             var child = real.GetChild(i);
-            // Nothing draws a ribbon any more; this strips one left behind in a scene by an
-            // earlier styling pass, which would otherwise survive as authored hierarchy.
-            foreach (var ribbon in child.GetComponentsInChildren<Transform>(true))
-                if (ribbon.name == "Requirement ribbon")
+            // The cost plaque is regenerated on every pass. Nothing draws a ribbon any more; that
+            // strips one left behind in a scene by an earlier styling pass, which would otherwise
+            // survive as authored hierarchy.
+            foreach (var generated in child.GetComponentsInChildren<Transform>(true))
+                if (generated.name == "Cost plaque" || generated.name == "Requirement ribbon")
                 {
-                    if (Application.isPlaying) Destroy(ribbon.gameObject);
-                    else DestroyImmediate(ribbon.gameObject);
+                    if (Application.isPlaying) Destroy(generated.gameObject);
+                    else DestroyImmediate(generated.gameObject);
                 }
         }
     }

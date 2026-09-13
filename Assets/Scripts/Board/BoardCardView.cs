@@ -91,9 +91,12 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left && Zone != null && Zone.board.Match != null && Zone.board.Match.Select(this)) return;
-        if (eventData.button == PointerEventData.InputButton.Left && Zone != null && Zone.board.preview != null)
-            Zone.board.preview.Pin(this);
+        if (eventData.button != PointerEventData.InputButton.Left || Zone == null) return;
+        // A playable hand card plays straight from the hover; one that is blocked still pins, so
+        // the preview can say why.
+        if (Zone == Zone.board.hand && Zone.board.Match != null && Zone.board.Match.CanPlay(this)) { Zone.board.Match.Play(this); return; }
+        if (Zone.board.Match != null && Zone.board.Match.Select(this)) return;
+        if (Zone.board.preview != null) Zone.board.preview.Pin(this);
     }
     private void Update()
     {

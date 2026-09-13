@@ -14,6 +14,18 @@ public sealed class PlayerMaterials
         Array.Copy(amounts, copy.amounts, amounts.Length);
         return copy;
     }
+    /// <summary>What left the pool since <paramref name="before"/>: the exact split a joker cost was paid in.</summary>
+    public PlayerMaterials SpentSince(PlayerMaterials before)
+    {
+        var spent = new PlayerMaterials();
+        for (int i = 0; i < amounts.Length; i++) spent.amounts[i] = Mathf.Max(0, before.amounts[i] - amounts[i]);
+        return spent;
+    }
+    /// <summary>Puts a measured spend back. Additive, so lands tapped in the meantime keep their mana.</summary>
+    public void Refund(PlayerMaterials spent)
+    {
+        for (int i = 0; i < amounts.Length; i++) amounts[i] += spent.amounts[i];
+    }
     public void Grant(CardData land)
     {
         if (land == null || land.GetCardType() != CardTypeEnum.Land) return;

@@ -71,7 +71,7 @@ public sealed class BoardCardPreview : MonoBehaviour
         title.rectTransform.pivot = new Vector2(.5f, 1); title.rectTransform.sizeDelta = new Vector2(-Skin.preview.labelInset * 2, header);
         string hint = deck != null ? $"{deck.SelectedIndex + 1} / {deck.Count}" : pinned ? "ESC TO CLOSE" : "CLICK CARD TO PIN";
         var unit = board.Match?.Unit(source);
-        if (board.Match != null) hint = board.Match.InspectionHint(source) ?? hint;
+        if (board.Match != null) hint = board.Match.InspectionHint(source) ?? (!pinned && board.Match.CanPlay(source) ? "CLICK CARD TO PLAY" : hint);
         if (unit != null && unit.Objects.Count > 0) hint = "Objects: " + string.Join(", ", unit.Objects.ConvertAll(c => c.name));
         var status = BoardPresentation.TextLabel(panel, hint, board.interfaceFont, Skin.typography.previewLabelSize, Skin.colors.muted,
             Vector2.zero, Vector2.right, TextAnchor.MiddleCenter);

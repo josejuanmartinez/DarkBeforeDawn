@@ -396,11 +396,12 @@ public class CardData
         if (steelGranted > 0) grants.Add(steelGranted + SpriteTag("steel"));
         if (mithrilGranted > 0) grants.Add(mithrilGranted + SpriteTag("mithril"));
         if (goldGranted > 0) grants.Add(goldGranted + SpriteTag("gold"));
-        if (grants.Count > 0) parts.Add(string.Join(string.Empty, grants));
+        if (grants.Count > 0) parts.Add($"Provides {string.Join(string.Empty, grants)} each turn.");
 
+        // A land is named after its region (the region field itself is blank on land cards).
         if (!string.IsNullOrWhiteSpace(name))
         {
-            parts.Add($"Reveals hexes and allows founding PCs originally from {PcDescriptionBuilder.FormatDisplayRegionName(name)}.");
+            parts.Add($"Allows playing Population Centers from {PcDescriptionBuilder.FormatDisplayRegionName(name)}.");
         }
 
         return string.Join(" ", parts.Where(part => !string.IsNullOrWhiteSpace(part)));

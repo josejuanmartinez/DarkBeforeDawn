@@ -534,7 +534,7 @@ public class DeckManagerWindow : EditorWindow
         if (card.GetCardType() == CardTypeEnum.Land && !string.IsNullOrWhiteSpace(card.name))
         {
             EditorGUILayout.LabelField(
-                $"Reveals hexes and allows founding PCs originally from {PcDescriptionBuilder.FormatDisplayRegionName(card.name)}.",
+                $"Allows playing Population Centers from {PcDescriptionBuilder.FormatDisplayRegionName(card.name)}.",
                 EditorStyles.wordWrappedLabel);
         }
 
