@@ -67,7 +67,7 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
         var hit = gameObject.AddComponent<Image>();
         hit.color = Color.clear;
         hit.raycastTarget = true;
-        if (data.GetCardType() == CardTypeEnum.Land || data.GetCardType() == CardTypeEnum.Character || data.GetCardType() == CardTypeEnum.Army)
+        if (data.GetCardType() == CardTypeEnum.Land || data.GetCardType() == CardTypeEnum.Character || data.GetCardType() == CardTypeEnum.Army || data.GetCardType() == CardTypeEnum.PC)
         {
             tappedLabel = BoardPresentation.TextLabel(transform, "TAPPED", zone.board.interfaceFont, 16,
                 skin.colors.ivory, new Vector2(0,.4f), new Vector2(1,.65f), TextAnchor.MiddleCenter);
@@ -104,8 +104,10 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
         {
             var unit = Zone.board.Match?.Unit(this);
             string objects = unit != null && unit.Objects.Count > 0 ? "\n" + unit.Objects.Count + " OBJECTS" : "";
-            string state = Zone.board.IsTapped(this) ? "TAPPED" : Zone.board.Match != null && Zone.board.Match.Rules != null && Zone.board.Match.Rules.IsNewUnit(unit)
-                ? "NEW\nATTACK NEXT TURN" : "";
+            var match = Zone.board.Match;
+            string state = Zone.board.IsTapped(this) ? (Data.GetCardType() == CardTypeEnum.PC ? "USED" : "TAPPED")
+                : match != null && match.Rules != null && match.Rules.IsNewUnit(unit) ? "NEW\nATTACK NEXT TURN"
+                : match != null && match.IsDestination(this) && match.Rules.Stage == MatchStage.Destination ? "CURRENT" : "";
             tappedLabel.text = state + objects;
             tappedLabel.gameObject.SetActive(tappedLabel.text.Length > 0);
         }

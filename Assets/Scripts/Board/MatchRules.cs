@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public enum MatchStage { Draw = 1, Realm, Muster, Events, Attack, Defend, Spoils }
+public enum MatchStage { Draw = 1, Realm, Destination, Muster, Events, Attack, Defend, Spoils }
 
 /// <summary>Match state independent of Unity views. Card instances retain identity through every zone.</summary>
 public sealed class MatchRules
@@ -20,8 +20,13 @@ public sealed class MatchRules
     {
         public int Life = 20, HandLimit = 5;
         public readonly List<CardData> Deck = new(), Hand = new(), Discard = new();
+        // Population centres are never drawn: the whole pool is on the table from the first turn, and
+        // one of them is picked as the turn's destination once its land has been played.
+        public readonly List<CardData> Settlements = new();
         public readonly List<Unit> Field = new();
         public readonly PlayerMaterials Mana = new();
+        /// <summary>The settlement in play this turn. Also in Field, so it taps and untaps like any unit.</summary>
+        public Unit Destination;
     }
     public sealed class Strike
     {
@@ -31,7 +36,7 @@ public sealed class MatchRules
     public sealed class Loot { public CardData Card; public int Owner; public bool Offered; }
     // Everything a play touched, so it can be put back. Cleared at every stage change: once the
     // stage is passed there is no way back.
-    sealed class Played { public CardData Card; public int HandIndex; public Unit Unit, Recipient; public PlayerMaterials Spent; }
+    sealed class Played { public CardData Card; public int HandIndex; public Unit Unit, Recipient; public PlayerMaterials Spent; public bool TappedDestination, Discarded; }
     readonly Stack<Played> played = new();
     public readonly Player[] Players = { new(), new() };
     public readonly List<Strike> Attacks = new();
@@ -45,6 +50,9 @@ public sealed class MatchRules
     // Explicit extension seams for future card abilities; no inference from flavour text.
     public Func<Unit, bool> CanChooseTarget = u => u.Card.HasTag("ChooseTarget");
     public Action<CardData, int, MatchRules> ResolveEvent;
+    // An encounter's outcome. Left null, investigating it simply spends the card: the face promises
+    // nothing about what happens, so an unauthored outcome is not a blocked play.
+    public Action<CardData, int, MatchRules> ResolveEncounter;
     public void Begin(int first) { Turn = 0; Winner = -1; StartTurn(first); }
     void StartTurn(int player)
     {
@@ -65,14 +73,13 @@ public sealed class MatchRules
         var p = Players[Active];
         if (card == null || Winner >= 0 || !p.Hand.Contains(card)) return "That card is not in the active hand.";
         var type = card.GetCardType();
-        bool realm = type == CardTypeEnum.Land || type == CardTypeEnum.PC || type == CardTypeEnum.Environmental;
-        bool muster = type == CardTypeEnum.Character || type == CardTypeEnum.Army || type == CardTypeEnum.Object;
+        if (type == CardTypeEnum.PC) return "Settlements are chosen as your destination, not played from the hand.";
+        bool realm = type == CardTypeEnum.Land || type == CardTypeEnum.Environmental;
+        bool muster = type == CardTypeEnum.Character || type == CardTypeEnum.Army || type == CardTypeEnum.Object || type == CardTypeEnum.Encounter;
         if (!(Stage == MatchStage.Realm && realm || Stage == MatchStage.Muster && muster || Stage == MatchStage.Events && type == CardTypeEnum.Event))
             return "This card cannot be played during " + Stage + ".";
-        if (type == CardTypeEnum.PC && !p.Field.Any(u => u.Card.GetCardType() == CardTypeEnum.Land && Same(u.Card.name, card.region)))
-            return "First play the land: " + card.region + ".";
-        if (type == CardTypeEnum.Character && !p.Field.Any(u => u.Card.GetCardType() == CardTypeEnum.PC && Same(u.Card.name, card.startingPC)))
-            return "Required starting PC: " + card.startingPC + ".";
+        var destination = DestinationBlockReason(card);
+        if (destination != null) return destination;
         if (type == CardTypeEnum.Object && !(recipient != null && recipient.IsCharacter && p.Field.Contains(recipient)) &&
             !(recipient == null && choosingRecipient && p.Field.Any(u => u.IsCharacter)))
             return "Select one of your characters to carry this object.";
@@ -86,6 +93,19 @@ public sealed class MatchRules
         }
         return available.CanAfford(card) ? null : "Not enough mana/materials.";
     }
+    /// <summary>Why the active destination cannot host this card, or null when it can (or the card does not care).</summary>
+    public string DestinationBlockReason(CardData card)
+    {
+        if (card == null || !card.RequiresDestination()) return null;
+        var destination = Players[Active].Destination;
+        if (destination == null) return "Choose a destination first: " + DestinationWanted(card) + ".";
+        if (!card.CanBePlayedAt(destination.Card)) return "Not playable at " + destination.Card.name + ". Needs " + DestinationWanted(card) + ".";
+        if (destination.Tapped) return destination.Card.name + " has already hosted a play this turn.";
+        return null;
+    }
+    static string DestinationWanted(CardData card) => card.GetCardType() == CardTypeEnum.Object
+        ? "a settlement trading in " + CardData.FormatObjectTypeLabel(card.objectType)
+        : CardData.JoinNames(card.GetBirthplaces().ToList());
     public bool Play(CardData card, Unit recipient = null)
     {
         var reason = PlayBlockReason(card, recipient, false);
@@ -97,11 +117,13 @@ public sealed class MatchRules
         p.Hand.Remove(card);
         if (type == CardTypeEnum.Object) recipient.Objects.Add(card);
         else if (type == CardTypeEnum.Event) { ResolveEvent(card, Active, this); p.Discard.Add(card); }
+        else if (type == CardTypeEnum.Encounter) { ResolveEncounter?.Invoke(card, Active, this); p.Discard.Add(card); record.Discarded = true; }
         else p.Field.Add(record.Unit = new Unit { Card = card, Owner = Active, EnteredTurn = Turn });
+        if (card.RequiresDestination()) { p.Destination.Tapped = true; record.TappedDestination = true; }
         // An event's effect is whatever its handler did and cannot be walked back, so nothing
-        // played before it can be either.
-        if (type == CardTypeEnum.Event) played.Clear(); else played.Push(record);
-        Message = card.name + " played."; return true;
+        // played before it can be either. The same goes for an encounter with an authored outcome.
+        if (type == CardTypeEnum.Event || type == CardTypeEnum.Encounter && ResolveEncounter != null) played.Clear(); else played.Push(record);
+        Message = type == CardTypeEnum.Encounter ? card.name + " investigated at " + p.Destination.Card.name + "." : card.name + " played."; return true;
     }
     public bool CanUndo => Winner < 0 && played.Count > 0;
     public CardData LastPlayed => played.Count > 0 ? played.Peek().Card : null;
@@ -111,12 +133,48 @@ public sealed class MatchRules
         if (!CanUndo) return Reject("Nothing to take back this stage.");
         var record = played.Pop(); var p = Players[Active];
         if (record.Unit != null) p.Field.Remove(record.Unit);
+        else if (record.Discarded) p.Discard.Remove(record.Card);
         else record.Recipient?.Objects.Remove(record.Card);
+        if (record.TappedDestination && p.Destination != null) p.Destination.Tapped = false;
         p.Hand.Insert(Math.Clamp(record.HandIndex, 0, p.Hand.Count), record.Card);
         p.Mana.Refund(record.Spent);
         Message = record.Card.name + " returned to hand."; return true;
     }
     static bool Same(string a, string b) => !string.IsNullOrWhiteSpace(a) && string.Equals(a.Trim(), b?.Trim(), StringComparison.OrdinalIgnoreCase);
+    // --- Destinations ---------------------------------------------------------------------------------
+    /// <summary>The settlements a player could travel to: every one in the pool whose land is on the board.</summary>
+    public IEnumerable<CardData> DestinationChoices(int player)
+    {
+        var p = Players[player];
+        return p.Settlements.Where(pc => p.Field.Any(u => u.Card.GetCardType() == CardTypeEnum.Land && Same(u.Card.name, pc.region)));
+    }
+    public bool IsDestination(int player, CardData pc) => pc != null && Players[player].Destination != null && ReferenceEquals(Players[player].Destination.Card, pc);
+    public bool CanChooseDestination(CardData pc) => Winner < 0 && Stage == MatchStage.Destination && pc != null &&
+        !IsDestination(Active, pc) && DestinationChoices(Active).Contains(pc);
+    /// <summary>Travels to a settlement for the turn. Staying is simply advancing the stage.</summary>
+    public bool ChooseDestination(CardData pc)
+    {
+        if (!CanChooseDestination(pc)) return Reject("Choose a settlement whose land you have played, or stay where you are.");
+        var p = Players[Active];
+        if (p.Destination != null) p.Field.Remove(p.Destination);
+        p.Destination = new Unit { Card = pc, Owner = Active, EnteredTurn = Turn };
+        p.Field.Add(p.Destination);
+        Message = "Travelling to " + pc.name + "."; return true;
+    }
+    /// <summary>How many cards in a player's hand could be played at a settlement. What the opponent travels by.</summary>
+    public int DestinationDemand(int player, CardData pc) => Players[player].Hand.Count(c => c.RequiresDestination() && c.CanBePlayedAt(pc));
+    /// <summary>The choice with the most hand cards waiting for it; the current destination on a tie. Null to stay.</summary>
+    public CardData PreferredDestination(int player)
+    {
+        var current = Players[player].Destination?.Card;
+        CardData best = null; int bestDemand = current != null ? DestinationDemand(player, current) : -1;
+        foreach (var pc in DestinationChoices(player))
+        {
+            int demand = DestinationDemand(player, pc);
+            if (demand > bestDemand) { best = pc; bestDemand = demand; }
+        }
+        return best != null && !ReferenceEquals(best, current) ? best : null;
+    }
     public bool CanTapLand(Unit unit) => unit != null && Winner < 0 && (Stage == MatchStage.Muster || Stage == MatchStage.Events) && unit.Owner == Active &&
         !unit.Tapped && Players[Active].Field.Contains(unit) && unit.Card.GetCardType() == CardTypeEnum.Land;
     public bool TapLand(Unit unit)
@@ -152,6 +210,7 @@ public sealed class MatchRules
     public bool HasLegalAction() => Winner < 0 && (Stage switch
     {
         MatchStage.Realm => Players[Active].Hand.Any(CanPlay),
+        MatchStage.Destination => DestinationChoices(Active).Any(CanChooseDestination),
         MatchStage.Muster or MatchStage.Events => Players[Active].Hand.Any(c => PlayBlockReason(c, includeReadyMana: true) == null),
         MatchStage.Attack => Players[Active].Field.Any(CanAttack),
         MatchStage.Defend => Players[1 - Active].Field.Any(u => Attacks.Any(a => CanBlock(u, a))),

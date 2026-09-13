@@ -12,9 +12,10 @@ using UnityEngine.UI;
 // The card face, ported from Runeboard's Assets/Scripts/UI/Card.cs.
 //
 // Everything about how a card *looks and behaves as a piece of UI* is kept: the token <-> card flip,
-// art resolution, the type-colored border, the hand-draw typewriter, the encounter "?" cover and its
-// fade reveal, requirement icons, token tinting for the bloom wheel, and the display-only clones the
-// play-flight animations fly around.
+// art resolution, the type-colored border, the hand-draw typewriter, requirement icons, token tinting
+// for the bloom wheel, and the display-only clones the play-flight animations fly around. (The
+// encounter "?" cover is gone: an encounter shows its face and names the settlement it is
+// investigated at, and nothing of what happens there.)
 //
 // Everything that made it a Runeboard component is gone. Where the original called Game.Instance,
 // Board.Instance, DeckManager, ActionsManager, Illustrations, Colors, CursorManager, Sounds or
@@ -145,10 +146,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     }
 
     private string baseDescription = string.Empty;
-    private Image encounterArtOverlay;
-    private TextMeshProUGUI encounterQuestionMark;
-    private Image encounterTokenOverlay;
-    private TextMeshProUGUI encounterTokenQuestionMark;
     private Coroutine descriptionTypewriterCoroutine;
     private bool isEnvironmentalPresentation;
     private bool environmentalPreviewHovered;
@@ -334,18 +331,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             // The badge is the one glyph on the face that no text explains, so it gets the same
             // popup the keyword icons use.
             GetComponent<CardKeywordHover>()?.SetBadge(deckTypeImage.rectTransform, DeckBadgeTitle(data), DeckBadgeBody(data));
-        }
-
-        if (data.IsEncounterCard() && !data.encounterRevealed)
-        {
-            SetupEncounterHiddenVisuals(data);
-        }
-        else
-        {
-            // This Card instance may have previously shown an unrevealed encounter card (a recycled
-            // slot, say) — its "?" overlay is only ever removed by the animated reveal flow, so a
-            // non-encounter card reused into the same instance must clear it here.
-            ClearEncounterHiddenVisualsInstant();
         }
 
         UpdateInteractableState();
@@ -643,151 +628,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
 
         return null;
-    }
-
-    private void ClearEncounterHiddenVisualsInstant()
-    {
-        if (encounterArtOverlay != null)
-        {
-            Destroy(encounterArtOverlay.gameObject);
-            encounterArtOverlay = null;
-            encounterQuestionMark = null;
-        }
-        if (encounterTokenOverlay != null)
-        {
-            Destroy(encounterTokenOverlay.gameObject);
-            encounterTokenOverlay = null;
-            encounterTokenQuestionMark = null;
-        }
-    }
-
-    // Covers an unrevealed encounter card's art with a veiled "?" panel, on both the card face and
-    // the token. RevealEncounterCard fades these back off. Colours and glyph size come from
-    // CardServices.FaceStyle so a skin owns them; the built-in default is the black/white/64 this
-    // shipped with.
-    private void SetupEncounterHiddenVisuals(CardData data)
-    {
-        if (titleText != null) titleText.text = "Encounter";
-        var faceStyle = CardServices.FaceStyle;
-
-        if (encounterArtOverlay == null && cardArtImage != null)
-        {
-            var overlayGo = new GameObject("EncounterOverlay", typeof(RectTransform), typeof(Image));
-            overlayGo.transform.SetParent(cardArtImage.transform, false);
-            var overlayRect = overlayGo.GetComponent<RectTransform>();
-            overlayRect.anchorMin = Vector2.zero;
-            overlayRect.anchorMax = Vector2.one;
-            overlayRect.offsetMin = Vector2.zero;
-            overlayRect.offsetMax = Vector2.zero;
-            encounterArtOverlay = overlayGo.GetComponent<Image>();
-            encounterArtOverlay.color = faceStyle.EncounterOverlayColor;
-
-            var qGo = new GameObject("QuestionMark", typeof(RectTransform), typeof(TextMeshProUGUI));
-            qGo.transform.SetParent(overlayGo.transform, false);
-            var qRect = qGo.GetComponent<RectTransform>();
-            qRect.anchorMin = Vector2.zero;
-            qRect.anchorMax = Vector2.one;
-            qRect.offsetMin = Vector2.zero;
-            qRect.offsetMax = Vector2.zero;
-            encounterQuestionMark = qGo.GetComponent<TextMeshProUGUI>();
-            encounterQuestionMark.text = "?";
-            encounterQuestionMark.fontSize = faceStyle.EncounterGlyphSize;
-            encounterQuestionMark.alignment = TextAlignmentOptions.Center;
-            encounterQuestionMark.color = faceStyle.EncounterGlyphColor;
-            encounterQuestionMark.fontStyle = FontStyles.Bold;
-        }
-
-        if (encounterTokenOverlay == null && tokenImage != null)
-        {
-            var tokenOverlayGo = new GameObject("EncounterTokenOverlay", typeof(RectTransform), typeof(Image));
-            tokenOverlayGo.transform.SetParent(tokenImage.transform, false);
-            var tokenOverlayRect = tokenOverlayGo.GetComponent<RectTransform>();
-            tokenOverlayRect.anchorMin = Vector2.zero;
-            tokenOverlayRect.anchorMax = Vector2.one;
-            tokenOverlayRect.offsetMin = Vector2.zero;
-            tokenOverlayRect.offsetMax = Vector2.zero;
-            encounterTokenOverlay = tokenOverlayGo.GetComponent<Image>();
-            encounterTokenOverlay.color = faceStyle.EncounterOverlayColor;
-            encounterTokenOverlay.raycastTarget = false;
-
-            var tqGo = new GameObject("QuestionMark", typeof(RectTransform), typeof(TextMeshProUGUI));
-            tqGo.transform.SetParent(tokenOverlayGo.transform, false);
-            var tqRect = tqGo.GetComponent<RectTransform>();
-            tqRect.anchorMin = Vector2.zero;
-            tqRect.anchorMax = Vector2.one;
-            tqRect.offsetMin = Vector2.zero;
-            tqRect.offsetMax = Vector2.zero;
-            encounterTokenQuestionMark = tqGo.GetComponent<TextMeshProUGUI>();
-            encounterTokenQuestionMark.text = "?";
-            encounterTokenQuestionMark.fontSize = faceStyle.EncounterGlyphSize;
-            encounterTokenQuestionMark.alignment = TextAlignmentOptions.Center;
-            encounterTokenQuestionMark.color = faceStyle.EncounterGlyphColor;
-            encounterTokenQuestionMark.fontStyle = FontStyles.Bold;
-            encounterTokenQuestionMark.raycastTarget = false;
-        }
-
-        // Runeboard named the hex the encounter waited at. With no board here, the card just says
-        // an encounter is hidden; supply your own text by setting data.description instead.
-        baseDescription = !string.IsNullOrWhiteSpace(data.description)
-            ? data.description.Trim()
-            : "An encounter waits to be investigated.";
-        if (descriptionText != null) descriptionText.text = baseDescription;
-    }
-
-    // Fades the "?" cover off and types in the card's real title and description. Call it when the
-    // encounter is actually entered; it sets encounterRevealed itself.
-    public void RevealEncounterCard()
-    {
-        if (cardData == null || cardData.encounterRevealed) return;
-        StartCoroutine(RevealEncounterCoroutine());
-    }
-
-    private IEnumerator RevealEncounterCoroutine()
-    {
-        const float FadeDuration = 0.8f;
-        float elapsed = 0f;
-
-        while (elapsed < FadeDuration)
-        {
-            if (this == null) yield break;
-            float alpha = 1f - elapsed / FadeDuration;
-            ApplyEncounterOverlayAlpha(alpha);
-            elapsed += Time.unscaledDeltaTime;
-            yield return null;
-        }
-
-        ClearEncounterHiddenVisualsInstant();
-
-        cardData.encounterRevealed = true;
-        if (titleText != null) titleText.text = FormatCardTitle(cardData.name);
-
-        string realDescription = GetActionDescription(cardData);
-        if (TypewriterEffect)
-        {
-            yield return StartCoroutine(TypewriterEffectCoroutine(descriptionText, realDescription));
-        }
-        else if (descriptionText != null)
-        {
-            descriptionText.text = realDescription;
-        }
-        baseDescription = realDescription;
-        UpdateInteractableState();
-    }
-
-    private void ApplyEncounterOverlayAlpha(float alpha)
-    {
-        SetGraphicAlpha(encounterArtOverlay, alpha);
-        SetGraphicAlpha(encounterQuestionMark, alpha);
-        SetGraphicAlpha(encounterTokenOverlay, alpha);
-        SetGraphicAlpha(encounterTokenQuestionMark, alpha);
-    }
-
-    private static void SetGraphicAlpha(Graphic graphic, float alpha)
-    {
-        if (graphic == null) return;
-        Color c = graphic.color;
-        c.a = alpha;
-        graphic.color = c;
     }
 
     // Prefabs authored before the fields were named resolve their references by child name instead.
@@ -1189,7 +1029,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         if (!showCloseIcon) return;
         Button btn = discardButton.GetComponent<Button>();
         if (btn == null) return;
-        // An unrevealed encounter can't be thrown away — it has to be entered.
+        // An encounter can't be thrown away — it has to be investigated at its birthplace.
         btn.interactable = cardData != null && !cardData.IsEncounterCard();
     }
 

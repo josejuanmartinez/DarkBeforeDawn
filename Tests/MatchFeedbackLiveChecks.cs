@@ -10,7 +10,7 @@ var veteran=new MatchRules.Unit{Card=Card("Veteran army","Army"),Owner=0};
 var pc=Card("Test PC","PC");pc.region=l1.Card.name;
 var beast=Card("New Beasts","Army");
 r.Players[0].Field.AddRange(new[]{l1,l2,veteran}); r.Players[1].Field.Add(enemy);
-r.Players[0].Hand.AddRange(new[]{pc,beast}); r.Begin(0); l2.Tapped=true;
+r.Players[0].Hand.Add(beast); r.Players[0].Settlements.Add(pc); r.Begin(0); l2.Tapped=true;
 typeof(TowerMatchController).GetProperty("Rules").SetValue(m,r);
 var sync=typeof(TowerMatchController).GetMethod("Sync",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance);
 void Sync()=>sync.Invoke(m,null);
@@ -22,10 +22,16 @@ System.Collections.IEnumerator Run() {
     Check(!b.transform.Find("Match stages/CONTINUE").gameObject.activeSelf,"Replenish showed Next Stage");
     m.Advance();Check(r.Stage==MatchStage.Draw,"Manual draw progression allowed");
     Check(m.AdvanceIfNoActions()&&r.Stage==MatchStage.Realm,"Replenish did not auto-progress");yield return null;
-    Check(View(pc).ActionHighlighted&&!View(beast).ActionHighlighted,"Realm highlights incorrect");
-    m.Advance();Check(r.Stage==MatchStage.Muster,"Realms must go directly to Muster");yield return null;
+    Check(!View(beast).ActionHighlighted,"Realm highlights incorrect");
+    Check(m.AdvanceIfNoActions()&&r.Stage==MatchStage.Destination,"Empty Realm did not auto-progress to Select Destination");yield return null;
+    var picker=m.GetComponent<DestinationPicker>();
+    Check(b.humanPopulationCenters.Count==0&&picker!=null&&picker.IsOpen&&picker.Shown==pc,"Destination picker did not open on the settlement");
+    Check(b.transform.Find("Destination picker/Travel")!=null&&b.transform.Find("Destination picker/Previous")!=null,"Picker lacks travel/arrow controls");
+    Check(m.Travel(pc)&&r.Players[0].Destination!=null&&r.Players[0].Destination.Card==pc&&r.Stage==MatchStage.Muster,"Travel did not choose and move on");yield return null;
+    Check(!picker.IsOpen,"Picker stayed open after travelling");
     var heading=(UnityEngine.UI.Text)typeof(TowerMatchController).GetField("headline",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance).GetValue(m);
-    Check(heading.text.Contains("3 · MUSTER")&&!heading.text.Contains("GATHER MANA"),"HUD still shows separate mana stage: "+heading.text);
+    Check(heading.text.Contains("4 · MUSTER")&&!heading.text.Contains("GATHER MANA"),"HUD stage numbering wrong: "+heading.text);
+    Check(b.humanPopulationCenters.Count==1&&View(pc)!=null,"Settlement zone must show only the destination");
     var v1=View(l1.Card);var v2=View(l2.Card);var ve=View(enemy.Card);var vv=View(veteran.Card);
     Check(v1.ActionHighlighted&&!v2.ActionHighlighted&&!ve.ActionHighlighted,"Mana highlighted wrong lands");
     var old2=v2.transform.localRotation;var oldEnemy=ve.transform.localRotation;
@@ -52,7 +58,7 @@ System.Collections.IEnumerator Run() {
     Check(m.AdvanceIfNoActions()&&r.Stage==MatchStage.Draw&&r.Active==1,"Empty spoils did not hand off");
     Check(l1.Tapped&&l2.Tapped&&!enemy.Tapped,"Turn change untapped wrong player");
     Check(v1==View(l1.Card)&&v2==View(l2.Card)&&ve==View(enemy.Card),"Turn change rebuilt lands");
-    System.IO.File.WriteAllText("Temp/MatchFeedbackLiveResult.txt","PASS: automatic stages, highlights, illegal-button removal, click attack, fresh-unit explanation, stable token identities and isolated tap/untap animations.");
+    System.IO.File.WriteAllText("Temp/MatchFeedbackLiveResult.txt","PASS: automatic stages, destination choice on the board, highlights, illegal-button removal, click attack, fresh-unit explanation, stable token identities and isolated tap/untap animations.");
 }
 System.Collections.IEnumerator Guard() {
     var run=Run();while(true) {object current;try{if(!run.MoveNext())break;current=run.Current;}catch(System.Exception e){System.IO.File.WriteAllText("Temp/MatchFeedbackLiveResult.txt","FAIL: "+e);throw;}yield return current;}

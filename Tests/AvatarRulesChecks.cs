@@ -2,11 +2,9 @@ void Check(bool ok, string message) { if (!ok) throw new System.Exception(messag
 var r = new MatchRules();
 Check(r.Players.All(p => p.Life == 20), "Starting health");
 var army = new CardData {name="Test army",type="Army",attack=4,defense=4,commanderSkillRequired=9,agentSkillRequired=9};
-r.Players[0].Hand.Add(army); r.Begin(0); r.Next(); r.Next();
-Check(r.Play(army), "Army must need no character");
-r.Next(); r.Next(); r.Next(); r.Next(); r.Next();
-r.Next(); r.Next(); r.Next(); r.Next(); r.Next(); r.Next(); r.Next();
-r.Next(); r.Next(); r.Next(); r.Next();
+r.Players[0].Hand.Add(army); r.Begin(0); while (r.Stage != MatchStage.Muster) r.Next();
+Check(r.Play(army), "Army must need no character or destination");
+while (r.Active == 0) r.Next(); while (r.Active == 1) r.Next(); while (r.Stage != MatchStage.Attack) r.Next();
 Check(r.Stage == MatchStage.Attack && r.Active == 0, "Attack setup");
 Check(r.Attack(r.Players[0].Field[0]), "Attack"); r.Next(); r.Next();
 Check(r.Players[1].Life == 16, "Unblocked attack damages avatar");

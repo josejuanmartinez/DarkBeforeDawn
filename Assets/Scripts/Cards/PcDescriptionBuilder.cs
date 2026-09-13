@@ -29,13 +29,25 @@ public static class PcDescriptionBuilder
         // Population centres do not produce resources. Resource grants belong exclusively to Land
         // cards, whose own face and compact token render the granted materials.
 
-        if (includeFoundingText && hasRegion)
+        // A settlement is never played from the hand: it is picked as the turn's destination once
+        // its land is on the board, and one play there (a character or encounter born here, or an
+        // object of a kind it trades in) taps it until the next turn.
+        if (includeFoundingText)
         {
-            if (sb.Length > 0) sb.Append(" ");
-            sb.Append("Allows recruiting characters, allies, factions and objects from this site.");
+            sb.Append("Destination: recruit characters and investigate encounters born here.");
+            string wares = FormatObjectTypes(data);
+            if (!string.IsNullOrEmpty(wares)) sb.Append(" Trades in ").Append(wares).Append('.');
+            sb.Append(" One play here taps it for the turn.");
         }
 
-        return sb.ToString();
+        return sb.ToString().Trim();
+    }
+
+    public static string FormatObjectTypes(CardData data)
+    {
+        if (data?.objectTypes == null) return string.Empty;
+        var tags = data.objectTypes.Distinct().Where(t => t != ObjectTypeEnum.None).Select(CardData.FormatObjectTypeTag).ToList();
+        return tags.Count == 0 ? string.Empty : string.Join(", ", tags);
     }
 
     public static string FormatDisplayRegionName(string value)

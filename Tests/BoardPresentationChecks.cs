@@ -3,7 +3,7 @@ if (!UnityEngine.Application.isPlaying) throw new System.InvalidOperationExcepti
 var b=UnityEngine.Object.FindFirstObjectByType<Board>();
 var all=System.Linq.Enumerable.ToList(CardCatalog.AllCards());
 var sample=new System.Collections.Generic.List<CardData>();
-foreach(var card in all) { var copy=card.Clone(); copy.encounterRevealed=true; sample.Add(copy); if(sample.Count==100) break; }
+foreach(var card in all) { var copy=card.Clone(); sample.Add(copy); if(sample.Count==100) break; }
 int checks=0;
 void Assert(bool condition, string message) { if(!condition) throw new System.Exception(message); checks++; }
 void CheckFit(CardZoneVisualizer zone)

@@ -32,6 +32,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Lonely Mountain (Lost)"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -57,7 +60,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -106,6 +111,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Starwatch"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -131,7 +139,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -180,6 +190,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Crossway"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -205,7 +218,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -254,6 +269,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Warwatch"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -279,7 +297,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -328,6 +348,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Warwatch"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -353,7 +376,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -402,6 +427,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Oldgrowth Forest"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -427,7 +455,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -476,6 +506,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Thornspire"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -501,7 +534,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -550,6 +585,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Bramblemarch"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -575,7 +613,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -624,6 +664,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Pale City"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -649,7 +692,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -698,6 +743,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Woodking's Halls"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -723,7 +771,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -772,6 +822,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Frostkeep"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -797,7 +850,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -846,6 +901,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Scorched Hold"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -871,7 +929,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -920,6 +980,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Great Delving"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -945,7 +1008,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -994,6 +1059,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Deepdelve"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -1019,7 +1087,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -1068,6 +1138,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Oathstone"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -1093,7 +1166,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -1142,6 +1217,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Crook Hollow"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -1167,7 +1245,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -1216,6 +1296,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Black Tower"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -1241,7 +1324,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -1290,6 +1375,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Eastport"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -1315,7 +1403,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -1364,6 +1454,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Stockleigh"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -1389,7 +1482,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -1438,6 +1533,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Bramblemarch"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -1463,7 +1561,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -1512,6 +1612,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Wraithtower"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -1537,7 +1640,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -1586,6 +1691,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Ashhold"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -1611,7 +1719,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -1660,6 +1770,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Giantmoors"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -1685,7 +1798,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -1734,6 +1849,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Lonely Mountain (Lost)"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -1759,7 +1877,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -1808,6 +1928,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Forest Circle"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -1833,7 +1956,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -1882,6 +2007,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Woodking's Halls"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -1907,7 +2035,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -1956,6 +2086,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Deepholes"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -1981,7 +2114,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -2030,6 +2165,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Dune Market"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -2055,7 +2193,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -2104,6 +2244,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Highwood"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -2129,7 +2272,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -2178,6 +2323,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Kingshall"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -2203,7 +2351,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -2252,6 +2402,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Kingshall"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -2277,7 +2430,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -2326,6 +2481,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Under Gate"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -2351,7 +2509,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -2400,6 +2560,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Silver Valley"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -2425,7 +2588,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -2474,6 +2639,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Mount Frostfang"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -2499,7 +2667,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -2548,6 +2718,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Silver Valley"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -2573,7 +2746,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -2622,6 +2797,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Redwall"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -2647,7 +2825,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -2696,6 +2876,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Merehaven"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -2721,7 +2904,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -2770,6 +2955,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Raven Stair"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -2795,7 +2983,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -2844,6 +3034,9 @@
             "race": 3,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Great Delving"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -2869,7 +3062,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -2918,6 +3113,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Oldgrowth Forest"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -2943,7 +3141,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -2992,6 +3192,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Forest Circle"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -3017,7 +3220,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -3066,6 +3271,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Hollyburrow"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -3091,7 +3299,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -3140,6 +3350,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Skyrie"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -3165,7 +3378,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -3214,6 +3429,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Northdelve"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -3239,7 +3457,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -3288,6 +3508,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Seeing Hill"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -3313,7 +3536,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -3362,6 +3587,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Greymouth Haven"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -3387,7 +3615,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -3436,6 +3666,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Greenhaven"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -3461,7 +3694,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -3510,6 +3745,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Silverbourne"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -3535,7 +3773,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -3584,6 +3824,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Deepdelve"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -3609,7 +3852,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -3658,6 +3903,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Lonely Mountain (Lost)"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -3683,7 +3931,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -3732,6 +3982,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Lonely Mountain (Lost)"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -3757,7 +4010,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -3806,6 +4061,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Lonely Mountain (Lost)"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -3831,7 +4089,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -3880,6 +4140,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Southwatch Tower"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -3905,7 +4168,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -3954,6 +4219,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Woodhill"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -3979,7 +4247,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -4028,6 +4298,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Blackwood Keep"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -4053,7 +4326,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -4102,6 +4377,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Hidden Refuge"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -4127,7 +4405,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -4176,6 +4456,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Thornspire"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -4201,7 +4484,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -4250,6 +4535,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Irisfields"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -4275,7 +4563,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -4324,6 +4614,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Crossway"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -4349,7 +4642,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -4398,6 +4693,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Hollyburrow"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -4423,7 +4721,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -4472,6 +4772,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Goblin Mountain"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -4497,7 +4800,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -4546,6 +4851,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Forest Circle"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -4571,7 +4879,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -4620,6 +4930,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Ironhall"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -4645,7 +4958,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -4694,6 +5009,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Crook Hollow"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -4719,7 +5037,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -4768,6 +5088,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Blackwood Keep"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -4793,7 +5116,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -4842,6 +5167,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Irisfields"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -4867,7 +5195,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -4916,6 +5246,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Kingsfast"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -4941,7 +5274,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -4990,6 +5325,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Dragonwatch"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -5015,7 +5353,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -5064,6 +5404,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Black Tower"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -5089,7 +5432,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -5138,6 +5483,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "The Last Quays"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -5163,7 +5511,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -5212,6 +5562,9 @@
             "race": 8,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Blackwood Keep"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -5237,7 +5590,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -5286,6 +5641,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Starwatch"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -5311,7 +5669,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -5360,6 +5720,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Starwatch"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -5385,7 +5748,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -5434,6 +5799,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Thornspire"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -5459,7 +5827,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -5508,6 +5878,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Frostwatch Keep"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -5533,7 +5906,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -5582,6 +5957,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Starlight Tower"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -5607,7 +5985,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -5656,6 +6036,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Great Steppe Camp"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -5681,7 +6064,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -5730,6 +6115,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Amberhold"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -5755,7 +6143,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -5804,6 +6194,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Cinder Camp"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -5829,7 +6222,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -5878,6 +6273,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Warwatch"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -5903,7 +6301,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -5952,6 +6352,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Eastport"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -5977,7 +6380,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,
@@ -6026,6 +6431,9 @@
             "race": 0,
             "sex": 0,
             "startingPC": "",
+            "birthplaces": [
+                "Thornspire"
+            ],
             "troopType": 0,
             "specialAbilities": [],
             "characterAbilities": [],
@@ -6051,7 +6459,9 @@
             "mithrilGranted": 0,
             "goldGranted": 0,
             "isUnderground": false,
+            "objectTypes": [],
             "hidden": false,
+            "objectType": 0,
             "copies": 1,
             "commanderBonus": 0,
             "agentBonus": 0,

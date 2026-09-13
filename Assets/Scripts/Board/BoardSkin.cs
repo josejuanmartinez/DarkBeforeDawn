@@ -161,14 +161,7 @@ public sealed class BoardSkin : ScriptableObject
     {
         [Tooltip("Unplayable-requirement messages beneath the description.")]
         public Color requirementsMessage = Color.red;
-        [Tooltip("Veil over the art of a face-down encounter, and the '?' drawn on it.")]
-        public Color encounterOverlay = Color.black;
-        public Color encounterGlyph = Color.white;
-        [Min(1)] public float encounterGlyphSize = 64;
         Color ICardFaceStyle.RequirementsMessageColor => requirementsMessage;
-        Color ICardFaceStyle.EncounterOverlayColor => encounterOverlay;
-        Color ICardFaceStyle.EncounterGlyphColor => encounterGlyph;
-        float ICardFaceStyle.EncounterGlyphSize => encounterGlyphSize;
     }
     [Serializable] public class PileStyle
     {
@@ -197,15 +190,17 @@ public sealed class BoardSkin : ScriptableObject
         { this.zone=zone; this.title=title; bounds=new(x0,y0,x1,y1); this.accent=accent; }
     }
     private static ZoneStyle[] DefaultZones() => new[] {
-        new ZoneStyle(BoardZoneId.OpponentLands,"LANDS",0.153f,0.818f,0.504f,0.93f,SkinColorRole.Gold),
-        new ZoneStyle(BoardZoneId.OpponentSettlements,"SETTLEMENTS",0.512f,0.818f,0.863f,0.93f,SkinColorRole.Gold),
+        new ZoneStyle(BoardZoneId.OpponentLands,"LANDS",0.153f,0.818f,0.70f,0.93f,SkinColorRole.Gold),
+        // One token wide: the settlement zone only ever shows the destination (and, while the human
+        // is choosing, the settlements that could be travelled to).
+        new ZoneStyle(BoardZoneId.OpponentSettlements,"DESTINATION",0.708f,0.818f,0.863f,0.93f,SkinColorRole.Gold),
         new ZoneStyle(BoardZoneId.OpponentArmies,"OPPONENT  /  ARMIES & CHARACTERS",0.153f,0.678f,0.863f,0.81f,SkinColorRole.Gold),
         new ZoneStyle(BoardZoneId.OpponentVictory,"VICTORY",0.871f,0.628f,0.992f,0.73f,SkinColorRole.Gold),
         new ZoneStyle(BoardZoneId.OpponentDiscard,"DISCARD",0.871f,0.738f,0.992f,0.93f,SkinColorRole.Gold),
         new ZoneStyle(BoardZoneId.Environment,"THE WORLD  /  ENVIRONMENT",0.153f,0.572f,0.863f,0.67f,SkinColorRole.Gold),
         new ZoneStyle(BoardZoneId.HumanArmies,"YOUR REALM  /  ARMIES & CHARACTERS",0.153f,0.43f,0.863f,0.564f,SkinColorRole.Teal),
-        new ZoneStyle(BoardZoneId.HumanLands,"LANDS",0.153f,0.302f,0.504f,0.422f,SkinColorRole.Teal),
-        new ZoneStyle(BoardZoneId.HumanSettlements,"SETTLEMENTS",0.512f,0.302f,0.863f,0.422f,SkinColorRole.Teal),
+        new ZoneStyle(BoardZoneId.HumanLands,"LANDS",0.153f,0.302f,0.70f,0.422f,SkinColorRole.Teal),
+        new ZoneStyle(BoardZoneId.HumanSettlements,"DESTINATION",0.708f,0.302f,0.863f,0.422f,SkinColorRole.Teal),
         new ZoneStyle(BoardZoneId.HumanVictory,"VICTORY",0.871f,0.302f,0.992f,0.408f,SkinColorRole.Teal),
         new ZoneStyle(BoardZoneId.HumanDiscard,"DISCARD",0.871f,0.416f,0.992f,0.62f,SkinColorRole.Teal),
         new ZoneStyle(BoardZoneId.Hand,"YOUR HAND",0.153f,0.012f,0.992f,0.294f,SkinColorRole.Teal)

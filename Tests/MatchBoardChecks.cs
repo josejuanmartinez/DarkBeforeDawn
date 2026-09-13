@@ -17,7 +17,7 @@ m.AdvanceIfNoActions();
 if(r.Stage!=MatchStage.Realm || !b.TryPlay(View(land))) throw new System.Exception("Board land deployment failed.");
 foreach(var card in r.Players[0].Hand.ToArray()) if(card.GetCardType()==CardTypeEnum.Land) b.TryPlay(View(card));
 if(b.CanTap(View(land))) throw new System.Exception("Board allows mana during Realms.");
-m.Advance();
+m.Advance(); if(r.Stage!=MatchStage.Destination || !m.AdvanceIfNoActions() || r.Stage!=MatchStage.Muster) throw new System.Exception("Realm must pass through an empty Select Destination into Muster.");
 if(!b.TryTap(View(land)) || !b.IsTapped(View(land)) || b.TryTap(View(land))) throw new System.Exception("Board tapping integration failed.");
 if(!object.ReferenceEquals(b.HumanMaterials,r.Players[0].Mana)) throw new System.Exception("Board material pool not bound to rules.");
 foreach(var card in r.Players[0].Field.Where(u=>u.Card.GetCardType()==CardTypeEnum.Land).ToArray()) b.TryTap(View(card.Card));

@@ -132,6 +132,9 @@ public class DeckManagerWindow : EditorWindow
     private string editedStartingPC = string.Empty;
 
     private bool editedObjectHidden;
+    private ObjectTypeEnum editedObjectType;
+    private ObjectTypeEnum editedPcObjectTypeToAdd = ObjectTypeEnum.Weapon;
+    private string editedBirthplaceToAdd = string.Empty;
     private bool editedObjectTransferable;
     private int editedObjectCopies;
     private int editedObjectCommanderBonus;
@@ -540,7 +543,7 @@ public class DeckManagerWindow : EditorWindow
 
         if (card.GetCardType() == CardTypeEnum.PC && !string.IsNullOrWhiteSpace(card.name))
         {
-            EditorGUILayout.LabelField($"Allows recruiting characters born in {card.name}.", EditorStyles.wordWrappedLabel);
+            EditorGUILayout.LabelField($"As the destination: characters and encounters born in {card.name}, and objects of the kinds it trades in.", EditorStyles.wordWrappedLabel);
         }
 
         if (GUILayout.Button("Remove Card", GUILayout.Width(120))) Defer(() => RemoveCard(card));
@@ -686,6 +689,20 @@ public class DeckManagerWindow : EditorWindow
             DrawEditableGrants(card);
         }
 
+        if (card.GetCardType() == CardTypeEnum.PC)
+        {
+            GUILayout.Space(10);
+            EditorGUILayout.LabelField("Trades In", EditorStyles.boldLabel);
+            DrawEditableObjectTypes(card);
+        }
+
+        if (card.GetCardType() == CardTypeEnum.Encounter)
+        {
+            GUILayout.Space(10);
+            EditorGUILayout.LabelField("Birthplaces", EditorStyles.boldLabel);
+            DrawEditableBirthplaces(card);
+        }
+
         GUILayout.Space(6);
         EditorGUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
@@ -809,6 +826,48 @@ public class DeckManagerWindow : EditorWindow
         return changed;
     }
 
+    // A settlement lists the kinds of object that can be played while it is the destination. Saved on
+    // change, like the ability lists: an enum popup has no commit moment of its own.
+    private void DrawEditableObjectTypes(CardData card)
+    {
+        if (card == null) return;
+        card.objectTypes ??= new List<ObjectTypeEnum>();
+        EditorGUILayout.HelpBox("Objects of these kinds can be equipped here when this settlement is the destination.", MessageType.None);
+        if (DrawAbilityList(card.objectTypes, "Object kinds", ref editedPcObjectTypeToAdd))
+            Defer(() => SaveObjectTypes(card));
+    }
+
+    // An encounter is investigated at one of its birthplaces; each deck that holds the encounter
+    // needs one of them among its own settlements.
+    private void DrawEditableBirthplaces(CardData card)
+    {
+        if (card == null) return;
+        card.birthplaces ??= new List<string>();
+        bool changed = false;
+        int toRemove = -1;
+        for (int i = 0; i < card.birthplaces.Count; i++)
+        {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField(card.birthplaces[i]);
+            if (GUILayout.Button("-", GUILayout.Width(25))) toRemove = i;
+            EditorGUILayout.EndHorizontal();
+        }
+        if (toRemove >= 0) { card.birthplaces.RemoveAt(toRemove); changed = true; }
+
+        List<string> pcNames = GetAvailablePcNames();
+        EditorGUILayout.BeginHorizontal();
+        int index = Mathf.Max(0, pcNames.IndexOf(editedBirthplaceToAdd));
+        index = EditorGUILayout.Popup("Add", index, pcNames.ToArray());
+        editedBirthplaceToAdd = pcNames[Mathf.Clamp(index, 0, pcNames.Count - 1)];
+        if (GUILayout.Button("+", GUILayout.Width(25)) && !string.IsNullOrWhiteSpace(editedBirthplaceToAdd) && !card.birthplaces.Contains(editedBirthplaceToAdd))
+        {
+            card.birthplaces.Add(editedBirthplaceToAdd);
+            changed = true;
+        }
+        EditorGUILayout.EndHorizontal();
+        if (changed) Defer(() => SaveBirthplaces(card));
+    }
+
     private void DrawEditableCharacterStats(CardData card)
     {
         SyncEditableCardFields(card);
@@ -838,6 +897,8 @@ public class DeckManagerWindow : EditorWindow
     {
         SyncEditableCardFields(card);
 
+        editedObjectType = (ObjectTypeEnum)EditorGUILayout.EnumPopup(
+            new GUIContent("Kind", "Decides which settlements the object can be played at: a destination must trade in this kind."), editedObjectType);
         editedObjectHidden = EditorGUILayout.Toggle(
             new GUIContent("Hidden", "Not revealed to its owner until found or granted."), editedObjectHidden);
         editedObjectTransferable = EditorGUILayout.Toggle(
@@ -977,6 +1038,7 @@ public class DeckManagerWindow : EditorWindow
         editedStartingPC = card.startingPC ?? string.Empty;
 
         editedObjectHidden = card.hidden;
+        editedObjectType = card.objectType;
         editedObjectTransferable = card.transferable;
         editedObjectCopies = Mathf.Max(1, card.copies);
         editedObjectCommanderBonus = card.commanderBonus;
@@ -1134,11 +1196,26 @@ public class DeckManagerWindow : EditorWindow
         CommitDeck(deckView, $"character stats for '{target.name}'");
     }
 
+    private void SaveObjectTypes(CardData card)
+    {
+        if (!TryGetSaveTarget(card, out DeckEntryView deckView, out CardData target)) return;
+        target.objectTypes = card.objectTypes != null ? new List<ObjectTypeEnum>(card.objectTypes.Distinct()) : new List<ObjectTypeEnum>();
+        CommitDeck(deckView, $"object kinds for '{target.name}'");
+    }
+
+    private void SaveBirthplaces(CardData card)
+    {
+        if (!TryGetSaveTarget(card, out DeckEntryView deckView, out CardData target)) return;
+        target.birthplaces = card.birthplaces != null ? new List<string>(card.birthplaces.Distinct()) : new List<string>();
+        CommitDeck(deckView, $"birthplaces for '{target.name}'");
+    }
+
     private void SaveObjectStats(CardData card)
     {
         if (!TryGetSaveTarget(card, out DeckEntryView deckView, out CardData target)) return;
 
         target.hidden = editedObjectHidden;
+        target.objectType = editedObjectType;
         target.transferable = editedObjectTransferable;
         target.copies = Mathf.Max(1, editedObjectCopies);
         target.commanderBonus = editedObjectCommanderBonus;
@@ -1976,7 +2053,6 @@ public class DeckManagerWindow : EditorWindow
         // Preview a clone: Initialize writes presentation state onto the CardData it is handed, and
         // that instance is the one the deck file will be written from.
         CardData previewData = card.Clone();
-        previewData.encounterRevealed = true;   // show the face, not the unrevealed "?" side
         previewData.hasShownHandAnimation = true;
         if (string.IsNullOrWhiteSpace(previewData.deckSpriteName))
         {

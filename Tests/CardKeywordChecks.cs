@@ -23,7 +23,7 @@ foreach (StatusEffects effect in System.Enum.GetValues(typeof(StatusEffects)))
     count++;
 }
 var clone = data.Clone(); clone.statusEffects.Clear();
-if (data.statusEffects.Count != 11) throw new System.Exception("Status clone shares its list");
+if (data.statusEffects.Count != System.Enum.GetValues(typeof(StatusEffects)).Length) throw new System.Exception("Status clone shares its list");
 if (CardKeywordGlossary.DisplayName("BonusVersusDragons") != "Bonus vs Dragons") throw new System.Exception("Bad bonus label");
 var root = new UnityEngine.GameObject("Keyword checks", typeof(UnityEngine.RectTransform), typeof(UnityEngine.Canvas));
 try

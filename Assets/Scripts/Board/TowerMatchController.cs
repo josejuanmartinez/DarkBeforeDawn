@@ -24,6 +24,7 @@ public sealed class TowerMatchController : MonoBehaviour
     Button next, offer, undo;
     RectTransform deckAnchor;
     MatchCinematic cinematic;
+    DestinationPicker picker;
     CardData pendingObject;
     MatchRules.Unit pendingAttacker, pendingDefender;
     readonly Queue<(CardData card, int player)> draws = new();
@@ -32,7 +33,7 @@ public sealed class TowerMatchController : MonoBehaviour
     float aiAt;
     float autoAt;
     string selectionHint;
-    readonly string[] stages = { "", "REPLENISH", "BUILD YOUR REALM", "MUSTER", "EVENTS", "DECLARE ATTACKS", "ASSIGN DEFENDERS", "RECOVER OBJECTS" };
+    readonly string[] stages = { "", "REPLENISH", "BUILD YOUR REALM", "SELECT DESTINATION", "MUSTER", "EVENTS", "DECLARE ATTACKS", "ASSIGN DEFENDERS", "RECOVER OBJECTS" };
 
     IEnumerator Start()
     {
@@ -60,6 +61,10 @@ public sealed class TowerMatchController : MonoBehaviour
                 cards.Add(avatar.Clone());
             if (cards.Count == 0) { selectionHint = "Assign both match deck IDs on TowerMatchController."; Busy = true; return; }
             for (int n = cards.Count - 1; n > 0; n--) { int j = Random.Range(0, n + 1); (cards[n], cards[j]) = (cards[j], cards[n]); }
+            // Settlements are never drawn: the whole pool waits on the table for its land, and one of
+            // them is picked as the destination each turn.
+            Rules.Players[i].Settlements.AddRange(cards.Where(c => c.GetCardType() == CardTypeEnum.PC).OrderBy(c => c.name));
+            cards.RemoveAll(c => c.GetCardType() == CardTypeEnum.PC);
             if (useStarterDeck) cards = StarterDeck(cards);
             Rules.Players[i].Deck.AddRange(cards);
         }
@@ -69,12 +74,11 @@ public sealed class TowerMatchController : MonoBehaviour
     static List<CardData> StarterDeck(List<CardData> catalog)
     {
         // Preserve printed costs and identities; select only the implemented deployment types.
-        var supported = catalog.Where(c => c.GetCardType() == CardTypeEnum.Land || c.GetCardType() == CardTypeEnum.PC ||
-            c.GetCardType() == CardTypeEnum.Character || c.GetCardType() == CardTypeEnum.Army || c.GetCardType() == CardTypeEnum.Object || c.GetCardType() == CardTypeEnum.Environmental).ToList();
+        var supported = catalog.Where(c => c.GetCardType() == CardTypeEnum.Land || c.GetCardType() == CardTypeEnum.Character ||
+            c.GetCardType() == CardTypeEnum.Army || c.GetCardType() == CardTypeEnum.Object || c.GetCardType() == CardTypeEnum.Environmental ||
+            c.GetCardType() == CardTypeEnum.Encounter).ToList();
         var lands = supported.Where(c => c.GetCardType() == CardTypeEnum.Land).ToList();
         var opening = lands.Take(3).ToList();
-        var pc = supported.FirstOrDefault(c => c.GetCardType() == CardTypeEnum.PC && opening.Any(l => l.name == c.region));
-        if (pc != null) opening.Add(pc);
         var army = supported.Where(c => c.GetCardType() == CardTypeEnum.Army).OrderBy(c => c.GetTotalMaterialCost()).FirstOrDefault();
         if (army != null) opening.Add(army);
         foreach(var c in opening) supported.Remove(c);
@@ -124,6 +128,7 @@ public sealed class TowerMatchController : MonoBehaviour
         deckLabel = Label(deck.transform, "ORREN\nDRAW DECK", 16, Vector2.zero, Vector2.one);
         offer = Button(transform, "OFFER TO ENEMY", new Vector2(.35f,.565f), new Vector2(.65f,.60f), () => { Rules.OfferLoot(); selectionHint = null; Sync(); });
         ownedUI.Add(offer.gameObject); offer.gameObject.SetActive(false);
+        picker = gameObject.AddComponent<DestinationPicker>(); picker.Initialize(board, this);
     }
     Text Label(Transform root, string value, int size, Vector2 min, Vector2 max) => BoardPresentation.TextLabel(root, value,
         board.interfaceFont != null ? board.interfaceFont : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf"), size,
@@ -141,6 +146,8 @@ public sealed class TowerMatchController : MonoBehaviour
     public bool CanInteract => !Busy && !animating && draws.Count == 0 && Rules != null && Rules.Winner < 0;
     public bool CanPlay(BoardCardView view) => CanInteract && Rules.Active == 0 && view != null && view.Zone == board.hand && Rules.CanPlay(view.Data);
     public bool CanTap(BoardCardView view) => CanInteract && Rules.Active == 0 && Rules.CanTapLand(Unit(view));
+    public bool IsDestination(BoardCardView view) => view != null && Rules != null && view.Zone != board.hand &&
+        Rules.IsDestination(board.IsOpponentZone(view.Zone) ? 1 : 0, view.Data);
     public bool IsActionable(BoardCardView view)
     {
         if (!CanInteract || view == null) return false;
@@ -164,6 +171,7 @@ public sealed class TowerMatchController : MonoBehaviour
     {
         if (Rules == null || view == null) return null;
         var unit = Unit(view);
+        if (IsDestination(view)) return (unit != null && unit.Tapped ? "Destination used this turn. " : "Destination. ") + "Characters and encounters born here, and objects it trades in, are played here.";
         if (Rules.IsNewUnit(unit)) return "New unit: untapped; can defend now, attack next turn (unless Mounted).";
         if (view.Zone == board.hand && Rules.Active == 0) return Rules.PlayBlockReason(view.Data);
         if (unit != null && Rules.Stage == MatchStage.Attack) return Rules.AttackBlockReason(unit);
@@ -181,6 +189,13 @@ public sealed class TowerMatchController : MonoBehaviour
         if (view.Data.GetCardType() == CardTypeEnum.Object && Rules.Stage == MatchStage.Muster)
         { pendingObject = view.Data; selectionHint = "Select your character to carry " + pendingObject.name + "."; board.preview?.Hide(); UpdateHUD(); return true; }
         bool result = Rules.Play(view.Data); selectionHint = null; Sync(); return result;
+    }
+    /// <summary>The human travels to a settlement for the turn; the choice made, the stage moves on.</summary>
+    public bool Travel(CardData settlement)
+    {
+        if (!CanInteract || Rules.Active != 0 || Rules.Stage != MatchStage.Destination) return false;
+        if (!Rules.ChooseDestination(settlement)) { selectionHint = Rules.Message; UpdateHUD(); return false; }
+        selectionHint = null; Rules.Next(); Sync(); return true;
     }
     /// <summary>Takes back the human's last play of this stage. A stage change forgets the stack.</summary>
     public void Undo()
@@ -278,6 +293,12 @@ public sealed class TowerMatchController : MonoBehaviour
         }
         if (Rules.Active != 1 || Rules.Stage == MatchStage.Defend) return;
         var p = Rules.Players[1];
+        // The opponent travels wherever the most cards in its hand are waiting; on a tie it stays.
+        if (Rules.Stage == MatchStage.Destination)
+        {
+            var preferred = Rules.PreferredDestination(1);
+            if (preferred != null) Rules.ChooseDestination(preferred);
+        }
         if ((Rules.Stage == MatchStage.Muster || Rules.Stage == MatchStage.Events) &&
             p.Hand.Any(c => !Rules.CanPlay(c) && Rules.PlayBlockReason(c, includeReadyMana: true) == null))
         {
@@ -306,7 +327,11 @@ public sealed class TowerMatchController : MonoBehaviour
             (Rules.Active == 0 && Rules.Stage != MatchStage.Defend || Rules.Active == 1 && Rules.Stage == MatchStage.Defend);
         next.gameObject.SetActive(Rules.Winner >= 0 || manual);
         next.interactable = !Busy && !animating && draws.Count == 0 && (Rules.Winner >= 0 || manual);
-        nextText.text = Rules.Winner >= 0 ? "TOWER" : Rules.Stage == MatchStage.Defend ? "RESOLVE COMBAT" : "NEXT STAGE";
+        var destination = Rules.Players[0].Destination;
+        nextText.text = Rules.Winner >= 0 ? "TOWER" : Rules.Stage == MatchStage.Defend ? "RESOLVE COMBAT"
+            : Rules.Stage == MatchStage.Destination ? (destination == null ? "SKIP" : "STAY") : "NEXT STAGE";
+        // The popup is the whole Select Destination stage for the human; anywhere else it is closed.
+        picker?.Sync(CanInteract && Rules.Active == 0 && Rules.Stage == MatchStage.Destination && Rules.HasLegalAction() ? Rules.DestinationChoices(0) : null);
         undo.gameObject.SetActive(Rules.Winner < 0 && HoldingForUndo);
         undo.interactable = CanInteract;
         offer.gameObject.SetActive(!Busy && Rules.Stage == MatchStage.Spoils && Rules.Spoils.Count > 0 && !Rules.Spoils.Peek().Offered && Rules.Spoils.Peek().Owner == 0);
@@ -315,8 +340,13 @@ public sealed class TowerMatchController : MonoBehaviour
     string StageHint()
     {
         if (Rules.Stage == MatchStage.Draw) return "Replenishing hand... play continues automatically.";
-        if (Rules.Active == 0 && Rules.Stage == MatchStage.Realm) return "Glowing hand cards can build your realm: lands, PCs and environments.";
-        if (Rules.Active == 0 && Rules.Stage == MatchStage.Muster) return "Tap ready lands for mana, then deploy characters, armies or objects. New units attack next turn.";
+        if (Rules.Active == 0 && Rules.Stage == MatchStage.Realm) return "Glowing hand cards can build your realm: lands and environments. Settlements unlock as destinations once their land is down.";
+        if (Rules.Active == 0 && Rules.Stage == MatchStage.Destination)
+            return Rules.Players[0].Destination == null ? "Browse the settlements whose land you hold and travel to one for this turn."
+                : "Browse your settlements and travel to one, or stay at " + Rules.Players[0].Destination.Card.name + ".";
+        if (Rules.Active == 0 && Rules.Stage == MatchStage.Muster)
+            return "Tap ready lands for mana, then deploy armies anywhere; characters, encounters and objects only at your destination, which one play taps."
+                + (Rules.Players[0].Destination != null ? " Destination: " + Rules.Players[0].Destination.Card.name + "." : " No destination this turn.");
         if (Rules.Active == 0 && Rules.Stage == MatchStage.Events && Rules.ResolveEvent != null) return "Tap ready lands for mana as needed, then play events.";
         if (Rules.Stage == MatchStage.Attack && Rules.Active == 0)
             return "Click ready units to attack. " + Rules.Attacks.Count + " committed. " + Rules.Message;
@@ -334,6 +364,7 @@ public sealed class TowerMatchController : MonoBehaviour
         void Zone(CardZoneVisualizer zone, int player, params CardTypeEnum[] types)
         { zone?.SynchronizeCards(Rules.Players[player].Field.Where(u => types.Contains(u.Card.GetCardType())).Select(u => u.Card)); }
         Zone(board.humanLands, 0, CardTypeEnum.Land); Zone(board.opponentLands, 1, CardTypeEnum.Land);
+        // The settlement zone holds one token: the destination. Choosing it happens in the picker popup.
         Zone(board.humanPopulationCenters, 0, CardTypeEnum.PC); Zone(board.opponentPopulationCenters, 1, CardTypeEnum.PC);
         Zone(board.humanArmies, 0, CardTypeEnum.Character, CardTypeEnum.Army); Zone(board.opponentArmies, 1, CardTypeEnum.Character, CardTypeEnum.Army);
         board.environmental?.SynchronizeCards(Rules.Players.SelectMany(p => p.Field).Where(u => u.Card.GetCardType() == CardTypeEnum.Environmental).Select(u => u.Card));

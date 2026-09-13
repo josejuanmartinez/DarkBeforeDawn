@@ -136,8 +136,9 @@ lowercase), so a card named `Gap of Rohan` still finds `GapOfRohan.jpg`.
 - **`CardData`'s gameplay half** — combat effects, encounter outcomes, the object bonuses that fed
   `Duel.cs` and `Army.cs`. Field names for everything kept are unchanged, so Runeboard's deck JSON
   still deserializes; dropped fields are simply ignored.
-- **Encounter target hexes.** With no hex board, an unrevealed encounter shows its `?` cover and
-  `description` rather than naming a hex. `Card.RevealEncounterCard()` still plays the fade.
+- **Encounter target hexes and the `?` cover.** With no hex board, an encounter shows its full face
+  and says only where it can be investigated (`birthplaces`, rendered as "Investigate this encounter
+  at X"); its options and outcome text are not shown.
 - **`CardBloomWheel`** (808 lines) and `CardPlayFlight` / `CardPlayFailure`. These are a *layout*
   and its animations, not the card face, and both were heavily tied to characters, armies and hexes.
   The hooks they need survive on `Card`: `SetTokenTint`, `LastKnownPlayable`,

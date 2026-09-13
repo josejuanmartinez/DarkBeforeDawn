@@ -108,6 +108,24 @@ public enum StatusEffects
     Halted = 12 // Does not untap during the owner's draw stage.
 }
 
+// What kind of thing an Object is, so a settlement can say which kinds it trades in. Every object
+// carries exactly one; a PC lists the kinds that can be equipped there (CardData.objectTypes).
+public enum ObjectTypeEnum
+{
+    None = 0,
+    Weapon = 1,      // swords, axes, daggers, staves
+    Bow = 2,         // bows and arrows
+    Armor = 3,       // mail, helms, cloaks, hoods, boots
+    Ring = 4,
+    Jewel = 5,       // gems, brooches, talismans
+    SeeingStone = 6, // palantiri and scrying mirrors
+    Banner = 7,      // standards carried into battle
+    Regalia = 8,     // crowns, seals, batons, horns
+    Remedy = 9,      // herbs, waybread, cordials, phials
+    Tool = 10,       // compasses, lockpicks, tokens
+    Mount = 11       // steeds
+}
+
 public enum CharacterOnlySpecialAbilityEnum {
     Scholar = 0, // Bonux to play artifacts
     Lieutenant = 1, // Chance of applying Strenghtened status effect to the units attacking at the same time with it

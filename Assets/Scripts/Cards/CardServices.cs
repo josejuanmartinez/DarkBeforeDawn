@@ -33,7 +33,7 @@ public static partial class CardServices
 
     // --- Face style ------------------------------------------------------------------------------
     // Style for the pieces the card face builds itself at refresh time -- the requirement-failure
-    // messages and the face-down encounter veil -- which board chrome cannot reach afterwards.
+    // messages -- which board chrome cannot reach afterwards.
     // BoardPresentation installs the active BoardSkin's section here, so the skin stays the single
     // authority without Card ever referencing BoardSkin. Falls back to the values the face shipped.
     [AutoStaticsCleanup]
@@ -93,11 +93,6 @@ public interface ICardFaceStyle
 {
     // Colour of the "Need 3<sprite name="gold">" lines under the description.
     Color RequirementsMessageColor { get; }
-
-    // The veil laid over a face-down encounter's artwork, and the '?' drawn on top of it.
-    Color EncounterOverlayColor { get; }
-    Color EncounterGlyphColor { get; }
-    float EncounterGlyphSize { get; }
 }
 
 // What the face used before any of this was skinnable. Kept as the no-install default so the
@@ -108,9 +103,6 @@ public sealed class DefaultCardFaceStyle : ICardFaceStyle
     [NoAutoStaticsCleanup]
     public static readonly DefaultCardFaceStyle Instance = new();
     public Color RequirementsMessageColor => Color.red;
-    public Color EncounterOverlayColor => Color.black;
-    public Color EncounterGlyphColor => Color.white;
-    public float EncounterGlyphSize => 64f;
 }
 
 public interface ICardPlayabilitySource

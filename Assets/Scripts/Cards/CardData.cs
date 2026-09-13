@@ -44,6 +44,9 @@ public class CardData
     public RacesEnum race;
     public SexEnum sex = SexEnum.Male;
     public string startingPC = string.Empty;
+    // Encounter-only: the settlements where the encounter can be investigated. A character has one
+    // home (startingPC); an encounter shared by several decks may need one birthplace per deck.
+    public List<string> birthplaces = new();
 
     // --- Army and Character abilities -----------------------------------------------------------
     public TroopsTypeEnum troopType;
@@ -84,9 +87,12 @@ public class CardData
     public int mithrilGranted;
     public int goldGranted;
     public bool isUnderground;
+    // PC-only: the kinds of object that can be equipped while this settlement is the destination.
+    public List<ObjectTypeEnum> objectTypes = new();
 
     // --- Object card face -----------------------------------------------------------------------
     public bool hidden;
+    public ObjectTypeEnum objectType;
     public int copies = 1;
     public int commanderBonus;
     public int agentBonus;
@@ -109,10 +115,7 @@ public class CardData
     public string situation2 = string.Empty;
 
     // --- Presentation state, never serialized -------------------------------------------------------
-    // encounterTargetHex is gone with the hex board; encounterRevealed survives on its own because
-    // the reveal is a pure animation the card face owns (see Card.RevealEncounterCardAsync).
     [NonSerialized] public bool isPlayable = true;
-    [NonSerialized] public bool encounterRevealed;
     [NonSerialized] public bool hasShownHandAnimation;
     // Filled in by whatever ICardPlayabilitySource the project installs; the face only reads it to
     // render the red requirement warnings under the description.
@@ -132,6 +135,8 @@ public class CardData
             : new List<CharacterOnlySpecialAbilityEnum>();
         copy.playability = new CardPlayabilityResult();
         copy.statusEffects = statusEffects != null ? new List<StatusEffects>(statusEffects) : new();
+        copy.birthplaces = birthplaces != null ? new List<string>(birthplaces) : new();
+        copy.objectTypes = objectTypes != null ? new List<ObjectTypeEnum>(objectTypes) : new();
         return copy;
     }
 
@@ -160,6 +165,60 @@ public class CardData
     }
 
     public string GetActionRef() => !string.IsNullOrWhiteSpace(action) ? action : actionClassName;
+
+    // --- Destinations -----------------------------------------------------------------------------
+    // Where a card can be played from the hand: a character at its home, an encounter at any of its
+    // birthplaces. Empty for every other type.
+    public IEnumerable<string> GetBirthplaces()
+    {
+        CardTypeEnum cardType = GetCardType();
+        if (cardType == CardTypeEnum.Character)
+            return string.IsNullOrWhiteSpace(startingPC) ? Enumerable.Empty<string>() : new[] { startingPC };
+        if (cardType == CardTypeEnum.Encounter)
+            return (birthplaces ?? new List<string>()).Where(b => !string.IsNullOrWhiteSpace(b));
+        return Enumerable.Empty<string>();
+    }
+
+    public bool IsBornAt(string pcName)
+        => GetBirthplaces().Any(b => string.Equals(b.Trim(), pcName?.Trim(), StringComparison.OrdinalIgnoreCase));
+
+    // Whether this settlement trades in the given kind of object.
+    public bool EquipsObject(ObjectTypeEnum kind)
+        => GetCardType() == CardTypeEnum.PC && kind != ObjectTypeEnum.None && objectTypes != null && objectTypes.Contains(kind);
+
+    // The card types that are played at the active destination rather than anywhere on the field.
+    public bool RequiresDestination()
+    {
+        CardTypeEnum cardType = GetCardType();
+        return cardType == CardTypeEnum.Character || cardType == CardTypeEnum.Encounter || cardType == CardTypeEnum.Object;
+    }
+
+    public bool CanBePlayedAt(CardData settlement)
+    {
+        if (settlement == null || settlement.GetCardType() != CardTypeEnum.PC) return false;
+        return GetCardType() == CardTypeEnum.Object ? settlement.EquipsObject(objectType) : IsBornAt(settlement.name);
+    }
+
+    public static string FormatObjectTypeLabel(ObjectTypeEnum kind) => kind switch
+    {
+        ObjectTypeEnum.SeeingStone => "Seeing Stones",
+        ObjectTypeEnum.Regalia => "Regalia",
+        ObjectTypeEnum.Remedy => "Remedies",
+        ObjectTypeEnum.None => string.Empty,
+        _ => kind + "s"
+    };
+
+    // Glyphs from common_spritesheet standing in for each kind on the PC face.
+    public static string ObjectTypeSprite(ObjectTypeEnum kind) => kind switch
+    {
+        ObjectTypeEnum.Weapon => "sword", ObjectTypeEnum.Bow => "bow", ObjectTypeEnum.Armor => "armor",
+        ObjectTypeEnum.Ring => "ring", ObjectTypeEnum.Jewel => "jewel", ObjectTypeEnum.SeeingStone => "palantir",
+        ObjectTypeEnum.Banner => "banner", ObjectTypeEnum.Regalia => "crown", ObjectTypeEnum.Remedy => "herb",
+        ObjectTypeEnum.Tool => "key", ObjectTypeEnum.Mount => "hc", _ => "artifact"
+    };
+
+    public static string FormatObjectTypeTag(ObjectTypeEnum kind)
+        => kind == ObjectTypeEnum.None ? string.Empty : $"{SpriteTag(ObjectTypeSprite(kind))}{FormatObjectTypeLabel(kind)}";
 
     public int GetCharacterPointTotal()
     {
@@ -228,7 +287,7 @@ public class CardData
             CardTypeEnum.Land => GetLandDescription(),
             CardTypeEnum.PC => PcDescriptionBuilder.BuildBody(this, includeFoundingText),
             CardTypeEnum.Event or CardTypeEnum.Action or CardTypeEnum.Spell or CardTypeEnum.Environmental => GetActionEffectText(),
-            CardTypeEnum.Encounter => !string.IsNullOrWhiteSpace(description) ? description.Trim() : string.Empty,
+            CardTypeEnum.Encounter => GetEncounterDescription(),
             CardTypeEnum.Object => GetObjectDescription(),
             _ => string.Empty
         };
@@ -416,11 +475,31 @@ public class CardData
 
         string flavor = !string.IsNullOrWhiteSpace(description) ? description.Trim() : string.Empty;
         List<string> details = BuildObjectMechanicalDetails();
+        // The kind leads: it decides which destinations the object can be played at.
+        if (objectType != ObjectTypeEnum.None)
+            details.Insert(0, $"{FormatObjectTypeTag(objectType)} - equip at a destination that trades in them");
         string effectsBlock = details.Count > 0 ? string.Join("\n", details.Select(d => $"• {d}")) : string.Empty;
 
         if (string.IsNullOrWhiteSpace(flavor)) return effectsBlock;
         if (string.IsNullOrWhiteSpace(effectsBlock)) return flavor;
         return $"{flavor}\n\n{effectsBlock}";
+    }
+
+    // The face says where an encounter can be investigated and nothing of what happens there: the
+    // outcome belongs to the play, not to the card text.
+    public string GetEncounterDescription()
+    {
+        if (GetCardType() != CardTypeEnum.Encounter) return string.Empty;
+        var homes = GetBirthplaces().Select(PcDescriptionBuilder.FormatDisplayRegionName).ToList();
+        if (homes.Count == 0) return "Investigate this encounter at its birthplace.";
+        return $"Investigate this encounter at {JoinNames(homes)}.";
+    }
+
+    public static string JoinNames(IReadOnlyList<string> names)
+    {
+        if (names == null || names.Count == 0) return string.Empty;
+        if (names.Count == 1) return names[0];
+        return string.Join(", ", names.Take(names.Count - 1)) + " or " + names[names.Count - 1];
     }
 
     public string GetSpriteString() => !string.IsNullOrEmpty(spriteName) ? spriteName : "artifact";
