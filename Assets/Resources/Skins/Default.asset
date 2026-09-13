@@ -15,15 +15,15 @@ MonoBehaviour:
   displayName: Default
   colors:
     ink: {r: 0.035, g: 0.052, b: 0.06, a: 0.96}
-    gold: {r: 0.7, g: 0.56, b: 0.33, a: 1}
-    ivory: {r: 0.93, g: 0.89, b: 0.78, a: 1}
-    muted: {r: 0.57, g: 0.63, b: 0.62, a: 1}
-    teal: {r: 0.39, g: 0.71, b: 0.66, a: 1}
-    atmosphere: {r: 0.018, g: 0.033, b: 0.039, a: 0.48}
-    zoneSurface: {r: 0.035, g: 0.055, b: 0.06, a: 0.65}
+    gold: {r: 0.79, g: 0.64, b: 0.4, a: 1}
+    ivory: {r: 0.95, g: 0.91, b: 0.81, a: 1}
+    muted: {r: 0.65, g: 0.71, b: 0.71, a: 1}
+    teal: {r: 0.4, g: 0.77, b: 0.7, a: 1}
+    atmosphere: {r: 0.018, g: 0.033, b: 0.039, a: 0.22}
+    zoneSurface: {r: 0.035, g: 0.065, b: 0.075, a: 0.83}
     tokenBorder: {r: 0.7, g: 0.56, b: 0.33, a: 0.6}
     stackBorder: {r: 0.34, g: 0.31, b: 0.23, a: 1}
-    button: {r: 0.14, g: 0.18, b: 0.18, a: 1}
+    button: {r: 0.1, g: 0.28, b: 0.26, a: 1}
     disabledButton: {r: 0.3, g: 0.3, b: 0.3, a: 1}
     cardShadow: {r: 0, g: 0, b: 0, a: 0.6}
     previewShadow: {r: 0, g: 0, b: 0, a: 0.65}
@@ -33,8 +33,8 @@ MonoBehaviour:
     cardTypes: {fileID: 0}
     requirements: {r: 1, g: 1, b: 1, a: 1}
   typography:
-    interfaceFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    mastheadFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    interfaceFont: {fileID: 12800000, guid: e3265ab4bf004d28a9537516768c1c75, type: 3}
+    mastheadFont: {fileID: 12800000, guid: 17d4945b9a263ab4891b0cfbfdb9a2eb, type: 3}
     readingFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     readingFontFallback: Fonts & Materials/LiberationSans SDF
     zoneHeadingSize: 15
@@ -52,14 +52,14 @@ MonoBehaviour:
       max: {x: 1, y: 1}
     headerLabels:
     - text: DARK BEFORE DAWN
-      size: 24
+      size: 25
       color: 2
       bounds:
         min: {x: 0.02, y: 0}
         max: {x: 0.44, y: 1}
       alignment: 3
       mastheadFont: 1
-    - text: THE GOLDEN VALE
+    - text: T H E   G O L D E N   V A L E
       size: 13
       color: 1
       bounds:
@@ -79,7 +79,7 @@ MonoBehaviour:
     zoneBorderOpacity: 0.23
     zoneInlayOpacity: 0.65
     zoneInlayFraction: 0.12
-    headingInset: {x: 14, y: 2}
+    headingInset: {x: 22, y: 4}
     headingHeight: 26
     countWidth: 80
     contentInsetMin: {x: 14, y: 10}

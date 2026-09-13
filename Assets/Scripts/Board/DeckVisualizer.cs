@@ -42,7 +42,20 @@ public sealed class DeckVisualizer : CardZoneVisualizer
             rt.anchorMin = rt.anchorMax = new Vector2(1, 0);
             rt.pivot = new Vector2(1, 0);
         }
-        empty.color = skin.colors.emptyPile;
+        var engraving = empty.GetComponentInChildren<BoardSurface>();
+        if (engraving == null)
+        {
+            empty.color = skin.colors.ink;
+            BoardSurface.Dress(empty, skin.colors.muted, true, true);
+            BoardPresentation.TextLabel(empty.transform, "\u2014", board.interfaceFont, 14, skin.colors.muted,
+                Vector2.zero, Vector2.one, TextAnchor.MiddleCenter);
+        }
+        else
+        {
+            engraving.surface = skin.colors.ink;
+            engraving.accent = skin.colors.muted;
+            engraving.SetVerticesDirty();
+        }
         BoardPresentation.Stretch(empty.rectTransform, skin.piles.emptyBounds.min, skin.piles.emptyBounds.max);
         counter.font = board.interfaceFont;
         counter.fontSize = skin.piles.counterFontSize;

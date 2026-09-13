@@ -42,10 +42,10 @@ try
         Check(discard.SelectedIndex == selection, "Skin switch reset pile selection.");
         foreach (var zone in zones) Check(zone.Cards.SequenceEqual(snapshot[zone]), "Skin switch changed card data/order.");
         var masthead = board.GetComponentsInChildren<UnityEngine.UI.Image>().First(g=>g.name=="Board masthead");
-        Check(masthead.color == variant.colors.ink, "Board surface did not load skin color.");
+        Check(masthead.GetComponentInChildren<BoardSurface>().surface == variant.colors.ink, "Board surface did not load skin color.");
         board.preview.Show(board.hand.GetComponentInChildren<BoardCardView>());
         Check(board.preview.preferredHeight == variant.preview.preferredHeight, "Preview size was not loaded.");
-        Check(board.preview.PreviewRect.GetComponent<UnityEngine.UI.Image>().color == variant.colors.ink, "Preview color did not load.");
+        Check(board.preview.PreviewRect.GetComponentInChildren<BoardSurface>().surface == variant.colors.ink, "Preview color did not load.");
         manager.SetSkin(original);
         Check(board.hand.GetComponentInChildren<BoardCardView>().NaturalSize == original.cards.size, "Default geometry did not restore.");
     }

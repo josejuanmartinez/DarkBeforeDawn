@@ -83,8 +83,9 @@ public sealed class BoardPresentation : MonoBehaviour
         shade.transform.SetAsFirstSibling();
         var header = Track(Panel(transform, "Board masthead", skin.colors.ink));
         Stretch(header.rectTransform, skin.chrome.header.min, skin.chrome.header.max);
-        foreach (var label in skin.chrome.headerLabels) StyledLabel(header.transform, label);
-        Rule(header.transform, skin.colors.gold, Vector2.zero, Vector2.right);
+        BoardSurface.Dress(header, skin.colors.gold, true);
+        for (int i = 0; i < skin.chrome.headerLabels.Length; i++)
+            if (i == 0 || board.Match == null) StyledLabel(header.transform, skin.chrome.headerLabels[i]);
         foreach (var style in skin.zones) if (style != null) Zone(ResolveZone(style.zone), style);
         PlayerPanel(false);
         PlayerPanel(true);
@@ -170,12 +171,18 @@ public sealed class BoardPresentation : MonoBehaviour
         var surface = Track(Panel(panel, "Zone surface", skin.colors.zoneSurface));
         Stretch(surface.rectTransform, Vector2.zero, Vector2.one);
         surface.transform.SetAsFirstSibling();
-        Border(surface.rectTransform, new Color(accent.r, accent.g, accent.b, chrome.zoneBorderOpacity));
-        Rule(surface.transform, new Color(accent.r, accent.g, accent.b, chrome.zoneInlayOpacity), Vector2.up, new Vector2(chrome.zoneInlayFraction, 1));
+        BoardSurface.Dress(surface, accent, style.zone == BoardZoneId.Hand || style.zone == BoardZoneId.Environment);
+        var ribbon = Panel(surface.transform, "Recessed heading", new Color(accent.r, accent.g, accent.b, .025f));
+        Stretch(ribbon.rectTransform, Vector2.up, Vector2.one);
+        ribbon.rectTransform.pivot = new Vector2(.5f, 1);
+        ribbon.rectTransform.sizeDelta = new Vector2(-20, chrome.headingHeight + 2);
+        ribbon.rectTransform.anchoredPosition = new Vector2(0, -4);
         var heading = Label(panel, style.title, skin.typography.zoneHeadingSize, accent, Vector2.up, Vector2.one);
         heading.rectTransform.pivot = new Vector2(.5f, 1);
         heading.rectTransform.sizeDelta = new Vector2(-chrome.headingInset.x * 2, chrome.headingHeight);
         heading.rectTransform.anchoredPosition = new Vector2(0, -chrome.headingInset.y);
+        heading.fontStyle = FontStyle.Bold;
+        heading.fontSize = Mathf.Max(11, skin.typography.zoneHeadingSize - 2);
         var count = Label(panel, "", skin.typography.countSize, skin.colors.muted, Vector2.one, Vector2.one, TextAnchor.MiddleRight);
         count.rectTransform.pivot = Vector2.one;
         count.rectTransform.sizeDelta = new Vector2(chrome.countWidth, chrome.headingHeight);
@@ -210,7 +217,7 @@ public sealed class BoardPresentation : MonoBehaviour
         var bounds = opponent ? style.opponentMaterials : style.humanMaterials;
         var panel = Track(Panel(transform, opponent ? "Opponent materials" : "Your materials", Skin.colors.zoneSurface));
         Stretch(panel.rectTransform, bounds.min, bounds.max);
-        Border(panel.rectTransform, accent);
+        BoardSurface.Dress(panel, accent);
         Label(panel.transform, opponent ? "OPPONENT MATERIALS" : "YOUR MATERIALS", style.headingSize, accent,
             new Vector2(.02f,.85f), new Vector2(.98f,1), TextAnchor.MiddleCenter);
         var pool = opponent ? board.OpponentMaterials : board.HumanMaterials;
@@ -241,7 +248,16 @@ public sealed class BoardPresentation : MonoBehaviour
             var next = Panel(panel.transform, "End turn", Skin.colors.button);
             Stretch(next.rectTransform, new Vector2(.04f,.015f), new Vector2(.96f,.145f));
             next.raycastTarget = true;
+            BoardSurface.Dress(next, accent, false, true);
             var button = next.gameObject.AddComponent<Button>(); button.targetGraphic = next;
+            // Tint the engraved mesh itself so hover and press remain visible over its opaque face.
+            button.targetGraphic = next.GetComponentInChildren<BoardSurface>();
+            var feedback = button.colors;
+            feedback.normalColor = Color.white;
+            feedback.highlightedColor = new Color(1.3f, 1.3f, 1.15f);
+            feedback.pressedColor = new Color(.65f, .8f, .75f);
+            feedback.fadeDuration = .12f;
+            button.colors = feedback;
             button.onClick.AddListener(board.EndTurn);
             endTurnLabel = Label(next.transform, board.IsOpponentTurn ? "END OPPONENT TURN" : "END TURN",
                 style.materialSize, accent, Vector2.zero, Vector2.one, TextAnchor.MiddleCenter);
@@ -249,12 +265,13 @@ public sealed class BoardPresentation : MonoBehaviour
         var avatarBounds = opponent ? style.opponentAvatar : style.humanAvatar;
         var avatar = Track(Panel(transform, opponent ? "Opponent avatar" : "Your avatar", Skin.colors.zoneSurface));
         Stretch(avatar.rectTransform, avatarBounds.min, avatarBounds.max);
-        Border(avatar.rectTransform, accent);
+        BoardSurface.Dress(avatar, accent, true);
         var avatarHeading = Label(avatar.transform, opponent ? "OPPONENT AVATAR" : "YOUR AVATAR", style.headingSize, accent,
             Vector2.up, Vector2.one, TextAnchor.MiddleCenter);
         avatarHeading.rectTransform.pivot = new Vector2(.5f, 1);
         avatarHeading.rectTransform.sizeDelta = new Vector2(-12, 24);
         avatarHeading.rectTransform.anchoredPosition = new Vector2(0, -2);
+        AvatarHealthBar.Create(avatar.transform, board, opponent ? 1 : 0, accent);
         var cardName = opponent ? board.opponentAvatarCardName : board.humanAvatarCardName;
         var data = string.IsNullOrWhiteSpace(cardName) ? null : CardCatalog.FindCardByName(cardName);
         if (data == null)
@@ -266,7 +283,7 @@ public sealed class BoardPresentation : MonoBehaviour
             go.transform.SetParent(avatar.transform, false);
             var area = (RectTransform)go.transform;
             Stretch(area, Vector2.zero, Vector2.one);
-            area.offsetMin = new Vector2(6, 6);
+            area.offsetMin = new Vector2(6, 48);
             area.offsetMax = new Vector2(-6, -28);
             var zone = go.AddComponent<AvatarZoneVisualizer>(); zone.board = board;
             zone.Owner = opponent ? 1 : 0;
@@ -390,6 +407,7 @@ public sealed class BoardPresentation : MonoBehaviour
         var backing = Panel(root, "Obsidian card stock", skin.colors.ink);
         Stretch(backing.rectTransform, Vector2.zero, Vector2.one);
         backing.transform.SetAsFirstSibling();
+        BoardSurface.Dress(backing, skin.colors.gold, false, true);
         var shadow = backing.gameObject.AddComponent<Shadow>();
         shadow.effectColor = skin.colors.cardShadow; shadow.effectDistance = style.shadowOffset;
         SetPiece(real, "Image", style.art.size, style.art.position, skin.colors.ink);
@@ -567,6 +585,7 @@ public sealed class BoardPresentation : MonoBehaviour
         var backing = Panel(root, "Token stock", skin.colors.ink);
         Stretch(backing.rectTransform, Vector2.zero, Vector2.one);
         backing.transform.SetAsFirstSibling();
+        BoardSurface.Dress(backing, skin.colors.gold, false, true);
         Border(backing.rectTransform, skin.colors.tokenBorder, skin.tokens.borderWidth);
         string caption = System.Text.RegularExpressions.Regex.Replace(card.cardData?.name ?? string.Empty, "(?<=[a-z])(?=[A-Z])", " ");
         var label = TextLabel(root, caption, interfaceFont, skin.tokens.captionMaxSize, skin.colors.ivory,

@@ -124,10 +124,11 @@ public sealed class TowerMatchController : MonoBehaviour
     {
         var bar = BoardPresentation.Panel(transform, "Match stages", new Color(.035f,.045f,.06f,.97f));
         ownedUI.Add(bar.gameObject);
-        BoardPresentation.Stretch(bar.rectTransform, new Vector2(.15f,.91f), new Vector2(.87f,.995f));
-        BoardPresentation.Border(bar.rectTransform, new Color(.72f,.53f,.26f));
-        headline = Label(bar.transform, "THE ASCENT", 20, new Vector2(.02f,.46f), new Vector2(.62f,.98f));
-        hint = Label(bar.transform, "Orren vs The Sleepless Eye", 12, new Vector2(.02f,.02f), new Vector2(.62f,.46f));
+        BoardPresentation.Stretch(bar.rectTransform, new Vector2(.32f,.944f), new Vector2(.992f,.998f));
+        BoardSurface.Dress(bar, BoardPresentation.SkinFor(transform).colors.gold);
+        headline = Label(bar.transform, "THE ASCENT", 16, new Vector2(.02f,.46f), new Vector2(.62f,.98f));
+        hint = Label(bar.transform, "Orren vs The Sleepless Eye", 10, new Vector2(.02f,.02f), new Vector2(.62f,.46f));
+        hint.resizeTextForBestFit = true; hint.resizeTextMinSize = 8; hint.resizeTextMaxSize = 10;
         undo = Button(bar.transform, "\u2190 UNDO", new Vector2(.63f,.15f), new Vector2(.76f,.85f), Undo);
         undo.gameObject.SetActive(false);
         next = Button(bar.transform, "CONTINUE", new Vector2(.77f,.15f), new Vector2(.98f,.85f), Advance);
@@ -144,7 +145,7 @@ public sealed class TowerMatchController : MonoBehaviour
                 else if (label.transform.parent == deck.transform.parent) label.enabled = false;
         }
         else BoardPresentation.Stretch(deckAnchor, new Vector2(.88f,.20f), new Vector2(.985f,.32f));
-        BoardPresentation.Border(deckAnchor, new Color(.7f,.52f,.25f));
+        BoardSurface.Dress(deck, BoardPresentation.SkinFor(transform).colors.gold, true);
         deckLabel = Label(deck.transform, "ORREN\nDRAW DECK", 16, Vector2.zero, Vector2.one);
         offer = Button(transform, "OFFER TO ENEMY", new Vector2(.35f,.565f), new Vector2(.65f,.60f), () => { Rules.OfferLoot(); selectionHint = null; Sync(); });
         ownedUI.Add(offer.gameObject); offer.gameObject.SetActive(false);
@@ -157,6 +158,7 @@ public sealed class TowerMatchController : MonoBehaviour
         ownedUI.Add(stance.gameObject); stance.gameObject.SetActive(false);
         picker = gameObject.AddComponent<DestinationPicker>(); picker.Initialize(board, this);
         banner = gameObject.AddComponent<TravelBanner>(); banner.Initialize(board, this);
+        gameObject.AddComponent<CombatResultPanel>().Initialize(board);
     }
     Text Label(Transform root, string value, int size, Vector2 min, Vector2 max) => BoardPresentation.TextLabel(root, value,
         board.interfaceFont != null ? board.interfaceFont : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf"), size,
@@ -165,9 +167,16 @@ public sealed class TowerMatchController : MonoBehaviour
     {
         var panel = BoardPresentation.Panel(root, title, new Color(.25f,.18f,.095f));
         BoardPresentation.Stretch(panel.rectTransform, min, max); panel.raycastTarget = true;
-        BoardPresentation.Border(panel.rectTransform, new Color(.8f,.61f,.3f));
+        BoardSurface.Dress(panel, new Color(.8f,.61f,.3f), false, true);
         Label(panel.transform, title, 13, Vector2.zero, Vector2.one);
-        var button = panel.gameObject.AddComponent<Button>(); button.targetGraphic = panel; button.onClick.AddListener(action); return button;
+        var button = panel.gameObject.AddComponent<Button>();
+        button.targetGraphic = panel.GetComponentInChildren<BoardSurface>();
+        var colors = button.colors;
+        colors.highlightedColor = new Color(1.35f, 1.25f, 1.05f);
+        colors.pressedColor = new Color(.65f, .7f, .72f);
+        colors.fadeDuration = .12f;
+        button.colors = colors;
+        button.onClick.AddListener(action); return button;
     }
     public MatchRules.Unit Unit(BoardCardView view) => view == null || Rules == null ? null : Rules.Players.SelectMany(p => p.Field).FirstOrDefault(u => ReferenceEquals(u.Card, view.Data));
     public bool IsTapped(BoardCardView view) => Unit(view)?.Tapped ?? false;
@@ -345,6 +354,7 @@ public sealed class TowerMatchController : MonoBehaviour
     /// <summary>Called only after draw animations finish. One transition per tick avoids runaway empty turns.</summary>
     public bool AdvanceIfNoActions()
     {
+        if (Rules?.Stage == MatchStage.Travel && banner != null && banner.IsTravelling) return false;
         if (!CanInteract || Rules.HasLegalAction() || HoldingForUndo) return false;
         pendingObject = null; pendingRaid = null; pendingAttacker = pendingDefender = null; selectionHint = null;
         Rules.Next(); Sync(); return true;
@@ -363,6 +373,7 @@ public sealed class TowerMatchController : MonoBehaviour
         if (Rules == null || Busy) return;
         if (!animating && draws.Count > 0) { StartCoroutine(AnimateDraws()); return; }
         UpdateHUD();
+        if (Rules.Stage == MatchStage.Travel && banner != null && banner.IsTravelling) return;
         if (CanInteract && Time.unscaledTime >= autoAt && AdvanceIfNoActions()) return;
         if (animating || Rules.Winner >= 0 || Time.unscaledTime < aiAt) return;
         aiAt = Time.unscaledTime + .85f;

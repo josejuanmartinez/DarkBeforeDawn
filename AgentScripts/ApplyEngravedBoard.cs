@@ -1,0 +1,21 @@
+// Run once through Unity CLI eval_file in Edit mode to author the default palette.
+if (UnityEngine.Application.isPlaying) throw new System.InvalidOperationException("Apply the skin in Edit mode.");
+var skin = BoardSkin.Default;
+UnityEditor.Undo.RecordObject(skin, "Refine board art direction");
+skin.colors.gold = new UnityEngine.Color(.79f, .64f, .40f);
+skin.colors.teal = new UnityEngine.Color(.40f, .77f, .70f);
+skin.colors.ivory = new UnityEngine.Color(.95f, .91f, .81f);
+skin.colors.muted = new UnityEngine.Color(.65f, .71f, .71f);
+skin.colors.zoneSurface = new UnityEngine.Color(.035f, .065f, .075f, .83f);
+skin.colors.atmosphere = new UnityEngine.Color(.018f, .033f, .039f, .22f);
+skin.colors.button = new UnityEngine.Color(.10f, .28f, .26f);
+skin.typography.interfaceFont = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Font>("Assets/TextMesh Pro/Fonts/LiberationSans.ttf");
+skin.typography.mastheadFont = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Font>("Assets/Art/Fonts/Default.ttf");
+skin.chrome.headingInset = new UnityEngine.Vector2(22, 4);
+skin.chrome.headingHeight = 26;
+skin.chrome.headerLabels[0].size = 25;
+skin.chrome.headerLabels[1].text = "T H E   G O L D E N   V A L E";
+UnityEditor.EditorUtility.SetDirty(skin);
+UnityEditor.AssetDatabase.SaveAssets();
+foreach (var manager in UnityEngine.Object.FindObjectsByType<SkinManager>(UnityEngine.FindObjectsSortMode.None)) manager.ApplyActiveSkin();
+return "Engraved board palette saved.";

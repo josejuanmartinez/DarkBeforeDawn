@@ -47,7 +47,7 @@ public sealed class BoardCardPreview : MonoBehaviour
         background.raycastTarget = true;
         var shadow = background.gameObject.AddComponent<Shadow>();
         shadow.effectColor = Skin.colors.previewShadow; shadow.effectDistance = Skin.preview.shadowOffset;
-        BoardPresentation.Border(panel, Skin.colors.gold);
+        BoardSurface.Dress(background, Skin.colors.gold, true);
         fade = panel.gameObject.AddComponent<CanvasGroup>(); fade.alpha = 0;
         var holder = new GameObject("Full card", typeof(RectTransform));
         holder.transform.SetParent(panel, false);

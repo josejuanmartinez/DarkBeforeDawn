@@ -1,0 +1,21 @@
+// Temporary Play-mode visual fixture. Restart Play afterwards to restore the real match.
+var board = UnityEngine.Object.FindFirstObjectByType<Board>();
+var match = board.Match;
+board.preview.Hide(); board.preview.gameObject.SetActive(false);
+match.StopAllCoroutines(); match.enabled = false;
+var cinematic = board.GetComponent<MatchCinematic>(); cinematic.StopAllCoroutines(); cinematic.Hide();
+var rules = match.Rules;
+var cards = System.Linq.Enumerable.ToList(CardCatalog.AllCards());
+var settlements = System.Linq.Enumerable.ToList(System.Linq.Enumerable.Where(cards,c => c.GetCardType()==CardTypeEnum.PC && !string.IsNullOrWhiteSpace(c.region)));
+var journey = new MatchRules.Journey { Destination = settlements[0], Moving = true, Stop = 1 };
+journey.Stops.AddRange(System.Linq.Enumerable.Take(System.Linq.Enumerable.Distinct(System.Linq.Enumerable.Select(settlements,c=>c.region)),3));
+typeof(MatchRules).GetProperty("Travel").SetValue(rules,journey);
+typeof(MatchRules).GetProperty("Stage").SetValue(rules,MatchStage.Travel);
+typeof(MatchRules).GetProperty("Active").SetValue(rules,0);
+rules.Players[0].Life=13; rules.Players[1].Life=5;
+board.GetComponent<TravelBanner>().Sync();
+var a = new MatchRules.Unit { Card=CardCatalog.FindCardByName(board.humanAvatarCardName), Owner=0 };
+var b = new MatchRules.Unit { Card=CardCatalog.FindCardByName(board.opponentAvatarCardName), Owner=1 };
+rules.Fights.Add(new MatchRules.Fight { Attacker=a, Defender=b, AttackerStats=(3,4), DefenderStats=(2,4), AttackerRoll=5, DefenderRoll=2, Loser=b, Blow=Blow.Wounded });
+match.SendMessage("UpdateHUD");
+return "Visual fixture: player travel, 13/20 and 5/20 health, resolved duel. Restart Play to restore match.";

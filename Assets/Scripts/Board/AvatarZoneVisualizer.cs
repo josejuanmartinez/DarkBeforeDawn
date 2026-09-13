@@ -8,7 +8,6 @@ public sealed class AvatarZoneVisualizer : CardZoneVisualizer
     {
         base.LateUpdate();
         if (HealthLabel != null)
-            HealthLabel.text = (Owner == 0 ? "YOUR AVATAR" : "OPPONENT AVATAR") + " · " +
-                (board.Match?.Rules?.Players[Owner].Life ?? 20) + " HEALTH";
+            HealthLabel.text = Owner == 0 ? "YOUR CHAMPION" : "ENEMY CHAMPION";
     }
 }
