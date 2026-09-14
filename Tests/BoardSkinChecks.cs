@@ -27,7 +27,7 @@ try
     var discard = board.humanDiscard;
     discard.Browse(-1);
     int selection = discard.SelectedIndex;
-    board.preview.Pin(board.hand.GetComponentInChildren<BoardCardView>());
+    board.preview.Show(board.hand.GetComponentInChildren<BoardCardView>());
     int viewCount = board.GetComponentsInChildren<BoardCardView>().Length;
     for (int i=0; i<3; i++)
     {

@@ -23,7 +23,8 @@ r.Begin(0); r.Next(); r.Next(); r.Next();
 Check(r.Stage == MatchStage.Travel, "Travel expected"); r.Next();
 Check(r.Stage == MatchStage.Arrival && r.NoneReady(0) && r.NeedsEntering() && r.CanEnter(null) && !r.CanSecure(null), "With nothing ready the champion may still lead the company in");
 Check(!r.CanPlay(friend) && r.Enter(null) && r.Players[0].Destination.Entered && r.Players[0].Destination.Garrison == null, "The champion leads the way in; nobody garrisons");
-Check(r.CanPlay(friend) && r.Play(friend), "The entered town must host plays");
+Check(!r.CanPlay(friend) && r.PlayBlockReason(friend).Contains("Muster"), "Arrival never hosts plays, even once entered");
+r.Next(); Check(r.Stage == MatchStage.Muster && r.CanPlay(friend) && r.Play(friend), "The entered town must host plays in Muster");
 // --- Neutral held town, nothing ready, champion off the field: a retention duel it wins ------------------
 var r2 = Fresh(orren);
 var cross = Town("Crossroads", CardData.NeutralAlignment, "Garrison"); r2.Players[0].Foreign.Add(cross);
@@ -33,7 +34,7 @@ Check(r2.Stage == MatchStage.Arrival && r2.NeedsSecuring() && r2.CanSecure(null)
 int life = r2.Players[0].Life;
 Check(r2.Secure(null) && r2.Players[0].Destination.Entered && r2.Players[0].Life == life, "Orren 3+3 beats the garrison 2+3: the town opens and the champion walks in");
 Check(r2.LastBattle.Led && r2.LastBattle.Clashes.Single().Attacker.Card == orren, "The battle must record the champion leading");
-Check(r2.CanPlay(wanderer), "Plays must open after the champion enters");
+r2.Next(); Check(r2.Stage == MatchStage.Muster && r2.CanPlay(wanderer), "Plays must open in Muster after the champion enters");
 // --- Hostile town, champion off the field, duel lost: the wound is the company's ---------------------------
 var weak = Card("Orren", "Character", 1, 2); weak.cardId = 50001;
 var r3 = Fresh(weak);

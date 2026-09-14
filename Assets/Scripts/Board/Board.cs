@@ -24,7 +24,7 @@ public sealed class Board : MonoBehaviour
     public PlayerMaterials HumanMaterials => Match != null && Match.Rules != null ? Match.Rules.Players[0].Mana : humanMaterials;
     public PlayerMaterials OpponentMaterials => Match != null && Match.Rules != null ? Match.Rules.Players[1].Mana : opponentMaterials;
     public bool IsOpponentTurn { get; private set; }
-    public string ActionStatus { get; private set; } = "Pin a land to tap it. Pin a hand card to play it.";
+    public string ActionStatus { get; private set; } = "Click a land to tap it. Click a hand card to play it.";
 
     public bool IsTapped(BoardCardView view) => Match != null ? Match.IsTapped(view) : view != null && view.Zone != null && view.Zone.IsTapped(view);
     public bool CanTap(BoardCardView view) => view != null && view.Zone != null &&

@@ -33,6 +33,14 @@ public sealed class FantasyCardAura : MaskableGraphic
         Vector2 a=new(r.xMin-2,r.yMin-2), b=new(r.xMax+2,r.yMin-2), c=new(r.xMax+2,r.yMax+2), d=new(r.xMin-2,r.yMax+2);
         FantasyVfxMesh.GlowLine(vh,a,b,2,tint,pulse*.65f);FantasyVfxMesh.GlowLine(vh,b,c,2,tint,pulse*.65f);
         FantasyVfxMesh.GlowLine(vh,c,d,2,tint,pulse*.65f);FantasyVfxMesh.GlowLine(vh,d,a,2,tint,pulse*.65f);
+        // Fully lit (a card that may act, or is chosen): a wide halo of light stands off the edge too.
+        if(strength>.7f)
+        {
+            float halo=(strength-.7f)/.3f*(.55f+.25f*Mathf.Sin(t*3.1f));
+            float o=7;Vector2 ha=new(r.xMin-o,r.yMin-o), hb=new(r.xMax+o,r.yMin-o), hc=new(r.xMax+o,r.yMax+o), hd=new(r.xMin-o,r.yMax+o);
+            FantasyVfxMesh.GlowLine(vh,ha,hb,5,tint,halo);FantasyVfxMesh.GlowLine(vh,hb,hc,5,tint,halo);
+            FantasyVfxMesh.GlowLine(vh,hc,hd,5,tint,halo);FantasyVfxMesh.GlowLine(vh,hd,ha,5,tint,halo);
+        }
         float perimeter=(r.width+r.height)*2;
         for(int i=0;i<(charged?12:5);i++)
         {

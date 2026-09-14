@@ -42,7 +42,8 @@ Check(r.PlayableAt(0, neutral).SequenceEqual(new[] { hero }) && !r.PlayableAt(0,
 // --- Neutral ground: a retention attack ---------------------------------------------------------------
 Check(r.ChooseDestination(neutral), "Choice failed"); r.Next(); r.Next();
 Check(r.Stage == MatchStage.Arrival && r.Players[0].Destination.Card == neutral && !r.Players[0].Destination.Secured, "A neutral town must start unsecured on arrival, and a company with ready units gets its Arrival");
-Check(!r.CanPlay(hero) && r.PlayBlockReason(hero).Contains("dwellers"), "An unsecured town must block plays and say why");
+Check(!r.CanPlay(hero) && r.PlayBlockReason(hero).Contains("Muster"), "Arrival is for the gates: nothing is played from the hand there, and the reason says so");
+r.Next(); Check(r.Stage == MatchStage.Muster && !r.CanPlay(hero) && r.PlayBlockReason(hero).Contains("dwellers"), "An unsecured town must block plays in Muster and say why");
 Check(r.NeedsSecuring() && r.HasLegalAction() && r.CanSecure(army) && r.CanSecure(champion), "Securing must be a legal action");
 Check(r.Secure(army) && r.Players[0].Destination.Secured && army.Tapped && r.Players[0].Destination.Entered && r.Players[0].Destination.Garrison == army, "Retention attack won (3+3 vs 2+3) must open the town, and the winner walks in: unit and town tap");
 Check(r.LastBattle != null && r.LastBattle.Kind == MatchRules.BattleKind.Dwellers && r.LastBattle.Neutral && r.LastBattle.Settlement == neutral && r.LastBattle.Clashes.Single().Attacker == army, "The dwellers fight must be reported");
@@ -106,7 +107,7 @@ var lurkerUnit = r5.Players[1].Field.FirstOrDefault(u => u.Card == lurker);
 Check(lurkerUnit != null && lurkerUnit.Tapped && !r5.Players[1].Hand.Contains(lurker), "The ambusher enters the field tapped");
 Check(porter.Wounded && !lurkerUnit.Wounded, "Ambush duel: 3+3 beats the tapped porter's 0+3 by 3 over defense 0: struck down, wounded");
 Check(r5.LastBattle.Kind == MatchRules.BattleKind.Ambush && r5.LastBattle.Clashes.Single().Target == porter, "The ambush must be reported");
-Check(r5.PendingAmbush == null && r5.CanPlay(settler) && r5.Play(settler) && r5.Next(), "Play resumes after the ambush at the entered town");
+Check(r5.PendingAmbush == null && !r5.CanPlay(settler) && r5.Next() && r5.Stage == MatchStage.Muster && r5.CanPlay(settler) && r5.Play(settler) && r5.Next(), "Play resumes in Muster after the ambush at the entered town");
 // Declining, and springing an encounter instead.
 var r6 = Fresh();
 var town6 = Town("Home", "Vale", CardData.FreePeople, "Garrison"); r6.Players[0].Settlements.Add(town6); r6.StartAt(0, town6);
@@ -141,7 +142,7 @@ r8.Next(); Check(r8.Stage == MatchStage.Arrival, "Undeclared attacks must let th
 Check(r8.Enter(ours) && r8.Players[0].Destination.Garrison == ours, "The unit that walked in garrisons the town");
 Check(ours.Wounded && r8.Players[1].Field.Contains(theirs), "Meeting: the character that walked in fights tapped at 1/1, loses 4 to 6 by 2 over defense 1: struck down, wounded");
 Check(r8.LastBattle.Kind == MatchRules.BattleKind.Meeting && r8.LastBattle.Settlement == shared0, "The meeting must be reported");
-Check(r8.Play(trader) && r8.Players[0].Field.Any(u => u.Card == trader), "Play at the entered shared town failed");
+r8.Next(); Check(r8.Stage == MatchStage.Muster && r8.Play(trader) && r8.Players[0].Field.Any(u => u.Card == trader), "Play at the entered shared town failed");
 // --- Journeys: one typed draw per stop, capped at five ----------------------------------------------------
 var map = new RegionMap(new RegionMapData
 {
@@ -294,11 +295,15 @@ Check(r11.Next() && r11.Active == 1, "Turn must end once the hand fits");
 var plaque = Town("Dark Hold", "MirkWood", CardData.DarkServants, "Wardens");
 plaque.objectTypes.AddRange(new[] { ObjectTypeEnum.Weapon, ObjectTypeEnum.Weapon, ObjectTypeEnum.Armor });
 var face = PcDescriptionBuilder.BuildBody(plaque, true).Split('\n');
-Check(face.Length == 4 && face[0] == "Mirk Wood (Dark Servants)" && face[1].StartsWith("Dwellers: ") && face[1].Contains("Wardens") && face[1].EndsWith(".")
+Check(face.Length == 4 && face[0] == PcDescriptionBuilder.RegionLink("MirkWood") + " (Dark Servants)" && face[0].Contains("<u>Mirk Wood</u>") && face[0].Contains("card:MirkWood") && face[1].StartsWith("Dwellers: ") && face[1].Contains("Wardens") && face[1].EndsWith(".")
     && face[2] == "Allows recruiting characters born here." && face[3] == "Playable objects: " + CardData.FormatObjectTypeTag(ObjectTypeEnum.Weapon) + ", " + CardData.FormatObjectTypeTag(ObjectTypeEnum.Armor),
     "PC face must read region (side) / dwellers / recruiting / playable objects, one per line: " + string.Join(" | ", face));
 Check(PcDescriptionBuilder.BuildBody(Town("Ruin", "Vale", CardData.NeutralAlignment, ""), true).Split('\n').Length == 2, "A PC without dwellers or wares must drop those lines");
 Check(DestinationPicker.PlayableSummary(new CardData[0]) == "Nothing in hand can be played here.", "Empty playable line wrong");
-Check(DestinationPicker.PlayableSummary(new[] { Card("A", "Character"), Card("B", "Character") }) == "Allows you playing A, B.", "Two playable names wrong");
-Check(DestinationPicker.PlayableSummary(new[] { Card("A", "Character"), Card("B", "Character"), Card("B", "Character"), Card("C", "Object") }) == "Allows you playing A, B, among others.", "Playable line past two must say among others");
+Check(DestinationPicker.PlayableSummary(new[] { Card("A", "Character"), Card("B", "Character") }) == "Allows you playing " + PcDescriptionBuilder.CardLink("A", "A") + ", " + PcDescriptionBuilder.CardLink("B", "B") + ".", "Two playable names wrong: " + DestinationPicker.PlayableSummary(new[] { Card("A", "Character"), Card("B", "Character") }));
+Check(DestinationPicker.PlayableSummary(new[] { Card("A", "Character"), Card("B", "Character"), Card("B", "Character"), Card("C", "Object"), Card("D", "Object") }).EndsWith(PcDescriptionBuilder.CardLink("C", "C") + ", among others."), "Playable line past three must say among others");
+var quest = Card("Old Road", "Encounter"); quest.birthplaces.Add("Dark Hold");
+Check(quest.GetEncounterDescription() == "Face this encounter at " + PcDescriptionBuilder.CardLink("Dark Hold") + " with your company, or force your opponent's company at " + PcDescriptionBuilder.CardLink("Dark Hold") + " into it.", "Encounter face wrong: " + quest.GetEncounterDescription());
+quest.birthplaces.Add("Ruin");
+Check(quest.GetEncounterDescription().EndsWith("or force your opponent's company at one of them into it."), "Encounter face with several homes wrong: " + quest.GetEncounterDescription());
 return "PASS: standing by home/side, dwellers, retention and hostile fights that enter the town, wounds that heal to tapped and sit out a turn, tapped -1/-1, ambush by character or encounter and decline, two companies meeting, map routes/aliases/clamp, stop-by-stop roads with typed draws and fallbacks, terrain-gated road attacks and defences, hand raiders that return to the deck, tapped recruits, standing fast, dice duels with killed/wounded/tapped margins and stand-offs, the end-of-turn discard, the PC face lines and the picker's playable line.";

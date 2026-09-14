@@ -15,9 +15,9 @@ public sealed class CardKeywordHover : MonoBehaviour
     private RectTransform panel;
     private TextMeshProUGUI popupText;
     private string currentId;
-    // One non-text target: the card's deck badge, an Image with nothing in the glossary to key on.
-    private RectTransform badgeRect;
-    private string badgeTitle, badgeBody;
+    // Non-text targets: the card's deck badge, the terrain marks on a map -- rects with nothing in
+    // the glossary to key on, each carrying its own explanation.
+    private readonly List<(RectTransform rect, string title, string body)> badges = new();
     // A "card:Name" link (the settlement's dwellers) expands into the named card itself rather than
     // a glossary line. The board it is built with is looked up once; without one the text falls back.
     private RectTransform cardHolder;
@@ -26,9 +26,17 @@ public sealed class CardKeywordHover : MonoBehaviour
 
     public void RefreshTargets() => labels = GetComponentsInChildren<TMP_Text>(true);
 
+    /// <summary>The one badge of a card face; replaces any earlier one.</summary>
     public void SetBadge(RectTransform rect, string title, string body)
     {
-        badgeRect = rect; badgeTitle = title; badgeBody = body;
+        badges.Clear();
+        AddBadge(rect, title, body);
+    }
+
+    /// <summary>Another hoverable rect under this hover, explained with the given title and body.</summary>
+    public void AddBadge(RectTransform rect, string title, string body)
+    {
+        if (rect != null) badges.Add((rect, title, body));
     }
 
     public static bool TryResolve(TMP_Text label, Vector2 pointer, Camera camera, out string id)
@@ -59,6 +67,9 @@ public sealed class CardKeywordHover : MonoBehaviour
     private void LateUpdate()
     {
         if (Hover.SuppressAll || Mouse.current == null || EventSystem.current == null) { Hide(); return; }
+        // While a popup is up (travel, destination picker, combat screen) only its own text explains
+        // itself: nothing on the board under or beside it is hovered.
+        if (BoardCardPreview.AnyModalOpen && !BoardCardPreview.InsideModal(transform)) { Hide(); return; }
         Vector2 pointer = Mouse.current.position.ReadValue();
         hits.Clear();
         EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current) { position = pointer }, hits);
@@ -79,15 +90,15 @@ public sealed class CardKeywordHover : MonoBehaviour
             Show(id, title, body, pointer, label.font);
             return;
         }
-        if (badgeRect != null && badgeRect.gameObject.activeInHierarchy && badgeRect.GetComponent<Image>()?.enabled == true)
+        for (int i = 0; i < badges.Count; i++)
         {
-            var canvas = badgeRect.GetComponentInParent<Canvas>()?.rootCanvas;
+            var (rect, title, body) = badges[i];
+            if (rect == null || !rect.gameObject.activeInHierarchy || rect.GetComponent<Image>()?.enabled != true) continue;
+            var canvas = rect.GetComponentInParent<Canvas>()?.rootCanvas;
             Camera camera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay ? canvas.worldCamera : null;
-            if (RectTransformUtility.RectangleContainsScreenPoint(badgeRect, pointer, camera))
-            {
-                Show("badge", badgeTitle, badgeBody, pointer, font);
-                return;
-            }
+            if (!RectTransformUtility.RectangleContainsScreenPoint(rect, pointer, camera)) continue;
+            Show("badge:" + i, title, body, pointer, font);
+            return;
         }
         Hide();
     }
@@ -103,7 +114,7 @@ public sealed class CardKeywordHover : MonoBehaviour
         if (!boardLooked) { board = FindAnyObjectByType<Board>(); boardLooked = true; }
         if (data == null || board == null)
         {
-            Show(id, name, data != null ? data.GetRenderedDescription() : "Dwellers of this settlement.", pointer, font);
+            Show(id, name, data != null ? data.GetRenderedDescription() : "No card of this name is in the catalog.", pointer, font);
             return;
         }
         bool fresh = id != currentId;
@@ -148,6 +159,9 @@ public sealed class CardKeywordHover : MonoBehaviour
             popupText.rectTransform.offsetMin = new Vector2(14, 12); popupText.rectTransform.offsetMax = new Vector2(-14, -12);
             popupText.fontSize = 18; popupText.color = new Color(.96f, .94f, .88f);
             popupText.raycastTarget = false; popupText.richText = true;
+            // The card icon sheet, so a terrain or material glyph in an explanation draws as on the face.
+            if (!boardLooked) { board = FindAnyObjectByType<Board>(); boardLooked = true; }
+            popupText.spriteAsset = BoardPresentation.SpriteAssetFor(board);
         }
         popupCanvas.SetActive(true);
         if (id != currentId)

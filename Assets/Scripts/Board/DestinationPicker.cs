@@ -30,7 +30,8 @@ public sealed class DestinationPicker : MonoBehaviour
     public bool IsOpen => panel != null;
     public CardData Shown => choices.Count > 0 ? choices[Mathf.Clamp(index, 0, choices.Count - 1)] : null;
     // The footer grows to hold the playable line and the fight warning if any above the buttons.
-    const float LineHeight = 22, NodeSize = 14, MapGap = 26;
+    // The playable line is the point of the trip, so it is set large, each card a hoverable link.
+    const float LineHeight = 22, PlayableHeight = 34, NodeSize = 14, MapGap = 26;
 
     public void Initialize(Board board, TowerMatchController match) { this.board = board; this.match = match; }
 
@@ -91,8 +92,7 @@ public sealed class DestinationPicker : MonoBehaviour
         board.preview?.Hide();
 
         string warning = FightLine(data, standing);
-        int lines = warning == null ? 1 : 2;
-        float header = skin.preview.header + 6, footer = skin.preview.footer + 24 + LineHeight * lines, padding = skin.preview.padding + 40;
+        float header = skin.preview.header + 6, footer = skin.preview.footer + 24 + PlayableHeight + (warning == null ? 0 : LineHeight), padding = skin.preview.padding + 40;
         var holder = new GameObject("Settlement", typeof(RectTransform));
         holder.transform.SetParent(panel, false);
         var visual = (RectTransform)holder.transform;
@@ -125,7 +125,7 @@ public sealed class DestinationPicker : MonoBehaviour
         title.rectTransform.pivot = new Vector2(.5f, 1); title.rectTransform.sizeDelta = new Vector2(-skin.preview.labelInset * 2, header);
 
         float y = skin.preview.footer + 4;
-        Line(PlayableLine(data), skin.colors.muted, y); y += LineHeight;
+        PlayableLine(data, y); y += PlayableHeight;
         if (warning != null) Line(warning, accent, y);
 
         var previous = Arrow("Previous", "<", -1);
@@ -162,15 +162,26 @@ public sealed class DestinationPicker : MonoBehaviour
         };
     }
 
-    // What the trip is for: the hand cards this town lets the player play, two by name.
+    // What the trip is for: the hand cards this town lets the player play, three by name, each a
+    // "card:" link the keyword hover expands into the card itself.
     public static string PlayableSummary(IEnumerable<CardData> playable)
     {
         var names = playable.Select(c => c.name).Distinct().ToList();
         if (names.Count == 0) return "Nothing in hand can be played here.";
-        return "Allows you playing " + string.Join(", ", names.Take(2)) + (names.Count > 2 ? ", among others" : "") + ".";
+        return "Allows you playing " + string.Join(", ", names.Take(3).Select(n => PcDescriptionBuilder.CardLink(n, n))) + (names.Count > 3 ? ", among others" : "") + ".";
     }
 
-    string PlayableLine(CardData data) => PlayableSummary(match.Rules.PlayableAt(0, data));
+    // Large, in the reading font, with its own keyword hover so each name previews its card.
+    void PlayableLine(CardData data, float bottom)
+    {
+        var skin = Skin;
+        var playable = match.Rules.PlayableAt(0, data).ToList();
+        var label = TravelBanner.RichLabel(panel, PlayableSummary(playable), board, skin.typography.previewLabelSize + 9, playable.Count > 0 ? skin.colors.ivory : skin.colors.muted);
+        label.rectTransform.anchorMin = Vector2.zero; label.rectTransform.anchorMax = Vector2.right;
+        label.rectTransform.pivot = new Vector2(.5f, 0); label.rectTransform.sizeDelta = new Vector2(-skin.preview.statusInset, PlayableHeight);
+        label.rectTransform.anchoredPosition = new Vector2(0, bottom);
+        label.gameObject.AddComponent<CardKeywordHover>().RefreshTargets();
+    }
 
     // The journey on the map of Caldrath: the road from where the company stands, a diamond per region
     // entered tinted by its ground (that is what decides which armies can fall on the company there),
@@ -205,7 +216,7 @@ public sealed class DestinationPicker : MonoBehaviour
         {
             map.Node("Here", here, skin.colors.muted, true, NodeSize);
             // Staying put: the town's own name below the node says it all.
-            if (origin != data.region) Caption(map.Overlay, "HERE", here + Vector2.down * (NodeSize + 2), skin.colors.ivory, skin.typography.previewLabelSize - 2, true);
+            if (origin != data.region) CaldrathMapView.Caption(map.Overlay, "HERE", board, here + Vector2.down * (NodeSize + 2), skin.colors.ivory, skin.typography.previewLabelSize - 1, true);
         }
         for (int i = 0; i < stops.Count; i++)
         {
@@ -214,9 +225,9 @@ public sealed class DestinationPicker : MonoBehaviour
             var tint = TravelBanner.TerrainColor(rules.TerrainOf(stops[i]));
             if (last) map.Halo(at, accent, NodeSize * 2.2f).gameObject.AddComponent<Pulse>();
             map.Node("Stop", at, tint, true, NodeSize);
-            // The stop's pay reads "+1 [glyph]" beside the node; stops past the fifth draw nothing.
+            // The stop's pay reads "+1 [glyph]" beside the node, hoverable for the rule; stops past the fifth draw nothing.
             int stop = i + 1;
-            string pay = stop <= journey ? "+1 <sprite name=\"" + TravelBanner.RewardSprite(MatchRules.RewardAt(stop)) + "\">" : "—";
+            string pay = stop <= journey ? TravelBanner.RewardLinkLabel(stop) : "—";
             var label = TravelBanner.RichLabel(map.Overlay, pay, board, skin.typography.previewLabelSize, stop <= journey ? skin.colors.ivory : skin.colors.muted);
             label.rectTransform.anchorMin = label.rectTransform.anchorMax = Vector2.one * .5f;
             label.rectTransform.pivot = new Vector2(.5f, 0); label.rectTransform.sizeDelta = new Vector2(Mathf.Max(30, label.preferredWidth + 8), 18);
@@ -225,23 +236,14 @@ public sealed class DestinationPicker : MonoBehaviour
         }
         // The destination named on the map too, so the route reads without looking back at the face.
         if (map.TryLocate(data.region, out var end))
-            Caption(map.Overlay, data.name.ToUpperInvariant(), end + Vector2.down * (NodeSize + 2), accent, skin.typography.previewLabelSize - 1, true);
-        var legend = BoardPresentation.TextLabel(map.Viewport, journey + (journey == 1 ? " STOP" : " STOPS") + "  ·  " + journey + (journey == 1 ? " CARD" : " CARDS"),
-            board.interfaceFont, skin.typography.previewLabelSize - 1, skin.colors.ivory, Vector2.zero, Vector2.right, TextAnchor.MiddleCenter);
-        legend.rectTransform.anchorMin = legend.rectTransform.anchorMax = new Vector2(.5f, 0);
-        legend.rectTransform.pivot = new Vector2(.5f, 0); legend.rectTransform.sizeDelta = new Vector2(legend.preferredWidth + 16, 20); legend.rectTransform.anchoredPosition = new Vector2(0, 4);
-        CaldrathMapView.Slip(legend.rectTransform);
-    }
-
-    // A name on the map: small caps on a dark slip so it reads over the parchment.
-    Text Caption(Transform parent, string text, Vector2 at, Color color, int size, bool below)
-    {
-        var label = BoardPresentation.TextLabel(parent, text, board.interfaceFont, size, color, Vector2.one * .5f, Vector2.one * .5f, TextAnchor.MiddleCenter);
-        label.fontStyle = FontStyle.Bold; label.horizontalOverflow = HorizontalWrapMode.Overflow;
-        label.rectTransform.pivot = new Vector2(.5f, below ? 1 : 0); label.rectTransform.sizeDelta = new Vector2(label.preferredWidth + 10, 18);
-        label.rectTransform.anchoredPosition = at;
-        CaldrathMapView.Slip(label.rectTransform);
-        return label;
+            CaldrathMapView.Caption(map.Overlay, data.name.ToUpperInvariant(), board, end + Vector2.down * (NodeSize + 2), accent, skin.typography.previewLabelSize, true);
+        CaldrathMapView.Caption(map.Viewport, journey + (journey == 1 ? " STOP" : " STOPS") + "  ·  " + journey + (journey == 1 ? " CARD" : " CARDS"),
+            board, new Vector2(0, 4), skin.colors.ivory, skin.typography.previewLabelSize, false, 20, new Vector2(.5f, 0));
+        // The +1 labels explain themselves on hover, the way card faces explain their keywords, and so
+        // does every region's painted terrain symbol.
+        var hover = map.Overlay.gameObject.AddComponent<CardKeywordHover>();
+        hover.RefreshTargets();
+        map.ExplainTerrains(hover, rules.TerrainOf, NodeSize * 1.8f);
     }
 
     /// <summary>Breathes a ring: the town the road leads to.</summary>

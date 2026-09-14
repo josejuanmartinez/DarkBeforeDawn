@@ -154,6 +154,24 @@ public sealed class CaldrathMapView
         return slip;
     }
 
+    /// <summary>
+    /// A name on the map: bold small capitals on a dark slip, hanging below the point or standing above
+    /// it. TextMeshPro rather than the legacy Text the rest of the chrome uses: at caption size under
+    /// the canvas scale the bitmap glyphs smear, and the signed-distance font stays crisp.
+    /// </summary>
+    public static TMPro.TextMeshProUGUI Caption(Transform parent, string text, Board board, Vector2 at, Color color, float size, bool below, float height = 18, Vector2? anchor = null)
+    {
+        var label = TravelBanner.RichLabel(parent, text, board, size, color);
+        label.enableAutoSizing = false; label.fontSize = size; label.fontStyle = TMPro.FontStyles.Bold; label.characterSpacing = 2;
+        var rect = label.rectTransform;
+        rect.anchorMin = rect.anchorMax = anchor ?? Vector2.one * .5f;
+        rect.pivot = new Vector2(.5f, below ? 1 : 0);
+        rect.sizeDelta = new Vector2(label.preferredWidth + 12, height);
+        rect.anchoredPosition = at;
+        Slip(rect);
+        return label;
+    }
+
     /// <summary>A soft ring around a point: the halo under the company or the town it is bound for.</summary>
     public Image Halo(Vector2 at, Color color, float size)
     {
@@ -164,6 +182,30 @@ public sealed class CaldrathMapView
         halo.rectTransform.localRotation = Quaternion.Euler(0, 0, 45);
         BoardPresentation.Border(halo.rectTransform, color, 2);
         return halo;
+    }
+
+    /// <summary>
+    /// The painted terrain symbol of every region in view explained on hover: an invisible square over each
+    /// marker, registered with the popup's hover, so pointing at a symbol names the region, its ground and
+    /// what that ground means for a company crossing it.
+    /// </summary>
+    public void ExplainTerrains(CardKeywordHover hover, Func<string, TerrainEnum> terrainOf, float size)
+    {
+        if (map == null || hover == null || terrainOf == null) return;
+        foreach (var region in map.Regions)
+        {
+            var ground = terrainOf(region.name);
+            if (ground == TerrainEnum.None || !TryLocate(region.name, out var at)) continue;
+            // Marks framed out of the window are clipped from sight; they must not answer the pointer either.
+            if (Mathf.Abs(at.x) > this.size.x * .5f || Mathf.Abs(at.y) > this.size.y * .5f) continue;
+            var mark = BoardPresentation.Panel(Overlay, "Terrain " + region.name, Color.clear);
+            mark.rectTransform.anchorMin = mark.rectTransform.anchorMax = Vector2.one * .5f;
+            mark.rectTransform.sizeDelta = Vector2.one * size;
+            mark.rectTransform.anchoredPosition = at;
+            mark.transform.SetAsFirstSibling();
+            CardKeywordGlossary.TryGet("terrain:" + ground, out var title, out var body);
+            hover.AddBadge(mark.rectTransform, region.name + "  ·  " + title, body);
+        }
     }
 
     /// <summary>An invisible clickable square over a point, for choosing a region straight off the map.</summary>

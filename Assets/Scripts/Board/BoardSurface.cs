@@ -12,6 +12,8 @@ public sealed class BoardSurface : MaskableGraphic
     public Color surface;
     public bool ceremonial;
     public bool compact;
+    /// <summary>Keeps the skin surface's own opacity even on large panels: for popups that must hide what they cover.</summary>
+    public bool opaque;
     public BoardEmblem emblem = BoardEmblem.Sprig;
 
     /// <summary>The device for a board zone: mountains for lands, a keep for settlements, crossed swords for armies, and so on.</summary>
@@ -26,7 +28,7 @@ public sealed class BoardSurface : MaskableGraphic
         _ => BoardEmblem.Hand
     };
 
-    public static void Dress(Image panel, Color accent, bool ceremonial = false, bool compact = false, BoardEmblem emblem = BoardEmblem.Sprig)
+    public static void Dress(Image panel, Color accent, bool ceremonial = false, bool compact = false, BoardEmblem emblem = BoardEmblem.Sprig, bool opaque = false)
     {
         var go = new GameObject("Engraved surface", typeof(RectTransform), typeof(CanvasRenderer), typeof(BoardSurface));
         go.transform.SetParent(panel.transform, false);
@@ -38,6 +40,7 @@ public sealed class BoardSurface : MaskableGraphic
         art.ceremonial = ceremonial;
         art.compact = compact;
         art.emblem = emblem;
+        art.opaque = opaque;
         art.raycastTarget = false;
         panel.color = Color.clear;
     }
@@ -54,8 +57,8 @@ public sealed class BoardSurface : MaskableGraphic
         Color high = Color.Lerp(surface, new Color(.19f, .125f, .067f, .97f), .6f);
         // The landscape is part of the board: large furniture stays transparent, while small
         // card stock and controls retain the opacity of their own skin surface.
-        low.a = compact ? surface.a : .66f;
-        high.a = compact ? surface.a : .73f;
+        low.a = opaque ? 1 : compact ? surface.a : .66f;
+        high.a = opaque ? 1 : compact ? surface.a : .73f;
         Plate(vh, r, cut, low, high);
         // Fine horizontal grain. Deterministic geometry avoids texture imports and stretching.
         // No full-width scan lines: these fight the landscape and shimmer at smaller view sizes.

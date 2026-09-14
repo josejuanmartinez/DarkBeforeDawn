@@ -2,7 +2,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-/// <summary>A shared, screen-clamped inspection surface. Slots never move when inspected.</summary>
+/// <summary>
+/// A shared, screen-clamped inspection surface, shown for the card under the pointer and put away
+/// when the pointer leaves it. It never sticks: a click on a card acts on it or does nothing.
+/// Slots never move when inspected.
+/// </summary>
 public sealed class BoardCardPreview : MonoBehaviour
 {
     public Board board;
@@ -13,61 +17,33 @@ public sealed class BoardCardPreview : MonoBehaviour
     private CanvasGroup fade;
     private Vector2 lastSize;
     private float outsideSince = -1;
-    private bool pinned;
     public bool IsShowing => source != null && panel != null;
     // Popups (the travel popup, the destination picker, the combat screen) register their plates
-    // here: a card under one is not inspected, and a preview already up is put away when the
-    // pointer is over one, so nothing peeks out around or through them.
+    // here: while any is up no board card is inspected, and a preview already up is put away, so
+    // nothing peeks out around or through them.
     static readonly System.Collections.Generic.List<RectTransform> modals = new();
     public static void RegisterModal(RectTransform plate) { if (plate != null && !modals.Contains(plate)) modals.Add(plate); }
     public static void UnregisterModal(RectTransform plate) { modals.Remove(plate); }
     public static bool AnyModalOpen { get { modals.RemoveAll(m => m == null); return modals.Count > 0; } }
-    /// <summary>The pointer is over one of the popups.</summary>
-    public static bool PointerOverModal()
+    /// <summary>The transform belongs to one of the popups (is one, or sits under one).</summary>
+    public static bool InsideModal(Transform target)
     {
         modals.RemoveAll(m => m == null);
-        if (modals.Count == 0 || Mouse.current == null) return false;
-        Vector2 pointer = Mouse.current.position.ReadValue();
-        foreach (var modal in modals)
-        {
-            if (!modal.gameObject.activeInHierarchy) continue;
-            var canvas = modal.GetComponentInParent<Canvas>()?.rootCanvas;
-            Camera camera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay ? canvas.worldCamera : null;
-            if (RectTransformUtility.RectangleContainsScreenPoint(modal, pointer, camera)) return true;
-        }
+        if (target == null) return false;
+        foreach (var modal in modals) if (modal.gameObject.activeInHierarchy && target.IsChildOf(modal)) return true;
         return false;
     }
-    /// <summary>A card lies under a popup: it is covered, and not to be inspected.</summary>
-    public static bool CoveredByModal(RectTransform card)
-    {
-        modals.RemoveAll(m => m == null);
-        if (card == null || modals.Count == 0) return false;
-        var canvas = card.GetComponentInParent<Canvas>()?.rootCanvas;
-        Camera camera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay ? canvas.worldCamera : null;
-        Vector2 centre = RectTransformUtility.WorldToScreenPoint(camera, card.TransformPoint(card.rect.center));
-        foreach (var modal in modals)
-            if (modal.gameObject.activeInHierarchy && RectTransformUtility.RectangleContainsScreenPoint(modal, centre, camera)) return true;
-        return false;
-    }
-    public bool IsPinned => pinned;
     public RectTransform PreviewRect => panel;
 
     public void Show(BoardCardView view)
     {
-        if (view == null || (pinned && IsShowing) || (source == view && panel != null)) return;
-        if (PointerOverModal() || CoveredByModal(view.Rect)) return;
+        if (view == null || (source == view && panel != null)) return;
+        // While any popup is up the board is not inspected at all: the glow says what can be
+        // clicked, and the popup's own text explains itself.
+        if (AnyModalOpen) return;
         Hide();
         source = view;
         if (source.Zone is DeckVisualizer deck) deck.ResetSelection();
-        Build();
-    }
-
-    public void Pin(BoardCardView view)
-    {
-        if (source == view && pinned) { Hide(); return; }
-        pinned = false;
-        Show(view);
-        pinned = true;
         Build();
     }
 
@@ -101,12 +77,19 @@ public sealed class BoardCardPreview : MonoBehaviour
         visual.localScale = Vector3.one * scale;
         visual.anchoredPosition = new Vector2(0, (footer - header) * .5f);
         panel.sizeDelta = new Vector2(natural.x * scale + padding * 2, natural.y * scale + header + footer);
-        var title = BoardPresentation.TextLabel(panel, (pinned ? "PINNED" : "INSPECT") + "  /  " + (data.type ?? "CARD").ToUpperInvariant(),
+        var title = BoardPresentation.TextLabel(panel, "INSPECT  /  " + (data.type ?? "CARD").ToUpperInvariant(),
             board.interfaceFont, Skin.typography.previewLabelSize, Skin.colors.gold, Vector2.up, Vector2.one);
         title.rectTransform.pivot = new Vector2(.5f, 1); title.rectTransform.sizeDelta = new Vector2(-Skin.preview.labelInset * 2, header);
-        string hint = deck != null ? $"{deck.SelectedIndex + 1} / {deck.Count}" : pinned ? "ESC TO CLOSE" : "CLICK CARD TO PIN";
+        // The footer says why the card cannot act, or what a click would do; nothing when neither applies.
+        string hint = deck != null ? $"{deck.SelectedIndex + 1} / {deck.Count}" : "";
         var unit = board.Match?.Unit(source);
-        if (board.Match != null) hint = board.Match.InspectionHint(source) ?? (!pinned && board.Match.CanPlay(source) ? "CLICK CARD TO PLAY" : hint);
+        if (board.Match != null)
+        {
+            var action = board.Match.ActionLabel(source);
+            hint = board.Match.InspectionHint(source) ?? (action != null ? "CLICK TO " + action : hint);
+        }
+        else if (source.Zone == board.hand) hint = "CLICK TO PLAY";
+        else if (board.CanTap(source)) hint = "CLICK TO TAP LAND";
         if (unit != null && unit.Objects.Count > 0) hint = "Objects: " + string.Join(", ", unit.Objects.ConvertAll(c => c.name));
         var status = BoardPresentation.TextLabel(panel, hint, board.interfaceFont, Skin.typography.previewLabelSize, Skin.colors.muted,
             Vector2.zero, Vector2.right, TextAnchor.MiddleCenter);
@@ -117,35 +100,6 @@ public sealed class BoardCardPreview : MonoBehaviour
             var next = Arrow("Next", ">", 1, deck);
             previous.interactable = deck.SelectedIndex > 0;
             next.interactable = deck.SelectedIndex < deck.Count - 1;
-        }
-        if (pinned)
-        {
-            if (board.Match != null)
-            {
-                var label = board.Match.ActionLabel(source);
-                if (label != null)
-                {
-                    status.text = "";
-                    var action = MakeButton("Card action", label, panel, new Vector2(.5f, 0), new Vector2(0, footer * .5f), new Vector2(180, footer - 8));
-                    var selected = source;
-                    action.onClick.AddListener(() => board.Match.PerformAction(selected));
-                }
-            }
-            else if (source.Zone == board.hand || source.Zone == board.humanLands || source.Zone == board.opponentLands)
-            {
-                status.text = "";
-                bool land = source.Zone != board.hand;
-                var action = MakeButton("Card action", land ? (board.IsTapped(source) ? "TAPPED" : "TAP LAND") : "PLAY CARD",
-                    panel, new Vector2(.5f, 0), new Vector2(0, footer * .5f), new Vector2(180, footer - 8));
-                action.interactable = !land || board.CanTap(source);
-                action.onClick.AddListener(() => {
-                    if (board.Match != null) { if (land) board.TryTap(source); else board.TryPlay(source); return; }
-                    if (land) { board.TryTap(source); Build(); }
-                    else if (!board.TryPlay(source)) action.GetComponentInChildren<Text>().text = "CANNOT AFFORD";
-                });
-            }
-            var close = MakeButton("Close", "x", panel, new Vector2(1, 1), Skin.preview.closeOffset, Skin.preview.closeSize);
-            close.onClick.AddListener(Hide);
         }
         Position();
     }
@@ -197,8 +151,8 @@ public sealed class BoardCardPreview : MonoBehaviour
         if (lastSize != ((RectTransform)transform).rect.size) Build();
         if (fade != null) fade.alpha = Mathf.MoveTowards(fade.alpha, 1, Time.unscaledDeltaTime * Skin.preview.fadeSpeed);
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) { Hide(); return; }
-        if (PointerOverModal() || CoveredByModal(source.Rect)) { Hide(); return; }
-        if (pinned || Mouse.current == null) return;
+        if (AnyModalOpen) { Hide(); return; }
+        if (Mouse.current == null) return;
         Vector2 pointer = Mouse.current.position.ReadValue();
         var canvas = GetComponentInParent<Canvas>().rootCanvas;
         Camera camera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
@@ -212,7 +166,7 @@ public sealed class BoardCardPreview : MonoBehaviour
     public void HideFor(CardZoneVisualizer zone) { if (source != null && source.Zone == zone) Hide(); }
     public void Hide()
     {
-        source = null; outsideSince = -1; pinned = false;
+        source = null; outsideSince = -1;
         if (panel != null) { panel.gameObject.SetActive(false); Destroy(panel.gameObject); }
         panel = null; fade = null;
     }

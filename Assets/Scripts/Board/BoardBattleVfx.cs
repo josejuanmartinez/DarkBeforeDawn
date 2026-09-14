@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 /// <summary>Presentation-only combat effects. Tracks card identity through layout rebuilds and never intercepts input.</summary>
+[RequireComponent(typeof(CanvasRenderer))]
 public sealed class BoardBattleVfx : MaskableGraphic
 {
     public static readonly Color Amber=new(1,.73f,.27f);
@@ -12,6 +13,7 @@ public sealed class BoardBattleVfx : MaskableGraphic
     Board board;
     MatchRules observedRules;
     readonly List<BoardCardView> views=new();
+    readonly List<BattleVfxAnchor> proxies=new();
     readonly Dictionary<CardData,Anchor> anchors=new();
     readonly Dictionary<CardData,int> commitments=new();
     readonly HashSet<MatchRules.Fight> seenFights=new();
@@ -36,7 +38,7 @@ public sealed class BoardBattleVfx : MaskableGraphic
     {
         var found=source.GetComponentInChildren<BoardBattleVfx>(true);
         if(found!=null)return found;
-        var go=new GameObject("Fantasy battle effects",typeof(RectTransform),typeof(Canvas),typeof(CanvasGroup),typeof(BoardBattleVfx));
+        var go=new GameObject("Fantasy battle effects",typeof(RectTransform),typeof(Canvas),typeof(CanvasGroup),typeof(CanvasRenderer),typeof(BoardBattleVfx));
         go.transform.SetParent(source.transform,false);
         BoardPresentation.Stretch((RectTransform)go.transform,Vector2.zero,Vector2.one);
         var effect=go.GetComponent<BoardBattleVfx>();effect.board=source;effect.raycastTarget=false;
@@ -47,6 +49,8 @@ public sealed class BoardBattleVfx : MaskableGraphic
     }
     public void Register(BoardCardView view) { if(!views.Contains(view))views.Add(view); }
     public void Unregister(BoardCardView view) { views.Remove(view); }
+    public void Register(BattleVfxAnchor proxy) { if(!proxies.Contains(proxy))proxies.Add(proxy); }
+    public void Unregister(BattleVfxAnchor proxy) { proxies.Remove(proxy); }
     public Vector2 Position(RectTransform target) => rectTransform.InverseTransformPoint(target.TransformPoint(target.rect.center));
     public int Commitment(CardData card) => card!=null && commitments.TryGetValue(card,out int value) ? value : 0;
     public int ActiveBolts => bolts.Count;
@@ -84,6 +88,14 @@ public sealed class BoardBattleVfx : MaskableGraphic
             anchors[view.Data]=new Anchor {center=Position(view.Rect),size=new Vector2(Mathf.Abs(max.x-min.x),Mathf.Abs(max.y-min.y)),seen=Time.unscaledTime};
         }
         // Keep recently removed cards briefly so a lethal hit still lands where its victim stood.
+        for(int i=proxies.Count-1;i>=0;i--)
+        {
+            var proxy=proxies[i];if(proxy==null){proxies.RemoveAt(i);continue;}
+            if(!proxy.gameObject.activeInHierarchy || proxy.Card==null)continue;
+            var rect=(RectTransform)proxy.transform;rect.GetWorldCorners(corners);
+            Vector2 min=rectTransform.InverseTransformPoint(corners[0]),max=rectTransform.InverseTransformPoint(corners[2]);
+            anchors[proxy.Card]=new Anchor {center=Position(rect),size=new Vector2(Mathf.Abs(max.x-min.x),Mathf.Abs(max.y-min.y)),seen=Time.unscaledTime};
+        }
         if(anchors.Count>256)
         {
             var stale=new List<CardData>();
@@ -144,8 +156,11 @@ public sealed class BoardBattleVfx : MaskableGraphic
             label.text.color=FantasyVfxMesh.Alpha(label.tint,Mathf.Min(age*10,1)*(1-Mathf.Pow(age,3)));
             label.text.transform.localScale=Vector3.one*(1+.18f*Mathf.Exp(-age*9)*Mathf.Sin(age*17));
         }
+        // Hidden under the cinematic, and faded out under the combat screen, which stages the same
+        // blows itself: the board's sparks and labels would otherwise float over its opaque plate.
         var cinema=board.GetComponent<MatchCinematic>();
-        visibility.alpha=cinema!=null && cinema.IsShowing ? 0 : 1;
+        bool hidden=cinema!=null && cinema.IsShowing || board.Match!=null && board.Match.CombatShowing;
+        visibility.alpha=Mathf.MoveTowards(visibility.alpha,hidden?0:1,Time.unscaledDeltaTime*6);
         SetVerticesDirty();
     }
 

@@ -219,7 +219,8 @@ public sealed class TowerMatchController : MonoBehaviour
     public bool CanInteract => !Busy && !animating && !CombatShowing && draws.Count == 0 && Rules != null && Rules.Winner < 0;
     /// <summary>The human's units may walk into, or fight for, the destination: Arrival, or Muster as the fallback.</summary>
     public bool HumanAtTheGates => Rules != null && Rules.Active == 0 && (Rules.Stage == MatchStage.Arrival || Rules.Stage == MatchStage.Muster);
-    public bool CanPlay(BoardCardView view) => CanInteract && Rules.Active == 0 && view != null && view.Zone == board.hand && Rules.CanPlay(view.Data);
+    /// <summary>A hand card the human may play now: the ready lands count as mana, since a click gathers them (MatchRules.GatherFor).</summary>
+    public bool CanPlay(BoardCardView view) => CanInteract && Rules.Active == 0 && view != null && view.Zone == board.hand && Rules.PlayBlockReason(view.Data, includeReadyMana: true) == null;
     public bool CanTap(BoardCardView view) => CanInteract && Rules.Active == 0 && Rules.CanTapLand(Unit(view));
     public bool IsDestination(BoardCardView view) => view != null && Rules != null && view.Zone != board.hand &&
         Rules.IsDestination(board.IsOpponentZone(view.Zone) ? 1 : 0, view.Data);
@@ -240,7 +241,10 @@ public sealed class TowerMatchController : MonoBehaviour
         if (HumanDefends)
             return unit != null && (Rules.Attacks.Any(a => Rules.CanBlock(unit, a)) ||
                 pendingDefender != null && Rules.Attacks.Any(a => a.Attacker == unit && Rules.CanBlock(pendingDefender, a)));
-        return CanPlay(view) || CanTap(view) || CanDiscard(view) || Rules.Active == 0 && (Rules.CanSecure(unit) || Rules.NeedsEntering() && Rules.CanEnter(unit));
+        // Securing and entering are asked of a field unit only: with a null unit the rules answer for
+        // the champion leading from off the field, which would make every unplayable hand card glow
+        // and offer PLAY CARD (that path is the ChampionMustLead button, not a card).
+        return CanPlay(view) || CanTap(view) || CanDiscard(view) || Rules.Active == 0 && unit != null && (Rules.CanSecure(unit) || Rules.NeedsEntering() && Rules.CanEnter(unit));
     }
     public string ActionLabel(BoardCardView view)
     {
@@ -249,11 +253,11 @@ public sealed class TowerMatchController : MonoBehaviour
         if (CanDiscard(view)) return Rules.Stage == MatchStage.Spoils ? "DISCARD" : "SET ASIDE";
         if (pendingObject != null || pendingAttacker != null || pendingRaid != null || Rules.Stage == MatchStage.Spoils) return "SELECT";
         if (HumanRaids && view.Zone == board.hand) return "STRIKE FROM HAND";
-        if (view.Zone == board.hand) return "PLAY CARD";
+        if (view.Zone == board.hand) return Rules.CanPlay(view.Data) ? "PLAY CARD" : "TAP LANDS & PLAY";
         if (CanTap(view)) return "TAP LAND";
         var unit = Unit(view);
-        if (HumanAtTheGates && Rules.CanSecure(unit)) return "FIGHT DWELLERS";
-        if (HumanAtTheGates && Rules.CanEnter(unit)) return "ENTER " + Rules.Players[0].Destination.Card.name.ToUpperInvariant();
+        if (HumanAtTheGates && unit != null && Rules.CanSecure(unit)) return "FIGHT DWELLERS";
+        if (HumanAtTheGates && unit != null && Rules.CanEnter(unit)) return "ENTER " + Rules.Players[0].Destination.Card.name.ToUpperInvariant();
         return HumanRaids ? "ATTACK" : "DEFEND";
     }
     public string InspectionHint(BoardCardView view)
@@ -331,8 +335,10 @@ public sealed class TowerMatchController : MonoBehaviour
             bool struck = Rules.AttackWith(view.Data); selectionHint = struck ? null : Rules.Message; Sync(); return struck;
         }
         if (!CanPlay(view)) { selectionHint = InspectionHint(view); UpdateHUD(); return false; }
+        // The lands the card needs are tapped for it here, so a card that glows can simply be clicked.
+        Rules.GatherFor(view.Data);
         if (view.Data.GetCardType() == CardTypeEnum.Object && Rules.Stage == MatchStage.Muster)
-        { pendingObject = view.Data; selectionHint = "Select your character to carry " + pendingObject.name + "."; board.preview?.Hide(); UpdateHUD(); return true; }
+        { pendingObject = view.Data; selectionHint = "Select your character to carry " + pendingObject.name + "."; board.preview?.Hide(); Sync(); return true; }
         bool result = Rules.Play(view.Data); selectionHint = null; Sync(); return result;
     }
     /// <summary>The human travels to a settlement for the turn; the choice made, the stage moves on.</summary>
@@ -604,19 +610,19 @@ public sealed class TowerMatchController : MonoBehaviour
                     + (Rules.StandingAt(0, destination.Card) == Standing.Neutral ? " (retention attack: lose and both tap)." : " (a normal attack: they hit back).") + (Rules.Stage == MatchStage.Arrival ? " Or stay outside." : " Armies deploy anywhere regardless.");
             }
             if (Rules.Stage == MatchStage.Arrival)
-                return "At the gates of " + destination.Card.name + (Rules.NoneReady(0) ? ": nothing of yours is ready, so your champion leads the company in (the town opens for your plays this turn), or stay outside."
-                    : ": click a ready character or army to enter (it taps, the town opens for your plays this turn), or stay outside.");
-            return "Tap ready lands for mana, then deploy armies anywhere; characters, encounters and objects only at your destination once a ready unit has entered it. Set aside cards no stage can spend."
+                return "At the gates of " + destination.Card.name + (Rules.NoneReady(0) ? ": nothing of yours is ready, so your champion leads the company in (the town opens for your plays in Muster), or stay outside."
+                    : ": click a ready character or army to enter (it taps, the town opens for your plays in Muster), or stay outside.");
+            return "Click a glowing hand card to play it (the lands it needs are tapped for you): armies deploy anywhere; characters, encounters and objects only at your destination once a ready unit has entered it. Set aside cards no stage can spend."
                 + (destination != null ? " Destination: " + destination.Card.name + (destination.Tapped && !destination.Secured ? " (closed this turn)." : destination.Entered ? " (entered)." : " (not entered).") : " No destination this turn.");
         }
-        if (Rules.Active == 0 && Rules.Stage == MatchStage.Events && Rules.ResolveEvent != null) return "Tap ready lands for mana as needed, then play events.";
+        if (Rules.Active == 0 && Rules.Stage == MatchStage.Events && Rules.ResolveEvent != null) return "Click a glowing event to play it; the lands it needs are tapped for you.";
         if (Rules.Stage == MatchStage.Travel && Rules.Travel != null)
         {
             string ground = Rules.Ground != TerrainEnum.None ? Rules.Ground + " ground" : "unknown ground";
             if (HumanRaids)
-                return "The enemy company crosses " + Rules.Travel.Region + " (" + ground + "). Click glowing units, or hand cards, to fall on it: characters, and armies of that terrain. Hand cards shuffle back into the deck afterwards. " + Rules.Attacks.Count + " committed.";
+                return "The enemy company crosses " + Rules.Travel.Region + " (" + ground + "). Click your glowing units on the board, or glowing cards in your hand, to fall on it: characters, and armies of that terrain. Hand cards shuffle back into the deck afterwards. " + Rules.Attacks.Count + " committed.";
             if (HumanDefends)
-                return "Ambushed in " + Rules.Travel.Region + " (" + ground + "): choose a defender, then the attacker it meets. Only characters and " + Rules.Ground + " armies can stand. Toggle whether defenders tap or stand fast (-2/-2, stay ready for the town). " + Rules.Attacks.Count + " attacks incoming.";
+                return "Ambushed in " + Rules.Travel.Region + " (" + ground + "): click a glowing defender on the board, then the attacker it meets in the popup. Only characters and " + Rules.Ground + " armies can stand. Toggle whether defenders tap or stand fast (-2/-2, stay ready for the town). " + Rules.Attacks.Count + " attacks incoming.";
             return Rules.Active == 0 ? "Your company crosses " + Rules.Travel.Region + " (" + ground + ")... the enemy weighs an ambush." : "The enemy company defends in " + Rules.Travel.Region + ".";
         }
         if (Rules.Stage == MatchStage.Events && Rules.ResolveEvent == null)

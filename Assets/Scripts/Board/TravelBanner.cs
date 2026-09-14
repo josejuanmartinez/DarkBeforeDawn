@@ -5,11 +5,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// The Travel stage on screen, as a popup over the middle of the board: the map of Caldrath framed on
-/// the road, a company marker that walks it from stop to stop, the region and its terrain lit up as it
-/// is entered, and — since the popup covers the army lanes — the units themselves as chips: who may
-/// fall on the company, who may stand, what has been committed. Chips are clickable for whatever the
-/// human may do at this stop. Owned by TowerMatchController; shown only while the stage is Travel.
+/// The Travel stage on screen, as a popup over the upper half of the board: the map of Caldrath framed
+/// on the road, a company marker that walks it from stop to stop, the region and its terrain lit up as
+/// it is entered, and — since the popup covers the enemy's lanes — the enemy's units as chips: who may
+/// fall on the company, who stands, what has been committed. The human's own lane and hand stay
+/// uncovered beneath it: the human's units and cards glow there when they may act, and are clicked
+/// there. Enemy chips are clickable for whatever the human may do to them (the attacker a defender
+/// meets). Owned by TowerMatchController; shown only while the stage is Travel.
 /// </summary>
 public sealed class TravelBanner : MonoBehaviour
 {
@@ -43,6 +45,12 @@ public sealed class TravelBanner : MonoBehaviour
     /// <summary>"+1 [glyph] ARMY": what a stop of the road pays, as rich text for a TMP label wired to the card icon sheet.</summary>
     public static string RewardRichLabel(TravelReward reward)
         => "+1 <sprite name=\"" + RewardSprite(reward) + "\"> " + MatchRules.RewardLabel(reward).ToUpperInvariant();
+    /// <summary>
+    /// "+1 [glyph]" for a stop of the road, wrapped in a "travel:N" link so a CardKeywordHover over the
+    /// map explains the draw (CardKeywordGlossary answers the id).
+    /// </summary>
+    public static string RewardLinkLabel(int stop)
+        => "<link=\"travel:" + stop + "\">+1 <sprite name=\"" + RewardSprite(MatchRules.RewardAt(stop)) + "\"></link>";
 
     /// <summary>A TMP label in the board's reading font with the card icon sheet, for chrome that shows sprite tags.</summary>
     public static TextMeshProUGUI RichLabel(Transform parent, string text, Board board, float size, Color color, TextAlignmentOptions alignment = TextAlignmentOptions.Center)
@@ -93,17 +101,18 @@ public sealed class TravelBanner : MonoBehaviour
         bool ours = rules.Active == 0;
         var ground = rules.Ground;
         var accent = ours ? skin.colors.teal : skin.colors.gold;
-        // The popup: centred over the army lanes, which it replaces with chips while the road is walked.
+        // The popup: over the enemy's lanes and the environment, opaque, leaving the human's own
+        // army lane and hand clear so what may act glows and is clicked on the board itself.
         var background = BoardPresentation.Panel(transform, "Travel popup", skin.colors.ink);
         background.raycastTarget = true;
         panel = background.rectTransform;
-        panel.anchorMin = panel.anchorMax = new Vector2(.508f, .60f); panel.pivot = new Vector2(.5f, .5f);
+        panel.anchorMin = panel.anchorMax = new Vector2(.508f, .757f); panel.pivot = new Vector2(.5f, .5f);
         var boardRect = ((RectTransform)transform).rect;
-        float width = boardRect.width * .64f;
-        float height = boardRect.height * .52f;
+        float width = boardRect.width * .70f;
+        float height = boardRect.height * .365f;
         panel.sizeDelta = new Vector2(width, height);
         panel.anchoredPosition = Vector2.zero;
-        BoardSurface.Dress(background, accent, true);
+        BoardSurface.Dress(background, accent, true, opaque: true);
         var shadow = background.gameObject.AddComponent<Shadow>(); shadow.effectColor = skin.colors.previewShadow; shadow.effectDistance = skin.preview.shadowOffset * 2;
         fade = panel.gameObject.AddComponent<CanvasGroup>(); fade.alpha = alpha; fade.blocksRaycasts = true;
         BoardCardPreview.RegisterModal(panel);
@@ -152,8 +161,8 @@ public sealed class TravelBanner : MonoBehaviour
             if (here) current = node;
             if (stopIndex >= 0 && stopIndex < RegionMap.MaxDistance)
             {
-                // What the stop pays: "+1 [glyph]". Passed stops have paid, the current one is paying, the rest are owed.
-                var reward = RichLabel(map.Overlay, "+1 <sprite name=\"" + RewardSprite(MatchRules.RewardAt(stopIndex + 1)) + "\">", board, skin.typography.previewLabelSize,
+                // What the stop pays: "+1 [glyph]", hoverable for the rule. Passed stops have paid, the current one is paying, the rest are owed.
+                var reward = RichLabel(map.Overlay, RewardLinkLabel(stopIndex + 1), board, skin.typography.previewLabelSize,
                     here ? skin.colors.ivory : passed ? skin.colors.gold : skin.colors.muted);
                 reward.rectTransform.anchorMin = reward.rectTransform.anchorMax = Vector2.one * .5f;
                 reward.rectTransform.pivot = new Vector2(.5f, 0); reward.rectTransform.sizeDelta = new Vector2(Mathf.Max(30, reward.preferredWidth + 8), 16);
@@ -162,7 +171,12 @@ public sealed class TravelBanner : MonoBehaviour
             }
         }
         // The destination named on the map, and the current stop, so the road reads at a glance.
-        if (journey.Moving) MapCaption(map.Overlay, journey.Destination.name.ToUpperInvariant(), nodePositions[nodePositions.Count - 1] + Vector2.down * (NodeSize + 2), accent, skin);
+        if (journey.Moving) CaldrathMapView.Caption(map.Overlay, journey.Destination.name.ToUpperInvariant(), board, nodePositions[nodePositions.Count - 1] + Vector2.down * (NodeSize + 2), accent, skin.typography.previewLabelSize, true);
+        // The +1 labels explain themselves on hover, the way card faces explain their keywords, and so
+        // does every region's painted terrain symbol.
+        var hover = map.Overlay.gameObject.AddComponent<CardKeywordHover>();
+        hover.RefreshTargets();
+        map.ExplainTerrains(hover, rules.TerrainOf, NodeSize * 1.8f);
         // The company itself: a bright marker that walks the road as stops are passed. It sits over the
         // clipped picture, a direct child of the window, so it is never cut off at the frame.
         var mark = BoardPresentation.Panel(strip, "Company", skin.colors.ink);
@@ -201,6 +215,8 @@ public sealed class TravelBanner : MonoBehaviour
             skin.colors.ink, Vector2.zero, Vector2.one, TextAnchor.MiddleCenter);
         terrain.fontStyle = FontStyle.Bold;
         terrain.resizeTextForBestFit = true; terrain.resizeTextMinSize = 7; terrain.resizeTextMaxSize = skin.typography.previewLabelSize;
+        if (CardKeywordGlossary.TryGet("terrain:" + ground, out var groundTitle, out var groundBody))
+            badge.gameObject.AddComponent<CardKeywordHover>().SetBadge(badge.rectTransform, groundTitle, groundBody);
 
         // The phase line, then the two lanes of chips: who may strike, who may stand.
         float phaseTop = groundTop - GroundHeight - 6;
@@ -209,70 +225,60 @@ public sealed class TravelBanner : MonoBehaviour
         phase.resizeTextForBestFit = true; phase.resizeTextMinSize = 8; phase.resizeTextMaxSize = skin.typography.previewLabelSize + 1;
         float lanesTop = phaseTop - 28;
         float lanesHeight = height + lanesTop - 14;
-        BuildLanes(rules, skin, columnX, lanesTop, lanesHeight, columnWidth);
+        BuildEnemyLane(rules, skin, columnX, lanesTop, lanesHeight, columnWidth);
         panel.SetAsLastSibling();
     }
 
-    // A name on the map: bold on a dark slip so it reads over the parchment.
-    void MapCaption(Transform parent, string text, Vector2 at, Color color, BoardSkin skin)
+    // The enemy's units at this stop, since the popup covers their lane. When the human travels
+    // these are the raiders: what has been committed against the company (lit, tagged with who
+    // meets it) and, while the enemy still weighs it, what could fall on it. When the enemy travels
+    // they are its defenders: what can stand on this ground, tagged with what it has taken on. The
+    // human's own units are never chips: they glow on the board and in the hand, and are clicked there.
+    void BuildEnemyLane(MatchRules rules, BoardSkin skin, float left, float top, float height, float width)
     {
-        var label = BoardPresentation.TextLabel(parent, text, board.interfaceFont, skin.typography.previewLabelSize - 1, color, Vector2.one * .5f, Vector2.one * .5f, TextAnchor.MiddleCenter);
-        label.fontStyle = FontStyle.Bold; label.horizontalOverflow = HorizontalWrapMode.Overflow;
-        label.rectTransform.pivot = new Vector2(.5f, 1); label.rectTransform.sizeDelta = new Vector2(label.preferredWidth + 10, 18);
-        label.rectTransform.anchoredPosition = at;
-        CaldrathMapView.Slip(label.rectTransform);
+        var enemyColor = skin.colors.gold;
+        bool enemyRaids = rules.Attacker == 1;
+        var lane = BoardPresentation.Panel(panel, "Enemy lane", new Color(0, 0, 0, .28f));
+        lane.rectTransform.anchorMin = lane.rectTransform.anchorMax = new Vector2(0, 1); lane.rectTransform.pivot = new Vector2(0, 1);
+        lane.rectTransform.sizeDelta = new Vector2(width, height); lane.rectTransform.anchoredPosition = new Vector2(left, top);
+        BoardPresentation.Border(lane.rectTransform, new Color(enemyColor.r, enemyColor.g, enemyColor.b, .35f), 1);
+        var entries = new List<(CardData card, MatchRules.Unit unit, string tag, bool committed)>();
+        string title;
+        if (enemyRaids)
+        {
+            foreach (var strike in rules.Attacks)
+            {
+                var met = strike.Blockers.Select(b => (strike.StoodFast.Contains(b) ? b.Card.name + " STANDS FAST" : "MET BY " + b.Card.name).ToUpperInvariant()).ToList();
+                string tag = met.Count > 0 ? string.Join(", ", met) : strike.Attacker.Roadside ? "FROM HAND" : "ATTACKING";
+                entries.Add((strike.Attacker.Card, strike.Attacker, tag, true));
+            }
+            // The enemy's hand is its own: only its field shows while it weighs the ambush.
+            if (rules.Phase == TravelPhase.Attack) foreach (var unit in rules.Raiders()) entries.Add((unit.Card, unit, null, false));
+            title = "ENEMY RAIDERS  ·  " + rules.Attacks.Count + (rules.Phase == TravelPhase.Attack ? " COMMITTED" : " ATTACKING");
+        }
+        else
+        {
+            foreach (var unit in rules.Players[rules.Active].Field.Where(u => u.IsCombatant))
+            {
+                var strike = rules.Attacks.FirstOrDefault(a => a.Blockers.Contains(unit));
+                bool can = unit.Card.FightsOn(rules.Ground) && !unit.Wounded;
+                if (strike == null && !can) continue;
+                string tag = strike != null ? (strike.StoodFast.Contains(unit) ? "STANDS FAST VS " : "MEETS ") + strike.Attacker.Card.name.ToUpperInvariant() : unit.Tapped ? "TAPPED" : null;
+                entries.Add((unit.Card, unit, tag, strike != null));
+            }
+            title = "ENEMY DEFENDERS" + (rules.Phase == TravelPhase.Defend ? "  ·  " + rules.Attacks.Sum(a => a.Blockers.Count) + " STANDING" : "  ·  " + entries.Count + " CAN STAND HERE");
+        }
+        var heading = BoardPresentation.TextLabel(lane.rectTransform, title, board.interfaceFont, skin.typography.previewLabelSize - 1, enemyColor, new Vector2(0, 1), Vector2.one, TextAnchor.MiddleCenter);
+        heading.rectTransform.pivot = new Vector2(.5f, 1); heading.rectTransform.sizeDelta = new Vector2(-8, 18); heading.rectTransform.anchoredPosition = new Vector2(0, -2);
+        heading.fontStyle = FontStyle.Bold;
+        FillLane(lane.rectTransform, entries, enemyColor, skin, rules, enemyRaids ? "Nothing of the enemy's can fight on this ground." : "Nothing of the enemy's can stand on this ground.");
     }
 
-    // The units at this stop. The raiders' lane lists the other company's units (and hand cards) that
-    // could fall on the traveller, committed ones lit; the defenders' lane lists the traveller's units
-    // that can stand here, and, while defenders are being assigned, what they have taken on.
-    void BuildLanes(MatchRules rules, BoardSkin skin, float left, float top, float height, float width)
-    {
-        var raiderColor = rules.Attacker == 0 ? skin.colors.teal : skin.colors.gold;
-        var defenderColor = rules.Active == 0 ? skin.colors.teal : skin.colors.gold;
-        float laneWidth = (width - 12) * .5f;
-        RectTransform Lane(string name, float x, Color accent)
-        {
-            var lane = BoardPresentation.Panel(panel, name, new Color(0, 0, 0, .22f));
-            lane.rectTransform.anchorMin = lane.rectTransform.anchorMax = new Vector2(0, 1); lane.rectTransform.pivot = new Vector2(0, 1);
-            lane.rectTransform.sizeDelta = new Vector2(laneWidth, height); lane.rectTransform.anchoredPosition = new Vector2(x, top);
-            BoardPresentation.Border(lane.rectTransform, new Color(accent.r, accent.g, accent.b, .35f), 1);
-            var heading = BoardPresentation.TextLabel(lane.rectTransform, name, board.interfaceFont, skin.typography.previewLabelSize - 1, accent, new Vector2(0, 1), Vector2.one, TextAnchor.MiddleCenter);
-            heading.rectTransform.pivot = new Vector2(.5f, 1); heading.rectTransform.sizeDelta = new Vector2(-8, 18); heading.rectTransform.anchoredPosition = new Vector2(0, -2);
-            heading.fontStyle = FontStyle.Bold;
-            return lane.rectTransform;
-        }
-        // Raiders: everything already committed, then the field units and hand cards that could still fall on the company.
-        var raiders = new List<(CardData card, MatchRules.Unit unit, string tag, bool committed)>();
-        foreach (var strike in rules.Attacks) raiders.Add((strike.Attacker.Card, strike.Attacker, strike.Attacker.Roadside ? "FROM HAND" : "ATTACKING", true));
-        if (rules.Phase == TravelPhase.Attack)
-        {
-            foreach (var unit in rules.Raiders()) raiders.Add((unit.Card, unit, null, false));
-            foreach (var card in rules.HandRaiders()) raiders.Add((card, null, "IN HAND", false));
-        }
-        string raiderTitle = (rules.Attacker == 0 ? "YOUR RAIDERS" : "ENEMY RAIDERS") + "  ·  " + rules.Attacks.Count + (rules.Phase == TravelPhase.Attack ? " COMMITTED" : " ATTACKING");
-        var raiderLane = Lane(raiderTitle, left, raiderColor);
-        FillLane(raiderLane, raiders, raiderColor, skin, rules.Attacker == 0 && rules.Phase == TravelPhase.Attack, rules);
-        // Defenders: the traveller's units that can stand on this ground, blocking ones tagged with what they took on.
-        var defenders = new List<(CardData card, MatchRules.Unit unit, string tag, bool committed)>();
-        foreach (var unit in rules.Players[rules.Active].Field.Where(u => u.IsCombatant))
-        {
-            var strike = rules.Attacks.FirstOrDefault(a => a.Blockers.Contains(unit));
-            bool can = unit.Card.FightsOn(rules.Ground) && !unit.Wounded;
-            if (strike == null && !can) continue;
-            string tag = strike != null ? (strike.StoodFast.Contains(unit) ? "STANDS FAST VS " : "MEETS ") + strike.Attacker.Card.name.ToUpperInvariant() : unit.Tapped ? "TAPPED" : null;
-            defenders.Add((unit.Card, unit, tag, strike != null));
-        }
-        string defenderTitle = (rules.Active == 0 ? "YOUR DEFENDERS" : "ENEMY DEFENDERS") + (rules.Phase == TravelPhase.Defend ? "  ·  " + rules.Attacks.Sum(a => a.Blockers.Count) + " STANDING" : "");
-        var defenderLane = Lane(defenderTitle, left + laneWidth + 12, defenderColor);
-        FillLane(defenderLane, defenders, defenderColor, skin, rules.Active == 0 && rules.Phase == TravelPhase.Defend, rules);
-    }
-
-    void FillLane(RectTransform lane, List<(CardData card, MatchRules.Unit unit, string tag, bool committed)> entries, Color accent, BoardSkin skin, bool interactive, MatchRules rules)
+    void FillLane(RectTransform lane, List<(CardData card, MatchRules.Unit unit, string tag, bool committed)> entries, Color accent, BoardSkin skin, MatchRules rules, string empty)
     {
         if (entries.Count == 0)
         {
-            var none = BoardPresentation.TextLabel(lane, "Nothing can fight on this ground.", board.interfaceFont, skin.typography.previewLabelSize - 1, skin.colors.muted, Vector2.zero, new Vector2(1, .85f), TextAnchor.MiddleCenter);
+            var none = BoardPresentation.TextLabel(lane, empty, board.interfaceFont, skin.typography.previewLabelSize - 1, skin.colors.muted, Vector2.zero, new Vector2(1, .85f), TextAnchor.MiddleCenter);
             none.resizeTextForBestFit = true; none.resizeTextMinSize = 8; none.resizeTextMaxSize = skin.typography.previewLabelSize - 1;
             return;
         }
@@ -287,7 +293,8 @@ public sealed class TravelBanner : MonoBehaviour
             var (card, unit, tag, committed) = entries[i];
             int row = i / columns, column = i % columns;
             var view = match.ViewOf(card);
-            bool actionable = interactive && view != null && match.IsActionable(view);
+            // The chip stands in for the covered board card: it is clickable exactly when that would be.
+            bool actionable = view != null && match.IsActionable(view);
             bool selected = match.PendingCombatCard == card;
             var chip = BoardPresentation.Panel(lane, "Chip " + card.name, skin.colors.ink);
             chip.raycastTarget = true;
@@ -295,12 +302,20 @@ public sealed class TravelBanner : MonoBehaviour
             rect.anchorMin = rect.anchorMax = new Vector2(.5f, 1); rect.pivot = new Vector2(0, 1);
             rect.sizeDelta = new Vector2(chipWidth, chipHeight); rect.localScale = Vector3.one * scale;
             rect.anchoredPosition = new Vector2(startX + column * (chipWidth + gap) * scale, -22 - row * (chipHeight + gap) * scale);
-            var frameColor = selected ? Color.white : committed ? accent : actionable ? new Color(.3f, 1f, .78f) : new Color(accent.r, accent.g, accent.b, .35f);
+            var battleColor = unit != null && unit.Owner == rules.Attacker ? BoardBattleVfx.Ember : BoardBattleVfx.Ward;
+            var frameColor = selected ? BoardBattleVfx.Amber : committed ? battleColor : actionable ? BoardBattleVfx.Amber : new Color(accent.r, accent.g, accent.b, .35f);
             var frame = BoardPresentation.Border(rect, frameColor, selected || committed || actionable ? 3 : 1);
             var art = BoardPresentation.Panel(rect, "Portrait", Color.white);
             BoardPresentation.Stretch(art.rectTransform, new Vector2(0, .38f), Vector2.one);
             art.rectTransform.offsetMin = new Vector2(4, 2); art.rectTransform.offsetMax = new Vector2(-4, -4);
             art.sprite = Artwork(card); art.preserveAspect = true;
+            BattleVfxAnchor.Bind(board,card,rect);
+            FantasyCardAura.Create(rect).SetPresentation(selected ? 1 : committed ? .8f : actionable ? .4f : 0, selected ? BoardBattleVfx.Amber : battleColor, selected || committed);
+            if (art.sprite != null)
+            {
+                var motion=art.gameObject.AddComponent<ZoomImage>();motion.EnableHoverMotion();motion.SetHovering(selected||committed);
+                motion.SetMotionPhase(i*.7f);
+            }
             if (art.sprite == null) art.color = new Color(.2f, .22f, .25f);
             if (unit != null && unit.Tapped && !committed) art.color = new Color(.55f, .55f, .55f);
             var name = BoardPresentation.TextLabel(rect, card.name, board.interfaceFont, 11, skin.colors.ivory, new Vector2(0, .2f), new Vector2(1, .38f), TextAnchor.MiddleCenter);
@@ -334,12 +349,12 @@ public sealed class TravelBanner : MonoBehaviour
         if (rules.Phase == TravelPhase.Attack)
         {
             int raiders = rules.Raiders().Count() + rules.HandRaiders().Count();
-            if (rules.Attacks.Count > 0) return rules.Attacks.Count + (rules.Attacks.Count == 1 ? " attack declared" : " attacks declared") + (rules.Attacker == 0 ? ": commit more, or ATTACK!" : ".");
+            if (rules.Attacks.Count > 0) return rules.Attacks.Count + (rules.Attacks.Count == 1 ? " attack declared" : " attacks declared") + (rules.Attacker == 0 ? ": commit more from your glowing units and cards, or ATTACK!" : ".");
             if (raiders == 0) return (ours ? "Nothing of the enemy's" : "Nothing of yours") + " can fight on this ground: the company passes.";
-            return ours ? "The enemy weighs an ambush..." : "Click a raider to fall on the company, or let them pass.";
+            return ours ? "The enemy weighs an ambush..." : "Your glowing units and hand cards can fall on the company: click them, or let them pass.";
         }
-        if (match.PendingCombatCard != null && ours) return match.PendingCombatCard.name + " stands: click the attacker it meets.";
-        return rules.Attacks.Count + (rules.Attacks.Count == 1 ? " attack" : " attacks") + " on the company: " + (ours ? "click a defender, then the attacker it meets, or resolve combat." : "the enemy assigns defenders.");
+        if (match.PendingCombatCard != null && ours) return match.PendingCombatCard.name + " stands: click the attacker it meets here.";
+        return rules.Attacks.Count + (rules.Attacks.Count == 1 ? " attack" : " attacks") + " on the company: " + (ours ? "click a glowing defender on your board, then the attacker it meets here, or resolve combat." : "the enemy assigns defenders.");
     }
 
     void Update()

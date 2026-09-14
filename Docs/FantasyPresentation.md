@@ -2,7 +2,11 @@
 
 The default board uses brown leather surfaces, brass book corners, parchment-colored lettering and sage player accents. Zone headings and the ascent title use the bundled fantasy display font; small interface text and card rules retain their reading fonts. Surface decoration remains a single input-transparent UI mesh per panel.
 
-The opening ascent is a runtime-built stone keep with staggered masonry, stepped buttresses, four watch turrets, faceted slate roofs, battlements, crimson heraldry, sconces and an iron-bound entrance. Five recessed arcades retain the existing floor pairings. Roman numerals identify the floors. The camera approaches the current floor, including upper floors after victories. Static architecture is combined by material; generated meshes and materials are released with the cinematic.
+The ascent uses authored retro artwork based on the user's carved dungeon-column reference: weathered shrine niches, stone reliefs, winding exterior stairs and lantern-lit balconies. Point-sampled texture strips continue above the view and fade into darkness, showing at least five landings without revealing a summit. The orthographic camera approaches the current landing, where the known character portraits sit whole and still in square frames inside the niches (the board's art zoom cropped them and the card aura's sparks read as stray pixels at this scale, so neither is used here). Unknown landings retain their carved stonework. As the player progresses, the visible section advances up the column.
+
+`TowerMatchController.ascentFinalLevel` controls the eventual end (30 provisionally, or 0 to leave it open-ended). The artwork stops at that landing and the final-landing caption is revealed only on arrival. This is presentation support; additional opponents and playable matches still need their authored content. The dice restore the perspective camera and filtering when the ascent closes.
+
+The final image is `Assets/Resources/Art/EndlessStair.png`; `AgentScripts/ImportStairArtwork.cs` reproduces its import settings. [StairArtworkPrompt.md](StairArtworkPrompt.md) records the built-in image-generation prompts.
 
 `AgentScripts/ApplyFantasyBoard.cs` reproduces the saved default palette through Unity CLI in Edit mode. `AgentScripts/CaptureFantasyTower.cs` captures the establishing view in Play mode after the cinematic initializes; restart Play afterwards because this fixture stops the match coroutine.
 

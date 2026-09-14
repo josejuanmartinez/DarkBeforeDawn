@@ -7,7 +7,7 @@ public sealed class AscentMist : MaskableGraphic
     protected override void OnPopulateMesh(VertexHelper vh)
     {
         vh.Clear();Rect r=rectTransform.rect;
-        Color mist=new(.055f,.043f,.032f,0);
+        Color mist=new(0,0,0,0);
         const int bands=20;
         for(int i=0;i<bands;i++)
         {

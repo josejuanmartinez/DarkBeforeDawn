@@ -434,7 +434,7 @@ public class CardData
             ? $"{troopLabel} {spriteTag}."
             : $"{raceLabel}. {troopLabel} {spriteTag}.";
         // Where it fights: on the road an army only strikes or stands in regions of its own ground.
-        if (GetTerrain() != TerrainEnum.None) baseText += $" {GetTerrain()} ground.";
+        if (GetTerrain() != TerrainEnum.None) baseText += $" {FormatAmbushLabel(GetTerrain())}.";
         return abilities.Count > 0 ? $"{baseText} {string.Join(". ", abilities)}." : baseText;
     }
 
@@ -513,7 +513,7 @@ public class CardData
             parts.Add($"{PcDescriptionBuilder.FormatDisplayRegionName(region)}.");
         }
         // The ground a company crosses here, and so which armies can fall on it.
-        if (GetTerrain() != TerrainEnum.None) parts.Add($"{GetTerrain()} ground.");
+        if (GetTerrain() != TerrainEnum.None) parts.Add($"{FormatTerrainLabel(GetTerrain())}.");
 
         List<string> grants = new();
         if (leatherGranted > 0) grants.Add(leatherGranted + SpriteTag("leather"));
@@ -553,14 +553,17 @@ public class CardData
         return $"{flavor}\n\n{effectsBlock}";
     }
 
-    // The face says where an encounter can be investigated and nothing of what happens there: the
-    // outcome belongs to the play, not to the card text.
+    // The face says where an encounter can be faced and nothing of what happens there: the outcome
+    // belongs to the play, not to the card text. Either company can meet it: the owner's, by
+    // playing it at the town, or the opponent's, when it enters the town while the card is in hand
+    // (MatchRules.TapDestination springs it as an ambush). Each town is a link to its card.
     public string GetEncounterDescription()
     {
         if (GetCardType() != CardTypeEnum.Encounter) return string.Empty;
-        var homes = GetBirthplaces().Select(PcDescriptionBuilder.FormatDisplayRegionName).ToList();
-        if (homes.Count == 0) return "Investigate this encounter at its birthplace.";
-        return $"Investigate this encounter at {JoinNames(homes)}.";
+        var homes = GetBirthplaces().Select(home => PcDescriptionBuilder.CardLink(home)).ToList();
+        if (homes.Count == 0) return "Face this encounter at its birthplace with your company, or force your opponent's company there into it.";
+        string where = JoinNames(homes);
+        return $"Face this encounter at {where} with your company, or force your opponent's company at {(homes.Count == 1 ? where : "one of them")} into it.";
     }
 
     public static string JoinNames(IReadOnlyList<string> names)
@@ -708,6 +711,14 @@ public class CardData
 
         return $"<link=\"character:{ability}\"><u>{abilityName}</u> <sprite name=\"{spriteName}\"></link>";
     }
+
+    /// <summary>"Plains ground [glyph]" as a "terrain:" link, so a land's face explains its ground on hover.</summary>
+    public static string FormatTerrainLabel(TerrainEnum ground)
+        => $"<link=\"terrain:{ground}\"><nobr><u>{ground} ground</u> {SpriteTag(CardKeywordGlossary.TerrainSprite(ground))}</nobr></link>";
+
+    /// <summary>"Ambush: [glyph]" as an "ambush:" link: the ground an army may fall on a travelling company in.</summary>
+    public static string FormatAmbushLabel(TerrainEnum ground)
+        => $"<link=\"ambush:{ground}\"><nobr><u>Ambush</u>: {SpriteTag(CardKeywordGlossary.TerrainSprite(ground))}</nobr></link>";
 
     public static string FormatArmyAbilityLabel(ObjectCharacterArmySpecialAbilityEnum ability)
     {

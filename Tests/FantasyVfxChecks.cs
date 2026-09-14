@@ -10,8 +10,8 @@ var flags=System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlag
 typeof(TowerMatchController).GetField("board",flags).SetValue(match,board);
 void Set(string name,object value)=>typeof(MatchRules).GetProperty(name).SetValue(rules,value);
 Set("Stage",MatchStage.Travel);Set("Phase",TravelPhase.Defend);
-var journey=new MatchRules.Journey();journey.Stops.Add("Golden Vale");Set("Travel",journey);
-var roster=CardCatalog.AllCards().Where(c=>c.GetCardType()==CardTypeEnum.Character || c.GetCardType()==CardTypeEnum.Army).Take(6).Select(c=>c.Clone()).ToArray();
+var journey=new MatchRules.Journey {Destination=CardCatalog.AllCards().First(c=>c.GetCardType()==CardTypeEnum.PC)};journey.Stops.Add("Golden Vale");Set("Travel",journey);
+var roster=CardCatalog.AllCards().Where(c=>c.GetCardType()==CardTypeEnum.Character).Take(6).Select(c=>c.Clone()).ToArray();
 var attackers=new System.Collections.Generic.List<MatchRules.Unit>();var defenders=new System.Collections.Generic.List<MatchRules.Unit>();
 for(int i=0;i<3;i++)
 {
@@ -40,8 +40,13 @@ System.Collections.IEnumerator Run()
     var before=mesh.vertices;yield return new UnityEngine.WaitForSecondsRealtime(.25f);mesh=vfx.canvasRenderer.GetMesh();
     Check(!before.SequenceEqual(mesh.vertices),"Battle arrows are static.");
     UnityEngine.ScreenCapture.CaptureScreenshot("Docs/Fantasy-Battle-Arrows.png");
-    var victim=board.GetComponentsInChildren<BoardCardView>().First(v=>ReferenceEquals(v.Data,defenders[0].Card));
-    board.preview.Show(victim);Check(board.preview.IsShowing,"Effects prevent inspection.");board.preview.Hide();
+    var chip=board.GetComponentsInChildren<BattleVfxAnchor>().First();
+    Check(chip!=null,"Travel chips are missing their VFX anchors.");
+    var pointer=new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
+    pointer.position=UnityEngine.RectTransformUtility.WorldToScreenPoint(null,chip.transform.TransformPoint(((UnityEngine.RectTransform)chip.transform).rect.center));
+    var hits=new System.Collections.Generic.List<UnityEngine.EventSystems.RaycastResult>();
+    UnityEngine.EventSystems.EventSystem.current.RaycastAll(pointer,hits);
+    Check(hits.Count>0 && (hits[0].gameObject==chip.gameObject || hits[0].gameObject.transform.IsChildOf(chip.transform)),"VFX intercept the travel chip raycast.");
     for(int i=0;i<2;i++)rules.Fights.Add(new MatchRules.Fight {Attacker=attackers[i],Defender=defenders[i],Loser=defenders[i],Blow=Blow.Wounded,AttackerRoll=6,DefenderRoll=1,AttackerStats=(4,3),DefenderStats=(2,3)});
     rules.Players[0].Life-=4;
     yield return new UnityEngine.WaitForSecondsRealtime(.12f);

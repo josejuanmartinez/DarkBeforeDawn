@@ -25,32 +25,41 @@ var second = board.hand.GetComponentsInChildren<BoardCardView>()[1];
 var click = new UnityEngine.EventSystems.PointerEventData(events) { button = UnityEngine.EventSystems.PointerEventData.InputButton.Left };
 var original = first.Rect.anchoredPosition;
 UnityEngine.EventSystems.ExecuteEvents.Execute(first.gameObject, click, UnityEngine.EventSystems.ExecuteEvents.pointerEnterHandler);
-Check(board.preview.IsShowing && !board.preview.IsPinned, "Hover did not open.");
+Check(board.preview.IsShowing, "Hover did not open.");
+var shown = board.preview.PreviewRect;
+Check(shown.Find("Close") == null && shown.Find("Card action") == null, "Hover preview carries pin-era buttons.");
+Check(!shown.GetComponentsInChildren<UnityEngine.UI.Text>().Any(t => t.text.Contains("PIN")), "Hover preview still talks about pinning.");
+// A click never sticks the preview: on the authoring board it plays the hand card (or fails to afford it) and nothing pins.
+int handBefore = board.hand.Cards.Count;
 UnityEngine.EventSystems.ExecuteEvents.Execute(first.gameObject, click, UnityEngine.EventSystems.ExecuteEvents.pointerClickHandler);
-Check(board.preview.IsPinned, "Click did not pin.");
-var pinned = board.preview.PreviewRect;
-UnityEngine.EventSystems.ExecuteEvents.Execute(second.gameObject, click, UnityEngine.EventSystems.ExecuteEvents.pointerEnterHandler);
-Check(board.preview.PreviewRect == pinned, "Another hover replaced pinned card.");
-Check(first.Rect.anchoredPosition == original, "Inspection moved the original slot.");
-var close = pinned.Find("Close").GetComponent<UnityEngine.UI.Button>();
-UnityEngine.EventSystems.ExecuteEvents.Execute(close.gameObject, click, UnityEngine.EventSystems.ExecuteEvents.pointerClickHandler);
-Check(!board.preview.IsShowing && !board.preview.IsPinned, "Close did not dismiss.");
-board.preview.Pin(first);
-board.preview.Pin(first);
-Check(!board.preview.IsShowing, "Second click did not unpin.");
-board.preview.Pin(first);
-var cards = new System.Collections.Generic.List<CardData>(board.hand.Cards);
-board.hand.SetCards(cards);
-Check(!board.preview.IsShowing, "Collection rebuild left a stale pinned preview.");
+Check(board.hand.Cards.Count == handBefore || board.hand.Cards.Count == handBefore - 1, "Click did something other than play the card.");
+if (board.hand.Cards.Count == handBefore)
+{
+    // Not affordable: the preview stays a plain hover, and another hover replaces it.
+    Check(board.preview.IsShowing && board.preview.PreviewRect == shown, "A click that played nothing changed the hover preview.");
+    UnityEngine.EventSystems.ExecuteEvents.Execute(second.gameObject, click, UnityEngine.EventSystems.ExecuteEvents.pointerEnterHandler);
+    Check(board.preview.IsShowing && board.preview.PreviewRect != shown, "Hover after a click did not move to the new card.");
+    Check(first.Rect.anchoredPosition == original, "Inspection moved the original slot.");
+}
+else Check(!board.preview.IsShowing || board.preview.PreviewRect != shown, "Playing the card left its preview up.");
+board.preview.Hide();
+var handNow = board.hand.GetComponentsInChildren<BoardCardView>();
+if (handNow.Length > 0)
+{
+    board.preview.Show(handNow[0]);
+    var cards = new System.Collections.Generic.List<CardData>(board.hand.Cards);
+    board.hand.SetCards(cards);
+    Check(!board.preview.IsShowing, "Collection rebuild left a stale preview.");
+}
 foreach (var zone in new CardZoneVisualizer[] {board.humanArmies, board.environmental, board.humanDiscard})
 {
     var view = zone.GetComponentInChildren<BoardCardView>();
     if (view == null) continue;
-    board.preview.Pin(view);
-    Check(board.preview.IsPinned, "Could not pin token or deck.");
+    board.preview.Show(view);
+    Check(board.preview.IsShowing, "Could not inspect token or deck.");
     var root = (UnityEngine.RectTransform)board.preview.transform;
     var corners = new UnityEngine.Vector3[4]; board.preview.PreviewRect.GetWorldCorners(corners);
-    foreach (var corner in corners) Check(root.rect.Contains(root.InverseTransformPoint(corner)), "Pinned preview outside screen.");
+    foreach (var corner in corners) Check(root.rect.Contains(root.InverseTransformPoint(corner)), "Preview outside screen.");
     board.preview.Hide();
 }
-return checks + " checks passed: card raycasts, hover, click-to-pin, pinned stability, close, unpin, source replacement, token/environment/deck pinning and bounds.";
+return checks + " checks passed: card raycasts, hover, click never pins, hover replacement, source replacement, token/environment/deck inspection and bounds.";

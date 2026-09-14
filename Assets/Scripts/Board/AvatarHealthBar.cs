@@ -20,31 +20,39 @@ public sealed class AvatarHealthBar : MonoBehaviour
     static readonly Color Blood = new(.70f, .11f, .09f), BloodDark = new(.38f, .04f, .05f), Ember = new(1f, .58f, .22f), Bone = new(.96f, .92f, .84f);
 
     /// <summary>
-    /// Builds the bar on a full card as its own band between the title and the artwork. The card is
-    /// stacked to make room: the artwork keeps its size and slides down, the description below gives
-    /// up the height, and the plaques that hang on the artwork's corner follow it.
+    /// Builds the bar on a full card as its own band stacked between the title and the artwork, with
+    /// clear ground on both sides so it never sits on the picture, even mid-shake. The card makes
+    /// room by giving up height below the bar: the artwork loses half of it off its top and slides
+    /// down, the description loses the other half, and the plaques that hang on the artwork's lower
+    /// corner follow its bottom edge.
     /// </summary>
     public static AvatarHealthBar CreateOnCard(Card card, Board board, int owner)
     {
         var skin = BoardPresentation.SkinFor(card.transform);
-        var art = skin.cards.art;
-        const float height = 26, gap = 3, band = height + gap;
+        var art = skin.cards.art; var title = skin.cards.title;
+        const float height = 26, gap = 8;
+        // The bar hangs a gap under the title; the artwork's top must clear it by another gap.
+        float barTop = title.position.y - title.size.y * .5f - gap;
+        float artTop = art.position.y + art.size.y * .5f;
+        float drop = Mathf.Max(0, artTop - (barTop - height - gap));
+        float artShrink = Mathf.Round(drop * .5f), descriptionShrink = drop - artShrink;
         var real = card.transform.Find("RealCard");
         if (real != null)
         {
-            Shift(real.Find("Image") as RectTransform, band, 0);
-            Shift(real.Find("DescriptionBackground") as RectTransform, band * .5f, band);
+            // Top edge down by the whole drop, bottom edge down by what the description gives up.
+            Shift(real.Find("Image") as RectTransform, drop - artShrink * .5f, artShrink);
+            Shift(real.Find("DescriptionBackground") as RectTransform, descriptionShrink * .5f, descriptionShrink);
         }
         foreach (string plaque in new[] { "Stat plaque", "Class plaque", "Status plaque" })
-            Shift(card.transform.Find(plaque) as RectTransform, band, 0);
-        if (card.CombatStatsLabel != null) Shift(card.CombatStatsLabel.rectTransform, band, 0);
-        if (card.ClassStatsLabel != null) Shift(card.ClassStatsLabel.rectTransform, band, 0);
-        if (card.StatusEffectsLabel != null) Shift(card.StatusEffectsLabel.rectTransform, band, 0);
+            Shift(card.transform.Find(plaque) as RectTransform, descriptionShrink, 0);
+        if (card.CombatStatsLabel != null) Shift(card.CombatStatsLabel.rectTransform, descriptionShrink, 0);
+        if (card.ClassStatsLabel != null) Shift(card.ClassStatsLabel.rectTransform, descriptionShrink, 0);
+        if (card.StatusEffectsLabel != null) Shift(card.StatusEffectsLabel.rectTransform, descriptionShrink, 0);
         var plate = BoardPresentation.Panel(card.transform, "Health bar", BloodDark);
         var rect = plate.rectTransform;
         rect.anchorMin = rect.anchorMax = rect.pivot = Vector2.one * .5f;
         rect.sizeDelta = new Vector2(art.size.x, height);
-        rect.anchoredPosition = new Vector2(art.position.x, art.position.y + art.size.y * .5f - height * .5f);
+        rect.anchoredPosition = new Vector2(art.position.x, barTop - height * .5f);
         rect.localScale = Vector3.one;
         BoardPresentation.Border(rect, new Color(.16f, .02f, .02f), 2);
         var health = plate.gameObject.AddComponent<AvatarHealthBar>();

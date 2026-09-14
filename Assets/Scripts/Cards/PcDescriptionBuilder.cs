@@ -23,7 +23,8 @@ public static class PcDescriptionBuilder
     {
         if (data == null) return string.Empty;
 
-        string regionName = FormatDisplayRegionName(data.region);
+        // The region is a link to its land card, so a hover shows the ground the town stands on.
+        string regionName = RegionLink(data.region);
         string alignment = CardData.AlignmentLabel(data.settlementAlignment);
         List<string> lines = new()
         {
@@ -51,7 +52,20 @@ public static class PcDescriptionBuilder
     }
 
     public const string CardLinkPrefix = "card:";
+    /// <summary>
+    /// A card's name, underlined, as a "card:Name" link the keyword hover expands into the card
+    /// itself. Shown as the display form of the name (run-together region names split into words)
+    /// unless a display text is given.
+    /// </summary>
+    public static string CardLink(string cardName, string display = null) => string.IsNullOrWhiteSpace(cardName) ? string.Empty
+        : $"<link=\"{CardLinkPrefix}{cardName}\"><u>{display ?? FormatDisplayRegionName(cardName)}</u></link>";
     public static string DwellersLink(string cardName) => $"<link=\"{CardLinkPrefix}{cardName}\"><u>{cardName}</u></link>";
+    /// <summary>
+    /// A region's display name linked to its land card. Every region is a land card of the same
+    /// name (a second land card may open the same region, see RegionMap.landAliases, but the
+    /// region's own is what the hover shows), so the raw region name is the link id.
+    /// </summary>
+    public static string RegionLink(string region) => CardLink(region);
 
     public static string FormatObjectTypes(CardData data)
     {

@@ -95,7 +95,10 @@ public sealed partial class MatchCinematic : MonoBehaviour
         if (rollFrame != null) { picture.transform.SetParent(overlay.transform, false); Destroy(rollFrame); }
         overlay.SetActive(true); overlay.transform.SetAsLastSibling(); picture.color = Color.white;
         camera3D.ResetAspect();
-        overlay.GetComponent<Image>().color = new Color(.055f,.043f,.032f,1);
+        overlay.GetComponent<Image>().color = Color.black;
+        camera3D.orthographic = true;
+        camera3D.backgroundColor = Color.black;
+        target.filterMode = FilterMode.Point;
         ascentMist.SetActive(true);
         BoardPresentation.Stretch(picture.rectTransform,new Vector2(.12f,.08f),new Vector2(.88f,.91f));
         BoardPresentation.Stretch(title.rectTransform,new Vector2(.1f,.88f),new Vector2(.9f,.99f));
@@ -120,9 +123,10 @@ public sealed partial class MatchCinematic : MonoBehaviour
         {
             if (SkipRequested()) { skipped = true; t = 1; }
             float s=t*t*(3-2*t);
-            float focus = (floor-first)*StairRise+1.2f;
-            float landingX = LandingX(floor);
-            Look(Vector3.Lerp(new Vector3(8,12,-43),new Vector3(landingX+1.8f,focus+2.6f,-16),s),Vector3.Lerp(new Vector3(0,8.8f,0),new Vector3(landingX,focus,0),s));
+            float focus = (floor-first)*StairRise+2.0f;
+            camera3D.orthographicSize = Mathf.Lerp(10.7f,3.15f,s);
+            float cameraY = Mathf.Lerp(9.4f,focus,s);
+            Look(new Vector3(0,cameraY,-20),new Vector3(0,cameraY,0));
             yield return null;
         }
         for (float wait = 0; wait < 1 && !skipped; wait += Time.unscaledDeltaTime) { if (SkipRequested()) break; yield return null; }
@@ -134,14 +138,14 @@ public sealed partial class MatchCinematic : MonoBehaviour
         go.transform.SetParent(tower.transform, false);
         var rect = (RectTransform)go.transform;
         rect.sizeDelta = new Vector2(420,180);
-        rect.localPosition = new Vector3(LandingX(floor),y+1.45f,.34f);
-        rect.localScale = Vector3.one * .0063f;
+        rect.localPosition = new Vector3(.3f,y+2.15f,-.05f);
+        rect.localScale = Vector3.one * .009f;
         var canvas = go.GetComponent<Canvas>(); canvas.renderMode = RenderMode.WorldSpace; canvas.worldCamera = camera3D;
         var accent = current ? new Color(1,.83f,.43f) : new Color(.68f,.61f,.46f);
         PairingText(rect, Roman(floor+1), new Vector2(0,73), new Vector2(55,24), 15, accent);
-        PairingText(rect, "VS", new Vector2(0,5), new Vector2(55,30), 19, accent);
         string left = floor == 0 ? board.humanAvatarCardName : floor == 1 ? board.opponentAvatarCardName : null;
         string right = floor == 0 ? board.opponentAvatarCardName : null;
+        if (left != null && right != null) PairingText(rect, "VS", new Vector2(0,5), new Vector2(55,30), 19, accent);
         LeaderPortrait(rect, -112, left, accent);
         LeaderPortrait(rect, 112, right, accent);
         foreach (var child in go.GetComponentsInChildren<Transform>(true)) child.gameObject.layer = Layer;
@@ -156,10 +160,13 @@ public sealed partial class MatchCinematic : MonoBehaviour
     }
     void LeaderPortrait(Transform parent, float x, string leaderName, Color accent)
     {
+        if (string.IsNullOrWhiteSpace(leaderName)) return;
         var frame = BoardPresentation.Panel(parent, string.IsNullOrWhiteSpace(leaderName) ? "Unknown leader" : "Leader " + leaderName, new Color(.09f,.065f,.038f));
         frame.rectTransform.anchorMin = frame.rectTransform.anchorMax = Vector2.one * .5f;
-        frame.rectTransform.sizeDelta = new Vector2(150,128);
-        frame.rectTransform.anchoredPosition = new Vector2(x,12);
+        // Square, like the card art it holds: the whole portrait shows, nothing is cropped away.
+        float side = x > 0 ? 92 : 128;
+        frame.rectTransform.sizeDelta = Vector2.one * side;
+        frame.rectTransform.anchoredPosition = new Vector2(x,x > 0 ? 30 : 12);
         BoardPresentation.Border(frame.rectTransform,accent,2);
         var data = string.IsNullOrWhiteSpace(leaderName) ? null : CardCatalog.FindCardByName(leaderName);
         Sprite sprite = null;
@@ -171,12 +178,10 @@ public sealed partial class MatchCinematic : MonoBehaviour
             var portrait = BoardPresentation.Panel(frame.transform,"Leader portrait",Color.white);
             BoardPresentation.Stretch(portrait.rectTransform,Vector2.zero,Vector2.one);
             portrait.rectTransform.offsetMin = Vector2.one * 4; portrait.rectTransform.offsetMax = Vector2.one * -4;
+            // Plain and still. The board's art zoom and card aura were tried here: the zoom cropped
+            // the portraits and the aura's sparks, point-sampled at the tower's scale, read as stray
+            // pixels crawling around the frame rather than as enchantment.
             portrait.sprite = sprite; portrait.preserveAspect = true;
-            var motion = portrait.gameObject.AddComponent<ZoomImage>();
-            motion.zoomFactor = 1.08f;
-            motion.SetMotionPhase(x * .017f + parent.localPosition.y * .31f);
-            motion.EnableHoverMotion(); motion.SetHovering(true);
-            FantasyCardAura.Create(portrait.rectTransform).SetPresentation(1, accent, true);
         }
         else PairingText(frame.transform, string.IsNullOrWhiteSpace(leaderName) ? "?" : "NO ART",Vector2.zero,new Vector2(135,100),52,accent);
         PairingText(parent,string.IsNullOrWhiteSpace(leaderName) ? "UNREVEALED" : leaderName.ToUpperInvariant(),new Vector2(x,-68),new Vector2(195,30),14,accent);
@@ -212,6 +217,9 @@ public sealed partial class MatchCinematic : MonoBehaviour
     }
     public IEnumerator Roll(int human,int opponent)
     {
+        camera3D.orthographic = false;
+        camera3D.backgroundColor = new Color(.012f,.018f,.033f,0);
+        target.filterMode = FilterMode.Bilinear;
         if (ascentMist != null) ascentMist.SetActive(false);
         if (tower != null) tower.SetActive(false);
         overlay.SetActive(true); overlay.transform.SetAsLastSibling();

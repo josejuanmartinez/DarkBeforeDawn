@@ -25,8 +25,8 @@ Full cards use a 300×410 frame, type-colored accents, separate title and rules 
 ### Player materials and avatars
 
 Each player has a separate visible pool for Leather, Mounts, Timber, Iron, Steel, Mithril and Gold.
-Pin a land and select **TAP LAND** to add its printed grants; the same land cannot produce again
-until readied. Pin a card in your hand and select **PLAY CARD** to pay its printed material cost.
+Click a land to tap it and add its printed grants; the same land cannot produce again until
+readied. Click a card in your hand to play it and pay its printed material cost.
 Failed payment changes neither the pool nor the hand. Joker costs consume any remaining materials
 in the displayed order after specific costs. Character gold uses the existing character cost rule.
 
@@ -68,10 +68,10 @@ Use the corresponding `opponent*` references for the opponent. `SetCards` copies
 - Full rows preserve aspect ratio, fit the available height, and shrink/overlap as needed. A hovered card opens an enlarged copy above the board; its original slot does not move.
 - Token grids choose rows and columns to maximize token size. Environmental tokens stay in one horizontal row. Neither layout paginates. Very large collections necessarily produce small tokens.
 - Decks display only the last card and total count. Hover opens a full preview with previous/next buttons; browsing changes the preview selection, never the pile order. Buttons stop at the ends. Reopening starts at the last card. Empty piles show a subtle placeholder and zero count.
-- One shared preview uses sorting order 300, fades in, and opens beside the source where space permits. Deck previews accept pointer input across their face and buttons, with a short exit grace period. Unpinned non-deck previews let pointer input pass through. Previews clamp to the canvas bounds and close when their source collection changes or disappears.
-- Click a card or token to pin its inspection panel. Other hover events cannot replace a pinned card. Click that source again, use the close button, or press Escape to dismiss it. Pinned piles retain previous/next controls and show the selected index and total.
+- One shared preview uses sorting order 300, fades in, and opens beside the source where space permits. Deck previews accept pointer input across their face and buttons, with a short exit grace period. Non-deck previews let pointer input pass through. Previews clamp to the canvas bounds and close when their source collection changes or disappears.
+- The preview is hover-only and never sticks: a click on a card either acts on it (plays a playable hand card, taps a land, takes the match action the footer names) or does nothing. The footer says why a card cannot act, or what a click would do. Piles keep previous/next controls and show the selected index and total.
 
-The visualizers manage presentation only; drawing, playing, discarding, and game rules belong to match logic. Card clicks inspect cards and do not invoke gameplay. Generated full-card instances apply the reading layout to runtime clones. A CardServicesInstaller supplies the existing art library.
+The visualizers manage presentation only; drawing, playing, discarding, and game rules belong to match logic. Card clicks act through the board or the match controller and never inspect. Generated full-card instances apply the reading layout to runtime clones. A CardServicesInstaller supplies the existing art library.
 
 Scene wiring is saved in TCGBoard; the one-time editor setup tools have been removed.
 

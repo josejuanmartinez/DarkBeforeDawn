@@ -45,7 +45,16 @@ System.Collections.IEnumerator Run() {
     Check(!m.AdvanceIfNoActions()&&r.Stage==MatchStage.Muster,"Playable Muster auto-skipped");
     Check(v1==View(l1.Card)&&UnityEngine.Quaternion.Angle(v1.transform.localRotation,old1)<.01f,"Stage change restarted tap animation");
     Check(m.ActionLabel(View(pc))==null,"PC offered play during Muster");
-    b.preview.Pin(View(pc));Check(b.preview.PreviewRect.Find("Card action")==null,"Preview exposed illegal Play card button");b.preview.Hide();
+    b.preview.Show(View(pc));Check(!b.preview.PreviewRect.GetComponentsInChildren<UnityEngine.UI.Text>().Any(t=>t.text.Contains("CLICK TO PLAY")),"Preview offered to play an illegal card");b.preview.Hide();
+    // Nothing ready and the town waiting to be entered: the champion may lead from off the field, but that
+    // must not make an unaffordable hand card glow or offer PLAY CARD (it used to, through CanEnter(null)).
+    var pricey=Card("Pricey Hero","Character");pricey.startingPC=pc.name;pricey.mithrilRequired=9;
+    r.Players[0].Hand.Add(pricey);veteran.Tapped=true;Sync();yield return null;
+    Check(r.NoneReady(0)&&r.NeedsEntering()&&r.CanEnter(null),"Champion-leads precondition not met");
+    Check(!r.CanPlay(pricey)&&m.ActionLabel(View(pricey))==null&&!m.IsActionable(View(pricey)),"Unaffordable hand card offered PLAY CARD while the champion may lead");
+    b.preview.Show(View(pricey));Check(!b.preview.PreviewRect.GetComponentsInChildren<UnityEngine.UI.Text>().Any(t=>t.text.Contains("CLICK TO PLAY")),"Preview offered to play an unaffordable card");b.preview.Hide();
+    Check(!m.Play(View(pricey)),"Unaffordable card was played");
+    r.Players[0].Hand.Remove(pricey);veteran.Tapped=false;Sync();yield return null;
     Check(m.Play(View(beast)),"Army deployment failed");
     Check(vv==View(veteran.Card)&&ve==View(enemy.Card),"Deployment rebuilt existing board tokens");
     m.Advance();Check(r.Stage==MatchStage.Events,"Expected Events");

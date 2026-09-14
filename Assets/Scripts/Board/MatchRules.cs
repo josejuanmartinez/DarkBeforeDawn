@@ -188,7 +188,7 @@ public sealed class MatchRules
     // Explicit extension seams for future card abilities; no inference from flavour text.
     public Func<Unit, bool> CanChooseTarget = u => u.Card.HasTag("ChooseTarget");
     public Action<CardData, int, MatchRules> ResolveEvent;
-    // An encounter's outcome. Left null, investigating it simply spends the card: the face promises
+    // An encounter's outcome. Left null, facing it simply spends the card: the face promises
     // nothing about what happens, so an unauthored outcome is not a blocked play.
     public Action<CardData, int, MatchRules> ResolveEncounter;
     /// <summary>The army holding a settlement, from its `dwellers` name. Replace to test without the catalog.</summary>
@@ -243,7 +243,11 @@ public sealed class MatchRules
         bool muster = type == CardTypeEnum.Character || type == CardTypeEnum.Army || type == CardTypeEnum.Object || type == CardTypeEnum.Encounter;
         if (type == CardTypeEnum.Action || type == CardTypeEnum.Spell)
             return (type == CardTypeEnum.Action ? "Actions" : "Spells") + " have no stage in this prototype yet: set it aside during Muster.";
-        if (!(Stage == MatchStage.Realm && realm || (Stage == MatchStage.Muster || Stage == MatchStage.Arrival) && muster || Stage == MatchStage.Events && type == CardTypeEnum.Event))
+        // Arrival is for the gates only: a unit walks into the town (or fights for it), and the
+        // recruiting waits for Muster. Nothing, armies included, is played from the hand there.
+        if (Stage == MatchStage.Arrival && muster)
+            return "Played during Muster" + (p.Destination != null && card.RequiresDestination() ? ", once a ready unit has entered " + p.Destination.Card.name : "") + ". Arrival is for walking into the town.";
+        if (!(Stage == MatchStage.Realm && realm || Stage == MatchStage.Muster && muster || Stage == MatchStage.Events && type == CardTypeEnum.Event))
             return "This card cannot be played during " + Stage + ".";
         var destination = DestinationBlockReason(card);
         if (destination != null) return destination;
@@ -252,13 +256,32 @@ public sealed class MatchRules
             return "Select one of your characters to carry this object.";
         if (type == CardTypeEnum.Event && ResolveEvent == null)
             return "This event needs a registered effect before it can be played: set it aside during Muster.";
-        var available = p.Mana;
-        if (includeReadyMana)
+        if (p.Mana.CanAfford(card)) return null;
+        // What the pool is short of, and whether the ready lands would make up the difference: the
+        // face tells the player to tap (a click on the card gathers them itself, see GatherFor).
+        var withLands = p.Mana.Copy();
+        foreach (var land in p.Field.Where(CanTapLand)) withLands.Grant(land.Card);
+        if (includeReadyMana && withLands.CanAfford(card)) return null;
+        string short_ = p.Mana.Shortfall(card);
+        if (withLands.CanAfford(card)) return "Needs " + short_ + " more: your ready lands can pay it (click the card to tap them and play it).";
+        return "Not enough materials: " + short_ + " short" + (short_ != withLands.Shortfall(card) ? " (" + withLands.Shortfall(card) + " even with every ready land tapped)" : (p.Field.Any(CanTapLand) ? " (your ready lands would not make up the difference)" : "")) + ".";
+    }
+    /// <summary>
+    /// Taps ready lands until the active pool can pay for a card, the lands that cover most of what
+    /// is still owed first, and stops when the card is affordable or no ready land helps. Mana never
+    /// goes to waste: every untapped land is tapped at the end of the turn anyway and the pool persists.
+    /// </summary>
+    public bool GatherFor(CardData card)
+    {
+        var p = Players[Active];
+        if (card == null) return false;
+        while (!p.Mana.CanAfford(card))
         {
-            available = p.Mana.Copy();
-            foreach (var land in p.Field.Where(CanTapLand)) available.Grant(land.Card);
+            var land = p.Field.Where(CanTapLand).OrderByDescending(u => p.Mana.Help(u.Card, card)).FirstOrDefault();
+            if (land == null || p.Mana.Help(land.Card, card) <= 0) break;
+            TapLand(land);
         }
-        return available.CanAfford(card) ? null : "Not enough mana/materials.";
+        return p.Mana.CanAfford(card);
     }
     /// <summary>Why the active destination cannot host this card, or null when it can (or the card does not care).</summary>
     public string DestinationBlockReason(CardData card)
@@ -299,7 +322,7 @@ public sealed class MatchRules
             record.Unit.Tapped = record.Unit.IsCombatant && !card.specialAbilities.Contains(ObjectCharacterArmySpecialAbilityEnum.Mounted);
             p.Field.Add(record.Unit);
         }
-        Message = type == CardTypeEnum.Encounter ? card.name + " investigated at " + p.Destination.Card.name + "." : card.name + " played.";
+        Message = type == CardTypeEnum.Encounter ? card.name + " faced at " + p.Destination.Card.name + "." : card.name + " played.";
         // An event's effect is whatever its handler did and cannot be walked back, so nothing
         // played before it can be either. The same goes for an encounter with an authored outcome.
         bool irreversible = type == CardTypeEnum.Event || type == CardTypeEnum.Encounter && ResolveEncounter != null;
@@ -765,7 +788,7 @@ public sealed class MatchRules
         return Environments().Where(e => e.Card.EnvironmentEffectFor(side) != null);
     }
     // --- Mana, attacks and defence ----------------------------------------------------------------------
-    public bool CanTapLand(Unit unit) => unit != null && Winner < 0 && PendingAmbush == null && (Stage == MatchStage.Arrival || Stage == MatchStage.Muster || Stage == MatchStage.Events) && unit.Owner == Active &&
+    public bool CanTapLand(Unit unit) => unit != null && Winner < 0 && PendingAmbush == null && (Stage == MatchStage.Muster || Stage == MatchStage.Events) && unit.Owner == Active &&
         !unit.Tapped && Players[Active].Field.Contains(unit) && unit.Card.GetCardType() == CardTypeEnum.Land;
     public bool TapLand(Unit unit)
     {

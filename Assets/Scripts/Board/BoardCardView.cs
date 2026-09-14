@@ -40,6 +40,7 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
         var skin = BoardPresentation.SkinFor(transform);
         Zone = zone;
         Data = data;
+        liftPhase = (data.cardId % 97) * .37f;
         NaturalSize = BuildVisual(zone.board, data, token, transform, zone);
         ConfigureArtworkMotion();
         if (zone is DeckVisualizer deck && deck.Count > 1)
@@ -84,6 +85,8 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // Under a popup the board is not hovered at all; only a click on a glowing card counts.
+        if (BoardCardPreview.AnyModalOpen) return;
         targetHighlight = 1;
         SetArtworkHover(true);
         if (Zone != null && Zone.board.preview != null) Zone.board.preview.Show(this);
@@ -94,19 +97,22 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
         targetHighlight = 0;
         SetArtworkHover(false);
     }
+    // A click acts or does nothing: a playable hand card plays, a card with a legal action takes it
+    // (tap, enter, attack, block...), anything else is left alone. Inspection is the hover's job and
+    // never sticks to a click; the hover preview says why a card cannot be played.
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Left || Zone == null) return;
-        // A playable hand card plays straight from the hover; one that is blocked still pins, so
-        // the preview can say why.
-        if (Zone == Zone.board.hand && Zone.board.Match != null && Zone.board.Match.CanPlay(this))
+        var board = Zone.board;
+        if (board.Match != null)
         {
-            Zone.board.Match.Play(this);
+            if (Zone == board.hand && board.Match.CanPlay(this)) { board.Match.Play(this); return; }
+            if (board.Match.Select(this)) battleVfx.Selection(Rect);
             return;
         }
-        if (Zone.board.Match != null && Zone.board.Match.Select(this))
-        { battleVfx.Selection(Rect); return; }
-        if (Zone.board.preview != null) Zone.board.preview.Pin(this);
+        // The authoring board without a match: play from the hand, tap a land.
+        if (Zone == board.hand) board.TryPlay(this);
+        else if (board.CanTap(this) && board.TryTap(this)) board.preview?.RefreshCard(this);
     }
     private void Update()
     {
@@ -125,17 +131,35 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
         }
         if (Zone != null && Zone.board.Match != null && Zone != Zone.board.hand)
             transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(0, 0, PoseAngle()), Time.unscaledDeltaTime * 12);
+        if (BoardCardPreview.AnyModalOpen && targetHighlight > 0) { targetHighlight = 0; SetArtworkHover(false); }
         if (highlight != null) highlight.alpha = Mathf.MoveTowards(highlight.alpha, targetHighlight, Time.unscaledDeltaTime * BoardPresentation.SkinFor(transform).tokens.highlightFadeSpeed);
         ActionHighlighted = Zone != null && Zone.board.Match != null && Zone.board.Match.IsActionable(this);
-        if (actionHighlight != null) actionHighlight.alpha = ActionHighlighted ? .35f + .15f * Mathf.Sin(Time.unscaledTime * 2.4f) : 0;
+        // A card that may act is unmistakable: a bright breathing frame, a charged aura, and in the
+        // hand it rises out of the row and rocks gently, the way a card is offered to be taken.
+        float beat = .5f + .5f * Mathf.Sin(Time.unscaledTime * 3.2f + liftPhase);
+        if (actionHighlight != null) actionHighlight.alpha = ActionHighlighted ? .55f + .45f * beat : 0;
         if (aura != null)
         {
             int commitment = battleVfx != null ? battleVfx.Commitment(Data) : 0;
             bool selected = Zone?.board?.Match?.PendingCombatCard == Data;
             Color tint = commitment == 2 ? BoardBattleVfx.Ward : commitment == 1 ? BoardBattleVfx.Ember : BoardBattleVfx.Amber;
-            aura.SetPresentation(selected ? 1 : commitment > 0 ? .85f : targetHighlight > 0 ? .65f : ActionHighlighted ? .4f : 0, tint, selected || commitment > 0);
-            SetArtworkHover(targetHighlight > 0 || selected || commitment > 0);
+            aura.SetPresentation(selected ? 1 : commitment > 0 ? .85f : ActionHighlighted ? .8f + .2f * beat : targetHighlight > 0 ? .65f : 0, tint, selected || commitment > 0 || ActionHighlighted);
+            SetArtworkHover(targetHighlight > 0 || selected || commitment > 0 || ActionHighlighted);
         }
+        Lift(ActionHighlighted && Zone != null && Zone == Zone.board.hand ? 14 + 5 * beat : 0);
+    }
+
+    // The offset the view adds to the slot the zone laid it in. The zone rewrites the position
+    // outright when it arranges, so a position that is not the last one written is taken as a new
+    // base rather than fought over.
+    Vector2 basePosition; float applied, liftPhase;
+    void Lift(float lift)
+    {
+        var rect = Rect;
+        if (rect.anchoredPosition != basePosition + Vector2.up * applied) { basePosition = rect.anchoredPosition; applied = 0; }
+        applied = Mathf.MoveTowards(applied, lift, Time.unscaledDeltaTime * 60);
+        rect.anchoredPosition = basePosition + Vector2.up * applied;
+        if (Zone != null && Zone == Zone.board.hand) transform.localRotation = Quaternion.Euler(0, 0, applied > 0 ? Mathf.Sin(Time.unscaledTime * 2.1f + liftPhase) * 1.5f * (applied / 14) : 0);
     }
 
     private void OnDestroy() { if (battleVfx != null) battleVfx.Unregister(this); }

@@ -86,6 +86,68 @@ public static class CardKeywordGlossary
         _ => "error"
     };
 
+    /// <summary>The glyph for a ground, from the terrain sheet the card sprite asset falls back to.</summary>
+    public static string TerrainSprite(TerrainEnum ground) => ground switch
+    {
+        TerrainEnum.Plains => "plains", TerrainEnum.Forest => "forest", TerrainEnum.Hills => "hills",
+        TerrainEnum.Mountains => "mountains", TerrainEnum.Marsh => "swamp", TerrainEnum.Desert => "desert",
+        TerrainEnum.Coast => "shore", TerrainEnum.Wasteland => "wastelands", _ => "error"
+    };
+
+    /// <summary>What an army's "Ambush: [glyph]" line means, as its tooltip tells it.</summary>
+    public const string AmbushBody = "This unit can ambush an opponent travelling across regions of this terrain type.";
+
+    /// <summary>The ground's glyph as a sprite tag, for titles and bodies shown in a TMP label wired to the card icon sheet.</summary>
+    public static string TerrainGlyph(TerrainEnum ground) => "<sprite name=\"" + TerrainSprite(ground) + "\">";
+
+    /// <summary>
+    /// Who fights on each ground: the kinds of army the catalog (Resources/Cards/Meta/ArmyCards.json)
+    /// gives that terrain, so a hover says what a company crossing it should expect, and what an army
+    /// of that ground rides with. Characters fight anywhere and are not listed.
+    /// </summary>
+    public static string TerrainHost(TerrainEnum ground) => ground switch
+    {
+        TerrainEnum.Plains => "the horse-lords and light cavalry of the open country, men-at-arms, spearmen, swordsmen and archers, hounds, chariots, steppe warbands and wainfolk riders, and every siege engine: catapults, trebuchets, mangonels and ladders",
+        TerrainEnum.Forest => "elves (archers, scouts, warriors and elk riders), woodmen, hunters and rangers, wolves and war wolves, forest spiders, bears and beasts of the woods, forest orcs and wood trolls, and tree guardians",
+        TerrainEnum.Hills => "hillmen and their riders, orcs (war orcs, crossbow orcs, half-orcs), hobgoblins, stone trolls, firstblood rangers, dwarven explorers, tower wardens and wild beasts",
+        TerrainEnum.Mountains => "dwarves (axemen, archers, pikeshields, miners, goat riders and siege), cave goblins and goblin sappers, cave and snow trolls, orcs of the high passes, black crows and the Weaver's spawn",
+        TerrainEnum.Marsh => "rivermen, bog swarms and the undead",
+        TerrainEnum.Desert => "southerners (infantry, cavalry and assassins), camel riders, elephant guard spearmen and war elephants",
+        TerrainEnum.Coast => "fleets and ships, corsairs and pirates, mariners, coastal knights and riders, rimefolk, and creatures of the deeps",
+        TerrainEnum.Wasteland => "fallen men, war trolls, warbred and half trolls, orc garrisons, torch bearers and wolf-riders, ruin spiders, dragon hunters, and the engines of the ash: the Maw and head catapults",
+        _ => "armies of that ground"
+    };
+
+    // The ground rule from the region's side: what crossing it exposes a company to (the title
+    // carries the glyph).
+    private static string TerrainBody(TerrainEnum ground)
+        => "The ground of this region. A company travelling through it may be ambushed by characters, who fight anywhere, and by armies that fight on "
+            + ground + " ground: " + TerrainHost(ground) + ". The traveller defends under the same rule.";
+
+    // The ground rule from the army's side: where it may fall on the road, and in what company.
+    private static string AmbushBodyFor(TerrainEnum ground)
+        => AmbushBody + " On " + ground + " ground it fights alongside " + TerrainHost(ground) + ".";
+
+    // The road rule, as the +1 label's tooltip tells it: only the company on the road draws, a random
+    // card of the stop's kinds still in its deck. The fallbacks are MatchRules.Claim's.
+    private static string TravelRewardBody(int stop)
+    {
+        var reward = MatchRules.RewardAt(stop);
+        string kinds = reward switch
+        {
+            TravelReward.Land => "a Land",
+            TravelReward.EventOrAction => "an Event or an Action",
+            TravelReward.Encounter => "an Encounter",
+            TravelReward.Army => "an Army",
+            _ => "a Character (or another Army when none is left)"
+        };
+        return "Entering the " + Ordinal(stop) + " region of the road, the travelling company draws " + kinds
+            + " at random from its own deck (the top card when it holds none). Only the company on the road draws; "
+            + "the other company may then fall on it with characters, and with armies of this ground.";
+    }
+
+    private static string Ordinal(int n) => n switch { 1 => "first", 2 => "second", 3 => "third", 4 => "fourth", 5 => "fifth", _ => n + "th" };
+
     public static string DisplayName(string name)
     {
         if (name == "Strenghtened") return "Strengthened";
@@ -101,11 +163,27 @@ public static class CardKeywordGlossary
         int separator = id.IndexOf(':');
         if (separator < 0) return false;
         string prefix = id.Substring(0, separator), name = id.Substring(separator + 1);
+        // "travel:<stop>": what a stop of the road pays, for the +1 labels on the map popups.
+        if (prefix == "travel" && int.TryParse(name, out int stop) && stop >= 1 && stop <= RegionMap.MaxDistance)
+        {
+            title = "Stop " + stop + ": draw 1 " + MatchRules.RewardLabel(MatchRules.RewardAt(stop));
+            body = TravelRewardBody(stop);
+            return true;
+        }
+        // "terrain:<ground>" is a land's ground; "ambush:<ground>" is where an army may fall on the road.
+        if ((prefix == "terrain" || prefix == "ambush") && Enum.TryParse(name, true, out TerrainEnum ground) && ground != TerrainEnum.None)
+        {
+            title = (prefix == "ambush" ? "Ambush: " + ground : ground + " ground") + " " + TerrainGlyph(ground);
+            body = prefix == "ambush" ? AmbushBodyFor(ground) : TerrainBody(ground);
+            return true;
+        }
         if (prefix == "icon")
         {
             if (icons.TryGetValue(name, out var icon)) { title = icon.title; body = icon.body; return true; }
             foreach (StatusEffects status in Enum.GetValues(typeof(StatusEffects)))
                 if (StatusSprite(status) == name) return TryGet("status:" + status, out title, out body);
+            foreach (TerrainEnum terrain in Enum.GetValues(typeof(TerrainEnum)))
+                if (terrain != TerrainEnum.None && TerrainSprite(terrain) == name) return TryGet("terrain:" + terrain, out title, out body);
             return false;
         }
         title = DisplayName(name);
