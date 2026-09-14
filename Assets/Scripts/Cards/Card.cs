@@ -132,6 +132,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     }
 
     private bool lockedToRealCard;
+    // The champion's card is a portrait, not a hand card: it never prices itself, and it keeps its
+    // class levels and combat numbers to itself until the character has actually been played.
     public void SetAvatarUnlocked(bool unlocked)
     {
         if (descriptionText != null)
@@ -143,6 +145,32 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             color.a = unlocked ? 1f : .4f;
             image.color = color;
         }
+        SetCostVisible(false);
+        SetStatsVisible(unlocked);
+    }
+
+    /// <summary>Shows or hides the cost row under the title, and the plaque the board styles behind it.</summary>
+    public void SetCostVisible(bool visible)
+    {
+        if (requirementsText == null) return;
+        bool hasCost = !string.IsNullOrWhiteSpace(requirementsText.text);
+        requirementsText.gameObject.SetActive(visible && hasCost);
+        var plaque = requirementsText.transform.parent != null ? requirementsText.transform.parent.Find("Cost plaque") : null;
+        if (plaque != null) plaque.gameObject.SetActive(visible && hasCost);
+    }
+
+    /// <summary>Shows or hides the combat and class overlays, and the plaques the board styles behind them.</summary>
+    public void SetStatsVisible(bool visible)
+    {
+        Toggle(combatStatsText, "Stat plaque", visible && cardData != null && !string.IsNullOrEmpty(cardData.GetCombatStatsText()));
+        Toggle(classStatsText, "Class plaque", visible && cardData != null && !string.IsNullOrEmpty(cardData.GetClassStatsText(isTokenOnlyPresentation)));
+    }
+
+    private void Toggle(TMP_Text overlay, string plaqueName, bool on)
+    {
+        if (overlay != null) overlay.gameObject.SetActive(on);
+        var plaque = transform.Find(plaqueName);
+        if (plaque != null) plaque.gameObject.SetActive(on);
     }
 
     private string baseDescription = string.Empty;
@@ -318,11 +346,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         if (deckTypeImage != null)
         {
-            Sprite deckSprite = null;
-            if (!string.IsNullOrWhiteSpace(data.deckSpriteName))
-            {
-                CardServices.Art?.TryGetSprite(data.deckSpriteName, false, out deckSprite);
-            }
+            // The deck's own emblem (Resources/DeckBacks) when the art library has no badge for it.
+            Sprite deckSprite = DeckArt.Badge(data);
 
             // Explicitly clear/hide when there is nothing to show, instead of leaving whatever
             // placeholder sprite is authored on the prefab enabled (most cards have no deck badge).

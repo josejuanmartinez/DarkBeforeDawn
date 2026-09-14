@@ -15,12 +15,47 @@ public sealed class BoardCardPreview : MonoBehaviour
     private float outsideSince = -1;
     private bool pinned;
     public bool IsShowing => source != null && panel != null;
+    // Popups (the travel popup, the destination picker, the combat screen) register their plates
+    // here: a card under one is not inspected, and a preview already up is put away when the
+    // pointer is over one, so nothing peeks out around or through them.
+    static readonly System.Collections.Generic.List<RectTransform> modals = new();
+    public static void RegisterModal(RectTransform plate) { if (plate != null && !modals.Contains(plate)) modals.Add(plate); }
+    public static void UnregisterModal(RectTransform plate) { modals.Remove(plate); }
+    public static bool AnyModalOpen { get { modals.RemoveAll(m => m == null); return modals.Count > 0; } }
+    /// <summary>The pointer is over one of the popups.</summary>
+    public static bool PointerOverModal()
+    {
+        modals.RemoveAll(m => m == null);
+        if (modals.Count == 0 || Mouse.current == null) return false;
+        Vector2 pointer = Mouse.current.position.ReadValue();
+        foreach (var modal in modals)
+        {
+            if (!modal.gameObject.activeInHierarchy) continue;
+            var canvas = modal.GetComponentInParent<Canvas>()?.rootCanvas;
+            Camera camera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay ? canvas.worldCamera : null;
+            if (RectTransformUtility.RectangleContainsScreenPoint(modal, pointer, camera)) return true;
+        }
+        return false;
+    }
+    /// <summary>A card lies under a popup: it is covered, and not to be inspected.</summary>
+    public static bool CoveredByModal(RectTransform card)
+    {
+        modals.RemoveAll(m => m == null);
+        if (card == null || modals.Count == 0) return false;
+        var canvas = card.GetComponentInParent<Canvas>()?.rootCanvas;
+        Camera camera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay ? canvas.worldCamera : null;
+        Vector2 centre = RectTransformUtility.WorldToScreenPoint(camera, card.TransformPoint(card.rect.center));
+        foreach (var modal in modals)
+            if (modal.gameObject.activeInHierarchy && RectTransformUtility.RectangleContainsScreenPoint(modal, centre, camera)) return true;
+        return false;
+    }
     public bool IsPinned => pinned;
     public RectTransform PreviewRect => panel;
 
     public void Show(BoardCardView view)
     {
         if (view == null || (pinned && IsShowing) || (source == view && panel != null)) return;
+        if (PointerOverModal() || CoveredByModal(view.Rect)) return;
         Hide();
         source = view;
         if (source.Zone is DeckVisualizer deck) deck.ResetSelection();
@@ -162,6 +197,7 @@ public sealed class BoardCardPreview : MonoBehaviour
         if (lastSize != ((RectTransform)transform).rect.size) Build();
         if (fade != null) fade.alpha = Mathf.MoveTowards(fade.alpha, 1, Time.unscaledDeltaTime * Skin.preview.fadeSpeed);
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) { Hide(); return; }
+        if (PointerOverModal() || CoveredByModal(source.Rect)) { Hide(); return; }
         if (pinned || Mouse.current == null) return;
         Vector2 pointer = Mouse.current.position.ReadValue();
         var canvas = GetComponentInParent<Canvas>().rootCanvas;

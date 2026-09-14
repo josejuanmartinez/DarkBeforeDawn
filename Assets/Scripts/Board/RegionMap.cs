@@ -9,6 +9,8 @@ public class RegionEntry
 {
     public string name, group, terrain;
     public float x, y;
+    // Where the region's marker sits on Resources/Maps/Caldrath.png, as a fraction of the image (x east, y south).
+    public float mapX, mapY;
     public List<string> adjacent = new();
 }
 [Serializable]
@@ -65,6 +67,19 @@ public sealed class RegionMap
     /// <summary>The ground of a region, from its land card. None for an unknown region.</summary>
     public TerrainEnum TerrainOf(string region) =>
         Contains(region) && Enum.TryParse(regions[region.Trim()].terrain, true, out TerrainEnum terrain) ? terrain : TerrainEnum.None;
+    /// <summary>
+    /// Where a region's marker sits on the drawn map, as fractions of the image with y running south.
+    /// False for an unknown region or one with no marker.
+    /// </summary>
+    public bool TryMapPosition(string region, out Vector2 position)
+    {
+        position = Vector2.zero;
+        if (!Contains(region)) return false;
+        var entry = regions[region.Trim()];
+        if (entry.mapX <= 0 && entry.mapY <= 0) return false;
+        position = new Vector2(entry.mapX, entry.mapY);
+        return true;
+    }
     public IEnumerable<string> Neighbours(string region) =>
         Contains(region) ? borders[region.Trim()] : Enumerable.Empty<string>();
     public bool AreAdjacent(string a, string b) => Contains(a) && borders[a.Trim()].Contains(b?.Trim() ?? "");

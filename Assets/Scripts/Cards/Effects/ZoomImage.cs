@@ -31,6 +31,7 @@ public class ZoomImage : MonoBehaviour
     private Material materialInstance;
     private bool hovered;
     private float hoverBlend;
+    private float motionPhase;
 
     private void Awake()
     {
@@ -61,7 +62,7 @@ public class ZoomImage : MonoBehaviour
         }
 
         float eased = hoverBlend * hoverBlend * (3f - 2f * hoverBlend);
-        float time = Time.unscaledTime * motionSpeed;
+        float time = Time.unscaledTime * motionSpeed + motionPhase;
 
         // A slow, non-repeating-feeling camera path: the different frequencies keep the art
         // travelling through the frame rather than simply wobbling left and right.
@@ -78,6 +79,7 @@ public class ZoomImage : MonoBehaviour
     public void EnableHoverMotion() => animateOnHover = true;
 
     public void SetHovering(bool value) => hovered = value;
+    public void SetMotionPhase(float value) => motionPhase = value;
 
     private void OnValidate()
     {

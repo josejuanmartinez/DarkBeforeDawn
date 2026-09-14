@@ -12,6 +12,8 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
     private float targetHighlight;
     private readonly List<ZoomImage> artworkMotion = new();
     private Text tappedLabel;
+    private FantasyCardAura aura;
+    private BoardBattleVfx battleVfx;
     public CardData Data { get; private set; }
     public CardZoneVisualizer Zone { get; private set; }
     public Vector2 NaturalSize { get; private set; }
@@ -60,10 +62,13 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
         var frame = BoardPresentation.Border(Rect, skin.colors.ivory);
         highlight = frame.gameObject.AddComponent<CanvasGroup>();
         highlight.alpha = 0; highlight.blocksRaycasts = false;
-        var readyFrame = BoardPresentation.Border(Rect, new Color(.3f,1f,.78f), 3);
+        var readyFrame = BoardPresentation.Border(Rect, skin.colors.gold, 2);
         readyFrame.name = "Legal action highlight";
         actionHighlight = readyFrame.gameObject.AddComponent<CanvasGroup>();
         actionHighlight.alpha = 0; actionHighlight.blocksRaycasts = false;
+        aura = FantasyCardAura.Create(Rect);
+        battleVfx = BoardBattleVfx.For(zone.board);
+        battleVfx.Register(this);
         var hit = gameObject.AddComponent<Image>();
         hit.color = Color.clear;
         hit.raycastTarget = true;
@@ -94,8 +99,13 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
         if (eventData.button != PointerEventData.InputButton.Left || Zone == null) return;
         // A playable hand card plays straight from the hover; one that is blocked still pins, so
         // the preview can say why.
-        if (Zone == Zone.board.hand && Zone.board.Match != null && Zone.board.Match.CanPlay(this)) { Zone.board.Match.Play(this); return; }
-        if (Zone.board.Match != null && Zone.board.Match.Select(this)) return;
+        if (Zone == Zone.board.hand && Zone.board.Match != null && Zone.board.Match.CanPlay(this))
+        {
+            Zone.board.Match.Play(this);
+            return;
+        }
+        if (Zone.board.Match != null && Zone.board.Match.Select(this))
+        { battleVfx.Selection(Rect); return; }
         if (Zone.board.preview != null) Zone.board.preview.Pin(this);
     }
     private void Update()
@@ -107,7 +117,7 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
             var match = Zone.board.Match;
             bool settlement = Data.GetCardType() == CardTypeEnum.PC;
             string state = unit != null && unit.Wounded ? "WOUNDED"
-                : Zone.board.IsTapped(this) ? (settlement ? (unit != null && !unit.Secured ? "CLOSED" : "USED") : unit != null && unit.Roadside ? "FROM HAND" : unit != null && unit.Recovering ? "HEALING" : unit != null && unit.IsCombatant && unit.EnteredTurn == match.Rules.Turn && unit.Owner == match.Rules.Active ? "MUSTERING" : "TAPPED")
+                : Zone.board.IsTapped(this) ? (settlement ? (unit != null && !unit.Secured ? "CLOSED" : "ENTERED") : unit != null && unit.Roadside ? "FROM HAND" : unit != null && unit.Recovering ? "HEALING" : unit != null && unit.IsCombatant && unit.EnteredTurn == match.Rules.Turn && unit.Owner == match.Rules.Active ? "MUSTERING" : "TAPPED")
                 : settlement && unit != null && !unit.Secured ? "HELD BY\nDWELLERS"
                 : match != null && match.IsDestination(this) && match.Rules.Stage == MatchStage.Destination ? "CURRENT" : "";
             tappedLabel.text = state + objects;
@@ -117,8 +127,18 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
             transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(0, 0, PoseAngle()), Time.unscaledDeltaTime * 12);
         if (highlight != null) highlight.alpha = Mathf.MoveTowards(highlight.alpha, targetHighlight, Time.unscaledDeltaTime * BoardPresentation.SkinFor(transform).tokens.highlightFadeSpeed);
         ActionHighlighted = Zone != null && Zone.board.Match != null && Zone.board.Match.IsActionable(this);
-        if (actionHighlight != null) actionHighlight.alpha = ActionHighlighted ? .75f + .25f * Mathf.Sin(Time.unscaledTime * 3) : 0;
+        if (actionHighlight != null) actionHighlight.alpha = ActionHighlighted ? .35f + .15f * Mathf.Sin(Time.unscaledTime * 2.4f) : 0;
+        if (aura != null)
+        {
+            int commitment = battleVfx != null ? battleVfx.Commitment(Data) : 0;
+            bool selected = Zone?.board?.Match?.PendingCombatCard == Data;
+            Color tint = commitment == 2 ? BoardBattleVfx.Ward : commitment == 1 ? BoardBattleVfx.Ember : BoardBattleVfx.Amber;
+            aura.SetPresentation(selected ? 1 : commitment > 0 ? .85f : targetHighlight > 0 ? .65f : ActionHighlighted ? .4f : 0, tint, selected || commitment > 0);
+            SetArtworkHover(targetHighlight > 0 || selected || commitment > 0);
+        }
     }
+
+    private void OnDestroy() { if (battleVfx != null) battleVfx.Unregister(this); }
 
     // A tapped card lies on its side; a wounded character is turned on its head.
     private float PoseAngle()

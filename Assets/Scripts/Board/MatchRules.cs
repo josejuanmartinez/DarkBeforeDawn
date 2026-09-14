@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public enum MatchStage { Draw = 1, Realm, Destination, Travel, Muster, Events, Spoils }
+public enum MatchStage { Draw = 1, Realm, Destination, Travel, Arrival, Muster, Events, Spoils }
 /// <summary>Within Travel, at each stop: the other company declares its attacks, then the traveller assigns defenders.</summary>
 public enum TravelPhase { Attack, Defend }
 /// <summary>How a settlement receives a company: its own, or of its side (Friendly); of no side (Neutral); of the other side (Hostile).</summary>
@@ -23,11 +23,14 @@ public sealed class MatchRules
         // A character that took lethal damage: out of action until healed. A healed character comes
         // back tapped and misses its next untap (Recovering), so it cannot act the turn after either.
         public bool Wounded, Recovering;
-        // Settlement only. Secured: the company may act here this turn, because the place is its own
-        // or the dwellers were beaten. Garrison: the owner's last unit to act here, who answers when
-        // both companies end up in the same town.
+        // Settlement only. Secured: the company is allowed in, because the place is its own or the
+        // dwellers were beaten. A secured settlement that is Tapped has been *entered* this turn: a
+        // ready unit walked in (and tapped for it), and the company may play there until the turn
+        // ends. An unsecured tapped settlement is closed: the dwellers held. Garrison: the unit that
+        // entered, who answers when both companies end up in the same town.
         public bool Secured;
         public Unit Garrison;
+        public bool Entered => Secured && Tapped;
         // A card that struck from the hand during the other company's travel. It stands on the field
         // only for that stop's fight, then goes back into the deck whatever happened to it.
         public bool Roadside;
@@ -54,6 +57,8 @@ public sealed class MatchRules
         public CardData Bound;
         /// <summary>One journey per turn: the choice cannot be re-picked within the stage.</summary>
         public bool Travelled;
+        /// <summary>The company's champion, the avatar card. Leads the way into a town when no unit is ready, and takes the dwellers' blows then.</summary>
+        public CardData Avatar;
     }
     /// <summary>
     /// A turn's journey: the regions entered, one stop at a time. At each stop the company draws the
@@ -78,6 +83,7 @@ public sealed class MatchRules
         public (int attack, int defense) Stats;
         public readonly List<Unit> Blockers = new();
         public readonly Dictionary<Unit, (int attack, int defense)> BlockerStats = new();
+        public readonly HashSet<Unit> StoodFast = new();
     }
     public sealed class Loot { public CardData Card; public int Owner; public bool Offered; }
     /// <summary>
@@ -104,6 +110,45 @@ public sealed class MatchRules
     }
     /// <summary>The duels of the last resolution (a stop's fight, a dwellers fight, an ambush or a meeting).</summary>
     public readonly List<Fight> Fights = new();
+    /// <summary>What a fight was about: a stop on the road, a town's dwellers, an ambush at a tap, or two companies meeting.</summary>
+    public enum BattleKind { Road, Dwellers, Ambush, Meeting }
+    /// <summary>One attacker and everything that stood against it: its blockers and the duels, or the blow that went through.</summary>
+    public sealed class Clash
+    {
+        public Unit Attacker;
+        public Unit Target;
+        public readonly List<Unit> Blockers = new();
+        public readonly HashSet<Unit> StoodFast = new();
+        public readonly List<Fight> Fights = new();
+        /// <summary>Damage that landed on the travelling company itself, no one having stood in the way.</summary>
+        public int Unblocked;
+        public bool FromHand => Attacker != null && Attacker.Roadside;
+    }
+    /// <summary>
+    /// A whole resolution in one readable record, for the combat screen: where it happened, who
+    /// fell on whom, and how every duel went. Fights holds the same duels flat.
+    /// </summary>
+    public sealed class Battle
+    {
+        public BattleKind Kind;
+        /// <summary>The company whose turn it is; on the road, the one travelling.</summary>
+        public int Player;
+        public string Region;
+        public CardData Settlement;
+        public TerrainEnum Ground;
+        public int Stop, Stops;
+        public bool Neutral;
+        /// <summary>The company had nothing ready, so its champion led the way (a stand-in when the avatar is not on the field).</summary>
+        public bool Led;
+        public readonly List<Clash> Clashes = new();
+        public int Serial;
+        public Battle Add(Clash clash) { Clashes.Add(clash); return this; }
+        public IEnumerable<Fight> AllFights => Clashes.SelectMany(c => c.Fights);
+    }
+    /// <summary>The last resolution, for presentation. Serial climbs with each so a screen can tell a new one from the last.</summary>
+    public Battle LastBattle { get; private set; }
+    int battles;
+    void Report(Battle battle) { battle.Serial = ++battles; LastBattle = battle; }
     /// <summary>A settlement being tapped while the other player holds a card born there: they may answer before play goes on.</summary>
     public sealed class Ambush
     {
@@ -115,7 +160,7 @@ public sealed class MatchRules
     }
     // Everything a play touched, so it can be put back. Cleared at every stage change: once the
     // stage is passed there is no way back.
-    sealed class Played { public CardData Card; public int HandIndex; public Unit Unit, Recipient; public PlayerMaterials Spent; public bool TappedDestination, Discarded; }
+    sealed class Played { public CardData Card; public int HandIndex; public Unit Unit, Recipient; public PlayerMaterials Spent; public bool Discarded; }
     readonly Stack<Played> played = new();
     readonly Random random = new();
     public readonly Player[] Players = { new(), new() };
@@ -196,7 +241,9 @@ public sealed class MatchRules
         if (type == CardTypeEnum.PC) return "Settlements are chosen as your destination, not played from the hand.";
         bool realm = type == CardTypeEnum.Land || type == CardTypeEnum.Environmental;
         bool muster = type == CardTypeEnum.Character || type == CardTypeEnum.Army || type == CardTypeEnum.Object || type == CardTypeEnum.Encounter;
-        if (!(Stage == MatchStage.Realm && realm || Stage == MatchStage.Muster && muster || Stage == MatchStage.Events && type == CardTypeEnum.Event))
+        if (type == CardTypeEnum.Action || type == CardTypeEnum.Spell)
+            return (type == CardTypeEnum.Action ? "Actions" : "Spells") + " have no stage in this prototype yet: set it aside during Muster.";
+        if (!(Stage == MatchStage.Realm && realm || (Stage == MatchStage.Muster || Stage == MatchStage.Arrival) && muster || Stage == MatchStage.Events && type == CardTypeEnum.Event))
             return "This card cannot be played during " + Stage + ".";
         var destination = DestinationBlockReason(card);
         if (destination != null) return destination;
@@ -204,7 +251,7 @@ public sealed class MatchRules
             !(recipient == null && choosingRecipient && p.Field.Any(u => u.IsCharacter)))
             return "Select one of your characters to carry this object.";
         if (type == CardTypeEnum.Event && ResolveEvent == null)
-            return "This event needs a registered effect before it can be played.";
+            return "This event needs a registered effect before it can be played: set it aside during Muster.";
         var available = p.Mana;
         if (includeReadyMana)
         {
@@ -226,7 +273,7 @@ public sealed class MatchRules
             var dwellers = Dwellers(destination.Card);
             return destination.Card.name + " is held by its dwellers" + (dwellers != null ? " (" + dwellers.name + " " + Fraction(dwellers.GetCombatStats()) + ")" : "") + ": fight them with a ready unit first.";
         }
-        if (destination.Tapped) return destination.Card.name + " has already hosted a play this turn.";
+        if (!destination.Tapped) return destination.Card.name + " has not been entered: a ready character or army must walk in first.";
         return null;
     }
     static string DestinationWanted(CardData card) => card.GetCardType() == CardTypeEnum.Object
@@ -254,10 +301,8 @@ public sealed class MatchRules
         }
         Message = type == CardTypeEnum.Encounter ? card.name + " investigated at " + p.Destination.Card.name + "." : card.name + " played.";
         // An event's effect is whatever its handler did and cannot be walked back, so nothing
-        // played before it can be either. The same goes for an encounter with an authored outcome,
-        // and for a tap that brought the other company out.
+        // played before it can be either. The same goes for an encounter with an authored outcome.
         bool irreversible = type == CardTypeEnum.Event || type == CardTypeEnum.Encounter && ResolveEncounter != null;
-        if (card.RequiresDestination()) { record.TappedDestination = true; irreversible |= TapDestination(record.Unit ?? recipient); }
         if (irreversible) played.Clear(); else played.Push(record);
         return true;
     }
@@ -271,7 +316,6 @@ public sealed class MatchRules
         if (record.Unit != null) p.Field.Remove(record.Unit);
         else if (record.Discarded) p.Discard.Remove(record.Card);
         else record.Recipient?.Objects.Remove(record.Card);
-        if (record.TappedDestination && p.Destination != null) { p.Destination.Tapped = false; p.Destination.Garrison = null; }
         p.Hand.Insert(Math.Clamp(record.HandIndex, 0, p.Hand.Count), record.Card);
         p.Mana.Refund(record.Spent);
         Message = record.Card.name + " returned to hand."; return true;
@@ -476,22 +520,56 @@ public sealed class MatchRules
         unit.Objects.Clear();
         if (owner.Destination != null && owner.Destination.Garrison == unit) owner.Destination.Garrison = null;
     }
+    /// <summary>The stages in which a company deals with the town it stands at: Arrival, and Muster as the fallback.</summary>
+    bool AtTheGates => Stage == MatchStage.Arrival || Stage == MatchStage.Muster;
+    /// <summary>No character or army of the company stands ready: the champion has to lead the way into town.</summary>
+    public bool NoneReady(int player) => !Players[player].Field.Any(u => u.IsReady);
+    /// <summary>
+    /// Who leads a company that has no ready unit: its champion on the field (tapped or not, but not
+    /// wounded), else a stand-in built from the avatar card, whose blows land on the company's life.
+    /// Null when the company has no champion at all.
+    /// </summary>
+    public Unit Leader(int player)
+    {
+        var p = Players[player];
+        if (p.Avatar == null) return null;
+        return p.Field.FirstOrDefault(u => u.IsCharacter && !u.Wounded && u.Card.cardId == p.Avatar.cardId && u.Card.name == p.Avatar.name)
+            ?? new Unit { Card = p.Avatar, Owner = player };
+    }
+    /// <summary>Whether a unit is the company's champion standing on the field.</summary>
+    public bool IsChampionUnit(Unit unit) => unit != null && Players[unit.Owner].Field.Contains(unit) && Players[unit.Owner].Avatar != null
+        && unit.Card.cardId == Players[unit.Owner].Avatar.cardId && unit.Card.name == Players[unit.Owner].Avatar.name;
+    /// <summary>A null unit asks for the champion to lead: allowed only when nothing else is ready.</summary>
+    string LeaderBlockReason(Unit unit, string verb)
+    {
+        var p = Players[Active];
+        if (unit == null)
+        {
+            if (!NoneReady(Active)) return "Choose a ready character or army to " + verb + ".";
+            return null;
+        }
+        if (unit.Owner != Active || !p.Field.Contains(unit) || !unit.IsReady) return "Choose a ready character or army to " + verb + ".";
+        return null;
+    }
     public bool CanSecure(Unit unit) => SecureBlockReason(unit) == null;
     public string SecureBlockReason(Unit unit)
     {
         var p = Players[Active];
         if (PendingAmbush != null) return "The ambush at " + PendingAmbush.Settlement.name + " must be answered first.";
-        if (unit == null || Winner >= 0 || Stage != MatchStage.Muster || unit.Owner != Active || !p.Field.Contains(unit) || !unit.IsReady)
-            return "Choose a ready character or army to face the dwellers.";
+        if (Winner >= 0 || !AtTheGates) return "Choose a ready character or army to face the dwellers.";
+        var lead = LeaderBlockReason(unit, "face the dwellers");
+        if (lead != null) return lead;
+        if (unit == null && Leader(Active) == null) return "No one can face the dwellers: the company has neither a ready unit nor a champion.";
         var destination = p.Destination;
         if (destination == null || destination.Secured) return "Nothing to secure at the destination.";
         if (destination.Tapped) return destination.Card.name + " is closed to your company this turn.";
         return null;
     }
     /// <summary>
-    /// Fights the destination's dwellers to be allowed to act there. Neutral ground is a retention
-    /// attack: winning opens the town, losing taps the unit and closes the town for the turn, and no
-    /// one bleeds. Hostile ground is a normal attack: the dwellers strike back and the unit taps.
+    /// Fights the destination's dwellers to be allowed in. Neutral ground is a retention attack:
+    /// losing taps the unit and closes the town for the turn, and no one bleeds. Hostile ground is a
+    /// normal attack: the dwellers strike back and the unit taps. Winning either way, the unit walks
+    /// in: the town is entered, as by Enter.
     /// </summary>
     public bool Secure(Unit unit)
     {
@@ -499,11 +577,16 @@ public sealed class MatchRules
         if (reason != null) return Reject(reason);
         var p = Players[Active]; var destination = p.Destination;
         played.Clear();
+        // With nothing ready the champion leads: on the field if played, else a stand-in whose
+        // wounds are the company's own.
+        bool led = unit == null;
+        if (led) unit = Leader(Active);
+        bool standIn = !p.Field.Contains(unit);
         var dwellers = Dwellers(destination.Card);
         if (dwellers == null)
         {
-            destination.Secured = true; destination.Garrison = unit;
-            Message = destination.Card.name + " is unguarded: the company may act here."; return true;
+            destination.Secured = true;
+            Message = destination.Card.name + " is unguarded."; Walk(standIn ? null : unit); return true;
         }
         Fights.Clear();
         var garrison = new Unit { Card = dwellers, Owner = 1 - Active };
@@ -512,22 +595,83 @@ public sealed class MatchRules
         var fight = Duel(unit, Stats(unit), garrison, dwellers.GetCombatStats(), apply: !neutral);
         bool won = fight.Loser == garrison;
         string fought = fight + " At " + destination.Card.name + ": ";
-        if (neutral)
+        Report(new Battle { Kind = BattleKind.Dwellers, Player = Active, Settlement = destination.Card, Region = destination.Card.region, Neutral = neutral, Led = led }
+            .Add(new Clash { Attacker = unit, Blockers = { garrison }, Fights = { fight } }));
+        if (neutral && !won)
         {
-            if (won) { destination.Secured = true; destination.Garrison = unit; Message = fought + "the dwellers stand aside."; }
-            else { unit.Tapped = true; destination.Tapped = true; Message = fought + "held back. " + unit.Card.name + " and " + destination.Card.name + " are tapped for the turn."; }
-            return true;
+            unit.Tapped = true; destination.Tapped = true;
+            Message = fought + "held back. " + unit.Card.name + " and " + destination.Card.name + " are tapped for the turn."; return true;
         }
-        unit.Tapped = true;
-        bool standing = p.Field.Contains(unit) && !unit.Wounded;
-        if (won) { destination.Secured = true; destination.Garrison = standing ? unit : null; Message = fought + "the dwellers are driven off."; }
-        else { destination.Tapped = true; Message = fought + destination.Card.name + " is closed this turn."; }
+        if (!neutral) unit.Tapped = true;
+        // A stand-in champion cannot be wounded, so the blow that would have wounded it strikes the company.
+        if (!neutral && !won && standIn && fight.Blow != Blow.None)
+        {
+            p.Life -= fight.Margin; CheckWinner();
+            fought += "The champion is not on the field: the company takes " + fight.Margin + ". ";
+        }
+        if (!won) { destination.Tapped = true; Message = fought + destination.Card.name + " is closed this turn."; return true; }
+        destination.Secured = true;
+        Message = fought + (neutral ? "the dwellers stand aside." : "the dwellers are driven off.");
+        // The winner walks in, if it is still on its feet.
+        if (standIn) Walk(null);
+        else if (p.Field.Contains(unit) && !unit.Wounded) Walk(unit);
         return true;
     }
+    /// <summary>A destination the company is welcome at (or has beaten its way into) but has not walked into yet.</summary>
+    public bool CanEnter(Unit unit) => EnterBlockReason(unit) == null;
+    public string EnterBlockReason(Unit unit)
+    {
+        var p = Players[Active];
+        if (PendingAmbush != null) return "The ambush at " + PendingAmbush.Settlement.name + " must be answered first.";
+        if (Winner >= 0 || !AtTheGates) return "Choose a ready character or army to enter the settlement.";
+        var lead = LeaderBlockReason(unit, "enter the settlement");
+        if (lead != null) return lead;
+        var destination = p.Destination;
+        if (destination == null) return "The company is at no settlement.";
+        if (!destination.Secured) return destination.Card.name + " is held by its dwellers: fight them first.";
+        if (destination.Tapped) return destination.Card.name + " has already been entered this turn.";
+        return null;
+    }
     /// <summary>
-    /// The first play at the destination taps it. That is the moment the other player may answer
-    /// with a card born there, and the moment two companies in one town come to blows. True when
-    /// something happened that a later Undo could not put back.
+    /// A ready unit walks into the destination: it taps, the town taps (entered), and for the rest of
+    /// the turn characters, encounters and objects can be played there. Entering is the moment the
+    /// other player may answer with a card born there, and the moment two companies in one town
+    /// come to blows, so it cannot be taken back.
+    /// </summary>
+    public bool Enter(Unit unit)
+    {
+        var reason = EnterBlockReason(unit);
+        if (reason != null) return Reject(reason);
+        played.Clear();
+        var p = Players[Active];
+        if (unit == null)
+        {
+            // Nothing ready: the champion leads the company in. On the field it garrisons the town.
+            var leader = Leader(Active);
+            var champion = leader != null && p.Field.Contains(leader) ? leader : null;
+            Message = (leader != null ? leader.Card.name + " leads the company into " : "The company enters ") + p.Destination.Card.name + ".";
+            Walk(champion);
+            return true;
+        }
+        Message = unit.Card.name + " enters " + p.Destination.Card.name + ".";
+        Walk(unit);
+        return true;
+    }
+    /// <summary>The company needs a unit to walk into its destination before it can play the cards waiting for it.</summary>
+    public bool NeedsEntering()
+    {
+        var d = Players[Active].Destination;
+        return d != null && d.Secured && !d.Tapped && PlayableAt(Active, d.Card).Any();
+    }
+    void Walk(Unit unit)
+    {
+        if (unit != null) unit.Tapped = true;
+        TapDestination(unit);
+    }
+    /// <summary>
+    /// Entering the destination taps it. That is the moment the other player may answer with a card
+    /// born there, and the moment two companies in one town come to blows. True when something
+    /// happened that a later Undo could not put back.
     /// </summary>
     bool TapDestination(Unit acting)
     {
@@ -573,6 +717,8 @@ public sealed class MatchRules
                 Fights.Clear();
                 var fight = Duel(unit, Stats(unit), target, Stats(target));
                 Message = card.name + " ambushes " + target.Card.name + " at " + ambush.Settlement.name + ". " + fight;
+                Report(new Battle { Kind = BattleKind.Ambush, Player = ambush.Defender, Settlement = ambush.Settlement, Region = ambush.Settlement.region }
+                    .Add(new Clash { Attacker = unit, Target = target, Blockers = { target }, Fights = { fight } }));
             }
             unit.Tapped = true;
         }
@@ -602,10 +748,24 @@ public sealed class MatchRules
         Fights.Clear();
         var fight = Duel(ours, Stats(ours), rival, Stats(rival));
         Message = (Message + " Both companies hold " + mine.Card.name + ". " + fight).Trim();
+        Report(new Battle { Kind = BattleKind.Meeting, Player = Active, Settlement = mine.Card, Region = mine.Card.region }
+            .Add(new Clash { Attacker = ours, Target = rival, Blockers = { rival }, Fights = { fight } }));
         return true;
     }
+    // --- Environments -----------------------------------------------------------------------------------
+    /// <summary>The environmental cards in play, whichever company laid them down.</summary>
+    public IEnumerable<Unit> Environments() => Players.SelectMany(p => p.Field).Where(u => u.Card.GetCardType() == CardTypeEnum.Environmental);
+    /// <summary>The side a unit answers to for the weather: its company's. (A card's own stamp defaults to 0, which is also Free People, so it cannot be trusted.)</summary>
+    public int AlignmentOf(Unit unit) => Players[unit.Owner].Alignment;
+    /// <summary>The environments whose text names this unit's side with anything but "unaffected". Characters and armies only.</summary>
+    public IEnumerable<Unit> EnvironmentsAffecting(Unit unit)
+    {
+        if (unit == null || !unit.IsCombatant) return Enumerable.Empty<Unit>();
+        int side = AlignmentOf(unit);
+        return Environments().Where(e => e.Card.EnvironmentEffectFor(side) != null);
+    }
     // --- Mana, attacks and defence ----------------------------------------------------------------------
-    public bool CanTapLand(Unit unit) => unit != null && Winner < 0 && PendingAmbush == null && (Stage == MatchStage.Muster || Stage == MatchStage.Events) && unit.Owner == Active &&
+    public bool CanTapLand(Unit unit) => unit != null && Winner < 0 && PendingAmbush == null && (Stage == MatchStage.Arrival || Stage == MatchStage.Muster || Stage == MatchStage.Events) && unit.Owner == Active &&
         !unit.Tapped && Players[Active].Field.Contains(unit) && unit.Card.GetCardType() == CardTypeEnum.Land;
     public bool TapLand(Unit unit)
     {
@@ -689,25 +849,38 @@ public sealed class MatchRules
     }
     /// <summary>The active hand is over its limit and must shed cards before the turn can end.</summary>
     public bool MustDiscard(int player) => Players[player].Hand.Count > Players[player].HandLimit;
-    public bool CanDiscard(CardData card) => card != null && Winner < 0 && Stage == MatchStage.Spoils && Spoils.Count == 0 && PendingAmbush == null &&
-        MustDiscard(Active) && Players[Active].Hand.Contains(card);
+    /// <summary>
+    /// A card that no stage of this prototype can spend: an action or spell, or an event while no
+    /// effect is registered. It may be set aside during Muster so it does not clog the hand for good.
+    /// </summary>
+    public bool IsDeadWeight(CardData card)
+    {
+        var type = card?.GetCardType();
+        return type == CardTypeEnum.Action || type == CardTypeEnum.Spell || type == CardTypeEnum.Event && ResolveEvent == null;
+    }
+    public bool CanDiscard(CardData card) => card != null && Winner < 0 && PendingAmbush == null && Players[Active].Hand.Contains(card) &&
+        (Stage == MatchStage.Spoils && Spoils.Count == 0 && MustDiscard(Active) || Stage == MatchStage.Muster && IsDeadWeight(card));
     public bool Discard(CardData card)
     {
-        if (!CanDiscard(card)) return Reject("Discard only when your hand is over its limit at the end of the turn.");
+        if (!CanDiscard(card)) return Reject("Discard only when your hand is over its limit at the end of the turn, or to set aside a card with no stage during Muster.");
         var p = Players[Active]; p.Hand.Remove(card); p.Discard.Add(card);
         int over = p.Hand.Count - p.HandLimit;
-        Message = card.name + " discarded." + (over > 0 ? " Discard " + over + " more." : ""); return true;
+        Message = card.name + (Stage == MatchStage.Muster ? " set aside." : " discarded.") + (over > 0 && Stage == MatchStage.Spoils ? " Discard " + over + " more." : ""); return true;
     }
     public bool HasLegalAction() => Winner < 0 && (PendingAmbush != null || Stage switch
     {
         MatchStage.Realm => Players[Active].Hand.Any(CanPlay),
         MatchStage.Destination => DestinationChoices(Active).Any(CanChooseDestination),
-        MatchStage.Muster => Players[Active].Hand.Any(c => PlayBlockReason(c, includeReadyMana: true) == null) || NeedsSecuring() && Players[Active].Field.Any(CanSecure),
+        MatchStage.Arrival => GatesOpen(),
+        MatchStage.Muster => Players[Active].Hand.Any(c => PlayBlockReason(c, includeReadyMana: true) == null) || Players[Active].Hand.Any(CanDiscard) || GatesOpen(),
         MatchStage.Events => Players[Active].Hand.Any(c => PlayBlockReason(c, includeReadyMana: true) == null),
         MatchStage.Travel => Phase == TravelPhase.Attack ? Players[Attacker].Field.Any(CanAttack) || Players[Attacker].Hand.Any(CanAttackWith) : Players[Active].Field.Any(u => Attacks.Any(a => CanBlock(u, a))),
         MatchStage.Spoils => Spoils.Count > 0 || MustDiscard(Active),
         _ => false
     });
+    /// <summary>Something can be done at the gates: a unit (or the champion, with nothing ready) can fight the dwellers or walk in.</summary>
+    public bool GatesOpen() => NeedsSecuring() && (Players[Active].Field.Any(CanSecure) || CanSecure(null))
+        || NeedsEntering() && (Players[Active].Field.Any(CanEnter) || CanEnter(null));
     /// <summary>The destination is held against the company while cards in hand want to be played there.</summary>
     public bool NeedsSecuring()
     {
@@ -727,6 +900,7 @@ public sealed class MatchRules
         var stats = Stats(defender);
         if (standFast) stats = (Math.Max(0, stats.attack - StandFastPenalty), Math.Max(0, stats.defense - StandFastPenalty));
         strike.BlockerStats[defender] = stats;
+        if (standFast) strike.StoodFast.Add(defender);
         defender.Tapped = !standFast; strike.Blockers.Add(defender);
         Message = defender.Card.name + (standFast ? " stands fast (" + Fraction(stats) + ") against " : " defends against ") + strike.Attacker.Card.name + "."; return true;
     }
@@ -765,7 +939,12 @@ public sealed class MatchRules
             if (Attacks.Count > 0) Combat();
             if (Winner >= 0) return true;
             if (!Travel.Last) { NextStop(); return true; }
-            Arrive(); Stage = MatchStage.Muster; return true;
+            Arrive();
+            // At the gates: a company with a ready unit, and something to do in town, gets its
+            // Arrival. One with neither goes straight on to Muster, as one with no town at all does.
+            Stage = MatchStage.Arrival;
+            if (!HasLegalAction()) { Stage = MatchStage.Muster; Message += " Nothing to do at the gates."; }
+            return true;
         }
         Stage++;
         if (Stage == MatchStage.Realm)
@@ -779,23 +958,31 @@ public sealed class MatchRules
     {
         Fights.Clear();
         var lines = new List<string>();
+        var battle = new Battle { Kind = BattleKind.Road, Player = Active, Region = Travel.Region, Ground = Ground, Stop = Travel.Stop + 1, Stops = Travel.Stops.Count,
+            Settlement = Travel.Last ? Travel.Destination : null };
         foreach (var strike in Attacks)
         {
+            var clash = new Clash { Attacker = strike.Attacker, Target = strike.Target };
+            battle.Add(clash);
             var defenders = strike.Blockers.ToList();
             if (defenders.Count == 0 && strike.Target != null && Players[Active].Field.Contains(strike.Target)) defenders.Add(strike.Target);
+            clash.Blockers.AddRange(defenders);
+            foreach (var braced in strike.StoodFast) clash.StoodFast.Add(braced);
             // Unanswered, the blow lands on the travelling company itself.
-            if (defenders.Count == 0) { Players[Active].Life -= strike.Stats.attack; lines.Add(strike.Attacker.Card.name + " hits the company for " + strike.Stats.attack + "."); continue; }
+            if (defenders.Count == 0) { Players[Active].Life -= strike.Stats.attack; clash.Unblocked = strike.Stats.attack; lines.Add(strike.Attacker.Card.name + " hits the company for " + strike.Stats.attack + "."); continue; }
             // The attacker duels each defender in turn, for as long as it is still on its feet.
             foreach (var defender in defenders)
             {
                 if (!Players[strike.Attacker.Owner].Field.Contains(strike.Attacker) || strike.Attacker.Wounded) break;
                 if (!Players[defender.Owner].Field.Contains(defender)) continue;
                 var defence = strike.BlockerStats.TryGetValue(defender, out var braced) ? braced : Stats(defender);
-                lines.Add(Duel(strike.Attacker, strike.Stats, defender, defence).ToString());
+                var fight = Duel(strike.Attacker, strike.Stats, defender, defence);
+                clash.Fights.Add(fight); lines.Add(fight.ToString());
             }
         }
         Message = string.Join(" ", lines);
         Attacks.Clear();
+        Report(battle);
         RecallRoadside();
         CheckWinner();
     }

@@ -14,6 +14,8 @@ public sealed class TowerMatchController : MonoBehaviour
     public Shader diceSurfaceShader;
     public string humanDeckId, opponentDeckId;
     public int startingLife = 20;
+    [Tooltip("The stair's eventual final landing. Zero leaves its end unrevealed; positive values have a minimum of five. Opponent content is authored separately.")]
+    [Min(0)] public int ascentFinalLevel = 30;
     [Tooltip("Build a playable opening from the chosen catalog deck while event effects are being authored.")]
     public bool useStarterDeck = true;
     public MatchRules Rules { get; private set; }
@@ -23,6 +25,10 @@ public sealed class TowerMatchController : MonoBehaviour
     Text headline, hint, nextText, deckLabel;
     Button next, offer, decline, undo;
     Text stanceText;
+    Button gates; Text gatesText;
+    /// <summary>The human has no ready unit at the gates: only the champion can lead the way.</summary>
+    public bool ChampionMustLead => HumanAtTheGates && Rules.NoneReady(0) && (Rules.NeedsSecuring() && Rules.CanSecure(null) || Rules.NeedsEntering() && Rules.CanEnter(null));
+    Image deckBack;
     RectTransform deckAnchor;
     MatchCinematic cinematic;
     DestinationPicker picker;
@@ -30,17 +36,25 @@ public sealed class TowerMatchController : MonoBehaviour
     // A hand card raiding the road that still needs its target.
     CardData pendingRaid;
     MatchRules.Unit pendingAttacker, pendingDefender;
+    // Read-only presentation state for the targeting tether and selected-card aura.
+    public CardData PendingCombatCard => pendingAttacker?.Card ?? pendingDefender?.Card ?? pendingRaid;
+    public bool ChoosingBlockTarget => pendingDefender != null;
     // The human's choice for the next defender: tap at full strength, or stand fast untapped at -2/-2.
     bool standFast;
     Button stance;
     readonly Queue<(CardData card, int player)> draws = new();
+    // The deck each company was dealt, for the backs of its cards.
+    readonly string[] deckIds = new string[2];
     readonly List<GameObject> ownedUI = new();
     bool animating;
     float aiAt;
     float autoAt;
     string selectionHint;
-    readonly string[] stages = { "", "REPLENISH", "BUILD YOUR REALM", "SELECT DESTINATION", "TRAVEL", "MUSTER", "EVENTS", "RECOVER OBJECTS" };
+    readonly string[] stages = { "", "REPLENISH", "BUILD YOUR REALM", "SELECT DESTINATION", "TRAVEL", "ARRIVAL", "MUSTER", "EVENTS", "RECOVER OBJECTS" };
     TravelBanner banner;
+    CombatResultPanel combat;
+    /// <summary>The combat screen is up: the match waits until it is dismissed.</summary>
+    public bool CombatShowing => combat != null && combat.Showing;
     /// <summary>The human declares attacks on the road: the opponent's company is travelling.</summary>
     public bool HumanRaids => Rules != null && Rules.Stage == MatchStage.Travel && Rules.Phase == TravelPhase.Attack && Rules.Attacker == 0;
     /// <summary>The human assigns defenders: its own company is under attack on the road.</summary>
@@ -69,12 +83,15 @@ public sealed class TowerMatchController : MonoBehaviour
             string id = i == 0 ? humanDeckId : opponentDeckId;
             var avatar = CardCatalog.FindCardByName(i == 0 ? board.humanAvatarCardName : board.opponentAvatarCardName);
             if (string.IsNullOrWhiteSpace(id)) id = avatar?.deckId;
+            deckIds[i] = id;
             var cards = CardCatalog.GetDeckCards(id).Select(c => c.Clone()).ToList();
             if (avatar != null && !cards.Any(c => c.cardId == avatar.cardId && c.name == avatar.name))
                 cards.Add(avatar.Clone());
             if (cards.Count == 0) { selectionHint = "Assign both match deck IDs on TowerMatchController."; Busy = true; return; }
             // The company's side decides which foreign settlements welcome it.
             player.Alignment = CardCatalog.TryResolveDeck(id, out var deck) ? deck.alignment : avatar?.alignment ?? CardData.NeutralAlignment;
+            // The champion leads the company into town when nothing else is ready, and takes the dwellers' blows then.
+            player.Avatar = avatar;
             for (int n = cards.Count - 1; n > 0; n--) { int j = Random.Range(0, n + 1); (cards[n], cards[j]) = (cards[j], cards[n]); }
             // Settlements are never drawn: the whole pool waits on the table for its land, and one of
             // them is picked as the destination each turn. Every other settlement in the world is
@@ -89,14 +106,15 @@ public sealed class TowerMatchController : MonoBehaviour
             if (player.Settlements.Count > 0) Rules.StartAt(i, player.Settlements[Random.Range(0, player.Settlements.Count)]);
         }
         Rules.Drawn += (card, player) => draws.Enqueue((card, player));
+        if (deckBack != null) { deckBack.sprite = DeckArt.Back(deckIds[0]) ?? DeckArt.NationBack(Rules.Players[0].Alignment); deckBack.enabled = deckBack.sprite != null; }
         Sync();
     }
     static List<CardData> StarterDeck(List<CardData> catalog)
     {
-        // Preserve printed costs and identities; select only the implemented deployment types.
-        var supported = catalog.Where(c => c.GetCardType() == CardTypeEnum.Land || c.GetCardType() == CardTypeEnum.Character ||
-            c.GetCardType() == CardTypeEnum.Army || c.GetCardType() == CardTypeEnum.Object || c.GetCardType() == CardTypeEnum.Environmental ||
-            c.GetCardType() == CardTypeEnum.Encounter).ToList();
+        // Preserve printed costs and identities. Every card type the deck lists is dealt, so the
+        // hand (and the road's typed draws) see events, actions, spells and encounters too; the
+        // ones no stage can spend yet are set aside during Muster rather than filtered out here.
+        var supported = catalog.Where(c => c.GetCardType() != CardTypeEnum.PC && c.GetCardType() != CardTypeEnum.Unknown).ToList();
         var lands = supported.Where(c => c.GetCardType() == CardTypeEnum.Land).ToList();
         var opening = lands.Take(3).ToList();
         var army = supported.Where(c => c.GetCardType() == CardTypeEnum.Army).OrderBy(c => c.GetTotalMaterialCost()).FirstOrDefault();
@@ -146,7 +164,15 @@ public sealed class TowerMatchController : MonoBehaviour
         }
         else BoardPresentation.Stretch(deckAnchor, new Vector2(.88f,.20f), new Vector2(.985f,.32f));
         BoardSurface.Dress(deck, BoardPresentation.SkinFor(transform).colors.gold, true);
-        deckLabel = Label(deck.transform, "ORREN\nDRAW DECK", 16, Vector2.zero, Vector2.one);
+        // The deck's emblem is the back of every card in it; the counts sit in a plaque beneath it.
+        var back = BoardPresentation.Panel(deck.transform, "Deck back", Color.white);
+        BoardPresentation.Stretch(back.rectTransform, new Vector2(.08f, .3f), new Vector2(.92f, .96f));
+        back.preserveAspect = true;
+        var plaque = BoardPresentation.Panel(deck.transform, "Deck plaque", new Color(.02f, .03f, .045f, .85f));
+        BoardPresentation.Stretch(plaque.rectTransform, new Vector2(.04f, .03f), new Vector2(.96f, .3f));
+        deckLabel = Label(plaque.transform, "ORREN\nDRAW DECK", 13, Vector2.zero, Vector2.one);
+        deckLabel.resizeTextForBestFit = true; deckLabel.resizeTextMinSize = 8; deckLabel.resizeTextMaxSize = 13;
+        deckBack = back;
         offer = Button(transform, "OFFER TO ENEMY", new Vector2(.35f,.565f), new Vector2(.65f,.60f), () => { Rules.OfferLoot(); selectionHint = null; Sync(); });
         ownedUI.Add(offer.gameObject); offer.gameObject.SetActive(false);
         // Same spot as the loot offer: one belongs to Recover Objects, the other to an ambush during Muster.
@@ -156,9 +182,17 @@ public sealed class TowerMatchController : MonoBehaviour
         stance = Button(transform, "DEFENDERS TAP", new Vector2(.35f,.565f), new Vector2(.65f,.60f), () => { standFast = !standFast; UpdateHUD(); });
         stanceText = stance.GetComponentInChildren<Text>();
         ownedUI.Add(stance.gameObject); stance.gameObject.SetActive(false);
+        // At the gates with nothing ready: the champion leads the company in, or faces the dwellers.
+        gates = Button(transform, "CHAMPION LEADS", new Vector2(.30f,.565f), new Vector2(.70f,.60f), () =>
+        {
+            if (Rules.NeedsSecuring()) Rules.Secure(null); else Rules.Enter(null);
+            selectionHint = null; Sync();
+        });
+        gatesText = gates.GetComponentInChildren<Text>();
+        ownedUI.Add(gates.gameObject); gates.gameObject.SetActive(false);
         picker = gameObject.AddComponent<DestinationPicker>(); picker.Initialize(board, this);
         banner = gameObject.AddComponent<TravelBanner>(); banner.Initialize(board, this);
-        gameObject.AddComponent<CombatResultPanel>().Initialize(board);
+        combat = gameObject.AddComponent<CombatResultPanel>(); combat.Initialize(board);
     }
     Text Label(Transform root, string value, int size, Vector2 min, Vector2 max) => BoardPresentation.TextLabel(root, value,
         board.interfaceFont != null ? board.interfaceFont : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf"), size,
@@ -179,8 +213,12 @@ public sealed class TowerMatchController : MonoBehaviour
         button.onClick.AddListener(action); return button;
     }
     public MatchRules.Unit Unit(BoardCardView view) => view == null || Rules == null ? null : Rules.Players.SelectMany(p => p.Field).FirstOrDefault(u => ReferenceEquals(u.Card, view.Data));
+    /// <summary>The board view showing a card, wherever it sits; popups that cover the board act on cards through it.</summary>
+    public BoardCardView ViewOf(CardData card) => card == null ? null : board.GetComponentsInChildren<BoardCardView>(true).FirstOrDefault(v => ReferenceEquals(v.Data, card));
     public bool IsTapped(BoardCardView view) => Unit(view)?.Tapped ?? false;
-    public bool CanInteract => !Busy && !animating && draws.Count == 0 && Rules != null && Rules.Winner < 0;
+    public bool CanInteract => !Busy && !animating && !CombatShowing && draws.Count == 0 && Rules != null && Rules.Winner < 0;
+    /// <summary>The human's units may walk into, or fight for, the destination: Arrival, or Muster as the fallback.</summary>
+    public bool HumanAtTheGates => Rules != null && Rules.Active == 0 && (Rules.Stage == MatchStage.Arrival || Rules.Stage == MatchStage.Muster);
     public bool CanPlay(BoardCardView view) => CanInteract && Rules.Active == 0 && view != null && view.Zone == board.hand && Rules.CanPlay(view.Data);
     public bool CanTap(BoardCardView view) => CanInteract && Rules.Active == 0 && Rules.CanTapLand(Unit(view));
     public bool IsDestination(BoardCardView view) => view != null && Rules != null && view.Zone != board.hand &&
@@ -202,18 +240,20 @@ public sealed class TowerMatchController : MonoBehaviour
         if (HumanDefends)
             return unit != null && (Rules.Attacks.Any(a => Rules.CanBlock(unit, a)) ||
                 pendingDefender != null && Rules.Attacks.Any(a => a.Attacker == unit && Rules.CanBlock(pendingDefender, a)));
-        return CanPlay(view) || CanTap(view) || Rules.Active == 0 && Rules.CanSecure(unit);
+        return CanPlay(view) || CanTap(view) || CanDiscard(view) || Rules.Active == 0 && (Rules.CanSecure(unit) || Rules.NeedsEntering() && Rules.CanEnter(unit));
     }
     public string ActionLabel(BoardCardView view)
     {
         if (!IsActionable(view)) return null;
         if (HumanAmbushPending) return view.Data.GetCardType() == CardTypeEnum.Encounter ? "SPRING ENCOUNTER" : "AMBUSH";
-        if (CanDiscard(view)) return "DISCARD";
+        if (CanDiscard(view)) return Rules.Stage == MatchStage.Spoils ? "DISCARD" : "SET ASIDE";
         if (pendingObject != null || pendingAttacker != null || pendingRaid != null || Rules.Stage == MatchStage.Spoils) return "SELECT";
         if (HumanRaids && view.Zone == board.hand) return "STRIKE FROM HAND";
         if (view.Zone == board.hand) return "PLAY CARD";
         if (CanTap(view)) return "TAP LAND";
-        if (Rules.Stage == MatchStage.Muster) return "FIGHT DWELLERS";
+        var unit = Unit(view);
+        if (HumanAtTheGates && Rules.CanSecure(unit)) return "FIGHT DWELLERS";
+        if (HumanAtTheGates && Rules.CanEnter(unit)) return "ENTER " + Rules.Players[0].Destination.Card.name.ToUpperInvariant();
         return HumanRaids ? "ATTACK" : "DEFEND";
     }
     public string InspectionHint(BoardCardView view)
@@ -229,9 +269,11 @@ public sealed class TowerMatchController : MonoBehaviour
                 Standing.Neutral => "Neutral ground: a retention attack on the dwellers opens it for the turn. ",
                 _ => ""
             };
-            string state = unit == null ? "" : unit.Wounded ? "" : unit.Tapped ? (unit.Secured ? "Used this turn. " : "Closed this turn: the dwellers held. ") : unit.Secured ? "" : "Held by its dwellers. ";
-            return (state + standing + "Characters and encounters born here, and objects it trades in, are played here.").Trim();
+            string state = unit == null ? "" : unit.Wounded ? "" : unit.Tapped ? (unit.Secured ? "Entered this turn: the company may play here. " : "Closed this turn: the dwellers held. ") : unit.Secured ? "Not entered yet: a ready unit must walk in before anything is played here. " : "Held by its dwellers. ";
+            return (state + standing + "Characters and encounters born here, and objects it trades in, are played here once a ready unit has entered.").Trim();
         }
+        var weather = EnvironmentHint(unit);
+        if (weather != null && !(view.Zone == board.hand)) return weather;
         if (unit != null && unit.Wounded) return "Wounded: out of action until healed by an object that heals or a night in one of your own settlements. Heals to tapped.";
         if (unit != null && unit.Recovering) return "Healing: back on its feet, but sits out this turn.";
         if (HumanAmbushPending && view.Zone == board.hand) return Rules.CanAmbush(view.Data) ? "Born at " + Rules.PendingAmbush.Settlement.name + ": may answer the tap." : "Waiting on your ambush choice.";
@@ -244,9 +286,18 @@ public sealed class TowerMatchController : MonoBehaviour
             if (unit.Owner == Rules.Attacker) return Rules.Phase == TravelPhase.Attack ? Rules.AttackBlockReason(unit) : (Rules.Attacks.Any(a => a.Attacker == unit) ? "Attacking the travelling company." : null);
             return Rules.Phase == TravelPhase.Defend ? Rules.BlockBlockReason(unit) : (unit.Card.FightsOn(Rules.Ground) ? "Can defend on " + Rules.Ground + " ground." : unit.Card.name + " cannot fight on " + Rules.Ground + " ground (" + unit.Card.GetTerrain() + ").");
         }
-        if (unit != null && Rules.Stage == MatchStage.Muster && Rules.Active == 0 && unit.Owner == 0 && unit.IsCombatant && Rules.NeedsSecuring())
+        if (unit != null && HumanAtTheGates && unit.Owner == 0 && unit.IsCombatant && Rules.NeedsSecuring())
             return Rules.SecureBlockReason(unit) ?? "Ready to face the dwellers of " + Rules.Players[0].Destination.Card.name + " (" + Rules.Stats(unit).attack + "/" + Rules.Stats(unit).defense + ").";
+        if (unit != null && HumanAtTheGates && unit.Owner == 0 && unit.IsCombatant && Rules.NeedsEntering())
+            return Rules.EnterBlockReason(unit) ?? "Ready to enter " + Rules.Players[0].Destination.Card.name + ": it taps, the town opens for the turn.";
         return null;
+    }
+    /// <summary>What the weather does to a unit, for its inspection card: every environment in play that names its side.</summary>
+    public string EnvironmentHint(MatchRules.Unit unit)
+    {
+        if (unit == null) return null;
+        var lines = Rules.EnvironmentsAffecting(unit).Select(e => e.Card.name + ": " + e.Card.EnvironmentEffectFor(Rules.AlignmentOf(unit))).ToList();
+        return lines.Count == 0 ? null : "Under " + string.Join("  ·  ", lines);
     }
     public void PerformAction(BoardCardView view) { if (view.Zone == board.hand) Play(view); else Select(view); }
     public bool Tap(BoardCardView view)
@@ -255,6 +306,15 @@ public sealed class TowerMatchController : MonoBehaviour
         bool result = Rules.TapLand(Unit(view)); selectionHint = null; Sync(); return result;
     }
     public bool Play(BoardCardView view)
+    {
+        if (view == null) return false;
+        var effects = BoardBattleVfx.For(board);
+        var origin = effects.Position(view.Rect);
+        bool played = PlayCore(view);
+        if (played) effects.Cast(origin);
+        return played;
+    }
+    bool PlayCore(BoardCardView view)
     {
         if (!CanInteract || view == null || view.Zone != board.hand) return false;
         // A hand card can also answer an ambush or be shed at the end of the turn.
@@ -299,9 +359,14 @@ public sealed class TowerMatchController : MonoBehaviour
         if (Rules.PendingAmbush != null) return false;
         if (CanTap(view)) return Tap(view);
         var unit = Unit(view);
-        if (Rules.Stage == MatchStage.Muster && Rules.Active == 0 && unit != null && unit.Owner == 0 && unit.IsCombatant && Rules.NeedsSecuring() && pendingObject == null)
+        if (HumanAtTheGates && unit != null && unit.Owner == 0 && unit.IsCombatant && Rules.NeedsSecuring() && pendingObject == null)
         {
             if (Rules.Secure(unit)) selectionHint = null; else selectionHint = Rules.Message;
+            Sync(); return true;
+        }
+        if (HumanAtTheGates && unit != null && unit.Owner == 0 && unit.IsCombatant && Rules.NeedsEntering() && pendingObject == null)
+        {
+            if (Rules.Enter(unit)) selectionHint = null; else selectionHint = Rules.Message;
             Sync(); return true;
         }
         if (pendingObject != null)
@@ -373,6 +438,8 @@ public sealed class TowerMatchController : MonoBehaviour
         if (Rules == null || Busy) return;
         if (!animating && draws.Count > 0) { StartCoroutine(AnimateDraws()); return; }
         UpdateHUD();
+        // A battle on screen holds everything, the opponent's decisions included, until it is read.
+        if (CombatShowing) return;
         if (Rules.Stage == MatchStage.Travel && banner != null && banner.IsTravelling) return;
         if (CanInteract && Time.unscaledTime >= autoAt && AdvanceIfNoActions()) return;
         if (animating || Rules.Winner >= 0 || Time.unscaledTime < aiAt) return;
@@ -443,11 +510,22 @@ public sealed class TowerMatchController : MonoBehaviour
             var land = p.Field.FirstOrDefault(Rules.CanTapLand);
             if (land != null) { Rules.TapLand(land); Sync(); return; }
         }
+        bool atTheGates = Rules.Stage == MatchStage.Arrival || Rules.Stage == MatchStage.Muster;
         // A destination held against it is fought for with the hardest hitter that can, before playing.
-        if (Rules.Stage == MatchStage.Muster && Rules.NeedsSecuring())
+        if (atTheGates && Rules.NeedsSecuring())
         {
             var champion = p.Field.Where(Rules.CanSecure).OrderByDescending(u => Rules.Stats(u).attack).ThenByDescending(u => Rules.Stats(u).defense).FirstOrDefault();
             if (champion != null) { Rules.Secure(champion); Sync(); return; }
+            // Nothing ready: its champion faces the dwellers, but only when the town is worth the wound.
+            if (Rules.CanSecure(null) && Rules.Players[1].Life > 6) { Rules.Secure(null); Sync(); return; }
+        }
+        // A town it is welcome at is entered by the unit it can best spare: the weakest, so the
+        // hitters stay ready to raid the human's next road.
+        if (atTheGates && Rules.NeedsEntering())
+        {
+            var porter = p.Field.Where(Rules.CanEnter).OrderBy(u => Rules.Stats(u).attack).ThenBy(u => Rules.Stats(u).defense).FirstOrDefault();
+            if (porter != null) { Rules.Enter(porter); Sync(); return; }
+            if (Rules.CanEnter(null)) { Rules.Enter(null); Sync(); return; }
         }
         if (Rules.Stage == MatchStage.Realm || Rules.Stage == MatchStage.Muster || Rules.Stage == MatchStage.Events)
         {
@@ -460,6 +538,8 @@ public sealed class TowerMatchController : MonoBehaviour
                 // The tap woke the human's ambush: wait for the answer before playing on.
                 if (Rules.PendingAmbush != null) { Sync(); return; }
             } while (played);
+            // Cards no stage can spend would otherwise sit in its hand for the rest of the match.
+            foreach (var card in p.Hand.Where(Rules.CanDiscard).ToArray()) Rules.Discard(card);
         }
         Rules.Next(); Sync();
     }
@@ -484,7 +564,7 @@ public sealed class TowerMatchController : MonoBehaviour
         next.interactable = !Busy && !animating && draws.Count == 0 && (Rules.Winner >= 0 || manual);
         var destination = Rules.Players[0].Destination;
         nextText.text = Rules.Winner >= 0 ? "TOWER" : HumanDefends ? "RESOLVE COMBAT" : HumanRaids ? (Rules.Attacks.Count > 0 ? "ATTACK!" : "LET THEM PASS")
-            : Rules.Stage == MatchStage.Destination ? (destination == null ? "SKIP" : "STAY") : "NEXT STAGE";
+            : Rules.Stage == MatchStage.Destination ? (destination == null ? "SKIP" : "STAY") : Rules.Stage == MatchStage.Arrival ? "STAY OUTSIDE" : "NEXT STAGE";
         banner?.Sync();
         // The popup is the whole Select Destination stage for the human; anywhere else it is closed.
         picker?.Sync(CanInteract && Rules.Active == 0 && Rules.Stage == MatchStage.Destination && Rules.HasLegalAction() ? Rules.RankedDestinations(0) : null);
@@ -494,6 +574,15 @@ public sealed class TowerMatchController : MonoBehaviour
         decline.gameObject.SetActive(!Busy && HumanAmbushPending);
         decline.interactable = CanInteract;
         stance.gameObject.SetActive(!Busy && HumanDefends && Rules.HasLegalAction());
+        bool lead = !Busy && ChampionMustLead;
+        gates.gameObject.SetActive(lead);
+        gates.interactable = CanInteract;
+        if (lead)
+        {
+            var leader = Rules.Leader(0); var town = Rules.Players[0].Destination.Card.name.ToUpperInvariant();
+            string who = leader == null ? "THE COMPANY" : Rules.IsChampionUnit(leader) ? leader.Card.name.ToUpperInvariant() : leader.Card.name.ToUpperInvariant() + " (NOT ON THE FIELD)";
+            gatesText.text = Rules.NeedsSecuring() ? who + " FACES THE DWELLERS OF " + town : who + " LEADS THE WAY INTO " + town;
+        }
         stanceText.text = standFast ? "STAND FAST  ·  -2/-2, STAYS READY" : "DEFENDERS TAP  ·  FULL STRENGTH";
         board.SetMatchStatus(Rules.Active == 1, hint.text);
     }
@@ -504,17 +593,21 @@ public sealed class TowerMatchController : MonoBehaviour
         if (Rules.Active == 0 && Rules.Stage == MatchStage.Destination)
             return Rules.Players[0].Destination == null ? "Browse the settlements whose land is down and travel to one for this turn. Each stop on the way draws a card."
                 : "Travel to a settlement whose land is down (each stop draws a card), or stay at " + Rules.Players[0].Destination.Card.name + ".";
-        if (Rules.Active == 0 && Rules.Stage == MatchStage.Muster)
+        if (Rules.Active == 0 && (Rules.Stage == MatchStage.Arrival || Rules.Stage == MatchStage.Muster))
         {
             var destination = Rules.Players[0].Destination;
             if (destination != null && !destination.Secured && !destination.Tapped)
             {
                 var dwellers = Rules.Dwellers(destination.Card);
                 return destination.Card.name + " is held by " + (dwellers != null ? dwellers.name + " (" + dwellers.GetCombatStats().attack + "/" + dwellers.GetCombatStats().defense + ")" : "its dwellers")
-                    + ": click a ready unit to fight them" + (Rules.StandingAt(0, destination.Card) == Standing.Neutral ? " (retention attack: lose and both tap)." : " (a normal attack: they hit back).") + " Armies deploy anywhere regardless.";
+                    + (Rules.NoneReady(0) ? ": nothing of yours is ready, so your champion must face them" + (Rules.Leader(0) != null && !Rules.IsChampionUnit(Rules.Leader(0)) ? " from off the field: a lost duel wounds the company's life instead" : "") : ": click a ready unit to fight them")
+                    + (Rules.StandingAt(0, destination.Card) == Standing.Neutral ? " (retention attack: lose and both tap)." : " (a normal attack: they hit back).") + (Rules.Stage == MatchStage.Arrival ? " Or stay outside." : " Armies deploy anywhere regardless.");
             }
-            return "Tap ready lands for mana, then deploy armies anywhere; characters, encounters and objects only at your destination, which one play taps."
-                + (destination != null ? " Destination: " + destination.Card.name + (destination.Tapped && !destination.Secured ? " (closed this turn)." : ".") : " No destination this turn.");
+            if (Rules.Stage == MatchStage.Arrival)
+                return "At the gates of " + destination.Card.name + (Rules.NoneReady(0) ? ": nothing of yours is ready, so your champion leads the company in (the town opens for your plays this turn), or stay outside."
+                    : ": click a ready character or army to enter (it taps, the town opens for your plays this turn), or stay outside.");
+            return "Tap ready lands for mana, then deploy armies anywhere; characters, encounters and objects only at your destination once a ready unit has entered it. Set aside cards no stage can spend."
+                + (destination != null ? " Destination: " + destination.Card.name + (destination.Tapped && !destination.Secured ? " (closed this turn)." : destination.Entered ? " (entered)." : " (not entered).") : " No destination this turn.");
         }
         if (Rules.Active == 0 && Rules.Stage == MatchStage.Events && Rules.ResolveEvent != null) return "Tap ready lands for mana as needed, then play events.";
         if (Rules.Stage == MatchStage.Travel && Rules.Travel != null)
@@ -546,6 +639,9 @@ public sealed class TowerMatchController : MonoBehaviour
         board.humanVictoryPoints?.SynchronizeCards(System.Array.Empty<CardData>()); board.opponentVictoryPoints?.SynchronizeCards(System.Array.Empty<CardData>());
         board.maximumHandSize = Mathf.Max(board.maximumHandSize, Rules.Players[0].HandLimit);
         board.hand.SynchronizeCards(Rules.Players[0].Hand);
+        // The weather: every field view carries the aura that shows which environments touch it.
+        foreach (var zone in new[] { board.humanArmies, board.opponentArmies, board.environmental })
+            if (zone != null) foreach (var view in zone.GetComponentsInChildren<BoardCardView>(true)) CardEnvironmentAura.Attach(board, view);
         UpdateHUD();
     }
     IEnumerator AnimateDraws()
@@ -557,9 +653,20 @@ public sealed class TowerMatchController : MonoBehaviour
         while (draws.Count > 0)
         {
             var draw = draws.Dequeue();
-            var panel = BoardPresentation.Panel(transform, "Drawing card", new Color(.07f,.10f,.15f));
+            var panel = BoardPresentation.Panel(transform, "Drawing card", new Color(.12f,.075f,.035f));
             panel.rectTransform.sizeDelta = new Vector2(110,150); BoardPresentation.Border(panel.rectTransform, new Color(.88f,.7f,.36f));
-            Label(panel.transform, "✦\nDARK BEFORE DAWN", 14, Vector2.zero, Vector2.one);
+            BoardSurface.Dress(panel, BoardBattleVfx.Amber, true, true);
+            FantasyCardAura.Create(panel.rectTransform).SetPresentation(.8f, BoardBattleVfx.Amber, true);
+            // Face down: the card travels showing its deck's back.
+            var back = DeckArt.Back(deckIds[draw.player]) ?? DeckArt.BackFor(draw.card);
+            if (back != null)
+            {
+                var face = BoardPresentation.Panel(panel.transform, "Deck back", Color.white);
+                BoardPresentation.Stretch(face.rectTransform, Vector2.zero, Vector2.one);
+                face.rectTransform.offsetMin = Vector2.one * 6; face.rectTransform.offsetMax = -Vector2.one * 6;
+                face.sprite = back; face.preserveAspect = true;
+            }
+            else Label(panel.transform, "✦\nDARK BEFORE DAWN", 14, Vector2.zero, Vector2.one);
             var view = board.hand.GetComponentsInChildren<BoardCardView>(true).FirstOrDefault(v => ReferenceEquals(v.Data, draw.card));
             Vector3 start = draw.player == 0 ? deckAnchor.position : transform.TransformPoint(new Vector3(500,250,0));
             Vector3 end = draw.player == 0 && view != null ? view.transform.position : transform.TransformPoint(new Vector3(0,350,0));
@@ -570,6 +677,7 @@ public sealed class TowerMatchController : MonoBehaviour
                 yield return null;
             }
             if (view != null) view.gameObject.SetActive(true);
+            BoardBattleVfx.For(board).Cast(BoardBattleVfx.For(board).Position(panel.rectTransform));
             Destroy(panel.gameObject);
         }
         animating = false;

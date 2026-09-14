@@ -6,6 +6,8 @@
             "terrain": "Coast",
             "x": 2.0,
             "y": 0.5,
+            "mapX": 0.1858,
+            "mapY": 0.1188,
             "adjacent": [
                 "Bluecrags",
                 "Grimhold",
@@ -19,6 +21,8 @@
             "terrain": "Mountains",
             "x": 4.2,
             "y": 1.0,
+            "mapX": 0.3477,
+            "mapY": 0.1603,
             "adjacent": [
                 "Hollowvale",
                 "Longwater",
@@ -36,6 +40,8 @@
             "terrain": "Coast",
             "x": 0.6,
             "y": 2.2,
+            "mapX": 0.0797,
+            "mapY": 0.2592,
             "adjacent": [
                 "Bluecrags",
                 "North Kingdom",
@@ -48,6 +54,8 @@
             "terrain": "Mountains",
             "x": 1.6,
             "y": 2.0,
+            "mapX": 0.1563,
+            "mapY": 0.2408,
             "adjacent": [
                 "North Kingdom",
                 "The Rimewater",
@@ -61,6 +69,8 @@
             "terrain": "Hills",
             "x": 3.1,
             "y": 1.8,
+            "mapX": 0.2687,
+            "mapY": 0.2257,
             "adjacent": [
                 "Grimhold",
                 "North Kingdom",
@@ -74,6 +84,8 @@
             "terrain": "Plains",
             "x": 2.6,
             "y": 2.9,
+            "mapX": 0.2209,
+            "mapY": 0.3086,
             "adjacent": [
                 "Bluecrags",
                 "Grimhold",
@@ -91,6 +103,8 @@
             "terrain": "Hills",
             "x": 4.3,
             "y": 2.4,
+            "mapX": 0.3517,
+            "mapY": 0.2695,
             "adjacent": [
                 "Grimhold",
                 "Hollowvale",
@@ -106,6 +120,8 @@
             "terrain": "Hills",
             "x": 5.1,
             "y": 2.9,
+            "mapX": 0.3987,
+            "mapY": 0.3238,
             "adjacent": [
                 "Elderforge",
                 "Grimhold",
@@ -119,6 +135,8 @@
             "terrain": "Plains",
             "x": 2.1,
             "y": 3.4,
+            "mapX": 0.1794,
+            "mapY": 0.3604,
             "adjacent": [
                 "Bluecrags",
                 "North Kingdom",
@@ -132,6 +150,8 @@
             "terrain": "Hills",
             "x": 3.1,
             "y": 3.9,
+            "mapX": 0.2663,
+            "mapY": 0.3963,
             "adjacent": [
                 "Elderforge",
                 "North Kingdom",
@@ -146,6 +166,8 @@
             "terrain": "Forest",
             "x": 4.5,
             "y": 4.1,
+            "mapX": 0.3581,
+            "mapY": 0.4226,
             "adjacent": [
                 "Hollowvale",
                 "The Palewall",
@@ -159,6 +181,8 @@
             "terrain": "Mountains",
             "x": 5.4,
             "y": 3.7,
+            "mapX": 0.4386,
+            "mapY": 0.3955,
             "adjacent": [
                 "Elderforge",
                 "Goldenwood",
@@ -176,6 +200,8 @@
             "terrain": "Plains",
             "x": 6.1,
             "y": 3.1,
+            "mapX": 0.4896,
+            "mapY": 0.3445,
             "adjacent": [
                 "Fenmire",
                 "Goldenwood",
@@ -194,6 +220,8 @@
             "terrain": "Hills",
             "x": 4.3,
             "y": 5.1,
+            "mapX": 0.3557,
+            "mapY": 0.5048,
             "adjacent": [
                 "Elderforge",
                 "Longstrand",
@@ -208,6 +236,8 @@
             "terrain": "Plains",
             "x": 5.3,
             "y": 5.7,
+            "mapX": 0.429,
+            "mapY": 0.5502,
             "adjacent": [
                 "Horse Plains",
                 "The Palewall",
@@ -221,6 +251,8 @@
             "terrain": "Forest",
             "x": 6.3,
             "y": 4.3,
+            "mapX": 0.5048,
+            "mapY": 0.4314,
             "adjacent": [
                 "Horse Plains",
                 "Longwater",
@@ -234,6 +266,8 @@
             "terrain": "Plains",
             "x": 6.1,
             "y": 6.1,
+            "mapX": 0.4912,
+            "mapY": 0.5821,
             "adjacent": [
                 "Fenmire",
                 "Goldenwood",
@@ -249,6 +283,8 @@
             "terrain": "Mountains",
             "x": 5.5,
             "y": 6.9,
+            "mapX": 0.4458,
+            "mapY": 0.6483,
             "adjacent": [
                 "Horse Plains",
                 "Longstrand",
@@ -263,6 +299,8 @@
             "terrain": "Coast",
             "x": 4.3,
             "y": 7.4,
+            "mapX": 0.3485,
+            "mapY": 0.6914,
             "adjacent": [
                 "Lower Sunlands",
                 "The Whitespine",
@@ -275,6 +313,8 @@
             "terrain": "Plains",
             "x": 6.7,
             "y": 7.1,
+            "mapX": 0.5335,
+            "mapY": 0.6627,
             "adjacent": [
                 "Fenmire",
                 "Greenmarch",
@@ -289,6 +329,8 @@
             "terrain": "Coast",
             "x": 5.9,
             "y": 7.9,
+            "mapX": 0.4825,
+            "mapY": 0.7337,
             "adjacent": [
                 "Corsair Coast",
                 "Greenmarch",
@@ -304,6 +346,8 @@
             "terrain": "Marsh",
             "x": 7.1,
             "y": 5.8,
+            "mapX": 0.5718,
+            "mapY": 0.5574,
             "adjacent": [
                 "Greenmarch",
                 "Horse Plains",
@@ -319,6 +363,8 @@
             "terrain": "Wasteland",
             "x": 7.4,
             "y": 4.9,
+            "mapX": 0.5965,
+            "mapY": 0.4769,
             "adjacent": [
                 "Fenmire",
                 "Longwater",
@@ -333,6 +379,8 @@
             "terrain": "Forest",
             "x": 7.6,
             "y": 7.1,
+            "mapX": 0.6164,
+            "mapY": 0.6722,
             "adjacent": [
                 "Fenmire",
                 "Lower Sunlands",
@@ -349,6 +397,8 @@
             "terrain": "Wasteland",
             "x": 7.1,
             "y": 1.2,
+            "mapX": 0.5742,
+            "mapY": 0.1786,
             "adjacent": [
                 "Grimhold",
                 "Ironreach",
@@ -363,6 +413,8 @@
             "terrain": "Forest",
             "x": 7.3,
             "y": 2.3,
+            "mapX": 0.5853,
+            "mapY": 0.2671,
             "adjacent": [
                 "Longwater",
                 "Nightwood Peaks",
@@ -377,6 +429,8 @@
             "terrain": "Mountains",
             "x": 7.7,
             "y": 3.2,
+            "mapX": 0.618,
+            "mapY": 0.3477,
             "adjacent": [
                 "North Nightwood",
                 "South Nightwood",
@@ -389,6 +443,8 @@
             "terrain": "Forest",
             "x": 7.1,
             "y": 3.9,
+            "mapX": 0.5726,
+            "mapY": 0.4083,
             "adjacent": [
                 "Goldenwood",
                 "Longwater",
@@ -404,6 +460,8 @@
             "terrain": "Plains",
             "x": 8.4,
             "y": 2.6,
+            "mapX": 0.6818,
+            "mapY": 0.2951,
             "adjacent": [
                 "Amber Sea",
                 "Eastlands",
@@ -422,6 +480,8 @@
             "terrain": "Hills",
             "x": 9.2,
             "y": 1.6,
+            "mapX": 0.7337,
+            "mapY": 0.2145,
             "adjacent": [
                 "Eastlands",
                 "The Blightheath",
@@ -435,6 +495,8 @@
             "terrain": "Plains",
             "x": 9.3,
             "y": 3.3,
+            "mapX": 0.7504,
+            "mapY": 0.3517,
             "adjacent": [
                 "Amber Sea",
                 "Eastlands",
@@ -448,6 +510,8 @@
             "terrain": "Coast",
             "x": 9.6,
             "y": 4.3,
+            "mapX": 0.7759,
+            "mapY": 0.4394,
             "adjacent": [
                 "Eastlands",
                 "Wildermark",
@@ -460,6 +524,8 @@
             "terrain": "Plains",
             "x": 9.2,
             "y": 5.5,
+            "mapX": 0.752,
+            "mapY": 0.5359,
             "adjacent": [
                 "Amber Sea",
                 "Eastern Steppe",
@@ -475,6 +541,8 @@
             "terrain": "Wasteland",
             "x": 8.1,
             "y": 5.7,
+            "mapX": 0.6539,
+            "mapY": 0.5494,
             "adjacent": [
                 "Eastlands",
                 "Fenmire",
@@ -489,6 +557,8 @@
             "terrain": "Wasteland",
             "x": 8.4,
             "y": 6.4,
+            "mapX": 0.6826,
+            "mapY": 0.6045,
             "adjacent": [
                 "Ashflats",
                 "Cinderplain",
@@ -503,6 +573,8 @@
             "terrain": "Wasteland",
             "x": 8.7,
             "y": 7.2,
+            "mapX": 0.7089,
+            "mapY": 0.6722,
             "adjacent": [
                 "Ashflats",
                 "Slave Fields",
@@ -516,6 +588,8 @@
             "terrain": "Mountains",
             "x": 8.0,
             "y": 7.4,
+            "mapX": 0.6563,
+            "mapY": 0.7002,
             "adjacent": [
                 "Cinderplain",
                 "Greenmarch",
@@ -529,6 +603,8 @@
             "terrain": "Wasteland",
             "x": 9.4,
             "y": 7.0,
+            "mapX": 0.7711,
+            "mapY": 0.6587,
             "adjacent": [
                 "Cinderplain",
                 "Eastern Steppe",
@@ -542,6 +618,8 @@
             "terrain": "Plains",
             "x": 8.9,
             "y": 8.1,
+            "mapX": 0.7265,
+            "mapY": 0.7448,
             "adjacent": [
                 "Ashflats",
                 "Cinderplain",
@@ -556,6 +634,8 @@
             "terrain": "Desert",
             "x": 7.2,
             "y": 8.6,
+            "mapX": 0.5845,
+            "mapY": 0.7847,
             "adjacent": [
                 "Corsair Coast",
                 "Eastern Steppe",
@@ -571,6 +651,8 @@
             "terrain": "Coast",
             "x": 6.0,
             "y": 9.0,
+            "mapX": 0.4936,
+            "mapY": 0.8158,
             "adjacent": [
                 "Far Southlands",
                 "Lower Sunlands",
@@ -583,6 +665,8 @@
             "terrain": "Desert",
             "x": 7.0,
             "y": 9.7,
+            "mapX": 0.563,
+            "mapY": 0.8804,
             "adjacent": [
                 "Corsair Coast",
                 "Near Southlands"
@@ -594,6 +678,8 @@
             "terrain": "Plains",
             "x": 9.6,
             "y": 8.7,
+            "mapX": 0.7919,
+            "mapY": 0.7982,
             "adjacent": [
                 "Ashflats",
                 "Eastlands",

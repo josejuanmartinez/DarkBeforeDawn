@@ -62,6 +62,55 @@ REGIONS = {
 }
 LAND_ALIASES = {'Greenmarch Ruins': 'Greenmarch', 'Fenmire Marshes': 'Fenmire'}
 
+# Where each region's marker sits on Assets/Resources/Maps/Caldrath.png, in pixels of the 1254x1254 image
+# (x east, y south). Read off the image's terrain symbols; stored in the JSON as mapX/mapY in 0-1.
+MAP_SIZE = 1254
+MAP_MARKERS = {
+    'The Rimewater':     (233, 149),
+    'Grimhold':          (436, 201),
+    'West Coast':        (100, 325),
+    'Bluecrags':         (196, 302),
+    'The Barrowfells':   (337, 283),
+    'North Kingdom':     (277, 387),
+    'Troll Hills':       (441, 338),
+    'Hollowvale':        (500, 406),
+    'Thornhollow':       (225, 452),
+    'West Downs':        (334, 497),
+    'Elderforge':        (449, 530),
+    'The Palewall':      (550, 496),
+    'Longwater':         (614, 432),
+    'Wyldmoor':          (446, 633),
+    'Windgate':          (538, 690),
+    'Goldenwood':        (633, 541),
+    'Horse Plains':      (616, 730),
+    'The Whitespine':    (559, 813),
+    'Longstrand':        (437, 867),
+    'Upper Sunlands':    (669, 831),
+    'Lower Sunlands':    (605, 920),
+    'Fenmire':           (717, 699),
+    'Scorchlands':       (748, 598),
+    'Greenmarch':        (773, 843),
+    'The Blightheath':   (720, 224),
+    'North Nightwood':   (734, 335),
+    'Nightwood Peaks':   (775, 436),
+    'South Nightwood':   (718, 512),
+    'Wildermark':        (855, 370),
+    'Ironreach':         (920, 269),
+    'Wine Country':      (941, 441),
+    'Amber Sea':         (973, 551),
+    'Eastlands':         (943, 672),
+    'The Battlewaste':   (820, 689),
+    'The Emberpit':      (856, 758),
+    'Cinderplain':       (889, 843),
+    'The Weftmarch':     (823, 878),
+    'Ashflats':          (967, 826),
+    'Slave Fields':      (911, 934),
+    'Near Southlands':   (733, 984),
+    'Corsair Coast':     (619, 1023),
+    'Far Southlands':    (706, 1104),
+    'Eastern Steppe':    (993, 1001),
+}
+
 
 def main():
     land_cards = json.load(open('Assets/Resources/Cards/Meta/LandCards.json', encoding='utf-8'))['cards']
@@ -72,6 +121,8 @@ def main():
     for name in REGIONS:
         if name not in lands:
             print('no land card named', name); ok = False
+        if name not in MAP_MARKERS:
+            print('no map marker for', name); ok = False
     for land in lands:
         if land not in REGIONS and land not in LAND_ALIASES:
             print('land card without a region entry:', land); ok = False
@@ -90,7 +141,9 @@ def main():
 
     data = {
         'regions': [
-            {'name': name, 'group': group, 'terrain': terrains.get(name, ''), 'x': x, 'y': y, 'adjacent': sorted(adjacency[name])}
+            {'name': name, 'group': group, 'terrain': terrains.get(name, ''), 'x': x, 'y': y,
+             'mapX': round(MAP_MARKERS[name][0] / MAP_SIZE, 4), 'mapY': round(MAP_MARKERS[name][1] / MAP_SIZE, 4),
+             'adjacent': sorted(adjacency[name])}
             for name, (group, x, y, _) in REGIONS.items()
         ],
         'landAliases': [{'land': land, 'region': region} for land, region in LAND_ALIASES.items()],
@@ -113,7 +166,7 @@ def main():
         '',
         '- **Distance** between two settlements is the number of borders crossed on the shortest route between their regions,',
         '  clamped to 1-5. Travelling draws that many cards. Same region still counts as 1.',
-        '- The route is drawn in the Select Destination popup as a chain of stops, one per region crossed.',
+        '- The route is drawn on the map in the Select Destination popup and walked on it during Travel, one stop per region crossed.',
         '- A settlement can be chosen once its land card is on the board; the route itself needs no lands.',
         '- Each region has a **terrain** (from its land card). At every stop the other company may attack with characters and',
         '  with armies of that terrain; the traveller defends under the same rule.',
@@ -121,13 +174,15 @@ def main():
         '## Layout guide',
         '',
         'Coordinates are a 0-10 grid: x runs west to east, y runs north to south. They place the region label; borders are the',
-        'adjacency list. Groups are the five areas from `Caldrath.md`.',
+        'adjacency list. Groups are the five areas from `Caldrath.md`. **Map** is where the region marker sits on the drawn',
+        'map, `Assets/Resources/Maps/Caldrath.png` (pixels of the 1254x1254 image, x east and y south); the match draws routes on it.',
         '',
-        '| Region | Group | Terrain | x | y | Borders | Settlements |',
-        '|---|---|---|---|---|---|---|',
+        '| Region | Group | Terrain | x | y | Map | Borders | Settlements |',
+        '|---|---|---|---|---|---|---|---|',
     ]
     for name, (group, x, y, _) in REGIONS.items():
-        lines.append(f"| **{name}** | {group} | {terrains.get(name, '')} | {x} | {y} | {', '.join(sorted(adjacency[name]))} | {', '.join(settlements.get(name, []))} |")
+        mx, my = MAP_MARKERS[name]
+        lines.append(f"| **{name}** | {group} | {terrains.get(name, '')} | {x} | {y} | {mx}, {my} | {', '.join(sorted(adjacency[name]))} | {', '.join(settlements.get(name, []))} |")
     lines += ['', '## Border list', '', 'Each border once, alphabetically:', '']
     seen = set()
     for name in sorted(adjacency):

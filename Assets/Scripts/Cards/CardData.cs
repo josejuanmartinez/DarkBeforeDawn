@@ -176,6 +176,42 @@ public class CardData
 
     public string GetActionRef() => !string.IsNullOrWhiteSpace(action) ? action : actionClassName;
 
+    // --- Environments -----------------------------------------------------------------------------
+    // An environmental card's text is one line per side, each opened by that side's glyph(s):
+    //   <sprite name="freePeople"> gain Hope; armies +8% attack
+    //   <sprite name="darkServants"><sprite name="Neutral"> unaffected
+    // A line that says only "unaffected" is no effect at all. Lines with no side glyph, on a card
+    // that has none, apply to everyone.
+    static readonly Regex sideGlyph = new(@"^\s*(?:<sprite name=""(freePeople|darkServants|Neutral)"">\s*)+", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    static readonly Regex anySprite = new("<[^>]+>", RegexOptions.Compiled);
+    static string SideSprite(int alignment) => alignment == FreePeople ? "freePeople" : alignment == DarkServants ? "darkServants" : "Neutral";
+
+    /// <summary>What this environment does to a side, or null when the side is unaffected (or this is no environment).</summary>
+    public string EnvironmentEffectFor(int alignment)
+    {
+        if (GetCardType() != CardTypeEnum.Environmental || string.IsNullOrWhiteSpace(actionEffect)) return null;
+        string wanted = SideSprite(alignment);
+        string untagged = null; bool anyTagged = false;
+        foreach (string raw in actionEffect.Split('\n'))
+        {
+            string line = raw.Trim();
+            if (line.Length == 0) continue;
+            var match = sideGlyph.Match(line);
+            if (!match.Success) { untagged ??= line; continue; }
+            anyTagged = true;
+            bool mine = false;
+            foreach (Capture capture in match.Groups[1].Captures)
+                if (string.Equals(capture.Value, wanted, StringComparison.OrdinalIgnoreCase)) mine = true;
+            if (!mine) continue;
+            string effect = line.Substring(match.Length).Trim();
+            return IsUnaffected(effect) ? null : effect;
+        }
+        return anyTagged || untagged == null || IsUnaffected(untagged) ? null : untagged;
+    }
+
+    static bool IsUnaffected(string effect)
+        => string.Equals(anySprite.Replace(effect, string.Empty).Trim().TrimEnd('.'), "unaffected", StringComparison.OrdinalIgnoreCase);
+
     // --- Destinations -----------------------------------------------------------------------------
     // Where a card can be played from the hand: a character at its home, an encounter at any of its
     // birthplaces. Empty for every other type.

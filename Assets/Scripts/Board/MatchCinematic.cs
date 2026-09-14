@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
 
 /// <summary>Isolated 3D stage composited above the board. All geometry and materials are runtime-owned.</summary>
-public sealed class MatchCinematic : MonoBehaviour
+public sealed partial class MatchCinematic : MonoBehaviour
 {
     GameObject stage, overlay, tower;
     Camera camera3D;
@@ -16,11 +16,13 @@ public sealed class MatchCinematic : MonoBehaviour
     readonly List<GameObject> dice = new();
     Mesh dieMesh;
     GameObject rollFrame;
+    GameObject ascentMist;
     Text humanScore, enemyScore, rollOutcome;
     Material stone, gold, dark, ivory, teal;
     Material ivoryDice, slateDice, diceTrim, diceInk;
     Board board;
     const int Layer = 30;
+    public bool IsShowing => overlay != null && overlay.activeInHierarchy;
     public void Initialize(Board board)
     {
         this.board = board;
@@ -41,17 +43,23 @@ public sealed class MatchCinematic : MonoBehaviour
         camera3D.cullingMask = 1 << Layer; camera3D.clearFlags = CameraClearFlags.SolidColor;
         camera3D.backgroundColor = new Color(.012f,.018f,.033f,0); camera3D.fieldOfView = 35;
         target = new RenderTexture(1600,1000,24) { antiAliasing = 4 }; target.Create(); camera3D.targetTexture = target;
-        Light("Warm key", new Vector3(-6,10,-8), new Color(1,.73f,.4f), 170, 35);
-        Light("Cold rim", new Vector3(6,8,3), new Color(.2f,.6f,1), 210, 35);
-        Light("Front fill", new Vector3(0,2,-10), new Color(.7f,.8f,1), 90, 35);
+        Light("Warm key", new Vector3(-6,14,-8), new Color(1,.88f,.7f), 135, 40);
+        Light("Moonlit rim", new Vector3(6,14,3), new Color(.65f,.69f,.79f), 170, 40);
+        Light("Lantern fill", new Vector3(0,8,-12), new Color(1,.85f,.65f), 150, 40);
         var panel = BoardPresentation.Panel(board.transform,"Tournament overlay",new Color(.01f,.02f,.03f,.97f));
         overlay = panel.gameObject; panel.raycastTarget = true;
         BoardPresentation.Stretch(panel.rectTransform,Vector2.zero,Vector2.one);
         var imageGO = new GameObject("3D tower and dice",typeof(RectTransform),typeof(RawImage)); imageGO.transform.SetParent(overlay.transform,false);
         picture = imageGO.GetComponent<RawImage>(); picture.texture = target; picture.raycastTarget = false;
+        ascentMist = new GameObject("Mist above the endless stair", typeof(RectTransform), typeof(CanvasRenderer), typeof(AscentMist));
+        ascentMist.transform.SetParent(picture.transform, false);
+        BoardPresentation.Stretch((RectTransform)ascentMist.transform, Vector2.zero, Vector2.one);
+        ascentMist.GetComponent<AscentMist>().raycastTarget = false;
         BoardPresentation.Stretch(picture.rectTransform,new Vector2(.12f,.08f),new Vector2(.88f,.91f));
         var font = board.interfaceFont != null ? board.interfaceFont : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         title = BoardPresentation.TextLabel(overlay.transform,"THE ASCENT",font,36,new Color(.94f,.8f,.5f),new Vector2(.1f,.88f),new Vector2(.9f,.99f),TextAnchor.MiddleCenter);
+        if (BoardPresentation.SkinFor(board.transform).typography.mastheadFont != null)
+            title.font = BoardPresentation.SkinFor(board.transform).typography.mastheadFont;
         subtitle = BoardPresentation.TextLabel(overlay.transform,"",font,20,new Color(.9f,.9f,.84f),new Vector2(.1f,.01f),new Vector2(.9f,.1f),TextAnchor.MiddleCenter);
     }
     Material Material(Color color,float metal,float smooth)
@@ -83,40 +91,41 @@ public sealed class MatchCinematic : MonoBehaviour
     { camera3D.transform.localPosition = position; camera3D.transform.LookAt(stage.transform.TransformPoint(at)); }
     public IEnumerator ShowTower(int floor)
     {
+        board.preview?.Hide();
         if (rollFrame != null) { picture.transform.SetParent(overlay.transform, false); Destroy(rollFrame); }
         overlay.SetActive(true); overlay.transform.SetAsLastSibling(); picture.color = Color.white;
         camera3D.ResetAspect();
-        overlay.GetComponent<Image>().color = new Color(.01f,.02f,.03f,.97f);
+        overlay.GetComponent<Image>().color = new Color(.055f,.043f,.032f,1);
+        ascentMist.SetActive(true);
         BoardPresentation.Stretch(picture.rectTransform,new Vector2(.12f,.08f),new Vector2(.88f,.91f));
         BoardPresentation.Stretch(title.rectTransform,new Vector2(.1f,.88f),new Vector2(.9f,.99f));
         BoardPresentation.Stretch(subtitle.rectTransform,new Vector2(.1f,.01f),new Vector2(.9f,.1f));
         foreach (var die in dice) if(die != null) Destroy(die); dice.Clear();
         if (tower != null) Destroy(tower);
-        tower = new GameObject("The tournament tower"); tower.transform.SetParent(stage.transform,false);
-        const int floors = 5;
-        for (int i = 0; i < floors; i++)
-        {
-            float y = i*2.6f;
-            Shape(PrimitiveType.Cylinder,tower.transform,new Vector3(0,y,0),new Vector3(5.6f,.16f,4),gold,"Gilded tier");
-            Shape(PrimitiveType.Cylinder,tower.transform,new Vector3(0,y+1.25f,0),new Vector3(4.7f,1.1f,3.4f),stone,"Obsidian floor");
-            Shape(PrimitiveType.Cube,tower.transform,new Vector3(0,y+1.2f,-1.64f),new Vector3(4.2f,1.8f,.12f),dark,"Match plaque");
-            for(int side=-1;side<=1;side+=2)
-            {
-                Shape(PrimitiveType.Cylinder,tower.transform,new Vector3(side*2.2f,y+1.3f,-.6f),new Vector3(.24f,1.2f,.24f),gold,"Pillar");
-                Shape(PrimitiveType.Sphere,tower.transform,new Vector3(side*2.2f,y+2.4f,-.6f),Vector3.one*.33f,teal,"Beacon");
-            }
-            Pairing(i, y, i == floor);
-        }
-        Shape(PrimitiveType.Cylinder,tower.transform,new Vector3(0,-.35f,0),new Vector3(7,.2f,5),dark,"Tower foundation");
+        tower = new GameObject("The unending stair"); tower.transform.SetParent(stage.transform,false);
+        int final = board.Match.ascentFinalLevel > 0 ? Mathf.Max(5,board.Match.ascentFinalLevel) : 0;
+        floor = final > 0 ? Mathf.Clamp(floor,0,final-1) : Mathf.Max(0,floor);
+        ascentMist.SetActive(final == 0 || floor < final-1);
+        int first = Mathf.Max(0, floor - 2);
+        int visible = final > 0 ? Mathf.Min(9,final-first) : 9;
+        BuildEndlessStair(first, visible, floor, final);
+        for (int i = 0; i < Mathf.Min(6,visible); i++) Pairing(first+i, i*StairRise, first+i == floor);
         title.text = floor == 0 ? "THE ASCENT" : "VICTORY · THE ASCENT";
-        subtitle.text = floor == 0 ? "Five floors. One ascent.\nFloor I · Orren vs The Sleepless Eye" : "Floor " + floor + " cleared · The next pairing is revealed";
+        subtitle.text = floor == 0 ? "Beyond the mist, the stair goes on.\nLanding I · Orren vs The Sleepless Eye"
+            : final > 0 && floor == final-1 ? "The mist parts. The final landing awaits."
+            : "Landing " + Roman(floor) + " cleared · The ascent continues";
+        // The climb can be cut short: a click or any key jumps the camera to the current floor and moves on.
+        bool skipped = false;
         for(float t=0;t<1;t+=Time.unscaledDeltaTime/5f)
         {
+            if (SkipRequested()) { skipped = true; t = 1; }
             float s=t*t*(3-2*t);
-            Look(Vector3.Lerp(new Vector3(8,11,-26),new Vector3(1.5f,3.8f,-14),s),Vector3.Lerp(new Vector3(0,6,0),new Vector3(0,1.8f,0),s));
+            float focus = (floor-first)*StairRise+1.2f;
+            float landingX = LandingX(floor);
+            Look(Vector3.Lerp(new Vector3(8,12,-43),new Vector3(landingX+1.8f,focus+2.6f,-16),s),Vector3.Lerp(new Vector3(0,8.8f,0),new Vector3(landingX,focus,0),s));
             yield return null;
         }
-        yield return new WaitForSecondsRealtime(1);
+        for (float wait = 0; wait < 1 && !skipped; wait += Time.unscaledDeltaTime) { if (SkipRequested()) break; yield return null; }
         tower.SetActive(false);
     }
     void Pairing(int floor, float y, bool current)
@@ -125,11 +134,11 @@ public sealed class MatchCinematic : MonoBehaviour
         go.transform.SetParent(tower.transform, false);
         var rect = (RectTransform)go.transform;
         rect.sizeDelta = new Vector2(420,180);
-        rect.localPosition = new Vector3(0,y+1.2f,-1.74f);
-        rect.localScale = Vector3.one * .01f;
+        rect.localPosition = new Vector3(LandingX(floor),y+1.45f,.34f);
+        rect.localScale = Vector3.one * .0063f;
         var canvas = go.GetComponent<Canvas>(); canvas.renderMode = RenderMode.WorldSpace; canvas.worldCamera = camera3D;
-        var accent = current ? new Color(1,.83f,.43f) : new Color(.73f,.78f,.8f);
-        PairingText(rect, (floor+1).ToString("00"), new Vector2(0,73), new Vector2(55,24), 15, accent);
+        var accent = current ? new Color(1,.83f,.43f) : new Color(.68f,.61f,.46f);
+        PairingText(rect, Roman(floor+1), new Vector2(0,73), new Vector2(55,24), 15, accent);
         PairingText(rect, "VS", new Vector2(0,5), new Vector2(55,30), 19, accent);
         string left = floor == 0 ? board.humanAvatarCardName : floor == 1 ? board.opponentAvatarCardName : null;
         string right = floor == 0 ? board.opponentAvatarCardName : null;
@@ -147,7 +156,7 @@ public sealed class MatchCinematic : MonoBehaviour
     }
     void LeaderPortrait(Transform parent, float x, string leaderName, Color accent)
     {
-        var frame = BoardPresentation.Panel(parent, string.IsNullOrWhiteSpace(leaderName) ? "Unknown leader" : "Leader " + leaderName, new Color(.015f,.03f,.035f));
+        var frame = BoardPresentation.Panel(parent, string.IsNullOrWhiteSpace(leaderName) ? "Unknown leader" : "Leader " + leaderName, new Color(.09f,.065f,.038f));
         frame.rectTransform.anchorMin = frame.rectTransform.anchorMax = Vector2.one * .5f;
         frame.rectTransform.sizeDelta = new Vector2(150,128);
         frame.rectTransform.anchoredPosition = new Vector2(x,12);
@@ -163,6 +172,11 @@ public sealed class MatchCinematic : MonoBehaviour
             BoardPresentation.Stretch(portrait.rectTransform,Vector2.zero,Vector2.one);
             portrait.rectTransform.offsetMin = Vector2.one * 4; portrait.rectTransform.offsetMax = Vector2.one * -4;
             portrait.sprite = sprite; portrait.preserveAspect = true;
+            var motion = portrait.gameObject.AddComponent<ZoomImage>();
+            motion.zoomFactor = 1.08f;
+            motion.SetMotionPhase(x * .017f + parent.localPosition.y * .31f);
+            motion.EnableHoverMotion(); motion.SetHovering(true);
+            FantasyCardAura.Create(portrait.rectTransform).SetPresentation(1, accent, true);
         }
         else PairingText(frame.transform, string.IsNullOrWhiteSpace(leaderName) ? "?" : "NO ART",Vector2.zero,new Vector2(135,100),52,accent);
         PairingText(parent,string.IsNullOrWhiteSpace(leaderName) ? "UNREVEALED" : leaderName.ToUpperInvariant(),new Vector2(x,-68),new Vector2(195,30),14,accent);
@@ -198,6 +212,7 @@ public sealed class MatchCinematic : MonoBehaviour
     }
     public IEnumerator Roll(int human,int opponent)
     {
+        if (ascentMist != null) ascentMist.SetActive(false);
         if (tower != null) tower.SetActive(false);
         overlay.SetActive(true); overlay.transform.SetAsLastSibling();
         overlay.GetComponent<Image>().color = new Color(.01f,.02f,.03f,.22f);
@@ -275,6 +290,12 @@ public sealed class MatchCinematic : MonoBehaviour
             portrait.preserveAspect=true;
         }
     }
+    /// <summary>A click or any key: the player has seen enough of the tower.</summary>
+    static bool SkipRequested()
+    {
+        var keyboard = UnityEngine.InputSystem.Keyboard.current; var mouse = UnityEngine.InputSystem.Mouse.current;
+        return keyboard != null && keyboard.anyKey.wasPressedThisFrame || mouse != null && (mouse.leftButton.wasPressedThisFrame || mouse.rightButton.wasPressedThisFrame);
+    }
     public void Hide() { if(overlay!=null) overlay.SetActive(false); }
     void OnDestroy()
     {
@@ -282,5 +303,6 @@ public sealed class MatchCinematic : MonoBehaviour
         if(target!=null) { target.Release(); Destroy(target); }
         foreach(var material in materials) if(material!=null) Destroy(material);
         if(dieMesh!=null) Destroy(dieMesh);
+        foreach (var mesh in towerMeshes) if (mesh != null) Destroy(mesh);
     }
 }

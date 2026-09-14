@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BoardSkin
   displayName: Default
   colors:
-    ink: {r: 0.035, g: 0.052, b: 0.06, a: 0.96}
-    gold: {r: 0.79, g: 0.64, b: 0.4, a: 1}
-    ivory: {r: 0.95, g: 0.91, b: 0.81, a: 1}
-    muted: {r: 0.65, g: 0.71, b: 0.71, a: 1}
-    teal: {r: 0.4, g: 0.77, b: 0.7, a: 1}
-    atmosphere: {r: 0.018, g: 0.033, b: 0.039, a: 0.22}
-    zoneSurface: {r: 0.035, g: 0.065, b: 0.075, a: 0.83}
+    ink: {r: 0.075, g: 0.048, b: 0.029, a: 0.97}
+    gold: {r: 0.83, g: 0.63, b: 0.35, a: 1}
+    ivory: {r: 0.95, g: 0.88, b: 0.72, a: 1}
+    muted: {r: 0.72, g: 0.65, b: 0.52, a: 1}
+    teal: {r: 0.65, g: 0.72, b: 0.43, a: 1}
+    atmosphere: {r: 0.04, g: 0.029, b: 0.018, a: 0.16}
+    zoneSurface: {r: 0.13, g: 0.085, b: 0.045, a: 0.86}
     tokenBorder: {r: 0.7, g: 0.56, b: 0.33, a: 0.6}
     stackBorder: {r: 0.34, g: 0.31, b: 0.23, a: 1}
-    button: {r: 0.1, g: 0.28, b: 0.26, a: 1}
-    disabledButton: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+    button: {r: 0.25, g: 0.17, b: 0.075, a: 1}
+    disabledButton: {r: 0.22, g: 0.19, b: 0.14, a: 1}
     cardShadow: {r: 0, g: 0, b: 0, a: 0.6}
     previewShadow: {r: 0, g: 0, b: 0, a: 0.65}
     emptyPile: {r: 1, g: 1, b: 1, a: 0.035}
@@ -59,7 +59,7 @@ MonoBehaviour:
         max: {x: 0.44, y: 1}
       alignment: 3
       mastheadFont: 1
-    - text: T H E   G O L D E N   V A L E
+    - text: THE GOLDEN VALE
       size: 13
       color: 1
       bounds:

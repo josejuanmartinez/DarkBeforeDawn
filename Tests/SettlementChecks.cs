@@ -41,10 +41,11 @@ Check(r.Stage == MatchStage.Destination && r.DestinationChoices(0).Count() == 5,
 Check(r.PlayableAt(0, neutral).SequenceEqual(new[] { hero }) && !r.PlayableAt(0, home).Any(), "PlayableAt wrong");
 // --- Neutral ground: a retention attack ---------------------------------------------------------------
 Check(r.ChooseDestination(neutral), "Choice failed"); r.Next(); r.Next();
-Check(r.Stage == MatchStage.Muster && r.Players[0].Destination.Card == neutral && !r.Players[0].Destination.Secured, "A neutral town must start unsecured on arrival");
+Check(r.Stage == MatchStage.Arrival && r.Players[0].Destination.Card == neutral && !r.Players[0].Destination.Secured, "A neutral town must start unsecured on arrival, and a company with ready units gets its Arrival");
 Check(!r.CanPlay(hero) && r.PlayBlockReason(hero).Contains("dwellers"), "An unsecured town must block plays and say why");
 Check(r.NeedsSecuring() && r.HasLegalAction() && r.CanSecure(army) && r.CanSecure(champion), "Securing must be a legal action");
-Check(r.Secure(army) && r.Players[0].Destination.Secured && !army.Tapped && r.Players[0].Destination.Garrison == army, "Retention attack won (3+3 vs 2+3) must open the town without tapping the unit");
+Check(r.Secure(army) && r.Players[0].Destination.Secured && army.Tapped && r.Players[0].Destination.Entered && r.Players[0].Destination.Garrison == army, "Retention attack won (3+3 vs 2+3) must open the town, and the winner walks in: unit and town tap");
+Check(r.LastBattle != null && r.LastBattle.Kind == MatchRules.BattleKind.Dwellers && r.LastBattle.Neutral && r.LastBattle.Settlement == neutral && r.LastBattle.Clashes.Single().Attacker == army, "The dwellers fight must be reported");
 Check(r.Fights.Count == 1 && r.Fights[0].Loser != army && r.Fights[0].Blow == Blow.Tapped, "The dwellers duel must be logged");
 Check(!r.CanUndo, "A fight cannot be undone");
 Check(r.CanPlay(hero) && r.Play(hero) && r.Players[0].Destination.Tapped, "Play after securing must work and tap the town");
@@ -65,7 +66,7 @@ r3.Begin(0); r3.Next(); r3.Next(); Check(r3.ChooseDestination(hold3), "Choice fa
 levy.Card.attack = 5;
 Check(r3.Secure(levy) && r3.Players[0].Field.Contains(levy) && levy.Tapped && !levy.Wounded, "Hostile fight won (5+3 vs 3+3): the unit taps for attacking and takes no blow");
 Check(r3.Players[0].Destination.Secured && r3.Players[0].Destination.Garrison == levy, "Winning the duel opens the town and garrisons it");
-levy.Tapped = false; lord.Card.attack = 1; r3.Players[0].Destination.Secured = false;
+levy.Tapped = false; lord.Card.attack = 1; r3.Players[0].Destination.Secured = false; r3.Players[0].Destination.Tapped = false;
 Check(r3.Secure(lord) && lord.Wounded && !r3.Players[0].Destination.Secured && r3.Players[0].Destination.Tapped, "Hostile fight lost (1+3 vs 3+3): margin 2 equals defense 2, the character is wounded and the town closes");
 var r4 = Fresh(); var lord4 = new MatchRules.Unit { Card = Card("Lord", "Character", 1, 2), Owner = 0, EnteredTurn = -1 }; r4.Players[0].Field.Add(lord4);
 var hold4 = Town("Dark Hold", "Vale", CardData.DarkServants, "Wardens"); r4.Players[0].Foreign.Add(hold4);
@@ -93,33 +94,36 @@ var r5 = Fresh();
 var town5 = Town("Home", "Vale", CardData.FreePeople, "Garrison"); r5.Players[0].Settlements.Add(town5); r5.StartAt(0, town5);
 r5.Players[0].Field.Add(new MatchRules.Unit { Card = Card("Vale", "Land"), Owner = 0 });
 var settler = Card("Settler", "Character", 2, 2); settler.startingPC = "Home"; r5.Players[0].Hand.Add(settler);
+var porter = new MatchRules.Unit { Card = Card("Porter", "Character", 1, 1), Owner = 0, EnteredTurn = -1 }; r5.Players[0].Field.Add(porter);
 var lurker = Card("Lurker", "Character", 3, 3); lurker.startingPC = "Home"; r5.Players[1].Hand.Add(lurker);
 var trap = Card("Trap", "Encounter"); trap.birthplaces.Add("Home"); r5.Players[1].Hand.Add(trap);
-r5.Begin(0); r5.Next(); r5.Next(); r5.Next(); r5.Next(); Check(r5.Stage == MatchStage.Muster, "Muster not reached");
-Check(r5.Play(settler) && r5.PendingAmbush != null && r5.PendingAmbush.Defender == 1 && r5.PendingAmbush.Options.Count == 2, "Tapping with enemy cards born there must raise an ambush");
+r5.Begin(0); r5.Next(); r5.Next(); r5.Next(); r5.Next(); Check(r5.Stage == MatchStage.Arrival && r5.NeedsEntering(), "Arrival not reached");
+Check(!r5.CanPlay(settler) && r5.Enter(porter) && r5.PendingAmbush != null && r5.PendingAmbush.Defender == 1 && r5.PendingAmbush.Options.Count == 2, "Entering with enemy cards born there must raise an ambush");
 Check(!r5.CanUndo && !r5.Next() && r5.PlayBlockReason(Card("Any", "Army")) != null && r5.HasLegalAction(), "Nothing moves while an ambush waits");
-var settlerUnit = r5.Players[0].Field.First(u => u.Card == settler);
-Check(r5.PendingAmbush.Target == settlerUnit, "The ambush targets the unit that acted");
+Check(r5.PendingAmbush.Target == porter, "The ambush targets the unit that walked in");
 Check(!r5.AmbushWith(settler) && r5.CanAmbush(lurker) && r5.AmbushWith(lurker), "Ambushing with the born character must work");
 var lurkerUnit = r5.Players[1].Field.FirstOrDefault(u => u.Card == lurker);
 Check(lurkerUnit != null && lurkerUnit.Tapped && !r5.Players[1].Hand.Contains(lurker), "The ambusher enters the field tapped");
-Check(settlerUnit.Wounded && !lurkerUnit.Wounded, "Ambush duel: 3+3 beats the mustering settler's 1+3 by 2 over defense 1: struck down, wounded");
-Check(r5.PendingAmbush == null && r5.Next(), "Play resumes after the ambush");
+Check(porter.Wounded && !lurkerUnit.Wounded, "Ambush duel: 3+3 beats the tapped porter's 0+3 by 3 over defense 0: struck down, wounded");
+Check(r5.LastBattle.Kind == MatchRules.BattleKind.Ambush && r5.LastBattle.Clashes.Single().Target == porter, "The ambush must be reported");
+Check(r5.PendingAmbush == null && r5.CanPlay(settler) && r5.Play(settler) && r5.Next(), "Play resumes after the ambush at the entered town");
 // Declining, and springing an encounter instead.
 var r6 = Fresh();
 var town6 = Town("Home", "Vale", CardData.FreePeople, "Garrison"); r6.Players[0].Settlements.Add(town6); r6.StartAt(0, town6);
 r6.Players[0].Field.Add(new MatchRules.Unit { Card = Card("Vale", "Land"), Owner = 0 });
 var settler6 = Card("Settler", "Character", 2, 2); settler6.startingPC = "Home"; r6.Players[0].Hand.Add(settler6);
+var porter6 = new MatchRules.Unit { Card = Card("Porter", "Character", 1, 1), Owner = 0, EnteredTurn = -1 }; r6.Players[0].Field.Add(porter6);
 var trap6 = Card("Trap", "Encounter"); trap6.birthplaces.Add("Home"); r6.Players[1].Hand.Add(trap6);
 int sprungOn = -1; r6.ResolveEncounter = (card, target, rules) => sprungOn = target;
-r6.Begin(0); r6.Next(); r6.Next(); r6.Next(); r6.Next(); Check(r6.Play(settler6) && r6.PendingAmbush != null, "Encounter-only ambush not raised");
+r6.Begin(0); r6.Next(); r6.Next(); r6.Next(); r6.Next(); Check(r6.Enter(porter6) && r6.PendingAmbush != null, "Encounter-only ambush not raised");
 Check(r6.AmbushWith(trap6) && sprungOn == 0 && r6.Players[1].Discard.Contains(trap6) && r6.PendingAmbush == null, "Springing an encounter must resolve it against the tapper and spend it");
 var r7 = Fresh();
 var town7 = Town("Home", "Vale", CardData.FreePeople, "Garrison"); r7.Players[0].Settlements.Add(town7); r7.StartAt(0, town7);
 r7.Players[0].Field.Add(new MatchRules.Unit { Card = Card("Vale", "Land"), Owner = 0 });
 var settler7 = Card("Settler", "Character", 2, 2); settler7.startingPC = "Home"; r7.Players[0].Hand.Add(settler7);
+var porter7 = new MatchRules.Unit { Card = Card("Porter", "Character", 1, 1), Owner = 0, EnteredTurn = -1 }; r7.Players[0].Field.Add(porter7);
 var lurker7 = Card("Lurker", "Character", 3, 3); lurker7.startingPC = "Home"; r7.Players[1].Hand.Add(lurker7);
-r7.Begin(0); r7.Next(); r7.Next(); r7.Next(); r7.Next(); r7.Play(settler7);
+r7.Begin(0); r7.Next(); r7.Next(); r7.Next(); r7.Next(); r7.Enter(porter7);
 Check(r7.DeclineAmbush() && r7.PendingAmbush == null && r7.Players[1].Hand.Contains(lurker7), "Declining must keep the card and resume");
 // --- Two companies in one town -------------------------------------------------------------------------
 var r8 = Fresh();
@@ -127,17 +131,17 @@ var shared0 = Town("Market", "Vale", CardData.NeutralAlignment, ""); var shared1
 r8.Players[0].Settlements.Add(shared0); r8.Players[1].Settlements.Add(shared1);
 r8.StartAt(0, shared0); r8.StartAt(1, shared1);
 r8.Players[0].Field.Add(new MatchRules.Unit { Card = Card("Vale", "Land"), Owner = 0 });
-var ours = new MatchRules.Unit { Card = Card("Ours", "Army", 2, 2), Owner = 0, EnteredTurn = -1 }; r8.Players[0].Field.Add(ours);
+var ours = new MatchRules.Unit { Card = Card("Ours", "Character", 2, 2), Owner = 0, EnteredTurn = -1 }; r8.Players[0].Field.Add(ours);
 var theirs = new MatchRules.Unit { Card = Card("Theirs", "Army", 3, 1), Owner = 1, EnteredTurn = -1 }; r8.Players[1].Field.Add(theirs);
 var trader = Card("Trader", "Character", 1, 1); trader.startingPC = "Market"; r8.Players[0].Hand.Add(trader);
-r8.Players[1].Destination.Tapped = true; // the other company already acted there on its turn
+r8.Players[1].Destination.Tapped = true; // the other company already entered it on its turn
 r8.Begin(0); r8.Next(); r8.Next(); r8.Next();
 Check(r8.Stage == MatchStage.Travel && r8.CanAttack(theirs), "The enemy army may fall on the company holding still");
-r8.Next(); Check(r8.Stage == MatchStage.Muster, "Undeclared attacks must let the road end");
-Check(r8.Play(trader), "Play failed");
-var traderUnit = r8.Players[0].Field.First(u => u.Card == trader);
-Check(r8.Players[0].Destination.Garrison == traderUnit, "The unit that acted garrisons the town");
-Check(traderUnit.Wounded && r8.Players[1].Field.Contains(theirs), "Meeting: the fresh recruit fights tapped at 0/0, is wounded, and cannot scratch the 3/1 army");
+r8.Next(); Check(r8.Stage == MatchStage.Arrival, "Undeclared attacks must let the road end at the gates");
+Check(r8.Enter(ours) && r8.Players[0].Destination.Garrison == ours, "The unit that walked in garrisons the town");
+Check(ours.Wounded && r8.Players[1].Field.Contains(theirs), "Meeting: the character that walked in fights tapped at 1/1, loses 4 to 6 by 2 over defense 1: struck down, wounded");
+Check(r8.LastBattle.Kind == MatchRules.BattleKind.Meeting && r8.LastBattle.Settlement == shared0, "The meeting must be reported");
+Check(r8.Play(trader) && r8.Players[0].Field.Any(u => u.Card == trader), "Play at the entered shared town failed");
 // --- Journeys: one typed draw per stop, capped at five ----------------------------------------------------
 var map = new RegionMap(new RegionMapData
 {
@@ -297,4 +301,4 @@ Check(PcDescriptionBuilder.BuildBody(Town("Ruin", "Vale", CardData.NeutralAlignm
 Check(DestinationPicker.PlayableSummary(new CardData[0]) == "Nothing in hand can be played here.", "Empty playable line wrong");
 Check(DestinationPicker.PlayableSummary(new[] { Card("A", "Character"), Card("B", "Character") }) == "Allows you playing A, B.", "Two playable names wrong");
 Check(DestinationPicker.PlayableSummary(new[] { Card("A", "Character"), Card("B", "Character"), Card("B", "Character"), Card("C", "Object") }) == "Allows you playing A, B, among others.", "Playable line past two must say among others");
-return "PASS: standing by home/side, dwellers, retention and hostile fights, wounds that heal to tapped and sit out a turn, tapped -1/-1, ambush by character or encounter and decline, two companies meeting, map routes/aliases/clamp, stop-by-stop roads with typed draws and fallbacks, terrain-gated road attacks and defences, hand raiders that return to the deck, tapped recruits, standing fast, dice duels with killed/wounded/tapped margins and stand-offs, the end-of-turn discard, the PC face lines and the picker's playable line.";
+return "PASS: standing by home/side, dwellers, retention and hostile fights that enter the town, wounds that heal to tapped and sit out a turn, tapped -1/-1, ambush by character or encounter and decline, two companies meeting, map routes/aliases/clamp, stop-by-stop roads with typed draws and fallbacks, terrain-gated road attacks and defences, hand raiders that return to the deck, tapped recruits, standing fast, dice duels with killed/wounded/tapped margins and stand-offs, the end-of-turn discard, the PC face lines and the picker's playable line.";
