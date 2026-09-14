@@ -81,9 +81,30 @@ public sealed class BoardPresentation : MonoBehaviour
         var shade = Track(Panel(transform, "Atmosphere veil", skin.colors.atmosphere));
         Stretch(shade.rectTransform, Vector2.zero, Vector2.one);
         shade.transform.SetAsFirstSibling();
-        var header = Track(Panel(transform, "Board masthead", skin.colors.ink));
+        if (skin.backdrop != null)
+        {
+            var landscape = Track(new GameObject("Illustrated landscape", typeof(RectTransform), typeof(RawImage)).GetComponent<RawImage>());
+            landscape.transform.SetParent(transform, false);
+            Stretch(landscape.rectTransform, Vector2.zero, Vector2.one);
+            landscape.texture = skin.backdrop;
+            landscape.raycastTarget = false;
+            var fit = landscape.gameObject.AddComponent<AspectRatioFitter>();
+            fit.aspectMode = AspectRatioFitter.AspectMode.EnvelopeParent;
+            fit.aspectRatio = (float)skin.backdrop.width / skin.backdrop.height;
+            landscape.transform.SetAsFirstSibling();
+        }
+        if (skin.openTable)
+        {
+            var table = Track(new GameObject("Battlefield inlay", typeof(RectTransform), typeof(CanvasRenderer), typeof(TableInlay)).GetComponent<TableInlay>());
+            table.transform.SetParent(transform, false);
+            Stretch(table.rectTransform, new Vector2(.175f,.245f), new Vector2(.805f,.90f));
+            table.raycastTarget = false;
+            table.color = skin.colors.gold;
+            table.transform.SetSiblingIndex(shade.transform.GetSiblingIndex()+1);
+        }
+        var header = Track(Panel(transform, "Board masthead", skin.openTable ? Color.clear : skin.colors.ink));
         Stretch(header.rectTransform, skin.chrome.header.min, skin.chrome.header.max);
-        BoardSurface.Dress(header, skin.colors.gold, true);
+        if (!skin.openTable) BoardSurface.Dress(header, skin.colors.gold, true);
         for (int i = 0; i < skin.chrome.headerLabels.Length; i++)
             if (i == 0 || board.Match == null) StyledLabel(header.transform, skin.chrome.headerLabels[i]);
         foreach (var style in skin.zones) if (style != null) Zone(ResolveZone(style.zone), style);
@@ -125,6 +146,10 @@ public sealed class BoardPresentation : MonoBehaviour
     // creating the current skin, otherwise their alpha values stack into an opaque black board.
     private void ClearStaleGeneratedBackdrops()
     {
+        var landscape = transform.Find("Illustrated landscape");
+        if (landscape != null) DestroyGenerated(landscape.gameObject);
+        var table = transform.Find("Battlefield inlay");
+        if (table != null) DestroyGenerated(table.gameObject);
         foreach (var text in GetComponentsInChildren<Text>(true))
         {
             if (text.transform.parent != transform) continue;
@@ -168,6 +193,11 @@ public sealed class BoardPresentation : MonoBehaviour
         Stretch(panel, style.bounds.min, style.bounds.max);
         foreach (var old in panel.GetComponentsInChildren<Graphic>())
             if (!old.transform.IsChildOf(zone.transform)) old.enabled = false;
+        if (skin.openTable)
+        {
+            OpenZone(zone, style, panel);
+            return;
+        }
         var surface = Track(Panel(panel, "Zone surface", skin.colors.zoneSurface));
         Stretch(surface.rectTransform, Vector2.zero, Vector2.one);
         surface.transform.SetAsFirstSibling();
@@ -196,6 +226,29 @@ public sealed class BoardPresentation : MonoBehaviour
         zone.gap = chrome.zoneGap;
     }
 
+    private void OpenZone(CardZoneVisualizer zone, BoardSkin.ZoneStyle style, RectTransform panel)
+    {
+        // Labels are attached to small physical groups, never full-width boxed lanes.
+        var root = Track(Panel(panel, "Zone surface", Color.clear));
+        Stretch(root.rectTransform, Vector2.zero, Vector2.one);
+        root.transform.SetAsFirstSibling();
+        bool army = style.zone == BoardZoneId.HumanArmies || style.zone == BoardZoneId.OpponentArmies;
+        bool hand = style.zone == BoardZoneId.Hand;
+        var title = Label(root.transform, style.title, army ? 15 : 13, Skin.colors.muted,
+            new Vector2(0,.88f), Vector2.one, TextAnchor.UpperCenter);
+        title.font = Skin.typography.mastheadFont != null ? Skin.typography.mastheadFont : font;
+        title.color = new Color(title.color.r,title.color.g,title.color.b,army ? .55f : .9f);
+        if (hand) title.text = "";
+        var count = Label(root.transform, "", 12, Skin.colors.muted,
+            new Vector2(.85f,.88f), Vector2.one, TextAnchor.UpperRight);
+        counts.Add((zone, count));
+        var area = (RectTransform)zone.transform;
+        Stretch(area, Vector2.zero, Vector2.one);
+        area.offsetMin = new Vector2(8, hand ? 4 : 6);
+        area.offsetMax = new Vector2(-8, hand ? -4 : -24);
+        zone.gap = army ? 20 : 12;
+    }
+
     private void LateUpdate()
     {
         foreach (var entry in materialLabels)
@@ -206,7 +259,7 @@ public sealed class BoardPresentation : MonoBehaviour
         {
             if (entry.zone == null || entry.label == null) continue;
             int handLimit = board.Match != null ? board.Match.Rules?.Players[0].HandLimit ?? board.defaultHandSize : board.maximumHandSize;
-            var value = entry.zone.isHand ? $"{entry.zone.Count} / {handLimit}" : entry.zone.Count.ToString("00");
+            var value = entry.zone.isHand ? $"{entry.zone.Count} / {handLimit}" : Skin.openTable ? (entry.zone.Count > 0 ? entry.zone.Count.ToString() : "") : entry.zone.Count.ToString("00");
             if (entry.label.text != value) entry.label.text = value;
         }
     }
@@ -216,10 +269,10 @@ public sealed class BoardPresentation : MonoBehaviour
         var style = Skin.players;
         var accent = opponent ? Skin.colors.gold : Skin.colors.teal;
         var bounds = opponent ? style.opponentMaterials : style.humanMaterials;
-        var panel = Track(Panel(transform, opponent ? "Opponent materials" : "Your materials", Skin.colors.zoneSurface));
+        var panel = Track(Panel(transform, opponent ? "Opponent materials" : "Your materials", Skin.openTable ? Color.clear : Skin.colors.zoneSurface));
         Stretch(panel.rectTransform, bounds.min, bounds.max);
-        BoardSurface.Dress(panel, accent, false, false, BoardEmblem.Materials);
-        Label(panel.transform, opponent ? "OPPONENT MATERIALS" : "YOUR MATERIALS", style.headingSize, accent,
+        if (!Skin.openTable) BoardSurface.Dress(panel, accent, false, false, BoardEmblem.Materials);
+        Label(panel.transform, Skin.openTable ? "" : opponent ? "OPPONENT MATERIALS" : "YOUR MATERIALS", style.headingSize, accent,
             new Vector2(.02f,.85f), new Vector2(.98f,1), TextAnchor.MiddleCenter);
         var pool = opponent ? board.OpponentMaterials : board.HumanMaterials;
         for (int i = 0; i < PlayerMaterials.Names.Length; i++)
@@ -244,7 +297,7 @@ public sealed class BoardPresentation : MonoBehaviour
             Label(panel.transform, PlayerMaterials.Names[i].ToUpperInvariant(), style.materialSize, Skin.colors.muted,
                 new Vector2(left,bottom), new Vector2(left+.24f,bottom+.12f), TextAnchor.MiddleCenter);
         }
-        if (!opponent)
+        if (!opponent && (!Skin.openTable || board.Match == null))
         {
             var next = Panel(panel.transform, "End turn", Skin.colors.button);
             Stretch(next.rectTransform, new Vector2(.04f,.015f), new Vector2(.96f,.145f));
@@ -264,9 +317,9 @@ public sealed class BoardPresentation : MonoBehaviour
                 style.materialSize, accent, Vector2.zero, Vector2.one, TextAnchor.MiddleCenter);
         }
         var avatarBounds = opponent ? style.opponentAvatar : style.humanAvatar;
-        var avatar = Track(Panel(transform, opponent ? "Opponent avatar" : "Your avatar", Skin.colors.zoneSurface));
+        var avatar = Track(Panel(transform, opponent ? "Opponent avatar" : "Your avatar", Skin.openTable ? Color.clear : Skin.colors.zoneSurface));
         Stretch(avatar.rectTransform, avatarBounds.min, avatarBounds.max);
-        BoardSurface.Dress(avatar, accent, true, false, BoardEmblem.Champion);
+        if (!Skin.openTable) BoardSurface.Dress(avatar, accent, true, false, BoardEmblem.Champion);
         var avatarHeading = Label(avatar.transform, opponent ? "OPPONENT AVATAR" : "YOUR AVATAR", style.headingSize, accent,
             Vector2.up, Vector2.one, TextAnchor.MiddleCenter);
         avatarHeading.rectTransform.pivot = new Vector2(.5f, 1);
@@ -296,6 +349,7 @@ public sealed class BoardPresentation : MonoBehaviour
             actionStatus = Label(transform, board.ActionStatus, 11, Skin.colors.muted,
                 new Vector2(.153f,.564f), new Vector2(.863f,.572f), TextAnchor.MiddleCenter);
             actionStatus.name = "Material action status";
+            if (Skin.openTable) actionStatus.gameObject.SetActive(false);
         }
     }
 
@@ -393,7 +447,7 @@ public sealed class BoardPresentation : MonoBehaviour
         => zone != null && zone.board != null && zone.board.IsOpponentZone(zone)
             ? skin.colors.opponentTokenStats : skin.colors.ownTokenStats;
 
-    public static void StyleFullCard(Card card)
+    public static void StyleFullCard(Card card, bool handPortrait = false)
     {
         var skin = SkinFor(card.transform);
         var style = skin.cards;
@@ -401,6 +455,7 @@ public sealed class BoardPresentation : MonoBehaviour
         var real = root.Find("RealCard") as RectTransform;
         if (real == null) return;
         ClearGeneratedCardChrome(root, real);
+        real.Find("DescriptionBackground")?.gameObject.SetActive(true);
         real.anchorMin = real.anchorMax = Vector2.one * .5f;
         real.sizeDelta = style.size;
         real.anchoredPosition = Vector2.zero;
@@ -483,6 +538,28 @@ public sealed class BoardPresentation : MonoBehaviour
         StyleCombatStats(card, root, skin, readingFont, accent);
         Border(root, Color.Lerp(skin.colors.gold, accent, style.typeBorderBlend));
         Rule(root, accent, Vector2.zero, Vector2.right);
+        if (handPortrait)
+        {
+            // Rules stay on the full inspection face. At table scale the illustration, name,
+            // price and combat values are what a player can actually read.
+            float top = style.title.position.y - style.title.size.y * .5f - 5;
+            float bottom = -style.size.y * .5f + 38;
+            SetPiece(real, "Image", new Vector2(style.art.size.x, top - bottom), new Vector2(0, (top + bottom) * .5f), Color.white);
+            real.Find("DescriptionBackground")?.gameObject.SetActive(false);
+            var ribbon = Panel(root, "Hand type ribbon", new Color(.79f,.73f,.57f));
+            ribbon.rectTransform.sizeDelta = new Vector2(style.art.size.x, 27);
+            ribbon.rectTransform.anchoredPosition = new Vector2(0, -style.size.y * .5f + 20);
+            var type = TextLabel(ribbon.transform, card.cardData.GetCardType().ToString().ToUpperInvariant(),
+                skin.typography.mastheadFont, 16, new Color(.12f,.14f,.10f), Vector2.zero, Vector2.one, TextAnchor.MiddleCenter);
+            type.raycastTarget = false;
+            foreach (string name in new[] { "Stat plaque", "Class plaque", "Status plaque" })
+            {
+                var piece = root.Find(name) as RectTransform;
+                if (piece != null) piece.anchoredPosition += new Vector2(0, bottom + 22 - style.stats.position.y);
+            }
+            foreach (var text in new[] { card.CombatStatsLabel, card.ClassStatsLabel, card.StatusEffectsLabel })
+                if (text != null) text.rectTransform.anchoredPosition += new Vector2(0, bottom + 22 - style.stats.position.y);
+        }
     }
 
     /// <summary>
@@ -491,6 +568,25 @@ public sealed class BoardPresentation : MonoBehaviour
     /// whole width; a full card has a description and flavour line down there, so left at that size
     /// the numerals sit on top of the story text at several times its size.
     /// </summary>
+    public static void StyleFieldCard(Card card, Board board)
+    {
+        var real = card.transform.Find("RealCard");
+        real.Find("Image/Requirements")?.gameObject.SetActive(false);
+        real.Find("Image/Cost plaque")?.gameObject.SetActive(false);
+        var ribbon = card.transform.Find("Hand type ribbon");
+        if (ribbon != null && card.cardData.GetCardType() == CardTypeEnum.Land)
+        {
+            foreach (var label in ribbon.GetComponentsInChildren<Text>()) label.enabled = false;
+            var text = new GameObject("Land yield", typeof(RectTransform), typeof(TextMeshProUGUI)).GetComponent<TextMeshProUGUI>();
+            text.transform.SetParent(ribbon,false);
+            Stretch(text.rectTransform,Vector2.zero,Vector2.one);
+            text.font = ReadingFontFor(SkinFor(card.transform)); text.spriteAsset=SpriteAssetFor(board);
+            text.text=card.LandResourceSummary; text.fontSize=23; text.enableAutoSizing=true;
+            text.fontSizeMin=12; text.fontSizeMax=23; text.color=new Color(.12f,.14f,.10f);
+            text.alignment=TextAlignmentOptions.Center; text.raycastTarget=false;
+        }
+    }
+
     private static void StyleCombatStats(Card card, RectTransform root, BoardSkin skin, TMP_FontAsset readingFont, Color accent)
     {
         var style = skin.cards;
@@ -544,7 +640,7 @@ public sealed class BoardPresentation : MonoBehaviour
 
     private static void ClearGeneratedCardChrome(RectTransform root, RectTransform real)
     {
-        ClearChildrenNamed(root, "Obsidian card stock", "Frame", "Inlay", "Stat plaque", "Class plaque", "Status plaque");
+        ClearChildrenNamed(root, "Obsidian card stock", "Frame", "Inlay", "Stat plaque", "Class plaque", "Status plaque", "Hand type ribbon");
         for (int i = real.childCount - 1; i >= 0; i--)
         {
             var child = real.GetChild(i);

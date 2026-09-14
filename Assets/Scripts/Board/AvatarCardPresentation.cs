@@ -16,6 +16,24 @@ public sealed class AvatarCardPresentation : MonoBehaviour
         card = face;
         zone = owner;
         if (card.transform.Find("Health bar") == null) AvatarHealthBar.CreateOnCard(card, zone.board, zone.Owner);
+        // A champion is a portrait with life and identity, so use the space formerly occupied
+        // by the empty rules panel for the illustration.
+        var real = card.transform.Find("RealCard");
+        var art = real?.Find("Image") as RectTransform;
+        var health = card.transform.Find("Health bar") as RectTransform;
+        var description = real?.Find("DescriptionBackground") as RectTransform;
+        var skin = BoardPresentation.SkinFor(card.transform);
+        if (art != null && health != null)
+        {
+            float top = health.anchoredPosition.y - health.sizeDelta.y * .5f - 8;
+            float bottom = -skin.cards.size.y * .5f + 36;
+            art.sizeDelta = new Vector2(art.sizeDelta.x, top - bottom);
+            art.anchoredPosition = new Vector2(art.anchoredPosition.x, (top + bottom) * .5f);
+            if (description != null) {
+                description.sizeDelta = new Vector2(description.sizeDelta.x, 28);
+                description.anchoredPosition = new Vector2(0, -skin.cards.size.y * .5f + 19);
+            }
+        }
         LateUpdate();
     }
     void LateUpdate()

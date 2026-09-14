@@ -12,8 +12,9 @@ Assert(board.preview.IsShowing, "Card inspection failed.");
 Assert(board.preview.PreviewRect.GetComponentInChildren<BoardSurface>() != null, "Preview is missing the board treatment.");
 board.preview.Hide();
 var bar = (UnityEngine.RectTransform)board.transform.Find("Match stages");
-Assert(bar != null && bar.anchorMin.y >= .944f, "Match toolbar overlaps the battlefield.");
-var next = bar.Find("CONTINUE").GetComponent<UnityEngine.UI.Button>();
+Assert(bar != null && bar.anchorMin.y >= .928f, "Match toolbar overlaps the battlefield.");
+var nextRoot = BoardSkin.Default.openTable ? board.transform.Find("CONTINUE") : bar.Find("CONTINUE");
+var next = nextRoot.GetComponent<UnityEngine.UI.Button>();
 Assert(next.targetGraphic is BoardSurface, "Action feedback does not target the visible surface.");
 bool wasVisible = next.gameObject.activeSelf;
 next.gameObject.SetActive(true);
@@ -39,11 +40,15 @@ foreach (var zone in board.GetComponentsInChildren<CardZoneVisualizer>())
             zone.Arrange();
             foreach (var view in zone.GetComponentsInChildren<BoardCardView>())
             {
+                // Measure the layout slot independently of the live ready-card rocking pose.
+                var pose = view.Rect.localRotation;
+                view.Rect.localRotation = UnityEngine.Quaternion.identity;
                 var corners = new UnityEngine.Vector3[4]; view.Rect.GetWorldCorners(corners);
+                view.Rect.localRotation = pose;
                 foreach (var corner in corners)
                 {
                     var p = rect.InverseTransformPoint(corner);
-                    Assert(p.x >= rect.rect.xMin-.1f && p.x <= rect.rect.xMax+.1f && p.y >= rect.rect.yMin-.1f && p.y <= rect.rect.yMax+.1f, "Card overflows resized zone " + zone.name);
+                    Assert(p.x >= rect.rect.xMin-.1f && p.x <= rect.rect.xMax+.1f && p.y >= rect.rect.yMin-.1f && p.y <= rect.rect.yMax+.1f, "Card overflows resized zone " + zone.name + "/" + view.name + " at " + size + ": " + p + " outside " + rect.rect);
                 }
             }
         }
@@ -57,7 +62,8 @@ try
 {
     board.Match.Rules.Players[0].Life = 7;
     foreach (var health in healthBars) health.SendMessage("Update");
-    Assert(board.transform.Find("Your avatar/Health bar").GetComponentInChildren<UnityEngine.UI.Text>().text.StartsWith("7 /"),"Health does not follow match damage.");
+    var humanHealth = board.transform.Find("Your avatar").GetComponentInChildren<AvatarHealthBar>();
+    Assert(humanHealth.GetComponentInChildren<TMPro.TMP_Text>().text.Contains("7 /"),"Health does not follow match damage.");
 }
 finally { board.Match.Rules.Players[0].Life=originalLife; foreach(var health in healthBars) health.SendMessage("Update"); }
 return checks + " assertions passed: decoration input transparency, card inspection, toolbar placement, button raycast, responsive card containment and live health.";

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 /// <summary>The blind-stamped device on a panel: each kind of widget wears the shape of what it holds.</summary>
 public enum BoardEmblem { Sprig, Lands, Settlements, Armies, Deck, Discard, Environment, Hand, Materials, Champion, None }
 
-/// <summary>Leather panels with brass bindings. One mesh, no textures or per-frame allocations.</summary>
+/// <summary>Inset gold metalwork over translucent midnight glass. One mesh per surface.</summary>
 [DisallowMultipleComponent]
 public sealed class BoardSurface : MaskableGraphic
 {
@@ -50,22 +50,22 @@ public sealed class BoardSurface : MaskableGraphic
         vh.Clear();
         Rect r = rectTransform.rect;
         if (r.width < 4 || r.height < 4) return;
-        float cut = Mathf.Min(2, r.height * .1f);
-        // Thick book-cover edges and warm leather keep the board in the fantasy world.
+        float cut = Mathf.Min(10, r.height * .12f);
+        // Beveled dark edges separate the illustrated table from its metal inlay.
         Plate(vh, new Rect(r.x - 2, r.y - 4, r.width + 4, r.height + 4), cut, new Color(0, 0, 0, .12f), new Color(0, 0, 0, .12f));
-        Color low = Color.Lerp(surface, new Color(.045f, .027f, .017f, .94f), .72f);
-        Color high = Color.Lerp(surface, new Color(.19f, .125f, .067f, .97f), .6f);
+        Color low = Color.Lerp(surface, new Color(.008f, .019f, .021f, .94f), .45f);
+        Color high = Color.Lerp(surface, new Color(.075f, .115f, .109f, .97f), .28f);
         // The landscape is part of the board: large furniture stays transparent, while small
         // card stock and controls retain the opacity of their own skin surface.
-        low.a = opaque ? 1 : compact ? surface.a : .66f;
-        high.a = opaque ? 1 : compact ? surface.a : .73f;
+        low.a = opaque ? 1 : surface.a;
+        high.a = opaque ? 1 : compact ? surface.a : surface.a * .65f;
         Plate(vh, r, cut, low, high);
         // Fine horizontal grain. Deterministic geometry avoids texture imports and stretching.
         // No full-width scan lines: these fight the landscape and shimmer at smaller view sizes.
-        Outline(vh, r, cut, new Color(.20f,.13f,.065f,.95f), 4);
-        Outline(vh, r, cut, Tone(.65f), 1);
+        Outline(vh, r, cut, new Color(.015f,.019f,.014f,.95f), 3);
+        Outline(vh, r, cut, Tone(.8f), 1);
         Rect inner = new Rect(r.x + 3, r.y + 3, r.width - 6, r.height - 6);
-        Outline(vh, inner, Mathf.Max(1, cut - 2), new Color(0, 0, 0, .5f), 1);
+        Outline(vh, inner, Mathf.Max(1, cut - 2), Tone(.28f), .65f);
         // Short, irregular pores instead of a repeated screen-like grid.
         int pores = Mathf.Min(400, Mathf.FloorToInt(r.width*r.height/550));
         for (int i=0;i<pores;i++)
@@ -84,8 +84,8 @@ public sealed class BoardSurface : MaskableGraphic
                 var a = new Vector2(x + sx * 5, y + sy * 23);
                 var b = new Vector2(x + sx * 5, y + sy * 5);
                 var c = new Vector2(x + sx * 23, y + sy * 5);
-                Line(vh, a, b, 4, Tone(.7f));
-                Line(vh, b, c, 4, Tone(.7f));
+                Line(vh, a, b, 1.2f, Tone(.9f));
+                Line(vh, b, c, 1.2f, Tone(.9f));
                 Ring(vh, new Vector2(x+sx*7,y+sy*7),2,Tone(.95f));
                 for(int stitch=0;stitch<3;stitch++)
                     Line(vh,new Vector2(x+sx*(29+stitch*7),y+sy*6),new Vector2(x+sx*(32+stitch*7),y+sy*6),1,Tone(.25f));

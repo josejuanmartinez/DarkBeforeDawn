@@ -12,19 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b9acc2c44d79fa4a96f5323cd173103, type: 3}
   m_Name: Default
   m_EditorClassIdentifier: Assembly-CSharp::BoardSkin
-  displayName: Default
+  displayName: The Twilight Table
+  backdrop: {fileID: 2800000, guid: 3380096abb76a9a438d4563e017c36ad, type: 3}
+  openTable: 1
   colors:
-    ink: {r: 0.075, g: 0.048, b: 0.029, a: 0.97}
-    gold: {r: 0.83, g: 0.63, b: 0.35, a: 1}
-    ivory: {r: 0.95, g: 0.88, b: 0.72, a: 1}
-    muted: {r: 0.72, g: 0.65, b: 0.52, a: 1}
-    teal: {r: 0.65, g: 0.72, b: 0.43, a: 1}
-    atmosphere: {r: 0.04, g: 0.029, b: 0.018, a: 0.16}
-    zoneSurface: {r: 0.13, g: 0.085, b: 0.045, a: 0.86}
+    ink: {r: 0.022, g: 0.038, b: 0.036, a: 0.98}
+    gold: {r: 0.79, g: 0.64, b: 0.39, a: 1}
+    ivory: {r: 0.95, g: 0.9, b: 0.77, a: 1}
+    muted: {r: 0.64, g: 0.68, b: 0.61, a: 1}
+    teal: {r: 0.64, g: 0.73, b: 0.57, a: 1}
+    atmosphere: {r: 0.012, g: 0.025, b: 0.025, a: 0.42}
+    zoneSurface: {r: 0.025, g: 0.05, b: 0.046, a: 0.48}
     tokenBorder: {r: 0.7, g: 0.56, b: 0.33, a: 0.6}
     stackBorder: {r: 0.34, g: 0.31, b: 0.23, a: 1}
-    button: {r: 0.25, g: 0.17, b: 0.075, a: 1}
-    disabledButton: {r: 0.22, g: 0.19, b: 0.14, a: 1}
+    button: {r: 0.08, g: 0.14, b: 0.115, a: 0.96}
+    disabledButton: {r: 0.12, g: 0.14, b: 0.12, a: 1}
     cardShadow: {r: 0, g: 0, b: 0, a: 0.6}
     previewShadow: {r: 0, g: 0, b: 0, a: 0.65}
     emptyPile: {r: 1, g: 1, b: 1, a: 0.035}
@@ -37,7 +39,7 @@ MonoBehaviour:
     mastheadFont: {fileID: 12800000, guid: 17d4945b9a263ab4891b0cfbfdb9a2eb, type: 3}
     readingFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     readingFontFallback: Fonts & Materials/LiberationSans SDF
-    zoneHeadingSize: 15
+    zoneHeadingSize: 17
     countSize: 12
     previewLabelSize: 12
     buttonSize: 19
@@ -48,15 +50,15 @@ MonoBehaviour:
   chrome:
     lineWidth: 2
     header:
-      min: {x: 0, y: 0.944}
+      min: {x: 0, y: 0.928}
       max: {x: 1, y: 1}
     headerLabels:
     - text: DARK BEFORE DAWN
-      size: 25
+      size: 27
       color: 2
       bounds:
         min: {x: 0.02, y: 0}
-        max: {x: 0.44, y: 1}
+        max: {x: 0.32, y: 1}
       alignment: 3
       mastheadFont: 1
     - text: THE GOLDEN VALE
@@ -80,12 +82,12 @@ MonoBehaviour:
     zoneInlayOpacity: 0.65
     zoneInlayFraction: 0.12
     headingInset: {x: 22, y: 4}
-    headingHeight: 26
+    headingHeight: 28
     countWidth: 80
     contentInsetMin: {x: 14, y: 10}
     contentInsetMax: {x: 14, y: 30}
     zoneGap: 12
-    handGap: 18
+    handGap: 12
   cards:
     size: {x: 300, y: 410}
     art:
@@ -121,8 +123,8 @@ MonoBehaviour:
     captionInset: 3
     captionMinSize: 11
     captionMaxSize: 16
-    borderWidth: 0
-    artInset: 0
+    borderWidth: 2
+    artInset: 4
     highlightFadeSpeed: 10
   face:
     requirementsMessage: {r: 1, g: 0, b: 0, a: 1}
@@ -154,90 +156,90 @@ MonoBehaviour:
     fadeSpeed: 12
   players:
     opponentMaterials:
-      min: {x: 0.008, y: 0.477}
-      max: {x: 0.145, y: 0.632}
+      min: {x: 0.013, y: 0.552}
+      max: {x: 0.164, y: 0.675}
     humanMaterials:
-      min: {x: 0.008, y: 0.31}
-      max: {x: 0.145, y: 0.465}
+      min: {x: 0.013, y: 0.005}
+      max: {x: 0.164, y: 0.119}
     opponentAvatar:
-      min: {x: 0.008, y: 0.64}
-      max: {x: 0.145, y: 0.93}
+      min: {x: 0.02, y: 0.665}
+      max: {x: 0.157, y: 0.925}
     humanAvatar:
-      min: {x: 0.008, y: 0.012}
-      max: {x: 0.145, y: 0.302}
-    headingSize: 12
-    amountSize: 22
-    materialSize: 11
+      min: {x: 0.02, y: 0.105}
+      max: {x: 0.157, y: 0.365}
+    headingSize: 11
+    amountSize: 24
+    materialSize: 10
   zones:
   - zone: 0
-    title: LANDS
+    title: ENEMY LANDS
     bounds:
-      min: {x: 0.153, y: 0.818}
-      max: {x: 0.7, y: 0.93}
-    accent: 1
-  - zone: 1
-    title: DESTINATION
-    bounds:
-      min: {x: 0.708, y: 0.818}
-      max: {x: 0.863, y: 0.93}
+      min: {x: 0.24, y: 0.795}
+      max: {x: 0.74, y: 0.928}
     accent: 1
   - zone: 2
-    title: OPPONENT  /  ARMIES & CHARACTERS
+    title: THE ENEMY COMPANY
     bounds:
-      min: {x: 0.153, y: 0.678}
-      max: {x: 0.863, y: 0.81}
+      min: {x: 0.2, y: 0.57}
+      max: {x: 0.78, y: 0.795}
     accent: 1
-  - zone: 3
-    title: VICTORY
+  - zone: 6
+    title: YOUR COMPANY
     bounds:
-      min: {x: 0.871, y: 0.628}
-      max: {x: 0.992, y: 0.73}
+      min: {x: 0.2, y: 0.345}
+      max: {x: 0.78, y: 0.565}
+    accent: 4
+  - zone: 7
+    title: YOUR LANDS
+    bounds:
+      min: {x: 0.24, y: 0.245}
+      max: {x: 0.74, y: 0.345}
+    accent: 4
+  - zone: 11
+    title: 
+    bounds:
+      min: {x: 0.185, y: 0.002}
+      max: {x: 0.803, y: 0.258}
+    accent: 4
+  - zone: 5
+    title: THE WORLD
+    bounds:
+      min: {x: 0.025, y: 0.39}
+      max: {x: 0.155, y: 0.55}
     accent: 1
+  - zone: 1
+    title: ENEMY DESTINATION
+    bounds:
+      min: {x: 0.823, y: 0.7}
+      max: {x: 0.922, y: 0.921}
+    accent: 1
+  - zone: 8
+    title: YOUR DESTINATION
+    bounds:
+      min: {x: 0.823, y: 0.43}
+      max: {x: 0.922, y: 0.654}
+    accent: 4
   - zone: 4
     title: DISCARD
     bounds:
-      min: {x: 0.871, y: 0.738}
-      max: {x: 0.992, y: 0.93}
+      min: {x: 0.932, y: 0.742}
+      max: {x: 0.99, y: 0.901}
     accent: 1
-  - zone: 5
-    title: THE WORLD  /  ENVIRONMENT
-    bounds:
-      min: {x: 0.153, y: 0.572}
-      max: {x: 0.863, y: 0.67}
-    accent: 1
-  - zone: 6
-    title: YOUR REALM  /  ARMIES & CHARACTERS
-    bounds:
-      min: {x: 0.153, y: 0.43}
-      max: {x: 0.863, y: 0.564}
-    accent: 4
-  - zone: 7
-    title: LANDS
-    bounds:
-      min: {x: 0.153, y: 0.302}
-      max: {x: 0.7, y: 0.422}
-    accent: 4
-  - zone: 8
-    title: DESTINATION
-    bounds:
-      min: {x: 0.708, y: 0.302}
-      max: {x: 0.863, y: 0.422}
-    accent: 4
-  - zone: 9
-    title: VICTORY
-    bounds:
-      min: {x: 0.871, y: 0.302}
-      max: {x: 0.992, y: 0.408}
-    accent: 4
   - zone: 10
     title: DISCARD
     bounds:
-      min: {x: 0.871, y: 0.416}
-      max: {x: 0.992, y: 0.62}
+      min: {x: 0.932, y: 0.472}
+      max: {x: 0.99, y: 0.631}
     accent: 4
-  - zone: 11
-    title: YOUR HAND
+  - zone: 3
+    title: VICTORY
     bounds:
-      min: {x: 0.153, y: 0.012}
-      max: {x: 0.992, y: 0.294}
+      min: {x: 0.932, y: 0.651}
+      max: {x: 0.99, y: 0.735}
+    accent: 1
+  - zone: 9
+    title: VICTORY
+    bounds:
+      min: {x: 0.932, y: 0.38}
+      max: {x: 0.99, y: 0.466}
     accent: 4

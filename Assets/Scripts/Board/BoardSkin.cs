@@ -10,6 +10,10 @@ public enum SkinColorRole { Ink, Gold, Ivory, Muted, Teal }
 public sealed class BoardSkin : ScriptableObject
 {
     public string displayName = "Default";
+    [Tooltip("Full bleed illustration beneath the board furniture. Leave empty to show the scene camera.")]
+    public Texture2D backdrop;
+    [Tooltip("Open battlefield, floating cards and a fanned hand instead of framed dashboard lanes.")]
+    public bool openTable;
     public Palette colors = new();
     public Typography typography = new();
     public Chrome chrome = new();

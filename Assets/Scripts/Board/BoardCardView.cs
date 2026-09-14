@@ -41,7 +41,7 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
         Zone = zone;
         Data = data;
         liftPhase = (data.cardId % 97) * .37f;
-        NaturalSize = BuildVisual(zone.board, data, token, transform, zone);
+        NaturalSize = BuildVisual(zone.board, data, token, transform, zone, tablePresentation: true);
         ConfigureArtworkMotion();
         if (zone is DeckVisualizer deck && deck.Count > 1)
         {
@@ -152,14 +152,20 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
     // The offset the view adds to the slot the zone laid it in. The zone rewrites the position
     // outright when it arranges, so a position that is not the last one written is taken as a new
     // base rather than fought over.
-    Vector2 basePosition; float applied, liftPhase;
+    Vector2 basePosition; float applied, liftPhase, fanAngle;
+    public void SetTablePose(Vector2 position, float angle)
+    {
+        basePosition = position; applied = 0; fanAngle = angle;
+        Rect.anchoredPosition = position;
+        Rect.localRotation = Quaternion.Euler(0,0,angle);
+    }
     void Lift(float lift)
     {
         var rect = Rect;
         if (rect.anchoredPosition != basePosition + Vector2.up * applied) { basePosition = rect.anchoredPosition; applied = 0; }
         applied = Mathf.MoveTowards(applied, lift, Time.unscaledDeltaTime * 60);
         rect.anchoredPosition = basePosition + Vector2.up * applied;
-        if (Zone != null && Zone == Zone.board.hand) transform.localRotation = Quaternion.Euler(0, 0, applied > 0 ? Mathf.Sin(Time.unscaledTime * 2.1f + liftPhase) * 1.5f * (applied / 14) : 0);
+        if (Zone != null && Zone == Zone.board.hand) transform.localRotation = Quaternion.Euler(0, 0, fanAngle + (applied > 0 ? Mathf.Sin(Time.unscaledTime * 2.1f + liftPhase) * 1.5f * (applied / 14) : 0));
     }
 
     private void OnDestroy() { if (battleVfx != null) battleVfx.Unregister(this); }
@@ -264,9 +270,11 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
         return skin.cards.size;
     }
 
-    public static Vector2 BuildVisual(Board board, CardData data, bool token, Transform parent, CardZoneVisualizer zone = null)
+    public static Vector2 BuildVisual(Board board, CardData data, bool token, Transform parent, CardZoneVisualizer zone = null, bool tablePresentation = false)
     {
         var skin = BoardPresentation.SkinFor(parent);
+        bool illustratedToken = token && tablePresentation && skin.openTable;
+        if (illustratedToken) token = false;
         var instance = Instantiate(token ? board.tokenCardPrefab : board.fullCardPrefab, parent, false);
         instance.SetActive(true);
         var provider = instance.GetComponent<CardDataProvider>();
@@ -318,7 +326,8 @@ public sealed class BoardCardView : MonoBehaviour, IPointerEnterHandler, IPointe
             // deliberately not the answer here: on this path the skin's card size is, and the root
             // is resized to it two lines down.
             FitFullCardRoot(card);
-            BoardPresentation.StyleFullCard(card);
+            BoardPresentation.StyleFullCard(card, tablePresentation && zone != null && (zone.isHand || illustratedToken));
+            if (illustratedToken) BoardPresentation.StyleFieldCard(card, board);
             if (zone is AvatarZoneVisualizer avatarZone)
                 instance.AddComponent<AvatarCardPresentation>().Initialize(card, avatarZone);
             size = skin.cards.size;

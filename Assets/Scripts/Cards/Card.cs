@@ -562,6 +562,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         if (plaque != null) plaque.gameObject.SetActive(statusEffectsText.gameObject.activeSelf);
     }
 
+    public string LandResourceSummary => cardData != null ? BuildLandResourceVisual() : string.Empty;
+
     private string BuildLandResourceVisual()
     {
         List<string> parts = new();

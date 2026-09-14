@@ -218,6 +218,24 @@ public class CardZoneVisualizer : MonoBehaviour
         int n = slots.Count;
         Vector2 area = Area.rect.size;
         if (n == 0 || area.x <= 0 || area.y <= 0 || natural.x <= 0 || natural.y <= 0) return;
+        if (isHand && BoardPresentation.SkinFor(transform).openTable)
+        {
+            // Reserve room for the arc, card rotation and the live legal-action lift.
+            float scaleFan = Mathf.Min(area.y * .78f / natural.y, area.x / (natural.x * (1 + (n-1)*.88f) + natural.y*.16f));
+            float stepFan = natural.x * scaleFan * .88f;
+            for (int i=0;i<n;i++)
+            {
+                float t = n == 1 ? 0 : (i-(n-1)*.5f)/Mathf.Max(1,(n-1)*.5f);
+                var slot = slots[i];
+                slot.anchorMin = slot.anchorMax = slot.pivot = Vector2.one*.5f;
+                slot.sizeDelta = natural; slot.localScale = Vector3.one*scaleFan;
+                var position = new Vector2((i-(n-1)*.5f)*stepFan, -t*t*area.y*.055f - area.y*.035f);
+                var view = slot.GetComponent<BoardCardView>();
+                if (view != null) view.SetTablePose(position,-t*7);
+                else { slot.anchoredPosition=position; slot.localRotation=Quaternion.Euler(0,0,-t*7); }
+            }
+            return;
+        }
         float width = area.x, height = area.y;
         int columns = n, rows = 1;
         float scale;

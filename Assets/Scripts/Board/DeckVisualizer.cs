@@ -27,6 +27,15 @@ public sealed class DeckVisualizer : CardZoneVisualizer
         if (SelectedCard != null) AddView(SelectedCard);
         if (counter == null)
         {
+            // Old scene versions serialized generated placeholders. Remove those before creating
+            // the live pair; otherwise empty piles leave several pale rectangles on the table.
+            for (int i=transform.childCount-1;i>=0;i--)
+            {
+                var child=transform.GetChild(i);
+                if (child.name != "Empty pile" && child.name != "Card count") continue;
+                child.gameObject.SetActive(false);
+                if (Application.isPlaying) Destroy(child.gameObject); else DestroyImmediate(child.gameObject);
+            }
             var placeholder = new GameObject("Empty pile", typeof(RectTransform), typeof(Image));
             placeholder.transform.SetParent(transform, false);
             empty = placeholder.GetComponent<Image>();
@@ -61,7 +70,7 @@ public sealed class DeckVisualizer : CardZoneVisualizer
         counter.fontSize = skin.piles.counterFontSize;
         counter.color = skin.colors.ivory;
         counter.rectTransform.sizeDelta = skin.piles.counterSize;
-        empty.gameObject.SetActive(Count == 0);
+        empty.gameObject.SetActive(Count == 0 && !skin.openTable);
         counter.text = board.GetComponent<BoardPresentation>() != null ? "" : Count.ToString();
         counter.transform.SetAsLastSibling();
         Arrange();

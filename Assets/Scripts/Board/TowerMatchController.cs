@@ -151,10 +151,28 @@ public sealed class TowerMatchController : MonoBehaviour
         undo.gameObject.SetActive(false);
         next = Button(bar.transform, "CONTINUE", new Vector2(.77f,.15f), new Vector2(.98f,.85f), Advance);
         nextText = next.GetComponentInChildren<Text>();
+        bool openTable = BoardPresentation.SkinFor(transform).openTable;
+        if (openTable)
+        {
+            BoardPresentation.Stretch(bar.rectTransform,new Vector2(.34f,.932f),new Vector2(.78f,.994f));
+            BoardPresentation.Stretch(headline.rectTransform,new Vector2(.02f,.43f),new Vector2(.98f,.95f));
+            headline.font=BoardPresentation.SkinFor(transform).typography.mastheadFont;
+            BoardPresentation.Stretch(hint.rectTransform,new Vector2(.02f,.04f),new Vector2(.98f,.43f));
+            next.transform.SetParent(transform,false);
+            BoardPresentation.Stretch((RectTransform)next.transform,new Vector2(.825f,.028f),new Vector2(.982f,.097f));
+            nextText.font=BoardPresentation.SkinFor(transform).typography.mastheadFont;
+            nextText.fontSize=20;
+            ownedUI.Add(next.gameObject);
+            undo.transform.SetParent(transform,false);
+            BoardPresentation.Stretch((RectTransform)undo.transform,new Vector2(.84f,.105f),new Vector2(.97f,.14f));
+            ownedUI.Add(undo.gameObject);
+        }
         var old = transform.Find("Your materials/End turn"); if (old != null) old.gameObject.SetActive(false);
         var deck = BoardPresentation.Panel(transform, "Your draw deck", new Color(.06f,.09f,.12f,.98f));
         ownedUI.Add(deck.gameObject); deckAnchor = deck.rectTransform;
-        if (board.humanVictoryPoints != null)
+        if (openTable)
+            BoardPresentation.Stretch(deckAnchor,new Vector2(.832f,.15f),new Vector2(.93f,.33f));
+        else if (board.humanVictoryPoints != null)
         {
             deck.transform.SetParent(board.humanVictoryPoints.transform.parent, false);
             BoardPresentation.Stretch(deckAnchor, new Vector2(.03f,.04f), new Vector2(.97f,.76f));
@@ -163,7 +181,8 @@ public sealed class TowerMatchController : MonoBehaviour
                 else if (label.transform.parent == deck.transform.parent) label.enabled = false;
         }
         else BoardPresentation.Stretch(deckAnchor, new Vector2(.88f,.20f), new Vector2(.985f,.32f));
-        BoardSurface.Dress(deck, BoardPresentation.SkinFor(transform).colors.gold, true);
+        if (!openTable) BoardSurface.Dress(deck, BoardPresentation.SkinFor(transform).colors.gold, true);
+        else deck.color=Color.clear;
         // The deck's emblem is the back of every card in it; the counts sit in a plaque beneath it.
         var back = BoardPresentation.Panel(deck.transform, "Deck back", Color.white);
         BoardPresentation.Stretch(back.rectTransform, new Vector2(.08f, .3f), new Vector2(.92f, .96f));
